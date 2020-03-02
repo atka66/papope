@@ -1,0 +1,1 @@
+global.playersFrozen = false;

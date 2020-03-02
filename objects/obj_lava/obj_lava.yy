@@ -1,0 +1,38 @@
+{
+    "id": "05a715a7-94c6-4010-9966-a3ad668ea6a9",
+    "modelName": "GMObject",
+    "mvc": "1.0",
+    "name": "obj_lava",
+    "eventList": [
+        {
+            "id": "c196c1cd-d211-42e9-9338-4c57e951824a",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 3,
+            "m_owner": "05a715a7-94c6-4010-9966-a3ad668ea6a9"
+        }
+    ],
+    "maskSpriteId": "d94a431b-a8ae-4b58-97e4-60335c3b018b",
+    "overriddenProperties": null,
+    "parentObjectId": "00000000-0000-0000-0000-000000000000",
+    "persistent": false,
+    "physicsAngularDamping": 0.1,
+    "physicsDensity": 0.5,
+    "physicsFriction": 0.2,
+    "physicsGroup": 0,
+    "physicsKinematic": false,
+    "physicsLinearDamping": 0.1,
+    "physicsObject": false,
+    "physicsRestitution": 0.1,
+    "physicsSensor": false,
+    "physicsShape": 1,
+    "physicsShapePoints": null,
+    "physicsStartAwake": true,
+    "properties": null,
+    "solid": false,
+    "spriteId": "00000000-0000-0000-0000-000000000000",
+    "visible": true
+}
