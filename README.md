@@ -1,5 +1,5 @@
 # Papope
-Papope is a multiplayer top-down fighting game made in _Game Maker Studio 2_.
+Papope is a fast-paced couch multiplayer fighting game made in _Game Maker Studio 2_.
 ## Download
 You can download the latest release from [**HERE**](https://atka66.itch.io/papope).
 ## How to play
@@ -10,4 +10,4 @@ Every player needs a controller to play this game.
 ## Contribution
 Feel free to leave improvement ideas and report bugs!
 
-<p align='center'><a href='https://ko-fi.com/G2G31H1IJ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/G2G31H1IJ)
