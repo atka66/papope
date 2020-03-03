@@ -1,5 +1,7 @@
 # Papope
 Papope is a multiplayer top-down fighting game made in _Game Maker Studio 2_.
+## Download
+You can download the latest release from [**HERE**](https://atka66.itch.io/papope).
 ## How to play
 Every player needs a controller to play this game.
 ## Sources
