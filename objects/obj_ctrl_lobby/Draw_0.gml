@@ -37,4 +37,7 @@ if (instance_number(obj_player_lobby) > 0) {
 		draw_sprite(spr_menu_arrow, 0, 120, 190);
 		draw_sprite(spr_menu_arrow, 1, 380, 190);
 	}
+} else {
+	drawText(160, 128, "PAPOPE", 5, c_white, 1.0);
+	drawText(164, 180, "A GAME BY ATKA", 2, c_white, 0.5);
 }
