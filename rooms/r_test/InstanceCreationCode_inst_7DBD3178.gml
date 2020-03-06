@@ -1,12 +1,6 @@
 var hudX = -102;
 var hudY = 20;
-var barX1 = -41;
-var barY1 = -14;
 x = hudX;
 y = hudY;
 alarm[0] = 1 * room_speed;
-sprite_index = 0;
-x1 = barX1;
-y1 = barY1;
-x2 = barX1 + 130;
-y2 = barY1 + 9;
+sprite_index = 3;
