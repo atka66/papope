@@ -119,7 +119,7 @@ if (alive) {
 				case obj_pwrup_trap:
 					instance_create_depth(x, y, -1, obj_trap);
 					// TODO trap placement sound
-					//audio_play_sound(choose(snd_whip_huts_1, snd_whip_huts_2, snd_whip_huts_3), 10, false);
+					audio_play_sound(snd_pickup, 10, false);
 					ammo--;
 					if (ammo < 1) {
 						item = pointer_null;

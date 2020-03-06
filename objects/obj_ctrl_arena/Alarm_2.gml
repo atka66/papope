@@ -18,5 +18,11 @@ do {
 	instance_position(randX, randY, obj_fallwater))
 )
 
-instance_create_depth(randX, randY, -1, choose(obj_pwrup_dynamite, obj_pwrup_revolver, obj_pwrup_shield, obj_pwrup_whip));
+instance_create_depth(randX, randY, -1, choose(
+	obj_pwrup_dynamite, 
+	obj_pwrup_revolver, 
+	obj_pwrup_shield, 
+	obj_pwrup_whip, 
+	obj_pwrup_trap
+));
 alarm[2] = room_speed * 6;
