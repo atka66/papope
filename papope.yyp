@@ -71,6 +71,14 @@
             }
         },
         {
+            "Key": "054d2a91-05cb-4a5a-bbab-ff5116300da3",
+            "Value": {
+                "id": "c4f337e2-d0a4-43de-a94c-6bbaa6bfb73e",
+                "resourcePath": "objects\\obj_pwrup_trap\\obj_pwrup_trap.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "05a715a7-94c6-4010-9966-a3ad668ea6a9",
             "Value": {
                 "id": "51398e31-dbe3-4d1e-8850-9ba961c8f690",
@@ -123,6 +131,14 @@
             "Value": {
                 "id": "4cb89d35-0355-44cb-8d1b-24c18b70f969",
                 "resourcePath": "sprites\\spr_player_circle\\spr_player_circle.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "09eae040-775b-41b3-91f8-71c30b7bfe49",
+            "Value": {
+                "id": "0fe18cc7-a099-4a26-9aa7-b50ca610c379",
+                "resourcePath": "sprites\\spr_hud_trap\\spr_hud_trap.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -556,6 +572,14 @@
                 "id": "ebeb84d7-cb37-4f27-94da-3f99e56d2e76",
                 "resourcePath": "sounds\\snd_collide_car_3\\snd_collide_car_3.yy",
                 "resourceType": "GMSound"
+            }
+        },
+        {
+            "Key": "43f549be-32b9-4981-ad75-d5be1772aeb9",
+            "Value": {
+                "id": "ba622118-f99d-403c-a1e1-926826f65b6f",
+                "resourcePath": "sprites\\spr_pwrup_trap\\spr_pwrup_trap.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -1311,6 +1335,14 @@
             }
         },
         {
+            "Key": "c10e3e75-5ec7-4b85-93d1-e8b76fa41639",
+            "Value": {
+                "id": "b7c374ba-2478-48ee-9ddf-1fdf5d3c39ab",
+                "resourcePath": "objects\\obj_trap\\obj_trap.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "c17db7ea-f0f5-4736-b387-85d79be8caac",
             "Value": {
                 "id": "cc008e6f-5b1b-434d-a711-8eb876b3c429",
@@ -1516,6 +1548,14 @@
                 "id": "079ebb01-12b9-4493-89d9-75c7d5fc1571",
                 "resourcePath": "scripts\\changeOption\\changeOption.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "d917ad60-243e-4340-bc9a-b1ab02c92e37",
+            "Value": {
+                "id": "0098d720-aff6-4c02-b5e1-9e5bd2be7f79",
+                "resourcePath": "sprites\\spr_trap\\spr_trap.yy",
+                "resourceType": "GMSprite"
             }
         },
         {

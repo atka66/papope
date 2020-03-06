@@ -116,6 +116,15 @@ if (alive) {
 						item = pointer_null;
 					}
 					break;
+				case obj_pwrup_trap:
+					instance_create_depth(x, y, -1, obj_trap);
+					// TODO trap placement sound
+					//audio_play_sound(choose(snd_whip_huts_1, snd_whip_huts_2, snd_whip_huts_3), 10, false);
+					ammo--;
+					if (ammo < 1) {
+						item = pointer_null;
+					}
+					break;
 			}
 		}
 		

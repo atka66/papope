@@ -79,5 +79,8 @@ if (player != noone) {
 				draw_sprite(spr_hud_whip_ammo, 0, itemX + (i * 5), itemY);
 			}
 			break;
+		case obj_pwrup_trap:
+			draw_sprite(spr_hud_trap, 0, itemX, itemY);
+			break;
 	}
 }

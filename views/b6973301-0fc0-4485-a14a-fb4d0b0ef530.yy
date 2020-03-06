@@ -8,7 +8,8 @@
         "95ecbd20-35b9-4dc5-b382-e3aa865bbaa9",
         "fee877ef-9f08-42dc-86d6-c0e8b15a306e",
         "e2eb0d44-fcb9-4e5d-b8fd-1668a0d7a13f",
-        "c4c8ae20-3ec4-4992-b716-7f9601f7a7ad"
+        "c4c8ae20-3ec4-4992-b716-7f9601f7a7ad",
+        "054d2a91-05cb-4a5a-bbab-ff5116300da3"
     ],
     "filterType": "GMObject",
     "folderName": "pwrup",
