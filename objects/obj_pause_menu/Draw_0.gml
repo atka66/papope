@@ -29,3 +29,5 @@ drawSpriteText(220, 290, spr_pwrup_whip, "WHIP");
 drawText(350, 290, "(5 CRACKS)", 2, c_white, 1.0);
 drawSpriteText(220, 310, spr_pwrup_shield, "SHIELD");
 drawText(350, 310, "(1 CHARGE)", 2, c_white, 1.0);
+drawSpriteText(220, 330, spr_pwrup_trap, "TRAP");
+drawText(350, 330, "(1 CHARGE)", 2, c_white, 1.0);
