@@ -1,6 +1,5 @@
 /// @description spawn powerup
 // You can write your code in this editor
-instance_destroy(instance_find(obj_pwrup, 0));
 
 var randX;
 var randY;
