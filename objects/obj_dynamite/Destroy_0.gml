@@ -24,3 +24,10 @@ for (var i = 0; i < 4; i++) {
 		}
 	}
 }
+with (obj_tumbleweed) {
+	var dist = distance_to_point(other.x, other.y);
+	if (dist < 150) {
+		var force = 150 - dist;
+		motion_add(point_direction(other.x, other.y, x, y), force / 10);
+	}
+}
