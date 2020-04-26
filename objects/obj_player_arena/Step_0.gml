@@ -36,9 +36,10 @@ if (alive) {
 				}
 			}
 			var toastText = aliveTeamId == -2 ? "DRAW" : getPlayerColorString(aliveTeamId) + " WINS";
-			with (instance_create_depth(210, 40, -2, obj_toast_msg)) {
+			with (instance_create_depth(room_width / 2, 40, -2, obj_toast_msg)) {
 				aliveTime = 3 * room_speed;
 				text = toastText;
+				align = 1;
 				alarm[3] = 1;
 				initSound = noone;
 			}

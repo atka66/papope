@@ -2,6 +2,7 @@
 // You can write your code in this editor
 var player = getInstanceByPlayerId(obj_player_arena, playerId);
 if (player != noone) {
+	
 	// calculate hud shake
 	var shakeOffsetX = 0;
 	var shakeOffsetY = 0;
@@ -15,7 +16,7 @@ if (player != noone) {
 	}
 	var shakedX = x + shakeOffsetX;
 	var shakedY = y + shakeOffsetY;
-	
+
 	// face sprite
 	var playerColor = getPlayerColor(global.player_team[playerId]);
 	draw_rectangle_color(shakedX + 16, shakedY, shakedX + 47, shakedY + 31,
@@ -59,7 +60,7 @@ if (player != noone) {
 	draw_sprite(spr_hud, 0, shakedX, shakedY);
 
 	// points
-	drawText(shakedX + 3, shakedY + 27, global.player_points[playerId], 2, c_white, 1.0);
+	drawText(shakedX + 3, shakedY + 27, global.player_points[playerId], 2, c_white, 1.0, 0);
 
 	// item
 	/// calculate item shake

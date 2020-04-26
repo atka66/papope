@@ -121,6 +121,20 @@
             "varType": 2
         },
         {
+            "id": "d84c64b7-8090-4d88-83d1-e1d23d4cd8e6",
+            "modelName": "GMObjectProperty",
+            "mvc": "1.0",
+            "listItems": null,
+            "multiselect": false,
+            "rangeEnabled": false,
+            "rangeMax": 10,
+            "rangeMin": 0,
+            "resourceFilter": 1023,
+            "value": "0",
+            "varName": "align",
+            "varType": 1
+        },
+        {
             "id": "06d7e5cf-a4cb-46f6-88e2-1a60f06aff68",
             "modelName": "GMObjectProperty",
             "mvc": "1.0",

@@ -12,9 +12,9 @@ for (var i = 0; i < 4; i++) {
 		var hudY = 0;
 		switch (i) {
 			case 0: hudX = -152; hudY = 4; break;
-			case 1: hudX = 552; hudY = 4;  break;
+			case 1: hudX = 720; hudY = 4;  break;
 			case 2: hudX = -152; hudY = 340; break;
-			case 3: hudX = 552; hudY = 340; break;
+			case 3: hudX = 720; hudY = 340; break;
 		}
 		if (winnerTeam < 0) {
 			with (instance_create_depth(hudX, hudY, -3, obj_hud)) {
@@ -28,46 +28,52 @@ for (var i = 0; i < 4; i++) {
 if (winnerTeam < 0) {
 	// splash text
 	var delay = 1;
-	with (instance_create_depth(200, 40, -2, obj_toast_msg)) {
+	with (instance_create_depth(room_width / 2, 40, -2, obj_toast_msg)) {
 		aliveTime = 2 * room_speed;
 		text = "GET READY!";
+		align = 1;
 		alarm[3] = delay;
 		delay += aliveTime;
 		initSound = snd_game_init;
 	}
-	with (instance_create_depth(250, 40, -2, obj_toast_msg)) {
+	with (instance_create_depth(room_width / 2, 40, -2, obj_toast_msg)) {
 		aliveTime = 1 * room_speed;
 		text = "3";
+		align = 1;
 		alarm[3] = delay;
 		delay += aliveTime;
 		initSound = snd_game_toast;
 	}
-	with (instance_create_depth(250, 40, -2, obj_toast_msg)) {
+	with (instance_create_depth(room_width / 2, 40, -2, obj_toast_msg)) {
 		aliveTime = 1 * room_speed;
 		text = "2";
+		align = 1;
 		alarm[3] = delay;
 		delay += aliveTime;
 		initSound = snd_game_toast;
 	}
-	with (instance_create_depth(250, 40, -2, obj_toast_msg)) {
+	with (instance_create_depth(room_width / 2, 40, -2, obj_toast_msg)) {
 		aliveTime = 1 * room_speed;
 		text = "1";
+		align = 1;
 		alarm[3] = delay;
 		delay += aliveTime;
 		initSound = snd_game_toast;
 	}
-	with (instance_create_depth(240, 40, -2, obj_toast_go)) {
+	with (instance_create_depth(room_width / 2, 40, -2, obj_toast_go)) {
 		aliveTime = 1 * room_speed;
 		text = "GO!";
+		align = 1;
 		alarm[3] = delay;
 	}
 	// powerup init
 	alarm[2] = room_speed * 10;
 } else {
 	// WE HAVE A WINNER WOO HOO
-	with (instance_create_depth(170, 40, -2, obj_toast_msg)) {
+	with (instance_create_depth(room_width / 2, 40, -2, obj_toast_msg)) {
 		aliveTime = 5 * room_speed;
 		text = getPlayerColorString(winnerTeam) + " WON THE GAME";
+		align = 1;
 		alarm[3] = 1;
 		initSound = snd_winner;
 	}
