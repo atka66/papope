@@ -1,8 +1,5 @@
 gml_pragma("global", "game_init()");
 
-// enable randomization
-randomize();
-
 // game modes
 global.game_modes[0] = "ARENA"
 

@@ -1,0 +1,1 @@
+emitParticle(irandom_range(argument0 - 4, argument0 + 4), argument1, c_gray, 90, 4, 10, 2);

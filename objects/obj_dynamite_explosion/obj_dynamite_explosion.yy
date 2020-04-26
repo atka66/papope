@@ -5,23 +5,13 @@
     "name": "obj_dynamite_explosion",
     "eventList": [
         {
-            "id": "77a245e0-575e-477f-9ed1-057ee8c8a8d8",
+            "id": "e1fbb3b8-3d07-4193-ab3b-eca2f2724a47",
             "modelName": "GMEvent",
             "mvc": "1.0",
             "IsDnD": false,
             "collisionObjectId": "00000000-0000-0000-0000-000000000000",
-            "enumb": 0,
-            "eventtype": 2,
-            "m_owner": "29bd8ace-8c68-47e2-97a3-8b5151983d69"
-        },
-        {
-            "id": "11b08a6d-75c4-4f98-b72f-5b5eef3a3867",
-            "modelName": "GMEvent",
-            "mvc": "1.0",
-            "IsDnD": false,
-            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
-            "enumb": 0,
-            "eventtype": 0,
+            "enumb": 7,
+            "eventtype": 7,
             "m_owner": "29bd8ace-8c68-47e2-97a3-8b5151983d69"
         }
     ],

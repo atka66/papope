@@ -15,14 +15,14 @@ if (firstStep) {
 			with (collidingObj) {
 				motion_add(point_direction(other.x, other.y, x, y), 3);
 			}
-			emitParticles(endX, endY, c_red, 1);
+			emitParticleCollide(endX, endY, c_red);
 			hurtPlayer(collidingObj, 20);
 			break;
 		}
 		// colliding with cactus
 		if (collision_point(endX, endY, obj_cactus, true, true) != noone) {
 			audio_play_sound(snd_cactus_shot, 10, false);
-			emitParticles(endX, endY, c_olive, 1);
+			emitParticleCollide(endX, endY, c_yellow);
 			break;
 		}
 		// colliding with wood
@@ -31,7 +31,7 @@ if (firstStep) {
 			collision_point(endX, endY, obj_tree, true, true) != noone
 		) {
 			audio_play_sound(choose(snd_collide_wood_1, snd_collide_wood_2, snd_collide_wood_3), 10, false);
-			emitParticles(endX, endY, c_orange, 1);
+			emitParticleCollide(endX, endY, c_orange);
 			break;
 		}
 		// colliding with metal
@@ -40,7 +40,7 @@ if (firstStep) {
 			collision_point(endX, endY, obj_car, true, true) != noone
 		) {
 			audio_play_sound(choose(snd_collide_metal_1, snd_collide_metal_2, snd_collide_metal_3), 10, false);
-			emitParticles(endX, endY, c_yellow, 1);
+			emitParticleCollide(endX, endY, c_yellow);
 			break;
 		}
 	}

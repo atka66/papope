@@ -226,7 +226,7 @@
             "Key": "14b22739-ed2b-47e4-8631-598d5a7147db",
             "Value": {
                 "id": "19216b67-e678-4a1d-b851-47dae2b5f4fb",
-                "resourcePath": "objects\\obj_par_general\\obj_par_general.yy",
+                "resourcePath": "objects\\obj_par_circle\\obj_par_circle.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -519,6 +519,14 @@
             }
         },
         {
+            "Key": "383e787f-4f55-4ec8-b3c6-7317f93a3423",
+            "Value": {
+                "id": "b920a9cd-bcae-438b-9a47-6d35972953b0",
+                "resourcePath": "scripts\\emitParticleExplosion\\emitParticleExplosion.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "398cb435-a9dd-4bcc-ae2c-185b18a0751e",
             "Value": {
                 "id": "7b2b525f-2c58-48c7-a9b6-cdd962f0960d",
@@ -588,6 +596,14 @@
                 "id": "ebeb84d7-cb37-4f27-94da-3f99e56d2e76",
                 "resourcePath": "sounds\\snd_collide_car_3\\snd_collide_car_3.yy",
                 "resourceType": "GMSound"
+            }
+        },
+        {
+            "Key": "43d157c1-1011-4715-b5e2-650ab7c549cd",
+            "Value": {
+                "id": "3a179bb4-e178-4457-bb20-6a18075831d4",
+                "resourcePath": "views\\43d157c1-1011-4715-b5e2-650ab7c549cd.yy",
+                "resourceType": "GMFolder"
             }
         },
         {
@@ -834,7 +850,7 @@
             "Key": "64038a9f-d3a0-439e-9a05-75c4573c8112",
             "Value": {
                 "id": "bab0d3ef-afb6-4857-83ec-8cc810a3125e",
-                "resourcePath": "scripts\\emitParticles\\emitParticles.yy",
+                "resourcePath": "scripts\\emitParticle\\emitParticle.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -908,14 +924,6 @@
                 "id": "f2021f67-ef2c-44fc-a6aa-64414c1bc00f",
                 "resourcePath": "rooms\\r_test\\r_test.yy",
                 "resourceType": "GMRoom"
-            }
-        },
-        {
-            "Key": "71398361-b40d-4961-a68d-fd189859c3a0",
-            "Value": {
-                "id": "1f898481-331e-4efb-b1df-a37c6a823735",
-                "resourcePath": "objects\\obj_par_smoke\\obj_par_smoke.yy",
-                "resourceType": "GMObject"
             }
         },
         {
@@ -1012,14 +1020,6 @@
                 "id": "7233b6f2-4a29-49b4-88f3-1c52c2682422",
                 "resourcePath": "sounds\\snd_collide_metal_2\\snd_collide_metal_2.yy",
                 "resourceType": "GMSound"
-            }
-        },
-        {
-            "Key": "807de5cd-9873-45e0-9105-c19727b993b9",
-            "Value": {
-                "id": "12f5271a-94b3-460a-b44f-9162d1e3528d",
-                "resourcePath": "sprites\\spr_smoke_par\\spr_smoke_par.yy",
-                "resourceType": "GMSprite"
             }
         },
         {
@@ -1455,10 +1455,10 @@
             }
         },
         {
-            "Key": "c8de54e2-f68d-4bfa-9527-a8e5b5332db6",
+            "Key": "c7ed191b-d134-424d-93bf-451bb7e59684",
             "Value": {
-                "id": "a821cdab-5d9e-4c58-96b4-c6f7224e5e5f",
-                "resourcePath": "sprites\\spr_par_general\\spr_par_general.yy",
+                "id": "c9390a8b-0a68-4400-a44d-11f417a8aa40",
+                "resourcePath": "sprites\\spr_par_circle\\spr_par_circle.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1727,6 +1727,14 @@
             }
         },
         {
+            "Key": "ebe6f34f-9f99-422c-b9f0-0e5658198700",
+            "Value": {
+                "id": "f2ac126b-cad6-4f8c-94e2-82059618a2a4",
+                "resourcePath": "scripts\\emitParticleSmoke\\emitParticleSmoke.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "ecd417ac-a2fd-4f8c-8ae2-66f5019b933a",
             "Value": {
                 "id": "124abc2e-f1b8-409c-8f67-86db6e6c4226",
@@ -1863,6 +1871,14 @@
             }
         },
         {
+            "Key": "fe335a93-50b7-4bf1-a1a4-d60147d862a3",
+            "Value": {
+                "id": "b193e5d2-6080-4629-87eb-61bce7403289",
+                "resourcePath": "scripts\\emitParticleCollide\\emitParticleCollide.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "fe454d0d-dd68-41e2-a5e9-ec9418d0f259",
             "Value": {
                 "id": "044f15df-1866-433d-8149-e3a673228aef",
@@ -1905,6 +1921,10 @@
         "26bc1a61-0b54-4249-a2b8-e7927c2832a4",
         "8f8bbdc0-b89c-40b8-8d94-295b7a0ad1bc",
         "035cacba-1c3e-4113-92eb-df99d1869b1a",
+        "64038a9f-d3a0-439e-9a05-75c4573c8112",
+        "fe335a93-50b7-4bf1-a1a4-d60147d862a3",
+        "ebe6f34f-9f99-422c-b9f0-0e5658198700",
+        "383e787f-4f55-4ec8-b3c6-7317f93a3423",
         "19959900-6f05-4512-a9e8-9ba880abb900",
         "18f8056c-5b2e-47ca-93ed-3c350cbb7298",
         "6c723bc0-c460-4768-b378-f42e1d7c9c73",
@@ -1914,7 +1934,6 @@
         "8457c751-c6f2-4755-9f2b-9a07e67919e9",
         "176a1d52-995e-44c0-b5c4-57737b440db0",
         "d6c0ef2f-a9bb-48b5-8aaa-3a379f02a3b5",
-        "64038a9f-d3a0-439e-9a05-75c4573c8112",
         "f82eb9ef-25e5-4d35-8e46-f05a814eb733",
         "a73927d4-a624-4361-853e-6caf66ecb81d",
         "98be1395-e43c-43a8-93f8-29ec89a06fb5",

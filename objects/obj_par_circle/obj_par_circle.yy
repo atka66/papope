@@ -2,7 +2,7 @@
     "id": "14b22739-ed2b-47e4-8631-598d5a7147db",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_par_general",
+    "name": "obj_par_circle",
     "eventList": [
         {
             "id": "81d70383-8739-43e2-b984-2d32c40138d3",
@@ -75,9 +75,23 @@
             "value": "0",
             "varName": "color",
             "varType": 7
+        },
+        {
+            "id": "322d68e0-3210-4402-8126-eaa6805ff457",
+            "modelName": "GMObjectProperty",
+            "mvc": "1.0",
+            "listItems": null,
+            "multiselect": false,
+            "rangeEnabled": false,
+            "rangeMax": 10,
+            "rangeMin": 0,
+            "resourceFilter": 1023,
+            "value": "0",
+            "varName": "fade",
+            "varType": 0
         }
     ],
     "solid": false,
-    "spriteId": "c8de54e2-f68d-4bfa-9527-a8e5b5332db6",
+    "spriteId": "c7ed191b-d134-424d-93bf-451bb7e59684",
     "visible": true
 }
