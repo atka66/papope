@@ -31,7 +31,7 @@ global.selectedMapIndex = 1
 global.selectedRoundsIndex = 1
 global.selectedMaxHpIndex = 2
 
-surface_resize(application_surface, 512, 384);
+surface_resize(application_surface, 680, 384);
 
 // player information
 for (var i = 0; i < 4; i++) {
