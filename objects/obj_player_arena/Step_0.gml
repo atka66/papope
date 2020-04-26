@@ -61,6 +61,7 @@ if (alive) {
 		}
 	
 		if (gamepad_button_check_pressed(playerId, gp_shoulderr)) {
+			shakeHudAmmo(playerId, 5);
 			switch (item) {
 				case obj_pwrup_revolver:
 					var rhValue = gamepad_axis_value(playerId, gp_axisrh);
@@ -101,7 +102,7 @@ if (alive) {
 						item = pointer_null;
 					}
 					break;
-				case obj_pwrup_whip: 
+				case obj_pwrup_whip:
 					var rhValue = gamepad_axis_value(playerId, gp_axisrh);
 					var rvValue = gamepad_axis_value(playerId, gp_axisrv);
 					var angle = darctan2(-rvValue, rhValue);

@@ -519,6 +519,14 @@
             }
         },
         {
+            "Key": "36a2cc17-54b3-4fcb-82bb-f20544de7967",
+            "Value": {
+                "id": "a6aaa84f-8ce2-47bc-9863-66f1a0edbef6",
+                "resourcePath": "scripts\\shakeHudAmmo\\shakeHudAmmo.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "383e787f-4f55-4ec8-b3c6-7317f93a3423",
             "Value": {
                 "id": "b920a9cd-bcae-438b-9a47-6d35972953b0",
@@ -1936,6 +1944,7 @@
         "d6c0ef2f-a9bb-48b5-8aaa-3a379f02a3b5",
         "f82eb9ef-25e5-4d35-8e46-f05a814eb733",
         "a73927d4-a624-4361-853e-6caf66ecb81d",
+        "36a2cc17-54b3-4fcb-82bb-f20544de7967",
         "98be1395-e43c-43a8-93f8-29ec89a06fb5",
         "179df852-357b-416d-b6bc-898ef6fa9630"
     ],

@@ -2,6 +2,17 @@
 // You can write your code in this editor
 var player = getInstanceByPlayerId(obj_player_arena, playerId);
 if (player != noone) {
+	// calculate hud shake
+	var shakeOffsetX = 0;
+	var shakeOffsetY = 0;
+	if (hudShakePwr > 0) {
+		shakeOffsetX = irandom_range(-hudShakePwr, hudShakePwr);
+		shakeOffsetY = irandom_range(-hudShakePwr, hudShakePwr);
+		hudShakePwr--;
+		gamepad_set_vibration(playerId, 1.0, 1.0);
+	} else {
+		gamepad_set_vibration(playerId, 0, 0);
+	}
 	var shakedX = x + shakeOffsetX;
 	var shakedY = y + shakeOffsetY;
 	
@@ -51,8 +62,17 @@ if (player != noone) {
 	drawText(shakedX + 3, shakedY + 27, global.player_points[playerId], 2, c_white, 1.0);
 
 	// item
-	var itemX = shakedX + 66;
-	var itemY = shakedY + 14;
+	/// calculate item shake
+	var ammoShakeOffsetX = 0;
+	var ammoShakeOffsetY = 0;
+	if (ammoShakePwr > 0) {
+		ammoShakeOffsetX = irandom_range(-ammoShakePwr, ammoShakePwr);
+		ammoShakeOffsetY = irandom_range(-ammoShakePwr, ammoShakePwr);
+		ammoShakePwr--;
+	}
+	
+	var itemX = shakedX + ammoShakeOffsetX + 66;
+	var itemY = shakedY + ammoShakeOffsetY + 14;
 	var ammo = player.ammo;
 	switch (player.item) {
 		case obj_pwrup_revolver: 

@@ -20,7 +20,7 @@
             "mvc": "1.0",
             "IsDnD": false,
             "collisionObjectId": "00000000-0000-0000-0000-000000000000",
-            "enumb": 0,
+            "enumb": 64,
             "eventtype": 8,
             "m_owner": "b1602df9-a562-4cdf-b07b-c63f0b09d2dc"
         },
@@ -115,11 +115,11 @@
             "rangeMin": 0,
             "resourceFilter": 1023,
             "value": "0",
-            "varName": "shakePwr",
+            "varName": "hudShakePwr",
             "varType": 1
         },
         {
-            "id": "52b767cc-463f-40e9-ab4e-60a0389097dc",
+            "id": "19babfea-5634-497e-bb2c-614445efa2a3",
             "modelName": "GMObjectProperty",
             "mvc": "1.0",
             "listItems": null,
@@ -129,21 +129,7 @@
             "rangeMin": 0,
             "resourceFilter": 1023,
             "value": "0",
-            "varName": "shakeOffsetX",
-            "varType": 1
-        },
-        {
-            "id": "e1181e36-b394-4a10-9a33-a01b8f9d98e5",
-            "modelName": "GMObjectProperty",
-            "mvc": "1.0",
-            "listItems": null,
-            "multiselect": false,
-            "rangeEnabled": false,
-            "rangeMax": 10,
-            "rangeMin": 0,
-            "resourceFilter": 1023,
-            "value": "0",
-            "varName": "shakeOffsetY",
+            "varName": "ammoShakePwr",
             "varType": 1
         }
     ],
