@@ -140,7 +140,7 @@ if (alive) {
 	}
 }
 // SPACE map no gravity
-if (room == r_map_space && x > 128 && x < 384) {
+if (room == r_map_space && x > 160 && x < 512) {
 	friction = 0;
 } else {
 	friction = 0.5;
