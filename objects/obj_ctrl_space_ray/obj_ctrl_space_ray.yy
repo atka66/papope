@@ -2,7 +2,7 @@
     "id": "2242936e-d14e-4b23-b15e-178d15699de9",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_ctrl_spaceray",
+    "name": "obj_ctrl_space_ray",
     "eventList": [
         {
             "id": "f69ebf50-6485-4515-bf6e-5f76fdc5714e",
