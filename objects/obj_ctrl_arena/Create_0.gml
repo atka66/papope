@@ -26,6 +26,8 @@ for (var i = 0; i < 4; i++) {
 }
 
 if (winnerTeam < 0) {
+	// fade in alarm
+	alarm[3] = 2 * room_speed;
 	// splash text
 	var delay = 1;
 	with (instance_create_depth(room_width / 2, 40, -2, obj_toast_msg)) {

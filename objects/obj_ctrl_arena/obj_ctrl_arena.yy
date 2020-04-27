@@ -63,6 +63,36 @@
             "enumb": 27,
             "eventtype": 9,
             "m_owner": "78b2a079-2802-4833-85d0-65213cec1416"
+        },
+        {
+            "id": "9df4b9f4-c80b-479a-999d-7d7b04d7b2de",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 3,
+            "eventtype": 2,
+            "m_owner": "78b2a079-2802-4833-85d0-65213cec1416"
+        },
+        {
+            "id": "32cdcf6a-bc29-4f33-aa18-1299909bb443",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 0,
+            "eventtype": 3,
+            "m_owner": "78b2a079-2802-4833-85d0-65213cec1416"
+        },
+        {
+            "id": "e8d7521b-9ff9-48c8-8067-02d46a7670d6",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 64,
+            "eventtype": 8,
+            "m_owner": "78b2a079-2802-4833-85d0-65213cec1416"
         }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
@@ -95,6 +125,34 @@
             "value": "0",
             "varName": "currentPlayerSpawning",
             "varType": 1
+        },
+        {
+            "id": "7ed70049-b35e-4584-99f5-35ef2cd8a322",
+            "modelName": "GMObjectProperty",
+            "mvc": "1.0",
+            "listItems": null,
+            "multiselect": false,
+            "rangeEnabled": false,
+            "rangeMax": 10,
+            "rangeMin": 0,
+            "resourceFilter": 1023,
+            "value": "1.0",
+            "varName": "dim",
+            "varType": 0
+        },
+        {
+            "id": "412e78c5-73b5-4135-8108-c6c69fde0268",
+            "modelName": "GMObjectProperty",
+            "mvc": "1.0",
+            "listItems": null,
+            "multiselect": false,
+            "rangeEnabled": false,
+            "rangeMax": 10,
+            "rangeMin": 0,
+            "resourceFilter": 1023,
+            "value": "0",
+            "varName": "fadeIn",
+            "varType": 3
         }
     ],
     "solid": false,
