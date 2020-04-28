@@ -2,7 +2,7 @@
     "id": "2c33736f-dfa4-43b6-990f-a80695afe516",
     "modelName": "GMSprite",
     "mvc": "1.12",
-    "name": "bg_rock",
+    "name": "bg_lava",
     "For3D": false,
     "HTile": false,
     "VTile": false,

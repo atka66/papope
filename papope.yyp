@@ -410,7 +410,7 @@
             "Key": "2c33736f-dfa4-43b6-990f-a80695afe516",
             "Value": {
                 "id": "380da6ba-fde7-49a6-8320-0bf2e0858254",
-                "resourcePath": "sprites\\bg_rock\\bg_rock.yy",
+                "resourcePath": "sprites\\bg_lava\\bg_lava.yy",
                 "resourceType": "GMSprite"
             }
         },
