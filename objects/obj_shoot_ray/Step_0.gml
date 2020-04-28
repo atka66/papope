@@ -35,10 +35,7 @@ if (firstStep) {
 			break;
 		}
 		// colliding with metal
-		if (
-			collision_point(endX, endY, obj_cannon, true, true) != noone ||
-			collision_point(endX, endY, obj_car, true, true) != noone
-		) {
+		if (collision_point(endX, endY, obj_car, true, true) != noone) {
 			audio_play_sound(choose(snd_collide_metal_1, snd_collide_metal_2, snd_collide_metal_3), 10, false);
 			emitParticleCollide(endX, endY, c_yellow);
 			break;

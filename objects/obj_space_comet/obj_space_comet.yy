@@ -2,7 +2,7 @@
     "id": "6e6462ad-64c8-4969-b868-c34ecafb5f68",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_par_star_2",
+    "name": "obj_space_comet",
     "eventList": [
         {
             "id": "c28f9c1e-722d-4729-98ba-c3f89383daba",

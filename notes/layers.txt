@@ -1,0 +1,22 @@
+102  : hud instances
+101  : toast msg
+
+100  : [bg] background
+99   : r_space star
+98   : r_space comet
+
+~50  : bg_tiles
+
+3    : lava particle 2
+2    : [inst] bg_inst (pwrup_spawner)
+1    : trap
+0    : [inst] players
+-1   : [inst] fg_inst (tree, cactus, ship mast)
+-2   : car
+-3   : powerups, confetti, flashes (playerspawn, pwrupspawn, collision, whipcrack, explosion), dynamite, whip
+-4   : circle particle
+-5   : lava particle 1, spaceray
+
+~-50 : fg_tiles
+
+-100 : ctrl

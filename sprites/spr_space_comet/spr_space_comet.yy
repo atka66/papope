@@ -2,7 +2,7 @@
     "id": "5c686e68-18ec-489b-a4e7-52156fb3ee6c",
     "modelName": "GMSprite",
     "mvc": "1.12",
-    "name": "spr_par_star_2",
+    "name": "spr_space_comet",
     "For3D": false,
     "HTile": false,
     "VTile": false,
