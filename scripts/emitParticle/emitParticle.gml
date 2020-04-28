@@ -5,7 +5,7 @@
 /// @arg speed
 /// @arg ttl
 /// @arg maxSize
-with (instance_create_depth(argument0, argument1, -2, obj_par_circle)) {
+with (instance_create_depth(argument0, argument1, -4, obj_par_circle)) {
 	color = argument2;
 	direction = argument3;
 	speed = argument4;

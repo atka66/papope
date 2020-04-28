@@ -5,7 +5,7 @@ if (!place_meeting(x, y, obj_lava)) {
 }
 
 if (gamepad_button_check_pressed(playerId, gp_start)) {
-	var pauseMenu = instance_create_depth(0, 0, -2, obj_pause_menu);
+	var pauseMenu = instance_create_depth(0, 0, 101, obj_pause_menu);
 	var pid = playerId;
 	with (pauseMenu) {
 		pausingPlayerId = pid;
@@ -36,7 +36,7 @@ if (alive) {
 				}
 			}
 			var toastText = aliveTeamId == -2 ? "DRAW" : getPlayerColorString(aliveTeamId) + " WINS";
-			with (instance_create_depth(room_width / 2, 40, -2, obj_toast_msg)) {
+			with (instance_create_depth(room_width / 2, 40, 101, obj_toast_msg)) {
 				aliveTime = 3 * room_speed;
 				text = toastText;
 				align = 1;
@@ -68,7 +68,7 @@ if (alive) {
 					var rhValue = gamepad_axis_value(playerId, gp_axisrh);
 					var rvValue = gamepad_axis_value(playerId, gp_axisrv);
 					var pid = playerId;
-					with (instance_create_depth(x, y, -1, obj_shoot_ray)) {
+					with (instance_create_depth(x, y, -2, obj_shoot_ray)) {
 						deltaX = rhValue;
 						deltaY = rvValue;
 						originPlayer = pid;
@@ -83,7 +83,7 @@ if (alive) {
 					var rhValue = gamepad_axis_value(playerId, gp_axisrh);
 					var rvValue = gamepad_axis_value(playerId, gp_axisrv);
 					var pid = playerId;
-					with (instance_create_depth(x, y, -1, obj_dynamite)) {
+					with (instance_create_depth(x, y, 1, obj_dynamite)) {
 						hspeed = rhValue * 6;
 						vspeed = rvValue * 6;
 						originPlayer = pid;
@@ -107,7 +107,7 @@ if (alive) {
 					var rhValue = gamepad_axis_value(playerId, gp_axisrh);
 					var rvValue = gamepad_axis_value(playerId, gp_axisrv);
 					var angle = darctan2(-rvValue, rhValue);
-					with (instance_create_depth(x, y, -1, obj_whip)) {
+					with (instance_create_depth(x, y, -3, obj_whip)) {
 						originPlayer = other;
 						direction = angle;
 						image_angle = angle;
@@ -119,7 +119,7 @@ if (alive) {
 					}
 					break;
 				case obj_pwrup_trap:
-					instance_create_depth(x, y, -1, obj_trap);
+					instance_create_depth(x, y, 1, obj_trap);
 					// TODO trap placement sound
 					audio_play_sound(snd_pickup, 10, false);
 					ammo--;

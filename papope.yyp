@@ -1687,14 +1687,6 @@
             }
         },
         {
-            "Key": "e5ee6cc7-07f9-423c-8d65-2784b345189b",
-            "Value": {
-                "id": "89c17981-c6ea-4df7-93d3-fb1d68ef07d8",
-                "resourcePath": "objects\\obj_ctrl_tumbleweed\\obj_ctrl_tumbleweed.yy",
-                "resourceType": "GMObject"
-            }
-        },
-        {
             "Key": "e5fc9933-5a54-4984-afbe-f4602936d8f6",
             "Value": {
                 "id": "d8f55dcc-a3dd-44f0-999b-b3a1fa2e4eb7",

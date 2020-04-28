@@ -11,7 +11,7 @@ if (spawner != noone) {
 		}
 	}
 
-	instance_create_depth(spawner.x, spawner.y, -1, choose(
+	instance_create_depth(spawner.x, spawner.y, -3, choose(
 		obj_pwrup_dynamite, 
 		obj_pwrup_revolver, 
 		obj_pwrup_shield, 
