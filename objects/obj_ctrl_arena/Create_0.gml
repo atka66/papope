@@ -2,7 +2,7 @@
 // You can write your code in this editor
 // create and freeze players
 global.playersFrozen = true;
-alarm[4] = room_speed / 2;
+alarm[4] = room_speed * 2;
 
 var winnerTeam = getWinnerTeam();
 for (var i = 0; i < 4; i++) {
@@ -19,25 +19,26 @@ for (var i = 0; i < 4; i++) {
 		if (winnerTeam < 0) {
 			with (instance_create_depth(hudX, hudY, 102, obj_hud)) {
 				playerId = i;
-				alarm[0] = 1 * room_speed;
+				alarm[0] = 2.5 * room_speed;
 			}
 		}
 	}
 }
 
 if (winnerTeam < 0) {
-	// fade in alarm
-	alarm[3] = 2 * room_speed;
-	// splash text
-	var delay = 1;
-	with (instance_create_depth(room_width / 2, 40, 101, obj_toast_msg)) {
+	// map name
+	with (instance_create_depth(64, room_height - 96, 101, obj_toast_msg)) {
 		aliveTime = 2 * room_speed;
-		text = "GET READY!";
-		align = 1;
-		alarm[3] = delay;
-		delay += aliveTime;
+		text = global.game_maps[global.actualSelectedMapIndex];
+		textSize = 6;
+		align = 0;
+		alarm[3] = 1;
 		initSound = snd_game_init;
 	}
+	// fade in alarm
+	alarm[3] = 0.5 * room_speed;
+	// splash text
+	var delay = 1 * room_speed;
 	with (instance_create_depth(room_width / 2, 40, 101, obj_toast_msg)) {
 		aliveTime = 1 * room_speed;
 		text = "3";

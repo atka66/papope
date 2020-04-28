@@ -1,3 +1,5 @@
+103 : [inst] {hidden} ctrls
+
 102  : hud instances
 101  : toast msg, pause
 
@@ -18,5 +20,3 @@
 -5   : lava particle 1, spaceray
 
 ~-50 : fg_tiles
-
--100 : [inst] {hidden} ctrls

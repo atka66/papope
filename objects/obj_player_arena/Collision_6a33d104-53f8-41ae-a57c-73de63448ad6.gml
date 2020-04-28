@@ -4,5 +4,5 @@ if (contactedLava == false) {
 	audio_play_sound(snd_player_contact_lava, 10, false)
 	contactedLava = true;
 }
-emitParticleSmoke(x, y + 14);
+emitParticleSmoke(irandom_range(x - 4, x + 4), y + 14);
 hurtByLava = true;
