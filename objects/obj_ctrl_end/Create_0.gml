@@ -1,5 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
+layer_background_index(layer_background_get_id("background"), irandom(sprite_get_number(bg_space) - 1));
+
 winners = ds_list_create();
 winnerTeam = getWinnerTeam();
 
