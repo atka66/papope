@@ -213,6 +213,16 @@
             "enumb": 64,
             "eventtype": 8,
             "m_owner": "daa5b734-5587-4c4c-95b1-b95598fb580a"
+        },
+        {
+            "id": "89b1a2ef-cbce-4e86-93e2-b3b4971d65bb",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 2,
+            "eventtype": 2,
+            "m_owner": "daa5b734-5587-4c4c-95b1-b95598fb580a"
         }
     ],
     "maskSpriteId": "09a311f5-f5ea-45e4-8c22-be9e49c74658",
@@ -384,6 +394,20 @@
             "resourceFilter": 1023,
             "value": "0",
             "varName": "fallWater",
+            "varType": 3
+        },
+        {
+            "id": "0c391117-23f1-413f-be93-e8f424c81ec6",
+            "modelName": "GMObjectProperty",
+            "mvc": "1.0",
+            "listItems": null,
+            "multiselect": false,
+            "rangeEnabled": false,
+            "rangeMax": 10,
+            "rangeMin": 0,
+            "resourceFilter": 1023,
+            "value": "0",
+            "varName": "trapped",
             "varType": 3
         }
     ],

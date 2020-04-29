@@ -50,7 +50,7 @@ if (alive) {
 		shakeHud(playerId, 20);
 	}
 	if (!global.playersFrozen && !fallWater) {
-		if (friction > 0) {
+		if (friction > 0 && !trapped) {
 			handleInputMovement();
 		}
 
