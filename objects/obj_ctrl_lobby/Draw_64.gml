@@ -35,7 +35,7 @@ if (instance_number(obj_player_lobby) > 0) {
 	drawText((room_width / 2) + 10, 192, global.game_maxHp[global.selectedMaxHpIndex], 2, c_white, 1.0, 0);
 	if (global.selectedOption == 3 && !cntdwn) {
 		draw_sprite(spr_menu_arrow, 0, (room_width / 2) - 150, 190);
-		draw_sprite(spr_menu_arrow, 1, (room_width / 2) - 150, 190);
+		draw_sprite(spr_menu_arrow, 1, (room_width / 2) + 150, 190);
 	}
 } else {
 	drawText(room_width / 2, 128, "PAPOPE", 5, c_white, 1.0, 1);
