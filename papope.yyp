@@ -199,6 +199,14 @@
             }
         },
         {
+            "Key": "11bb4ca3-26ba-4ffc-9d7a-28c466844146",
+            "Value": {
+                "id": "510d24ae-854c-4858-9817-4fe5246e4f00",
+                "resourcePath": "sounds\\snd_pickup_revolver\\snd_pickup_revolver.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
             "Key": "13028104-0b38-4515-98e8-c123c0dd2c87",
             "Value": {
                 "id": "2d54ba69-751c-4cd6-a957-dcbf0bae8e6a",
@@ -719,6 +727,14 @@
             }
         },
         {
+            "Key": "4f9ee5e7-a121-49c8-8f98-52ca173b7352",
+            "Value": {
+                "id": "624e67a3-d807-41b1-af55-9a0a1d8e4082",
+                "resourcePath": "sounds\\snd_revolver_shoot_ricochet_1\\snd_revolver_shoot_ricochet_1.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
             "Key": "4fdae610-e575-4932-9cee-80bf18627c1c",
             "Value": {
                 "id": "b205cebc-160f-4e9e-910b-0d041c4e4f9b",
@@ -788,6 +804,14 @@
                 "id": "518495a1-ca62-4060-bdf9-ca8516ec5cea",
                 "resourcePath": "views\\56ec98f2-1d3f-4cdb-b913-40af8ac72ddd.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "583d83c6-44c0-47a0-8a68-fac470900216",
+            "Value": {
+                "id": "a2a402d3-057a-4788-a09c-768f4edaf89e",
+                "resourcePath": "sounds\\snd_revolver_shoot_ricochet_3\\snd_revolver_shoot_ricochet_3.yy",
+                "resourceType": "GMSound"
             }
         },
         {
@@ -1300,6 +1324,14 @@
                 "id": "7877c33a-406a-4db3-893c-460f2d20e7ef",
                 "resourcePath": "sprites\\spr_lava_ts\\spr_lava_ts.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "aa5ba98b-7e9e-4eca-a2f2-7bf28ac8e7b1",
+            "Value": {
+                "id": "db7ddb84-2d72-409b-80b4-c3737c17255d",
+                "resourcePath": "sounds\\snd_revolver_shoot_ricochet_2\\snd_revolver_shoot_ricochet_2.yy",
+                "resourceType": "GMSound"
             }
         },
         {

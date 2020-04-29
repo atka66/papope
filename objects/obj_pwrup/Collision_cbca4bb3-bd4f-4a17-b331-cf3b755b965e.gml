@@ -8,6 +8,10 @@ if (other.alive) {
 		align = 1;
 		alarm[3] = 1;
 	}
-	audio_play_sound(snd_pickup, 10, false);
+	if (pwrupName == "REVOLVER") {
+		audio_play_sound(snd_pickup_revolver, 10, false);
+	} else {
+		audio_play_sound(snd_pickup, 10, false);
+	}
 	instance_destroy(self);
 }

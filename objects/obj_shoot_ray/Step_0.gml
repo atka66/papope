@@ -21,7 +21,10 @@ if (firstStep) {
 		}
 		// colliding with cactus
 		if (collision_point(endX, endY, obj_cactus, true, true) != noone) {
-			audio_play_sound(snd_cactus_shot, 10, false);
+			audio_play_sound(
+				choose(snd_revolver_shoot_ricochet_1, snd_revolver_shoot_ricochet_2, snd_revolver_shoot_ricochet_3),
+				10, false
+			);
 			emitParticleCollide(endX, endY, c_yellow);
 			break;
 		}
@@ -30,13 +33,19 @@ if (firstStep) {
 			collision_point(endX, endY, obj_mast, true, true) != noone ||
 			collision_point(endX, endY, obj_tree, true, true) != noone
 		) {
-			audio_play_sound(choose(snd_collide_wood_1, snd_collide_wood_2, snd_collide_wood_3), 10, false);
+			audio_play_sound(
+				choose(snd_revolver_shoot_ricochet_1, snd_revolver_shoot_ricochet_2, snd_revolver_shoot_ricochet_3),
+				10, false
+			);
 			emitParticleCollide(endX, endY, c_orange);
 			break;
 		}
 		// colliding with metal
 		if (collision_point(endX, endY, obj_car, true, true) != noone) {
-			audio_play_sound(choose(snd_collide_metal_1, snd_collide_metal_2, snd_collide_metal_3), 10, false);
+			audio_play_sound(
+				choose(snd_revolver_shoot_ricochet_1, snd_revolver_shoot_ricochet_2, snd_revolver_shoot_ricochet_3),
+				10, false
+			);
 			emitParticleCollide(endX, endY, c_yellow);
 			break;
 		}

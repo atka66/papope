@@ -11,10 +11,10 @@
 
 3    : lava particle 2
 2    : [inst] bg_inst (pwrup_spawner, {hidden} lava, block, fallwater)
-1    : trap, dynamite
+1    : trap, dynamite, shoot ray
 0    : [inst] players
 -1   : [inst] fg_inst (tree, cactus, ship mast)
--2   : car, shoot ray
+-2   : car
 -3   : powerups, confetti, flashes (playerspawn, pwrupspawn, collision, whipcrack, explosion), whip
 -4   : circle particle
 -5   : lava particle 1, spaceray

@@ -68,7 +68,7 @@ if (alive) {
 					var rhValue = gamepad_axis_value(playerId, gp_axisrh);
 					var rvValue = gamepad_axis_value(playerId, gp_axisrv);
 					var pid = playerId;
-					with (instance_create_depth(x, y, -2, obj_shoot_ray)) {
+					with (instance_create_depth(x, y, 1, obj_shoot_ray)) {
 						deltaX = rhValue;
 						deltaY = rvValue;
 						originPlayer = pid;
