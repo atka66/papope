@@ -6,3 +6,6 @@ draw_sprite(spr_skins, sprite_index, x, y);
 if (invulnerable) {
 	drawText(x - 4, y - 4, string(ceil(alarm_get(0) / 60)), 2, c_white, 1.0, 0);
 }
+if (global.player_crowned[playerId]) {
+	draw_sprite(spr_player_crown, 0, x, y - 18);
+}

@@ -39,4 +39,5 @@ for (var i = 0; i < 4; i++) {
 	global.player_skin[i] = 0;
 	global.player_points[i] = 0;
 	global.player_team[i] = i;
+	global.player_crowned[i] = false;
 }

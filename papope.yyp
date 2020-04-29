@@ -39,6 +39,14 @@
             }
         },
         {
+            "Key": "022c0589-2bfc-412e-8e8f-06d84059ea52",
+            "Value": {
+                "id": "cd173949-88c2-421c-99ae-b1a22e68de9f",
+                "resourcePath": "sprites\\spr_player_crown\\spr_player_crown.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "028b7d27-131a-45f8-aaf4-367c446a2004",
             "Value": {
                 "id": "1d554798-6941-439a-a860-3508336d25fc",
@@ -903,6 +911,14 @@
             }
         },
         {
+            "Key": "6b80b3c9-c417-46d2-aaf2-027661c2d450",
+            "Value": {
+                "id": "0f5bf1eb-14a6-4c71-85aa-8b9af8cf961a",
+                "resourcePath": "objects\\obj_crown_end\\obj_crown_end.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "6beb37ce-b7ef-477d-b9d0-9dac516b2624",
             "Value": {
                 "id": "515d008a-2b0b-44f2-b34b-96db55e41433",
@@ -1306,7 +1322,7 @@
             "Key": "a83f653f-cc48-455c-9a69-fb240ceae56c",
             "Value": {
                 "id": "05c42b6a-34cb-41e1-ae48-598d2e3b524a",
-                "resourcePath": "objects\\obj_ctrl_space\\obj_ctrl_space.yy",
+                "resourcePath": "objects\\obj_ctrl_space_par\\obj_ctrl_space_par.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -1543,6 +1559,14 @@
             }
         },
         {
+            "Key": "cef80acc-c08b-4cd8-9007-c08e55ad1ff6",
+            "Value": {
+                "id": "1bd3d712-ef4b-4cae-a8ee-675845036945",
+                "resourcePath": "objects\\obj_ctrl_end\\obj_ctrl_end.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "cf3b562b-7c68-4ce2-8241-c5919677f218",
             "Value": {
                 "id": "091b9c3b-1831-4e80-a7d5-95bcecb330be",
@@ -1588,6 +1612,14 @@
                 "id": "759e5c87-5820-4e4c-a369-612a93e6e43e",
                 "resourcePath": "sprites\\spr_hud_revolver_drum\\spr_hud_revolver_drum.yy",
                 "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "d3be9404-d438-4816-85f0-8a618b390748",
+            "Value": {
+                "id": "a4efe253-12fc-442f-bf94-dbbf2b003e80",
+                "resourcePath": "rooms\\r_end\\r_end.yy",
+                "resourceType": "GMRoom"
             }
         },
         {

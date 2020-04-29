@@ -8,11 +8,6 @@ if (cps < 4) {
 			playerId = cps;
 			hp = global.game_maxHp[global.selectedMaxHpIndex];
 			sprite_index = global.player_skin[cps];
-			if (getWinnerTeam() == global.player_team[playerId]) {
-				for (var i = 0; i < 100; i++) {
-					instance_create_depth(x, y, -3, obj_confetti);
-				}
-			}
 		}
 	}
 	currentPlayerSpawning++;

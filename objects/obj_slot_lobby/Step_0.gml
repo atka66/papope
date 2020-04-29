@@ -20,6 +20,7 @@ if (gamepad_button_check_pressed(slotId, gp_face2) && lobbyPlayerInstanceExists(
 	if (instance_find(obj_ctrl_lobby, 0).cntdwn) {
 		stopCntdwn();
 	} else {
+		global.player_crowned[slotId] = false;
 		instance_destroy(getInstanceByPlayerId(obj_player_lobby, slotId));
 	}
 }

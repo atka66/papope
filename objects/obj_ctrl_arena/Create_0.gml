@@ -73,12 +73,5 @@ if (winnerTeam < 0) {
 	alarm[2] = room_speed * 10;
 } else {
 	// WE HAVE A WINNER WOO HOO
-	with (instance_create_depth(room_width / 2, 40, 101, obj_toast_msg)) {
-		aliveTime = 5 * room_speed;
-		text = getPlayerColorString(winnerTeam) + " WON THE GAME";
-		align = 1;
-		alarm[3] = 1;
-		initSound = snd_winner;
-	}
-	alarm[1] = 5 * room_speed;
+	room_goto(r_end);
 }
