@@ -20,7 +20,7 @@ for (var i = 0; i < ds_list_size(winners); i++) {
 	var winner = winners[|i];
 	with (instance_create_depth((room_width / 2) + (i * 128 - ((ds_list_size(winners) - 1) * 64)), room_height / 2, 0, obj_crown_end)) {
 		playerId = winner;
-		sprite_index = global.player_skin[i];
+		sprite_index = global.player_skin[winner];
 	}
 }
 

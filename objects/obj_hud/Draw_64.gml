@@ -93,7 +93,7 @@ if (player != noone) {
 			draw_sprite(spr_hud_dynamite_ammo, 0, itemX, itemY);
 			break;
 		case obj_pwrup_shield:
-			draw_sprite(spr_hud_shield, 0, itemX, itemY);
+			draw_sprite_ext(spr_pwrup_shield, 0, itemX, itemY, 2.0, 2.0, 0, c_white, 1.0);
 			break;
 		case obj_pwrup_whip:
 			for (var i = 0; i < ammo; i++) {
@@ -101,7 +101,7 @@ if (player != noone) {
 			}
 			break;
 		case obj_pwrup_trap:
-			draw_sprite(spr_hud_trap, 0, itemX, itemY);
+			draw_sprite_ext(spr_pwrup_trap, 0, itemX, itemY, 2.0, 2.0, 0, c_white, 1.0);
 			break;
 	}
 }

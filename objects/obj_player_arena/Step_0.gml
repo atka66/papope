@@ -50,14 +50,16 @@ if (alive) {
 		shakeHud(playerId, 20);
 	}
 	if (!global.playersFrozen && !fallWater) {
-		if (friction > 0 && !trapped) {
-			handleInputMovement();
-		}
+		if (!trapped) {
+			if (friction > 0) {
+				handleInputMovement();
+			}
 
-		if (gamepad_button_check_pressed(playerId, gp_shoulderl)) {
-			if (speed < 10) {
-				motion_add(direction, 7);
-				audio_play_sound(choose(snd_player_dash_1, snd_player_dash_2, snd_player_dash_3), 10, false);
+			if (gamepad_button_check_pressed(playerId, gp_shoulderl)) {
+				if (speed < 10) {
+					motion_add(direction, 7);
+					audio_play_sound(choose(snd_player_dash_1, snd_player_dash_2, snd_player_dash_3), 10, false);
+				}
 			}
 		}
 	

@@ -151,14 +151,6 @@
             }
         },
         {
-            "Key": "09eae040-775b-41b3-91f8-71c30b7bfe49",
-            "Value": {
-                "id": "0fe18cc7-a099-4a26-9aa7-b50ca610c379",
-                "resourcePath": "sprites\\spr_hud_trap\\spr_hud_trap.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "0d81b6b8-6851-443c-b401-2b8557f40ad9",
             "Value": {
                 "id": "173f6081-d810-44ea-8248-48883ef36856",
@@ -1155,14 +1147,6 @@
             "Value": {
                 "id": "9bcdeb2e-1cba-4180-ae6a-3e470f19ed78",
                 "resourcePath": "sprites\\spr_spawner_pwrup\\spr_spawner_pwrup.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
-            "Key": "8cd13091-7b2b-4e78-9af0-49ca8ce92036",
-            "Value": {
-                "id": "9fddfb60-bdc9-4575-a1b3-6e9f1fb9c98b",
-                "resourcePath": "sprites\\spr_hud_shield\\spr_hud_shield.yy",
                 "resourceType": "GMSprite"
             }
         },
