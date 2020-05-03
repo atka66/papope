@@ -23,4 +23,5 @@ if (gamepad_is_connected(slotId)) {
 	}
 } else {
 	draw_sprite_ext(spr_controller, 0, x, y, 1, 1, 0, ctrl_col, 0.3);
+	drawText(x, y + 20, "OFFLINE", 2, c_white, 0.3, 1);
 }

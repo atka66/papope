@@ -43,6 +43,16 @@
             "enumb": 27,
             "eventtype": 9,
             "m_owner": "9ec4f692-e730-41d3-b24a-be53bce4e5d2"
+        },
+        {
+            "id": "b5db851f-923f-43c5-bbba-c9931edfe87d",
+            "modelName": "GMEvent",
+            "mvc": "1.0",
+            "IsDnD": false,
+            "collisionObjectId": "00000000-0000-0000-0000-000000000000",
+            "enumb": 1,
+            "eventtype": 2,
+            "m_owner": "9ec4f692-e730-41d3-b24a-be53bce4e5d2"
         }
     ],
     "maskSpriteId": "00000000-0000-0000-0000-000000000000",
@@ -75,6 +85,20 @@
             "value": "0",
             "varName": "cntdwn",
             "varType": 3
+        },
+        {
+            "id": "06b37d19-0d30-45a9-88d1-fda840773ec5",
+            "modelName": "GMObjectProperty",
+            "mvc": "1.0",
+            "listItems": null,
+            "multiselect": false,
+            "rangeEnabled": false,
+            "rangeMax": 10,
+            "rangeMin": 0,
+            "resourceFilter": 1023,
+            "value": "6",
+            "varName": "hintTimer",
+            "varType": 1
         }
     ],
     "solid": false,

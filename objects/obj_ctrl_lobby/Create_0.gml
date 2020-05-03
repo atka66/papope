@@ -7,3 +7,5 @@ randomize();
 for (var i = 0; i < 4; i++) {
 	global.player_points[i] = 0;
 }
+
+alarm[1] = 1;
