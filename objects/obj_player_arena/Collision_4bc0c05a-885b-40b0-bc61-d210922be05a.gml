@@ -1,6 +1,6 @@
 /// @description Insert description here
 // You can write your code in this editor
-move_bounce_all(true);
+move_bounce_solid(true);
 motion_add(point_direction(other.x, other.y, x, y), 2);
 
 emitParticleCollide(x, y, c_yellow);
