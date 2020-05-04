@@ -3,3 +3,7 @@
 if (fadeIn && dim > 0) {
 	dim -= 0.01;
 }
+
+if (!isAnyoneConnected()) {
+	room_goto(r_lobby);
+}

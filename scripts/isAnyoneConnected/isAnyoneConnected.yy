@@ -1,8 +1,8 @@
 {
-    "id": "d412f00c-5074-4174-8dd7-f5f3636f799f",
+    "id": "59ea3bda-7734-499c-a165-463b193ac741",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "drawSpriteText",
+    "name": "isAnyoneConnected",
     "IsCompatibility": false,
     "IsDnD": false
 }

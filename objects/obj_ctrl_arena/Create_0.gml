@@ -39,7 +39,7 @@ if (winnerTeam < 0) {
 	alarm[3] = 0.5 * room_speed;
 	// splash text
 	var delay = 1 * room_speed;
-	with (instance_create_depth(room_width / 2, 40, 101, obj_toast_msg)) {
+	with (instance_create_depth(room_width / 2, 64, 101, obj_toast_msg)) {
 		aliveTime = 1 * room_speed;
 		text = "3";
 		align = 1;
@@ -47,7 +47,7 @@ if (winnerTeam < 0) {
 		delay += aliveTime;
 		initSound = snd_game_toast;
 	}
-	with (instance_create_depth(room_width / 2, 40, 101, obj_toast_msg)) {
+	with (instance_create_depth(room_width / 2, 64, 101, obj_toast_msg)) {
 		aliveTime = 1 * room_speed;
 		text = "2";
 		align = 1;
@@ -55,7 +55,7 @@ if (winnerTeam < 0) {
 		delay += aliveTime;
 		initSound = snd_game_toast;
 	}
-	with (instance_create_depth(room_width / 2, 40, 101, obj_toast_msg)) {
+	with (instance_create_depth(room_width / 2, 64, 101, obj_toast_msg)) {
 		aliveTime = 1 * room_speed;
 		text = "1";
 		align = 1;
@@ -63,7 +63,7 @@ if (winnerTeam < 0) {
 		delay += aliveTime;
 		initSound = snd_game_toast;
 	}
-	with (instance_create_depth(room_width / 2, 40, 101, obj_toast_go)) {
+	with (instance_create_depth(room_width / 2, 64, 101, obj_toast_go)) {
 		aliveTime = 1 * room_speed;
 		text = "GO!";
 		align = 1;

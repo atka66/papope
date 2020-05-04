@@ -7,21 +7,22 @@ if (gamepad_is_connected(slotId)) {
 		ctrl_col = getPlayerColor(global.player_team[slotId]);
 	}
 	draw_sprite_ext(spr_controller, 0, x, y, 1, 1, 0, ctrl_col, 1.0);
+	drawText(x, y + 16, gamepad_get_description(slotId), 1, c_white, 1.0, 1);
 
 	if (joined) {
 		if (instance_find(obj_ctrl_lobby, 0).cntdwn) {
-			drawSpriteText(x - 40, y + 20, spr_controller_o, "CANCEL")
+			drawSpriteText(x - 40, y + 32, "CANCEL", spr_controller_o);
 		} else {
-			drawSpriteText(x - 40, y + 20, spr_controller_x, "START")
-			drawSpriteText(x - 40, y + 40, spr_controller_o, "LEAVE")
+			drawSpriteText(x - 40, y + 32, "START", spr_controller_x);
+			drawSpriteText(x - 40, y + 52, "LEAVE", spr_controller_o);
 		}
 	} else {
 		if (!instance_find(obj_ctrl_lobby, 0).cntdwn) {
 			draw_sprite(spr_player_summon, 0, x, y - 32);
-			drawSpriteText(x - 40, y + 20, spr_controller_x, "JOIN")
+			drawSpriteText(x - 40, y + 32, "JOIN", spr_controller_x);
 		}
 	}
 } else {
 	draw_sprite_ext(spr_controller, 0, x, y, 1, 1, 0, ctrl_col, 0.3);
-	drawText(x, y + 20, "OFFLINE", 2, c_white, 0.3, 1);
+	drawText(x, y + 16, "OFFLINE", 1, c_white, 0.3, 1);
 }

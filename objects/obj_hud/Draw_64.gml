@@ -104,4 +104,9 @@ if (player != noone) {
 			draw_sprite_ext(spr_pwrup_trap, 0, itemX, itemY, 2.0, 2.0, 0, c_white, 1.0);
 			break;
 	}
+	
+	// disconnect
+	if (!gamepad_is_connected(playerId)) {
+		drawText(shakedX + 56, shakedY + 20, "DISCONNECTED", 2, current_time mod 8 < 4 ? c_white : c_red, 1.0, 1);
+	}
 }

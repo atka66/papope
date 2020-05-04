@@ -25,9 +25,9 @@ global.game_maxHp[3] = 200
 global.game_maxHp[4] = 500
 
 // selections
-global.selectedOption = 0
+global.selectedOption = 1
 global.selectedModeIndex = 0
-global.selectedMapIndex = 1
+global.selectedMapIndex = 0
 global.selectedRoundsIndex = 1
 global.selectedMaxHpIndex = 2
 

@@ -37,10 +37,10 @@ if (!instance_find(obj_ctrl_lobby, 0).cntdwn) {
 	}
 
 	if (gamepad_button_check_pressed(playerId, gp_padu)) {
-		global.selectedOption = (global.selectedOption + 4 - 1) % 4;
+		global.selectedOption = ((global.selectedOption + 1) % 3) + 1;
 	}
 
 	if (gamepad_button_check_pressed(playerId, gp_padd)) {
-		global.selectedOption = (global.selectedOption + 1) % 4;
+		global.selectedOption = (global.selectedOption % 3) + 1;
 	}
 }

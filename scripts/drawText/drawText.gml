@@ -5,7 +5,8 @@
 // argument4 - color
 // argument5 - alpha
 // argument6 - alignment
-var strlen = string_length(argument2);
+var str = string_upper(argument2)
+var strlen = string_length(str);
 
 var letterImg = array_create(strlen);
 var letterWidth = array_create(strlen);
@@ -14,7 +15,8 @@ var fullWidth = 0;
 for (var i = 0; i < strlen; i++) {
 	var subimg = 0;
 	var spriteWidth = 5;
-	switch (string_char_at(argument2, i + 1)) {
+	switch (string_char_at(str, i + 1)) {
+			case " ": subimg = -1; spriteWidth = 3; break;
             case "A": subimg = 0; break;   case "B": subimg = 1; break;   case "C": subimg = 2; break;
             case "D": subimg = 3; break;   case "E": subimg = 4; break;   case "F": subimg = 5; break;
             case "G": subimg = 6; break;   case "H": subimg = 7; break;   case "I": subimg = 8; spriteWidth = 1; break;
@@ -31,7 +33,7 @@ for (var i = 0; i < strlen; i++) {
             case "-": subimg = 38; break;  case "!": subimg = 39; spriteWidth = 1; break;
             case "?": subimg = 40; break;  case "(": subimg = 41; spriteWidth = 2; break;
             case ")": subimg = 42; spriteWidth = 2; break;  case "/": subimg = 43; break;
-            default : subimg = -1; break;
+            default : subimg = 44; break;
     }
 	letterImg[i] = subimg;
 	letterWidth[i] = spriteWidth;

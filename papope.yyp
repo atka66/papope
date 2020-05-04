@@ -271,14 +271,6 @@
             }
         },
         {
-            "Key": "18f8056c-5b2e-47ca-93ed-3c350cbb7298",
-            "Value": {
-                "id": "03ea3a57-49d1-4bd8-95c0-1c46f4754773",
-                "resourcePath": "scripts\\drawSpriteText\\drawSpriteText.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "19959900-6f05-4512-a9e8-9ba880abb900",
             "Value": {
                 "id": "c96f7444-f61b-40df-8c46-d0121518e86c",
@@ -575,6 +567,14 @@
             }
         },
         {
+            "Key": "3d39167c-3804-48a1-b178-8a9268a4c54a",
+            "Value": {
+                "id": "9805d636-203e-4027-bb84-57695e1b5ded",
+                "resourcePath": "objects\\obj_toast_lobbycnt\\obj_toast_lobbycnt.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "3e4d8771-73ec-496e-88de-0f199d35e63a",
             "Value": {
                 "id": "5ce91201-957c-4bcd-8856-77294b836a19",
@@ -836,6 +836,14 @@
                 "id": "df1cab80-76da-4b16-a294-5ceb7f350ce4",
                 "resourcePath": "sounds\\snd_game_init\\snd_game_init.yy",
                 "resourceType": "GMSound"
+            }
+        },
+        {
+            "Key": "59ea3bda-7734-499c-a165-463b193ac741",
+            "Value": {
+                "id": "57f558d6-fcfb-4cfe-a4ba-780292c29e76",
+                "resourcePath": "scripts\\isAnyoneConnected\\isAnyoneConnected.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -1615,6 +1623,14 @@
             }
         },
         {
+            "Key": "d412f00c-5074-4174-8dd7-f5f3636f799f",
+            "Value": {
+                "id": "a0fab971-0306-48c6-a89a-0ae52ee57cc8",
+                "resourcePath": "scripts\\drawSpriteText\\drawSpriteText.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "d57cc5f0-6397-4d87-8635-3e3314c1de90",
             "Value": {
                 "id": "2315b5f8-4a62-42f7-a07f-63850fa32ef5",
@@ -1700,6 +1716,14 @@
                 "id": "f17eceb9-90a0-41e6-b027-d6b35645ccba",
                 "resourcePath": "rooms\\r_map_ship\\r_map_ship.yy",
                 "resourceType": "GMRoom"
+            }
+        },
+        {
+            "Key": "de39bd7f-293a-46b1-bcb9-9a65695cc8cc",
+            "Value": {
+                "id": "3b0d2382-0210-4e69-88cf-21573d4ef4f6",
+                "resourcePath": "objects\\obj_toast_lobbyhint\\obj_toast_lobbyhint.yy",
+                "resourceType": "GMObject"
             }
         },
         {
@@ -1990,7 +2014,7 @@
         "ebe6f34f-9f99-422c-b9f0-0e5658198700",
         "383e787f-4f55-4ec8-b3c6-7317f93a3423",
         "19959900-6f05-4512-a9e8-9ba880abb900",
-        "18f8056c-5b2e-47ca-93ed-3c350cbb7298",
+        "d412f00c-5074-4174-8dd7-f5f3636f799f",
         "6c723bc0-c460-4768-b378-f42e1d7c9c73",
         "852ec7bf-17a5-4e65-a601-d794baa6b4af",
         "32acfd5f-99af-45d2-83eb-5ad1db7591c2",
@@ -2003,6 +2027,7 @@
         "36a2cc17-54b3-4fcb-82bb-f20544de7967",
         "98be1395-e43c-43a8-93f8-29ec89a06fb5",
         "316d4c25-a549-4946-a953-cf017013c204",
+        "59ea3bda-7734-499c-a165-463b193ac741",
         "179df852-357b-416d-b6bc-898ef6fa9630"
     ],
     "tutorial": ""
