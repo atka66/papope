@@ -36,7 +36,7 @@ surface_resize(application_surface, 680, 384);
 // player information
 for (var i = 0; i < 4; i++) {
 	global.player_joined[i] = false;
-	global.player_skin[i] = 0;
+	global.player_skin[i] = i;
 	global.player_points[i] = 0;
 	global.player_team[i] = i;
 	global.player_crowned[i] = false;

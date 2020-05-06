@@ -2,6 +2,19 @@
 // You can write your code in this editor
 handleInputMovement()
 
+// gamepad 'o' or keyboard 'q' pressed
+if (gamepad_button_check_pressed(playerId, gp_face2) || keyboard_check_pressed(ord("Q"))) {
+	if (instance_find(obj_ctrl_lobby, 0).cntdwn) {
+		stopCntdwn();
+	} else {
+		instance_destroy();
+	}
+}
+// disconnect
+if (!gamepad_is_connected(playerId)) {
+	instance_destroy();
+}
+
 if (!instance_find(obj_ctrl_lobby, 0).cntdwn) {
 	// shoulders
 	if (gamepad_button_check_pressed(playerId, gp_shoulderl)) {

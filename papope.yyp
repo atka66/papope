@@ -1071,14 +1071,6 @@
             }
         },
         {
-            "Key": "80d2e44c-af13-4b6e-b492-6ad154e0be54",
-            "Value": {
-                "id": "578551e0-4f27-4a4b-8af4-1209628a215d",
-                "resourcePath": "scripts\\lobbyPlayerInstanceExists\\lobbyPlayerInstanceExists.yy",
-                "resourceType": "GMScript"
-            }
-        },
-        {
             "Key": "82a03b1b-5a59-4b74-83f2-84bd0fe56280",
             "Value": {
                 "id": "87631f49-d0f7-4734-9340-ca7ddcea8689",
@@ -2008,7 +2000,6 @@
         }
     ],
     "script_order": [
-        "80d2e44c-af13-4b6e-b492-6ad154e0be54",
         "d8cdb091-5eb7-44a7-bba6-e4f93411fff2",
         "fe9038ee-e3fc-47f4-932b-b2d44f32c939",
         "58ba6f16-70ee-4ffd-9bfc-fc38a5f1a4e6",

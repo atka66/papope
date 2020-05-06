@@ -1,4 +1,4 @@
-/// @description Insert description here
+/// @description spawn confetti
 // You can write your code in this editor
 for (var i = 0; i < 40; i++) {
 	with (instance_create_depth(0, room_height, -3, obj_confetti)) {

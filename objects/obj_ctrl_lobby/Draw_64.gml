@@ -2,7 +2,8 @@
 // You can write your code in this editor
 drawText(room_width - 128, 16, "PAPOPE", 5, c_white, 1.0, 1);
 drawText(room_width - 128, 48, "A GAME BY ATKA", 2, c_white, 0.5, 1);
-drawText(0, room_height - 16, "V" + string(GM_version), 2, c_white, 1.0, 0);
+drawText(0, room_height - 16, "V" + string(GM_version), 2, c_white, 0.5, 0);
+drawText(room_width, room_height - 16, "atka66.itch.io/papope", 2, c_white, 0.5, 2);
 
 drawText(510, 112, "HINT:", 2, c_white, 1.0, 1);
 
@@ -37,5 +38,12 @@ if (instance_number(obj_player_lobby) > 0) {
 			draw_sprite(spr_menu_arrow, 1, 288, 125 + (i * 25));
 		}
 	}
-	
+}
+
+if (instance_number(obj_player_lobby) < 2) {
+	drawText(room_width / 2, room_height - 48, "WAITING FOR MORE PLAYERS...", 2, c_white, 1.0, 1);
+} else if (getNumberOfTeams() < 2) {
+	drawText(room_width / 2, room_height - 48, "MUST HAVE AT LEAST 2 TEAMS!", 2, c_white, 1.0, 1);
+} else {
+	drawSpriteText((room_width / 2) - 64, room_height - 48, "START", spr_controller_x);
 }

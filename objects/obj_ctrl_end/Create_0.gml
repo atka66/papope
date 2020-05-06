@@ -27,3 +27,4 @@ for (var i = 0; i < ds_list_size(winners); i++) {
 audio_play_sound(snd_winner, 10, false);
 
 alarm[0] = 1;
+alarm[1] = 30 * room_speed;
