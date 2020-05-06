@@ -33,7 +33,7 @@ for (var i = 0; i < strlen; i++) {
             case "-": subimg = 38; break;  case "!": subimg = 39; spriteWidth = 1; break;
             case "?": subimg = 40; break;  case "(": subimg = 41; spriteWidth = 2; break;
             case ")": subimg = 42; spriteWidth = 2; break;  case "/": subimg = 43; break;
-            default : subimg = 44; break;
+            case "#": subimg = 44; break;  default : subimg = 45; break;
     }
 	letterImg[i] = subimg;
 	letterWidth[i] = spriteWidth;

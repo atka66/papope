@@ -1,7 +1,7 @@
 /// @description Draw controller sprites accordingly
 // You can write your code in this editor
 var ctrl_col = c_white;
-if (gamepad_is_connected(slotId)) {
+if (global.player_connected[slotId]) {
 	if (global.player_joined[slotId]) {
 		ctrl_col = getPlayerColor(global.player_team[slotId]);
 		if (instance_find(obj_ctrl_lobby, 0).cntdwn) {

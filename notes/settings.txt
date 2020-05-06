@@ -1,0 +1,3 @@
+# Prefs
+## DisconnectOnInit
+Whether to disconnect players when the game arrives to the lobby (useful to avoid AFK players)

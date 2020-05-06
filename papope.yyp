@@ -911,6 +911,14 @@
             }
         },
         {
+            "Key": "6673d821-d85a-4e59-97de-06ddffafc892",
+            "Value": {
+                "id": "c8629a14-4f73-4051-a017-22280b84c079",
+                "resourcePath": "views\\6673d821-d85a-4e59-97de-06ddffafc892.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "6a28a82d-f406-446a-b9e4-3b97e5254d99",
             "Value": {
                 "id": "8dda3723-2bab-4e9c-8df5-b6d98d983164",
@@ -1132,6 +1140,14 @@
                 "id": "aecc11e5-8ee7-495c-bf01-172cf76d3123",
                 "resourcePath": "objects\\obj_par_lava_1\\obj_par_lava_1.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "8b0d1037-b4d9-4625-9dec-63bdff5e799a",
+            "Value": {
+                "id": "322ab124-fb88-4c81-8a9c-e2e0a5b88346",
+                "resourcePath": "scripts\\handleGamepadConnections\\handleGamepadConnections.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -1399,6 +1415,14 @@
             }
         },
         {
+            "Key": "b4109003-7eba-40e6-bc5a-5e77770f118a",
+            "Value": {
+                "id": "8396234e-83b2-43dc-aebc-54105c74c7df",
+                "resourcePath": "datafiles_yy\\settings.ini.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "b6973301-0fc0-4485-a14a-fb4d0b0ef530",
             "Value": {
                 "id": "aca793c3-5635-4383-a96d-5134edc3f807",
@@ -1652,6 +1676,14 @@
                 "id": "cff4d951-53a9-4501-b3a2-08af9b811fe8",
                 "resourcePath": "scripts\\isOutsideView\\isOutsideView.yy",
                 "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "d76f089a-5347-487e-8d57-0080e219a93d",
+            "Value": {
+                "id": "20dcd562-3c17-4d7c-b5a3-cedb0e08adeb",
+                "resourcePath": "notes\\settings.yy",
+                "resourceType": "GMNotes"
             }
         },
         {
@@ -2027,6 +2059,7 @@
         "98be1395-e43c-43a8-93f8-29ec89a06fb5",
         "316d4c25-a549-4946-a953-cf017013c204",
         "59ea3bda-7734-499c-a165-463b193ac741",
+        "8b0d1037-b4d9-4625-9dec-63bdff5e799a",
         "179df852-357b-416d-b6bc-898ef6fa9630"
     ],
     "tutorial": ""

@@ -106,7 +106,7 @@ if (player != noone) {
 	}
 	
 	// disconnect
-	if (!gamepad_is_connected(playerId)) {
+	if (!global.player_connected[playerId]) {
 		drawText(shakedX + 56, shakedY + 20, "DISCONNECTED", 2, current_time mod 8 < 4 ? c_white : c_red, 1.0, 1);
 	}
 }

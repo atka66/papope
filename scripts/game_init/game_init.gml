@@ -1,5 +1,10 @@
 gml_pragma("global", "game_init()");
 
+// read settings.ini
+ini_open("settings.ini")
+global.prefs_dcOnInit = ini_read_real("Prefs", "DisconnectOnInit", 0) == 0 ? false : true;
+ini_close()
+
 // game modes
 global.game_modes[0] = "ARENA"
 
@@ -35,6 +40,7 @@ surface_resize(application_surface, 680, 384);
 
 // player information
 for (var i = 0; i < 4; i++) {
+	global.player_connected[i] = false;
 	global.player_joined[i] = false;
 	global.player_skin[i] = i;
 	global.player_points[i] = 0;
