@@ -43,20 +43,21 @@ if (!instance_find(obj_ctrl_lobby, 0).cntdwn) {
 		global.player_team[playerId] = (global.player_team[playerId] + 1) % 4;
 	}
 
-	// pad
-	if (gamepad_button_check_pressed(playerId, gp_padl)) {
-		changeOption(-1);
-	}
+	if (global.prefs_AllowPlayersSetOptions) {
+		if (gamepad_button_check_pressed(playerId, gp_padl)) {
+			changeOption(-1);
+		}
 
-	if (gamepad_button_check_pressed(playerId, gp_padr)) {
-		changeOption(1);
-	}
+		if (gamepad_button_check_pressed(playerId, gp_padr)) {
+			changeOption(1);
+		}
 
-	if (gamepad_button_check_pressed(playerId, gp_padu)) {
-		global.selectedOption = ((global.selectedOption + 1) % 3) + 1;
-	}
+		if (gamepad_button_check_pressed(playerId, gp_padu)) {
+			switchOption(1);
+		}
 
-	if (gamepad_button_check_pressed(playerId, gp_padd)) {
-		global.selectedOption = (global.selectedOption % 3) + 1;
+		if (gamepad_button_check_pressed(playerId, gp_padd)) {
+			switchOption(0);
+		}
 	}
 }

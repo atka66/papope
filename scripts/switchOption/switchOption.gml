@@ -1,0 +1,1 @@
+global.selectedOption = ((global.selectedOption + argument0) % 3) + 1;

@@ -2,7 +2,8 @@ gml_pragma("global", "game_init()");
 
 // read settings.ini
 ini_open("settings.ini")
-global.prefs_dcOnInit = ini_read_real("Prefs", "DisconnectOnInit", 0) == 0 ? false : true;
+global.prefs_DisconnectOnInit = ini_read_real("Prefs", "DisconnectOnInit", 0) == 0 ? false : true;
+global.prefs_AllowPlayersSetOptions = ini_read_real("Prefs", "AllowPlayersSetOptions", 1) == 0 ? false : true;
 ini_close()
 
 // game modes

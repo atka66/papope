@@ -10,9 +10,11 @@ drawText(510, 112, "HINT:", 2, c_white, 1.0, 1);
 if (instance_number(obj_player_lobby) > 0) {
 	var cntdwn = instance_find(obj_ctrl_lobby, 0).cntdwn;
 	drawText(5, 5, "MENU CTRL:", 2, c_white, 1.0, 0);
-	drawSpriteText(5, 25, "NAVIGATION", spr_controller_pad);
-	drawSpriteText(5, 45, "CHANGE SKIN", spr_controller_l1, spr_controller_r1)
-	drawSpriteText(5, 65, "CHANGE TEAM", spr_controller_l2, spr_controller_r2)
+	drawSpriteText(5, 25, "CHANGE SKIN", spr_controller_l1, spr_controller_r1)
+	drawSpriteText(5, 45, "CHANGE TEAM", spr_controller_l2, spr_controller_r2)
+	if (global.prefs_AllowPlayersSetOptions) {
+		drawSpriteText(5, 65, "NAVIGATION", spr_controller_pad);
+	}
 	drawText(250, 5, "IN-GAME CTRL:", 2, c_white, 1.0, 0);
 	drawSpriteText(250, 25, "MOVEMENT", spr_controller_sl);
 	drawSpriteText(250, 45, "AIM", spr_controller_sr);

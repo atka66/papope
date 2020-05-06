@@ -1,3 +1,5 @@
 # Prefs
 ## DisconnectOnInit
 Whether to disconnect players when the game arrives to the lobby (useful to avoid AFK players)
+## AllowPlayersSetOptions
+Whether to allow players to change option values like health, number of rounds or map (if false, only keyboard inputs can change options)
