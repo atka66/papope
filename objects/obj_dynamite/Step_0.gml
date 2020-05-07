@@ -3,3 +3,4 @@
 if (speed > 0) {
 	image_angle += 10;
 }
+emitParticleSpark(x, y, c_yellow);

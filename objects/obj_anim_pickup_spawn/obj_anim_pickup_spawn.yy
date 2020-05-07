@@ -2,7 +2,7 @@
     "id": "31c2e1eb-4e04-4131-b153-e9140cfb7298",
     "modelName": "GMObject",
     "mvc": "1.0",
-    "name": "obj_anim_pickup",
+    "name": "obj_anim_pickup_spawn",
     "eventList": [
         {
             "id": "c73117dc-36b5-4b97-88c2-0f24e10ff6cf",

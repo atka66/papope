@@ -11,6 +11,7 @@ while (currentLength < 96) {
 	if (collisionInst != noone && collisionInst != originPlayer) {
 		with (collisionInst) {
 			hurtPlayer(self, 30);
+			emitParticleCollide(x, y, c_yellow);
 			audio_play_sound(snd_whip_hit_1, 10, false);
 			motion_add(point_direction(other.x, other.y, crackX, crackY), 15);
 		}

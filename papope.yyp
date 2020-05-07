@@ -407,6 +407,14 @@
             }
         },
         {
+            "Key": "2c1df9c0-6f80-48fb-be3d-3fd9744a9b3d",
+            "Value": {
+                "id": "15dcf08c-4bb8-47ce-9937-c782b9f2a284",
+                "resourcePath": "views\\2c1df9c0-6f80-48fb-be3d-3fd9744a9b3d.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "2c33736f-dfa4-43b6-990f-a80695afe516",
             "Value": {
                 "id": "380da6ba-fde7-49a6-8320-0bf2e0858254",
@@ -506,7 +514,7 @@
             "Key": "31c2e1eb-4e04-4131-b153-e9140cfb7298",
             "Value": {
                 "id": "7096a5e7-c700-49bf-8d19-7306855456ca",
-                "resourcePath": "objects\\obj_anim_pickup\\obj_anim_pickup.yy",
+                "resourcePath": "objects\\obj_anim_pickup_spawn\\obj_anim_pickup_spawn.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -634,7 +642,7 @@
             "Key": "44445127-7b68-4cd6-93c3-4b24de802723",
             "Value": {
                 "id": "01fa940d-8e5e-40f2-b7c4-dd207a60c167",
-                "resourcePath": "sprites\\spr_pickup_anim\\spr_pickup_anim.yy",
+                "resourcePath": "sprites\\spr_anim_pickup_spawn\\spr_anim_pickup_spawn.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -927,6 +935,14 @@
             }
         },
         {
+            "Key": "6b34789c-f6b3-44a9-8556-d3746eb27223",
+            "Value": {
+                "id": "67312152-711d-4236-978b-309f16a33d0b",
+                "resourcePath": "scripts\\emitParticleSpark\\emitParticleSpark.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "6b80b3c9-c417-46d2-aaf2-027661c2d450",
             "Value": {
                 "id": "0f5bf1eb-14a6-4c71-85aa-8b9af8cf961a",
@@ -1039,6 +1055,14 @@
             }
         },
         {
+            "Key": "77e0c7be-f282-467f-8f16-a6a17762b0ed",
+            "Value": {
+                "id": "433e0179-cfd5-4e49-a49c-cd14f3b8eca8",
+                "resourcePath": "shaders\\shd_outline\\shd_outline.yy",
+                "resourceType": "GMShader"
+            }
+        },
+        {
             "Key": "78b2a079-2802-4833-85d0-65213cec1416",
             "Value": {
                 "id": "e22dd0c3-c26b-4f81-938f-d32a1cbd84ec",
@@ -1068,6 +1092,14 @@
                 "id": "471e9161-3e96-4c7c-824a-93199b85bed5",
                 "resourcePath": "rooms\\r_map_space\\r_map_space.yy",
                 "resourceType": "GMRoom"
+            }
+        },
+        {
+            "Key": "7c495b95-9299-4926-a44a-45e9c22c9ca8",
+            "Value": {
+                "id": "37bd8814-0b0f-4a15-bdcb-3cc5921c8df8",
+                "resourcePath": "objects\\obj_anim_pickup_despawn\\obj_anim_pickup_despawn.yy",
+                "resourceType": "GMObject"
             }
         },
         {
@@ -1154,7 +1186,7 @@
             "Key": "8b7959f7-5645-4d8a-b091-e39e86843f5d",
             "Value": {
                 "id": "d132d0e2-c164-40e6-a181-551bf8530a02",
-                "resourcePath": "sprites\\spr_dynamite_explosion\\spr_dynamite_explosion.yy",
+                "resourcePath": "sprites\\spr_anim_explosion\\spr_anim_explosion.yy",
                 "resourceType": "GMSprite"
             }
         },
@@ -1743,6 +1775,14 @@
             }
         },
         {
+            "Key": "dbb3713e-120a-47ec-8efb-c166ddef2fca",
+            "Value": {
+                "id": "6b037cbd-b3e9-42c0-adf1-e08f8130cc4c",
+                "resourcePath": "scripts\\applyShaderOutline\\applyShaderOutline.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "dc03c659-8bad-4c50-88f3-229b35266f14",
             "Value": {
                 "id": "f17eceb9-90a0-41e6-b027-d6b35645ccba",
@@ -1836,6 +1876,14 @@
                 "id": "8a0de5f9-9faa-4f76-ba31-3700c95be0f6",
                 "resourcePath": "objects\\obj_ctrl_emberwind\\obj_ctrl_emberwind.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "e8e36916-222d-4f0a-aa42-fde2d3ee569f",
+            "Value": {
+                "id": "d5538cb5-a735-416c-b954-4812900de3bb",
+                "resourcePath": "sprites\\spr_anim_pickup_despawn\\spr_anim_pickup_despawn.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -1943,6 +1991,14 @@
             }
         },
         {
+            "Key": "f68aebc9-2c06-4556-afd1-489648965348",
+            "Value": {
+                "id": "9dbd287a-a095-4dbd-a8ae-8919a93a25cd",
+                "resourcePath": "scripts\\applyShader\\applyShader.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "f753f8f3-23d8-4917-9446-5ebab866d67b",
             "Value": {
                 "id": "bdd9ba88-b28b-4e52-84a5-394e4add1a89",
@@ -2044,15 +2100,17 @@
         "fe9038ee-e3fc-47f4-932b-b2d44f32c939",
         "58ba6f16-70ee-4ffd-9bfc-fc38a5f1a4e6",
         "cda7dca9-b3c2-4af0-adde-dda940ef9935",
-        "7a58a00d-d340-43ca-9665-cb42843f0937",
         "b3a28526-4e5c-4433-b052-4003419621d1",
         "26bc1a61-0b54-4249-a2b8-e7927c2832a4",
         "8f8bbdc0-b89c-40b8-8d94-295b7a0ad1bc",
         "035cacba-1c3e-4113-92eb-df99d1869b1a",
         "64038a9f-d3a0-439e-9a05-75c4573c8112",
+        "6b34789c-f6b3-44a9-8556-d3746eb27223",
         "fe335a93-50b7-4bf1-a1a4-d60147d862a3",
         "ebe6f34f-9f99-422c-b9f0-0e5658198700",
         "383e787f-4f55-4ec8-b3c6-7317f93a3423",
+        "f68aebc9-2c06-4556-afd1-489648965348",
+        "dbb3713e-120a-47ec-8efb-c166ddef2fca",
         "19959900-6f05-4512-a9e8-9ba880abb900",
         "d412f00c-5074-4174-8dd7-f5f3636f799f",
         "6c723bc0-c460-4768-b378-f42e1d7c9c73",
@@ -2068,6 +2126,7 @@
         "98be1395-e43c-43a8-93f8-29ec89a06fb5",
         "316d4c25-a549-4946-a953-cf017013c204",
         "59ea3bda-7734-499c-a165-463b193ac741",
+        "7a58a00d-d340-43ca-9665-cb42843f0937",
         "8b0d1037-b4d9-4625-9dec-63bdff5e799a",
         "179df852-357b-416d-b6bc-898ef6fa9630"
     ],

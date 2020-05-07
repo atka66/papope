@@ -5,6 +5,7 @@
 // argument4 - color
 // argument5 - alpha
 // argument6 - alignment
+// argument7 - outline
 var str = string_upper(argument2)
 var strlen = string_length(str);
 
@@ -49,7 +50,11 @@ switch (argument6) {
 }
 for (var i = 0; i < strlen; i++) {
 	if (letterImg[i] > -1) {
+		if (argument7) {
+			applyShaderOutline(sprite_get_texture(spr_font, letterImg[i]), true);
+		}
 		draw_sprite_ext(spr_font, letterImg[i], argument0 - (fullWidth - xx), argument1, argument3, argument3, 0, argument4, argument5);
+		shader_reset();
 	}
 	xx += (letterWidth[i] + 1) * argument3;
 }

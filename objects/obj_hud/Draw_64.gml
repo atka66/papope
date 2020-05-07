@@ -60,7 +60,7 @@ if (player != noone) {
 	draw_sprite(spr_hud, 0, shakedX, shakedY);
 
 	// points
-	drawText(shakedX + 3, shakedY + 27, global.player_points[playerId], 2, c_white, 1.0, 0);
+	drawText(shakedX + 3, shakedY + 27, global.player_points[playerId], 2, c_white, 1.0, 0, false);
 
 	// item
 	/// calculate item shake
@@ -107,6 +107,6 @@ if (player != noone) {
 	
 	// disconnect
 	if (!global.player_connected[playerId]) {
-		drawText(shakedX + 56, shakedY + 20, "DISCONNECTED", 2, current_time mod 8 < 4 ? c_white : c_red, 1.0, 1);
+		drawText(shakedX + 56, shakedY + 20, "DISCONNECTED", 2, current_time mod 8 < 4 ? c_white : c_red, 1.0, 1, false);
 	}
 }
