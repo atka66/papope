@@ -5,13 +5,12 @@ if (gamepad_button_check_pressed(slotId, gp_face1) && !instance_find(obj_ctrl_lo
 	if (!global.player_joined[slotId]) {
 		createPlayer(slotId);
 	} else {
-		/*
 		if (instance_number(obj_player_lobby) < 2) {
 			warningGrowl("NEEDS AT LEAST 2 PLAYERS!");
 		} else if (getNumberOfTeams() < 2) {
 			warningGrowl("NEEDS AT LEAST 2 TEAMS!");
-		} else {*/
+		} else {
 			startCntdwn();
-		//}
+		}
 	}
 }
