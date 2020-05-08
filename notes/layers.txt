@@ -1,4 +1,4 @@
-103 : [inst] {hidden} ctrls
+103 : [inst] {hidden} ctrls, hp remove text
 
 102  : hud instances
 101  : toast msg, pause

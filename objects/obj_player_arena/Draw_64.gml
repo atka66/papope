@@ -24,6 +24,6 @@ if (alive) {
 	}
 	
 	if (isOutsideView() && outsideCntdwn > 0) {
-		drawText(max(min(x, room_width - 32), 32), max(min(y, room_height - 32), 32), string(ceil(outsideCntdwn / 60)), 2, current_time mod 8 < 4 ? c_white : c_red, 1.0, 0, true);
+		drawText(max(min(x, room_width - 32), 32), max(min(y, room_height - 32), 32), ceil(outsideCntdwn / 60), 2, current_time mod 8 < 4 ? c_white : c_red, 1.0, 0, true);
 	}
 }

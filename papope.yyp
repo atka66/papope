@@ -127,6 +127,14 @@
             }
         },
         {
+            "Key": "08674a9b-634f-4171-960e-2a2c533d2940",
+            "Value": {
+                "id": "9806db70-476d-4068-b3b8-d2f650ad1d27",
+                "resourcePath": "shaders\\shd_face\\shd_face.yy",
+                "resourceType": "GMShader"
+            }
+        },
+        {
             "Key": "0963fa1e-c7e5-4424-bfb5-11458f3fe96e",
             "Value": {
                 "id": "6ee332e8-82fd-4e96-8a6f-0ea1bf7283ac",
@@ -340,6 +348,14 @@
                 "id": "e92be730-e33e-4467-85b2-5b9b9430f747",
                 "resourcePath": "sounds\\snd_game_toast\\snd_game_toast.yy",
                 "resourceType": "GMSound"
+            }
+        },
+        {
+            "Key": "2596d077-8a40-4489-b1ad-3a0d8b7520f3",
+            "Value": {
+                "id": "7e7c316e-5473-49a5-a230-01e37b77c3bd",
+                "resourcePath": "objects\\obj_par_hpremove\\obj_par_hpremove.yy",
+                "resourceType": "GMObject"
             }
         },
         {
@@ -1994,7 +2010,7 @@
             "Key": "f68aebc9-2c06-4556-afd1-489648965348",
             "Value": {
                 "id": "9dbd287a-a095-4dbd-a8ae-8919a93a25cd",
-                "resourcePath": "scripts\\applyShader\\applyShader.yy",
+                "resourcePath": "scripts\\applyShaderFace\\applyShaderFace.yy",
                 "resourceType": "GMScript"
             }
         },

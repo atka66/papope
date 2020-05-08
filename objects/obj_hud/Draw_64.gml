@@ -21,7 +21,11 @@ if (player != noone) {
 	var playerColor = getPlayerColor(global.player_team[playerId]);
 	draw_rectangle_color(shakedX + 16, shakedY, shakedX + 47, shakedY + 31,
 		playerColor, playerColor, playerColor, playerColor, false);
+		
+	applyShaderFace(player.hurtIntensity, player.trapped, player.invulnerable);
 	draw_sprite(spr_faces, global.player_skin[playerId], shakedX + 16, shakedY);
+	shader_reset();
+	
 	if (hp < 1) {
 		var baseAlpha = draw_get_alpha();
 		draw_set_alpha(0.7);

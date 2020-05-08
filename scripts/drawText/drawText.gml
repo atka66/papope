@@ -6,7 +6,7 @@
 // argument5 - alpha
 // argument6 - alignment
 // argument7 - outline
-var str = string_upper(argument2)
+var str = string_upper(string(argument2));
 var strlen = string_length(str);
 
 var letterImg = array_create(strlen);

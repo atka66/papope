@@ -1,5 +1,9 @@
 /// @description Handle controller input
 // You can write your code in this editor
+if (hurtIntensity > 0.0) {
+	hurtIntensity -= 0.1;
+}
+
 if (!place_meeting(x, y, obj_lava)) {
 	contactedLava = false;
 }

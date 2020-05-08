@@ -409,6 +409,20 @@
             "value": "0",
             "varName": "trapped",
             "varType": 3
+        },
+        {
+            "id": "74b9ad5d-3b00-4467-9ae6-8bc515db8d96",
+            "modelName": "GMObjectProperty",
+            "mvc": "1.0",
+            "listItems": null,
+            "multiselect": false,
+            "rangeEnabled": false,
+            "rangeMax": 10,
+            "rangeMin": 0,
+            "resourceFilter": 1023,
+            "value": "0.0",
+            "varName": "hurtIntensity",
+            "varType": 0
         }
     ],
     "solid": false,

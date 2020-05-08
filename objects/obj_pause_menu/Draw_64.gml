@@ -5,8 +5,7 @@ draw_set_alpha(0.5);
 draw_rectangle_color(0, 0, room_width, room_height, c_black, c_black, c_black, c_black, false);
 draw_set_alpha(baseAlpha);
 
-var color = getPlayerColor(pausingPlayerId);
-drawText((room_width / 2) - 36, 10, "PAUSED", 2, color, 1.0, 0, true);
+drawText(room_width / 2, 10, "PAUSED", 3, c_white, 1.0, 1, true);
 
 // pause controls
 drawSpriteText(300, 120, "BACK", true, spr_controller_o);
