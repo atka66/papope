@@ -34,10 +34,12 @@ if (instance_number(obj_player_lobby) > 0) {
 	drawText(166, 202, "HP:", 2, c_white, 1.0, 2, false);
 	drawText(186, 202, global.game_maxHp[global.selectedMaxHpIndex], 2, c_white, 1.0, 0, false);
 	
-	for (var i = 1; i < 4; i++) {
-		if (global.selectedOption == i && !cntdwn) {
-			draw_sprite(spr_menu_arrow, 0, 64, 125 + (i * 25));
-			draw_sprite(spr_menu_arrow, 1, 288, 125 + (i * 25));
+	if (global.prefs_AllowPlayersSetOptions) {
+		for (var i = 1; i < 4; i++) {
+			if (global.selectedOption == i && !cntdwn) {
+				draw_sprite(spr_menu_arrow, 0, 64, 125 + (i * 25));
+				draw_sprite(spr_menu_arrow, 1, 288, 125 + (i * 25));
+			}
 		}
 	}
 }

@@ -4,6 +4,9 @@ gml_pragma("global", "game_init()");
 ini_open("settings.ini")
 global.prefs_DisconnectOnInit = ini_read_real("Prefs", "DisconnectOnInit", 0) == 0 ? false : true;
 global.prefs_AllowPlayersSetOptions = ini_read_real("Prefs", "AllowPlayersSetOptions", 1) == 0 ? false : true;
+global.selectedMapIndex = ini_read_real("Prefs", "DefaultMapIndex", 0);
+global.selectedRoundsIndex = ini_read_real("Prefs", "DefaultRoundsIndex", 1);
+global.selectedMaxHpIndex = ini_read_real("Prefs", "DefaultMaxHpIndex", 2);
 ini_close()
 
 // game modes
@@ -28,14 +31,10 @@ global.game_maxHp[0] = 1
 global.game_maxHp[1] = 50
 global.game_maxHp[2] = 100
 global.game_maxHp[3] = 200
-global.game_maxHp[4] = 500
 
 // selections
 global.selectedOption = 1
 global.selectedModeIndex = 0
-global.selectedMapIndex = 0
-global.selectedRoundsIndex = 1
-global.selectedMaxHpIndex = 2
 
 surface_resize(application_surface, 680, 384);
 
