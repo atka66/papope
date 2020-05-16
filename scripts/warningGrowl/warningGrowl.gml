@@ -3,5 +3,4 @@ with (instance_create_depth(room_width / 2, 200, 101, obj_toast_msg)) {
 	text = argument0;
 	align = 1;
 	alarm[3] = 1;
-	initSound = snd_game_toast;
 }

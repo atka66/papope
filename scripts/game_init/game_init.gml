@@ -24,7 +24,7 @@ global.game_maps[5] = "TRAFFIC"
 global.game_rounds[0] = 1
 global.game_rounds[1] = 3
 global.game_rounds[2] = 5
-global.game_rounds[3] = 10
+global.game_rounds[3] = 9
 
 // max HP
 global.game_maxHp[0] = 1

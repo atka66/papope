@@ -26,8 +26,10 @@ if (alive) {
 		hp = 0;
 	}
 	if (hp < 1) {
-		hp = 0;
 		alive = false;
+		hp = 0;
+		ammo = 0;
+		item = pointer_null;
 		audio_play_sound(snd_player_die, 10, false)
 		var aliveTeamId = whichTeamWon();
 		if (aliveTeamId != -1) {
@@ -73,6 +75,9 @@ if (alive) {
 				case obj_pwrup_revolver:
 					var rhValue = gamepad_axis_value(playerId, gp_axisrh);
 					var rvValue = gamepad_axis_value(playerId, gp_axisrv);
+					if (rhValue == 0.0 && rvValue = 0.0) {
+						rhValue = 1.0;
+					}
 					var pid = playerId;
 					with (instance_create_depth(x, y, 1, obj_shoot_ray)) {
 						deltaX = rhValue;
