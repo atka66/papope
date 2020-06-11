@@ -20,7 +20,7 @@ if (!hit) {
 	var xDiff = other.x - x;
 	var yDiff = other.y - y;
 	var scale = (speed + other.speed) / 7;
-	with (instance_create_depth(x + (xDiff / 2), y + (yDiff / 2), -3, obj_anim_playercollide)) {
+	with (instance_create_depth(x + (xDiff / 2), y + (yDiff / 2), -5, obj_anim_playercollide)) {
 		image_angle = darctan2(-yDiff, xDiff);
 		image_xscale = scale;
 		image_yscale = scale;

@@ -15,8 +15,9 @@
 0    : [inst] players
 -1   : [inst] fg_inst (tree, cactus, ship mast)
 -2   : car
--3   : powerups, confetti, flashes (playerspawn, pwrupspawn, collision, whipcrack, explosion), whip
+-3   : powerups, confetti, whip
 -4   : circle particle
--5   : lava particle 1, spaceray
+-5   : flashes (playerspawn, pwrupspawn, collision, whipcrack, explosion)
+-6   : lava particle 1, spaceray
 
 ~-50 : fg_tiles

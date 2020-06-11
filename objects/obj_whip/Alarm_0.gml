@@ -19,4 +19,4 @@ while (currentLength < 96) {
 	}
 	currentLength += 8;
 }
-instance_create_depth(crackX, crackY, -3, obj_whipcrack);
+instance_create_depth(crackX, crackY, -5, obj_whipcrack);
