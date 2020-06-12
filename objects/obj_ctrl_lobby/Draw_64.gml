@@ -1,13 +1,12 @@
 /// @description Insert description here
 // You can write your code in this editor
-drawText(room_width - 128, 16, "PAPOPE", 5, c_white, 1.0, 1, true);
-drawText(room_width - 128, 48, "TWIN STICK ARENA", 2, c_gray, 1.0, 1, true);
 drawText(8, room_height - 16, "V" + string(GM_version), 2, c_white, 1.0, 0, false);
 drawText(room_width - 8, room_height - 16, "atka66.itch.io/papope", 2, c_white, 1.0, 2, false);
 
-drawText(510, 112, "HINT:", 2, c_white, 1.0, 1, true);
-
-if (instance_number(obj_player_lobby) > 0) {
+if (instance_number(obj_player_lobby) == 0) {
+	drawText(room_width / 4, 160, "PAPOPE", 6, c_white, 1.0, 1, true);
+	drawText(room_width / 4, 204, "TWIN STICK ARENA", 3, c_gray, 1.0, 1, true);
+} else {
 	var cntdwn = instance_find(obj_ctrl_lobby, 0).cntdwn;
 	drawText(5, 5, "MENU:", 2, c_white, 1.0, 0, true);
 	drawSpriteText(5, 25, "MOVEMENT", true, spr_controller_sl);
@@ -26,13 +25,13 @@ if (instance_number(obj_player_lobby) > 0) {
 	/*drawText(166, 127, "MODE:", 2, c_white, 1.0, 2, false);
 	drawText(186, 127, global.game_modes[global.selectedModeIndex], 2, c_white, 1.0, 0, true);*/
 	
-	drawText(166, 152, "MAP:", 2, c_white, 1.0, 2, false);
+	drawText(166, 152, "MAP:", 2, c_gray, 1.0, 2, true);
 	drawText(186, 152, global.game_maps[global.selectedMapIndex], 2, c_white, 1.0, 0, true);
 	
-	drawText(166, 177, "ROUNDS:", 2, c_white, 1.0, 2, false);
+	drawText(166, 177, "ROUNDS:", 2, c_gray, 1.0, 2, true);
 	drawText(186, 177, global.game_rounds[global.selectedRoundsIndex], 2, c_white, 1.0, 0, true);
 	
-	drawText(166, 202, "HP:", 2, c_white, 1.0, 2, false);
+	drawText(166, 202, "HP:", 2, c_gray, 1.0, 2, true);
 	drawText(186, 202, global.game_maxHp[global.selectedMaxHpIndex], 2, c_white, 1.0, 0, true);
 	
 	if (global.prefs_AllowPlayersSetOptions) {
