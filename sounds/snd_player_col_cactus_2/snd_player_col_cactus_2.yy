@@ -1,8 +1,8 @@
 {
-    "id": "16b70492-7dd4-4df3-a96f-dc27eaf9401f",
+    "id": "d5829d3e-d926-47ae-9e2c-2bce48929e2d",
     "modelName": "GMSound",
     "mvc": "1.0",
-    "name": "snd_cactus_shot",
+    "name": "snd_player_col_cactus_2",
     "audioGroupGuid": "7b2c4976-1e09-44e5-8256-c527145e03bb",
     "bitDepth": 1,
     "bitRate": 128,

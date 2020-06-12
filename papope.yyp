@@ -255,14 +255,6 @@
             }
         },
         {
-            "Key": "16b70492-7dd4-4df3-a96f-dc27eaf9401f",
-            "Value": {
-                "id": "819221c2-d752-406d-adec-8488cecfbc63",
-                "resourcePath": "sounds\\snd_cactus_shot\\snd_cactus_shot.yy",
-                "resourceType": "GMSound"
-            }
-        },
-        {
             "Key": "176a1d52-995e-44c0-b5c4-57737b440db0",
             "Value": {
                 "id": "d40c99b2-3e37-459d-9956-b53ef3119ee7",
@@ -1735,6 +1727,14 @@
             }
         },
         {
+            "Key": "d5829d3e-d926-47ae-9e2c-2bce48929e2d",
+            "Value": {
+                "id": "860fa697-3394-4cda-b44a-dfa62ef6d9e3",
+                "resourcePath": "sounds\\snd_player_col_cactus_2\\snd_player_col_cactus_2.yy",
+                "resourceType": "GMSound"
+            }
+        },
+        {
             "Key": "d6779dbb-c025-49b9-ae08-fcb07788b6d6",
             "Value": {
                 "id": "6e58c0f1-a6c4-40a6-87ac-25fcefed1642",
@@ -1866,7 +1866,7 @@
             "Key": "e42103e4-712c-454c-b9ef-7e078e7134ae",
             "Value": {
                 "id": "1599f6ff-86f7-4090-b6b2-a9285401755c",
-                "resourcePath": "sounds\\snd_player_col_cactus\\snd_player_col_cactus.yy",
+                "resourcePath": "sounds\\snd_player_col_cactus_1\\snd_player_col_cactus_1.yy",
                 "resourceType": "GMSound"
             }
         },
