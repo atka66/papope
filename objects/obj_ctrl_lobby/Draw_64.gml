@@ -4,8 +4,8 @@ drawText(8, room_height - 16, "V" + string(GM_version), 2, c_white, 1.0, 0, fals
 drawText(room_width - 8, room_height - 16, "atka66.itch.io/papope", 2, c_white, 1.0, 2, false);
 
 if (instance_number(obj_player_lobby) == 0) {
-	drawText(room_width / 4, 160, "PAPOPE", 6, c_white, 1.0, 1, true);
-	drawText(room_width / 4, 204, "TWIN STICK ARENA", 3, c_gray, 1.0, 1, true);
+	drawText(room_width / 4, 128, "PAPOPE", 6, c_white, 1.0, 1, true);
+	drawText(room_width / 4, 172, "TWIN STICK ARENA", 3, c_gray, 1.0, 1, true);
 } else {
 	var cntdwn = instance_find(obj_ctrl_lobby, 0).cntdwn;
 	drawText(5, 5, "MENU:", 2, c_white, 1.0, 0, true);
