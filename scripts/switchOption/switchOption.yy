@@ -1,8 +1,12 @@
 {
-    "id": "b3a28526-4e5c-4433-b052-4003419621d1",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "switchOption",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "lobby",
+    "path": "folders/Scripts/lobby.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "switchOption",
+  "tags": [],
+  "resourceType": "GMScript",
 }

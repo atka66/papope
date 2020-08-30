@@ -1,8 +1,12 @@
 {
-    "id": "32acfd5f-99af-45d2-83eb-5ad1db7591c2",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "getPlayerColorString",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "common",
+    "path": "folders/Scripts/common.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "getPlayerColorString",
+  "tags": [],
+  "resourceType": "GMScript",
 }

@@ -1,1 +1,5 @@
-global.selectedOption = ((global.selectedOption + argument0) % 3) + 1;
+function switchOption(argument0) {
+	global.selectedOption = ((global.selectedOption + argument0) % 3) + 1;
+
+
+}

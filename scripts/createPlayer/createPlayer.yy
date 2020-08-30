@@ -1,8 +1,12 @@
 {
-    "id": "cda7dca9-b3c2-4af0-adde-dda940ef9935",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "createPlayer",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "lobby",
+    "path": "folders/Scripts/lobby.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "createPlayer",
+  "tags": [],
+  "resourceType": "GMScript",
 }

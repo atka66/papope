@@ -1,8 +1,12 @@
 {
-    "id": "f68aebc9-2c06-4556-afd1-489648965348",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "applyShaderFace",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "shader",
+    "path": "folders/Scripts/common/shader.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "applyShaderFace",
+  "tags": [],
+  "resourceType": "GMScript",
 }
