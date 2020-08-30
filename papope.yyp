@@ -32,6 +32,7 @@
     {"id":{"name":"spr_ship_ts","path":"sprites/spr_ship_ts/spr_ship_ts.yy",},"order":1,},
     {"id":{"name":"spr_western_ts","path":"sprites/spr_western_ts/spr_western_ts.yy",},"order":2,},
     {"id":{"name":"spr_space_ts","path":"sprites/spr_space_ts/spr_space_ts.yy",},"order":3,},
+    {"id":{"name":"ac_pwrup_levitation","path":"animcurves/ac_pwrup_levitation/ac_pwrup_levitation.yy",},"order":0,},
     {"id":{"name":"spr_lava_par_1","path":"sprites/spr_lava_par_1/spr_lava_par_1.yy",},"order":0,},
     {"id":{"name":"spr_lava_par_2","path":"sprites/spr_lava_par_2/spr_lava_par_2.yy",},"order":1,},
     {"id":{"name":"spr_par_circle","path":"sprites/spr_par_circle/spr_par_circle.yy",},"order":2,},
@@ -231,6 +232,7 @@
     "children": [],
   },
   "RoomOrder": [
+    {"name":"r_test","path":"rooms/r_test/r_test.yy",},
     {"name":"r_lobby","path":"rooms/r_lobby/r_lobby.yy",},
     {"name":"r_map_lava","path":"rooms/r_map_lava/r_map_lava.yy",},
     {"name":"r_map_western","path":"rooms/r_map_western/r_map_western.yy",},
@@ -238,7 +240,6 @@
     {"name":"r_map_space","path":"rooms/r_map_space/r_map_space.yy",},
     {"name":"r_map_traffic","path":"rooms/r_map_traffic/r_map_traffic.yy",},
     {"name":"r_end","path":"rooms/r_end/r_end.yy",},
-    {"name":"r_test","path":"rooms/r_test/r_test.yy",},
   ],
   "Folders": [
     {"folderPath":"folders/Sprites.yy","order":0,"resourceVersion":"1.0","name":"Sprites","tags":[],"resourceType":"GMFolder",},
