@@ -232,7 +232,6 @@
     "children": [],
   },
   "RoomOrder": [
-    {"name":"r_test","path":"rooms/r_test/r_test.yy",},
     {"name":"r_lobby","path":"rooms/r_lobby/r_lobby.yy",},
     {"name":"r_map_lava","path":"rooms/r_map_lava/r_map_lava.yy",},
     {"name":"r_map_western","path":"rooms/r_map_western/r_map_western.yy",},
@@ -240,6 +239,7 @@
     {"name":"r_map_space","path":"rooms/r_map_space/r_map_space.yy",},
     {"name":"r_map_traffic","path":"rooms/r_map_traffic/r_map_traffic.yy",},
     {"name":"r_end","path":"rooms/r_end/r_end.yy",},
+    {"name":"r_test","path":"rooms/r_test/r_test.yy",},
   ],
   "Folders": [
     {"folderPath":"folders/Sprites.yy","order":0,"resourceVersion":"1.0","name":"Sprites","tags":[],"resourceType":"GMFolder",},
