@@ -1,8 +1,12 @@
 {
-    "id": "d6c0ef2f-a9bb-48b5-8aaa-3a379f02a3b5",
-    "modelName": "GMScript",
-    "mvc": "1.0",
-    "name": "isOutsideView",
-    "IsCompatibility": false,
-    "IsDnD": false
+  "isDnD": false,
+  "isCompatibility": false,
+  "parent": {
+    "name": "common",
+    "path": "folders/Scripts/common.yy",
+  },
+  "resourceVersion": "1.0",
+  "name": "isOutsideView",
+  "tags": [],
+  "resourceType": "GMScript",
 }
