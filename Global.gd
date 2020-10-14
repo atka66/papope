@@ -1,17 +1,28 @@
 extends Node2D
 
-const playerColors = {
+const VERSION = '1.3.0'
+const PLAYER_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
 	2: Color(0.5, 0.9, 0.0),
 	3: Color(1.0, 0.7, 0)
 }
 
-const labelAnimations = {
-	'ob' : preload('res://sprites/label/ob.tres'),
-	'xa' : preload('res://sprites/label/xa.tres'),
-	'' : null
-}
+var playersConnected = [false, false, false, false]
+var playersJoined = [false, false, false, false]
+var playersSkin = [0, 1, 2, 3]
+var playersTeam = [0, 1, 2, 3]
+var playersPoints = [0, 0, 0, 0]
+var playersCrowned = [false, false, false, false]
+
+func isAnyPlayerConnected():
+	return playersConnected.has(true)
+
+func isAnyPlayerJoined():
+	return playersJoined.has(true)
+
+func _ready():
+	randomize()
 
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):

@@ -1,10 +1,28 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://objects/PlayerSlot.tscn" type="PackedScene" id=1]
-[ext_resource path="res://fonts/Font.tres" type="DynamicFont" id=2]
-[ext_resource path="res://DebugLabel.gd" type="Script" id=3]
+[ext_resource path="res://sprites/lobby/bg.png" type="Texture" id=2]
+[ext_resource path="res://objects/CustomLabel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Lobby.gd" type="Script" id=5]
+[ext_resource path="res://sprites/label/sl.tres" type="SpriteFrames" id=6]
+[ext_resource path="res://sprites/label/l1.tres" type="SpriteFrames" id=7]
+[ext_resource path="res://sprites/label/r1.tres" type="SpriteFrames" id=8]
+[ext_resource path="res://sprites/label/l2.tres" type="SpriteFrames" id=9]
+[ext_resource path="res://sprites/label/r2.tres" type="SpriteFrames" id=10]
+[ext_resource path="res://sprites/label/pad.tres" type="SpriteFrames" id=11]
+[ext_resource path="res://sprites/label/sr.tres" type="SpriteFrames" id=12]
 
 [node name="Lobby" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="MovingBackground" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false
+vframes = 5
+
+[node name="Dim" type="Polygon2D" parent="."]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
 
 [node name="PlayerSlot1" parent="." instance=ExtResource( 1 )]
 position = Vector2( 128, 288 )
@@ -21,13 +39,79 @@ playerId = 2
 position = Vector2( 512, 288 )
 playerId = 3
 
-[node name="DebugLabel" type="Label" parent="."]
-margin_left = 16.2227
-margin_top = 16.0
-margin_right = 528.223
-margin_bottom = 144.0
-custom_fonts/font = ExtResource( 2 )
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="VersionLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 8, 368 )
+fontSize = 2
+
+[node name="UrlLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 456, 368 )
+text = "atka66.itch.io/papope"
+fontSize = 2
+
+[node name="PapopeLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 100, 128 )
+text = "papope"
+fontSize = 6
+
+[node name="SubtitleLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 84, 172 )
+text = "twin stick arena"
+fontSize = 3
+
+[node name="MenuHintLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 5, 5 )
+text = "menu:"
+fontSize = 2
+
+[node name="MenuMovementHintLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 45, 25 )
+text = "movement"
+fontSize = 2
+frames = [ ExtResource( 6 ) ]
+
+[node name="MenuChangeSkinHintLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 45, 45 )
+text = "change skin"
+fontSize = 2
+frames = [ ExtResource( 8 ), ExtResource( 7 ) ]
+
+[node name="MenuChangeTeamHintLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 45, 65 )
+text = "change team"
+fontSize = 2
+frames = [ ExtResource( 10 ), ExtResource( 9 ) ]
+
+[node name="MenuNagivationHintLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 45, 85 )
+text = "navigation"
+fontSize = 2
+frames = [ ExtResource( 11 ) ]
+
+[node name="IngameHintLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 250, 5 )
+text = "in-game:"
+fontSize = 2
+
+[node name="IngameMovementHintLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 290, 25 )
+text = "movement"
+fontSize = 2
+frames = [ ExtResource( 6 ) ]
+
+[node name="IngameAimHintLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 290, 45 )
+text = "aim"
+fontSize = 2
+frames = [ ExtResource( 12 ) ]
+
+[node name="IngameDashHintLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 290, 65 )
+text = "dash"
+fontSize = 2
+frames = [ ExtResource( 7 ) ]
+
+[node name="IngameUseHintLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 290, 85 )
+text = "shoot/use"
+fontSize = 2
+frames = [ ExtResource( 8 ) ]

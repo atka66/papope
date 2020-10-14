@@ -1,17 +1,22 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://fonts/Font.tres" type="DynamicFont" id=1]
 [ext_resource path="res://objects/CustomLabel.gd" type="Script" id=2]
+[ext_resource path="res://test1.tres" type="Material" id=3]
 
 [node name="CustomLabel" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
+material = ExtResource( 3 )
 margin_bottom = 5.0
 custom_fonts/font = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-offset = Vector2( -16, 5 )
+[node name="AnimatedSprite1" type="AnimatedSprite" parent="."]
+offset = Vector2( -14, 5 )
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="."]
+offset = Vector2( -32, 5 )
