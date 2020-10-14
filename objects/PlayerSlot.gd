@@ -25,26 +25,40 @@ func _input(event):
 	if Input.is_key_pressed(KEY_1): pj = !pj
 	if Input.is_key_pressed(KEY_2): cd = !cd
 
-func _process(delta):
-	var controllerColor = Color.white
+func handleSpawnSprite():
+	if isPlayerConnected() and !isPlayerJoined() and !isCountingDown():
+		$SpawnSprite.show()
+	else:
+		$SpawnSprite.hide()
+
+func handleControllerSprite():
+	var color = Color.white
 	if isPlayerConnected():
 		if isPlayerJoined():
-			controllerColor = Global.playerColors[playerId]
-			if isCountingDown():
-				$JoinHint.text = 'cancel'
-				pass
-			else:
-				$JoinHint.text = 'leave'
-				pass
-		else:
-			if isCountingDown():
-				$SpawnSprite.visible = false
-				$JoinHint.text = ''
-			else:
-				$SpawnSprite.visible = true
-				$JoinHint.text = 'join'
-		controllerColor.a = 1.0
+			color = Global.playerColors[playerId]
 	else:
-		controllerColor.a = 0.5
-		$JoinHint.text = ''
-	$ControllerSprite.modulate = controllerColor
+		color.a = 0.5
+	$ControllerSprite.modulate = color
+
+func handleHints():
+	$JoinLabel.hide()
+	$CancelLabel.hide()
+	$LeaveLabel.hide()
+	$OfflineLabel.hide()
+	
+	if isPlayerConnected():
+		if isPlayerJoined():
+			if isCountingDown():
+				$CancelLabel.show()
+			else:
+				$LeaveLabel.show()
+		else:
+			if !isCountingDown():
+				$JoinLabel.show()
+	else:
+		$OfflineLabel.show()
+
+func _process(delta):
+	handleSpawnSprite()
+	handleControllerSprite()
+	handleHints()

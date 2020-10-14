@@ -3,7 +3,7 @@
 [ext_resource path="res://sprites/player_slot.png" type="Texture" id=1]
 [ext_resource path="res://objects/PlayerSlot.gd" type="Script" id=2]
 [ext_resource path="res://sprites/controller.png" type="Texture" id=3]
-[ext_resource path="res://objects/Label.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/CustomLabel.tscn" type="PackedScene" id=4]
 
 [node name="PlayerSlot" type="Node2D"]
 script = ExtResource( 2 )
@@ -16,7 +16,33 @@ position = Vector2( 0, 32 )
 texture = ExtResource( 3 )
 
 [node name="JoinHint" parent="." instance=ExtResource( 4 )]
-margin_top = 54.0
-margin_right = 0.0
-margin_bottom = 59.0
+visible = false
+position = Vector2( 0, 54 )
 fontSize = 2
+
+[node name="StatusHint" parent="." instance=ExtResource( 4 )]
+visible = false
+position = Vector2( 0, 48 )
+
+[node name="JoinLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( -16, 54 )
+text = "join"
+fontSize = 2
+frames = "xa"
+
+[node name="CancelLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( -16, 54 )
+text = "cancel"
+fontSize = 2
+frames = "ob"
+
+[node name="LeaveLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( -16, 54 )
+text = "leave"
+fontSize = 2
+frames = "ob"
+
+[node name="OfflineLabel" parent="." instance=ExtResource( 4 )]
+modulate = Color( 1, 1, 1, 0.498039 )
+position = Vector2( -19, 48 )
+text = "offline"
