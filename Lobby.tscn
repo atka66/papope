@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://objects/PlayerSlot.tscn" type="PackedScene" id=1]
+[ext_resource path="res://fonts/Font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://DebugLabel.gd" type="Script" id=3]
 
 [node name="Lobby" type="Node2D"]
 
@@ -9,9 +11,23 @@ position = Vector2( 128, 288 )
 
 [node name="PlayerSlot2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 256, 288 )
+playerId = 1
 
 [node name="PlayerSlot3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 384, 288 )
+playerId = 2
 
 [node name="PlayerSlot4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 512, 288 )
+playerId = 3
+
+[node name="DebugLabel" type="Label" parent="."]
+margin_left = 16.2227
+margin_top = 16.0
+margin_right = 528.223
+margin_bottom = 144.0
+custom_fonts/font = ExtResource( 2 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
