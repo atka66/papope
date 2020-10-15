@@ -15,11 +15,12 @@ var playersTeam = [0, 1, 2, 3]
 var playersPoints = [0, 0, 0, 0]
 var playersCrowned = [false, false, false, false]
 
-func isAnyPlayerConnected():
-	return playersConnected.has(true)
-
-func isAnyPlayerJoined():
-	return playersJoined.has(true)
+func getNumberOfTeams():
+	var distinctTeams = []
+	for i in playersTeam.size():
+		if !distinctTeams.has(playersTeam[i]):
+			distinctTeams.append(playersTeam[i])
+	return distinctTeams.size()
 
 func _ready():
 	randomize()

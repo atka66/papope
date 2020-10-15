@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://objects/PlayerSlot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/lobby/bg.png" type="Texture" id=2]
+[ext_resource path="res://sprites/label/x.tres" type="SpriteFrames" id=3]
 [ext_resource path="res://objects/CustomLabel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Lobby.gd" type="Script" id=5]
 [ext_resource path="res://sprites/label/sl.tres" type="SpriteFrames" id=6]
@@ -42,6 +43,7 @@ playerId = 3
 [node name="VersionLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 8, 368 )
 fontSize = 2
+aliveTime = 3.0
 
 [node name="UrlLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 456, 368 )
@@ -128,3 +130,22 @@ text = "shoot/use"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 8 ) ]
+
+[node name="WaitingLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 290, 336 )
+text = "waiting for more players..."
+fontSize = 2
+outline = true
+
+[node name="TeamLimitLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 290, 336 )
+text = "must have at least 2 teams!"
+fontSize = 2
+outline = true
+
+[node name="StartLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 290, 336 )
+text = "start"
+fontSize = 2
+outline = true
+frames = [ ExtResource( 3 ) ]

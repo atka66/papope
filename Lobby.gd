@@ -19,13 +19,23 @@ func handleLabels(connected):
 	$IngameDashHintLabel.visible = connected
 	$IngameUseHintLabel.visible = connected
 
+	$WaitingLabel.hide()
+	$TeamLimitLabel.hide()
+	$StartLabel.hide()
+	if Global.playersJoined.count(true) < 2:
+		$WaitingLabel.show()
+	elif Global.getNumberOfTeams() < 2:
+		$TeamLimitLabel.show()
+	else:
+		$StartLabel.show()
+
 func connectPlayer(playerId):
 	Global.playersConnected[playerId] = true
 	handleLabels(true)
 
 func disconnectPlayer(playerId):
 	Global.playersConnected[playerId] = false
-	if !Global.isAnyPlayerConnected():
+	if !Global.playersConnected.has(true):
 		handleLabels(false)
 
 func _ready():
