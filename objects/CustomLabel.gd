@@ -2,6 +2,7 @@ extends Node2D
 
 export var text = ''
 export var fontSize = 1
+export(int, "Left", "Center", "Right") var alignment = 0
 export(bool) var outline = false
 export(Color) var color = Color.white
 export(Array, SpriteFrames) var frames
@@ -9,6 +10,10 @@ export(float) var aliveTime = 0
 
 func set_text(_text):
 	$Label.text = _text
+	if alignment == 1:
+		position.x -= round($Label.get("custom_fonts/font").get_string_size(_text).x / 2) * fontSize
+	elif alignment == 2:
+		position.x -= round($Label.get("custom_fonts/font").get_string_size(_text).x) * fontSize
 
 func time_disappear(time):
 	yield(get_tree().create_timer(aliveTime), "timeout")

@@ -26,40 +26,42 @@ color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
 
 [node name="PlayerSlot1" parent="." instance=ExtResource( 1 )]
-position = Vector2( 128, 288 )
+position = Vector2( 128, 256 )
 
 [node name="PlayerSlot2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 256, 288 )
+position = Vector2( 256, 256 )
 playerId = 1
 
 [node name="PlayerSlot3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 384, 288 )
+position = Vector2( 384, 256 )
 playerId = 2
 
 [node name="PlayerSlot4" parent="." instance=ExtResource( 1 )]
-position = Vector2( 512, 288 )
+position = Vector2( 512, 256 )
 playerId = 3
 
 [node name="VersionLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 8, 368 )
 fontSize = 2
-aliveTime = 3.0
 
 [node name="UrlLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 456, 368 )
+position = Vector2( 672, 368 )
 text = "atka66.itch.io/papope"
 fontSize = 2
+alignment = 2
 
 [node name="PapopeLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 100, 128 )
+position = Vector2( 172, 128 )
 text = "papope"
 fontSize = 6
+alignment = 1
 outline = true
 
 [node name="SubtitleLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 84, 172 )
+position = Vector2( 172, 172 )
 text = "twin stick arena"
 fontSize = 3
+alignment = 1
 outline = true
 color = Color( 0.498039, 0.498039, 0.498039, 1 )
 
@@ -132,20 +134,23 @@ outline = true
 frames = [ ExtResource( 8 ) ]
 
 [node name="WaitingLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 290, 336 )
+position = Vector2( 340, 336 )
 text = "waiting for more players..."
 fontSize = 2
+alignment = 1
 outline = true
 
 [node name="TeamLimitLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 290, 336 )
+position = Vector2( 340, 336 )
 text = "must have at least 2 teams!"
 fontSize = 2
+alignment = 1
 outline = true
 
 [node name="StartLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 290, 336 )
+position = Vector2( 340, 336 )
 text = "start"
 fontSize = 2
+alignment = 1
 outline = true
 frames = [ ExtResource( 3 ) ]

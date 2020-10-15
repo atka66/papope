@@ -18,27 +18,31 @@ position = Vector2( 0, 32 )
 texture = ExtResource( 3 )
 
 [node name="JoinLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( -16, 54 )
+position = Vector2( 0, 54 )
 text = "join"
 fontSize = 2
+alignment = 1
 outline = true
 frames = [ ExtResource( 5 ) ]
 
 [node name="CancelLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( -16, 54 )
+position = Vector2( 0, 54 )
 text = "cancel"
 fontSize = 2
+alignment = 1
 outline = true
 frames = [ ExtResource( 6 ) ]
 
 [node name="LeaveLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( -24, 54 )
+position = Vector2( 0, 54 )
 text = "leave"
 fontSize = 2
+alignment = 1
 outline = true
 frames = [ ExtResource( 6 ) ]
 
 [node name="OfflineLabel" parent="." instance=ExtResource( 4 )]
 modulate = Color( 1, 1, 1, 0.498039 )
-position = Vector2( -19, 48 )
+position = Vector2( 0, 48 )
 text = "offline"
+alignment = 1
