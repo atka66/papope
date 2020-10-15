@@ -52,66 +52,79 @@ fontSize = 2
 position = Vector2( 100, 128 )
 text = "papope"
 fontSize = 6
+outline = true
 
 [node name="SubtitleLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 84, 172 )
 text = "twin stick arena"
 fontSize = 3
+outline = true
+color = Color( 0.498039, 0.498039, 0.498039, 1 )
 
 [node name="MenuHintLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 5, 5 )
 text = "menu:"
 fontSize = 2
+outline = true
 
 [node name="MenuMovementHintLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 45, 25 )
 text = "movement"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 6 ) ]
 
 [node name="MenuChangeSkinHintLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 45, 45 )
 text = "change skin"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 8 ), ExtResource( 7 ) ]
 
 [node name="MenuChangeTeamHintLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 45, 65 )
 text = "change team"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 10 ), ExtResource( 9 ) ]
 
 [node name="MenuNagivationHintLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 45, 85 )
 text = "navigation"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 11 ) ]
 
 [node name="IngameHintLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 250, 5 )
 text = "in-game:"
 fontSize = 2
+outline = true
 
 [node name="IngameMovementHintLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 290, 25 )
 text = "movement"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 6 ) ]
 
 [node name="IngameAimHintLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 290, 45 )
 text = "aim"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 12 ) ]
 
 [node name="IngameDashHintLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 290, 65 )
 text = "dash"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 7 ) ]
 
 [node name="IngameUseHintLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 290, 85 )
 text = "shoot/use"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 8 ) ]

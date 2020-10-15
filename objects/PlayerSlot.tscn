@@ -21,18 +21,21 @@ texture = ExtResource( 3 )
 position = Vector2( -16, 54 )
 text = "join"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 5 ) ]
 
 [node name="CancelLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( -16, 54 )
 text = "cancel"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 6 ) ]
 
 [node name="LeaveLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( -24, 54 )
 text = "leave"
 fontSize = 2
+outline = true
 frames = [ ExtResource( 6 ) ]
 
 [node name="OfflineLabel" parent="." instance=ExtResource( 4 )]
