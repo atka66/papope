@@ -1,38 +1,44 @@
 extends Node2D
 
 export var playerId = 0
+onready var Lobby = get_node('/root/Lobby')
 
-#TODO remove
-var cd = false
+func warningGrowl(message):
+	var label = Global.CustomLabel.instance()
+	label.position.x = 340
+	label.position.y = 200
+	label.text = message
+	label.fontSize = 2
+	label.outline = true
+	label.aliveTime = 2
+	label.alignment = Label.ALIGN_CENTER
+	Lobby.add_child(label)
 
-func _ready():
-	pass # Replace with function body.
-
-func isPlayerConnected():
-	return Global.playersConnected[playerId]
-
-func isPlayerJoined():
-	return Global.playersJoined[playerId]
-
-func isCountingDown():
-	return cd
-	
 #TODO remove
 func _input(event):
-	if Input.is_key_pressed(KEY_W):
-		Global.playersJoined[playerId] = !Global.playersJoined[playerId]
-	if Input.is_key_pressed(KEY_E): cd = !cd
+	if Global.playersConnected[playerId]: # this condition should not be necessary in the future
+		if Input.is_key_pressed(Global.MOCKED_CTRL_KEYS[playerId]['x']) and !Lobby.countingDown:
+			if !Global.playersJoined[playerId]:
+				Lobby.joinPlayer(playerId)
+			else:
+				if Global.playersJoined.count(true) < 2:
+					warningGrowl("NEEDS AT LEAST 2 PLAYERS!")
+				elif Global.getNumberOfTeams() < 2:
+					warningGrowl("NEEDS AT LEAST 2 TEAMS!")
+				else:
+					Lobby.countingDown = true
+	Lobby.handleLabels()
 
 func handleSpawnSprite():
-	if isPlayerConnected() and !isPlayerJoined() and !isCountingDown():
+	if Global.playersConnected[playerId] and !Global.playersJoined[playerId] and !Lobby.countingDown:
 		$SpawnSprite.show()
 	else:
 		$SpawnSprite.hide()
 
 func handleControllerSprite():
 	var color = Color.white
-	if isPlayerConnected():
-		if isPlayerJoined():
+	if Global.playersConnected[playerId]:
+		if Global.playersJoined[playerId]:
 			color = Global.PLAYER_COLORS[playerId]
 	else:
 		color.a = 0.5
@@ -44,14 +50,14 @@ func handleHints():
 	$LeaveLabel.hide()
 	$OfflineLabel.hide()
 	
-	if isPlayerConnected():
-		if isPlayerJoined():
-			if isCountingDown():
+	if Global.playersConnected[playerId]:
+		if Global.playersJoined[playerId]:
+			if Lobby.countingDown:
 				$CancelLabel.show()
 			else:
 				$LeaveLabel.show()
 		else:
-			if !isCountingDown():
+			if !Lobby.countingDown:
 				$JoinLabel.show()
 	else:
 		$OfflineLabel.show()

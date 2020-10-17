@@ -1,5 +1,8 @@
 extends Node2D
 
+onready var CustomLabel = preload("res://objects/CustomLabel.tscn")
+onready var Player = preload("res://objects/Player.tscn")
+
 const VERSION = '1.3.0'
 const PLAYER_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
@@ -19,6 +22,41 @@ const HINT_STRINGS = [
 	["YOU CANNOT MOVE IN SPACE", "ONLY DASH"],
 	["SAME COLOR MEANS SAME TEAM"]
 ]
+#TODO remove
+const MOCKED_CTRL_KEYS = {
+	0 : {
+		'l_up' : KEY_W,
+		'l_left' : KEY_A,
+		'l_down' : KEY_S,
+		'l_right' : KEY_D,
+		'x' : KEY_Q,
+		'r' : KEY_E
+	},
+	1 : {
+		'l_up' : KEY_T,
+		'l_left' : KEY_F,
+		'l_down' : KEY_G,
+		'l_right' : KEY_H,
+		'x' : KEY_R,
+		'r' : KEY_Z
+	},
+	2 : {
+		'l_up' : KEY_I,
+		'l_left' : KEY_J,
+		'l_down' : KEY_K,
+		'l_right' : KEY_L,
+		'x' : KEY_U,
+		'r' : KEY_P
+	},
+	3 : {
+		'l_up' : KEY_I,
+		'l_left' : KEY_J,
+		'l_down' : KEY_K,
+		'l_right' : KEY_L,
+		'x' : KEY_U,
+		'r' : KEY_P
+	}
+}
 
 var playersConnected = [false, false, false, false]
 var playersJoined = [false, false, false, false]

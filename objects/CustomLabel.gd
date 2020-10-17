@@ -17,6 +17,8 @@ func set_text(_text):
 
 func time_disappear(time):
 	yield(get_tree().create_timer(aliveTime), "timeout")
+	$LabelAnim.play("float_out")
+	yield($LabelAnim, "animation_finished")
 	queue_free()
 
 func _ready():
@@ -32,5 +34,6 @@ func _ready():
 		$AnimatedSprite2.set_sprite_frames(frames[1])
 		$AnimatedSprite2.play()
 	
+	$LabelAnim.play("float_in")
 	if aliveTime > 0:
 		time_disappear(aliveTime)
