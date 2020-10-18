@@ -104,4 +104,11 @@ func handleBackground():
 		$Dim.color.a = dim
 
 func _process(delta):
+	var connectedControllers = Input.get_connected_joypads()
+	for i in range(Global.playersConnected.size()):
+		if Global.playersConnected[i] && !connectedControllers.has(i + 1):
+			disconnectPlayer(i)
+		if !Global.playersConnected[i] && connectedControllers.has(i + 1):
+			connectPlayer(i)
+			
 	handleBackground()

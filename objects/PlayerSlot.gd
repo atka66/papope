@@ -17,7 +17,7 @@ func warningGrowl(message):
 #TODO remove
 func _input(event):
 	if Global.playersConnected[playerId]: # this condition should not be necessary in the future
-		if Input.is_key_pressed(Global.MOCKED_CTRL_KEYS[playerId]['x']) and !Lobby.countingDown:
+		if Input.is_joy_button_pressed(playerId + 1, JOY_SONY_X) and !Lobby.countingDown:
 			if !Global.playersJoined[playerId]:
 				Lobby.joinPlayer(playerId)
 			else:
