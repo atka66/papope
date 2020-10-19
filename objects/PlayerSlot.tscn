@@ -40,9 +40,3 @@ fontSize = 2
 alignment = 1
 outline = true
 frames = [ ExtResource( 6 ) ]
-
-[node name="OfflineLabel" parent="." instance=ExtResource( 4 )]
-modulate = Color( 1, 1, 1, 0.498039 )
-position = Vector2( 0, 48 )
-text = "offline"
-alignment = 1

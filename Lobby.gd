@@ -2,6 +2,8 @@ extends Node2D
 
 const hintTimer = 6.0
 
+signal player_remove(id)
+
 # background
 var dim = 1.0
 var appearing = true
@@ -52,38 +54,20 @@ func handleLabels():
 
 func joinPlayer(playerId):
 	Global.playersJoined[playerId] = true
-	var slot = get_node('PlayerSlot' + String(playerId))
+	var slot = get_node('PlayerSlot' + str(playerId))
 	var player = Global.Player.instance()
+	connect("player_remove", player, "_on_remove")
+	player.playerId = playerId
 	slot.add_child(player)
 
-func connectPlayer(playerId):
-	Global.playersConnected[playerId] = true
-	handleLabels()
-
-func disconnectPlayer(playerId):
+func leavePlayer(playerId):
 	Global.playersJoined[playerId] = false
-	Global.playersConnected[playerId] = false
-	handleLabels()
+	emit_signal("player_remove", playerId)
 
 func _ready():
-	handleLabels()
 	$VersionLabel.set_text('V' + Global.VERSION)
 	while true:
 		yield(createHintLabel(), "completed")
-
-func _input(event):
-	if Input.is_key_pressed(KEY_0):
-		if !Global.playersConnected[0]: connectPlayer(0)
-		else: disconnectPlayer(0)
-	if Input.is_key_pressed(KEY_1):
-		if !Global.playersConnected[1]: connectPlayer(1)
-		else: disconnectPlayer(1)
-	if Input.is_key_pressed(KEY_2):
-		if !Global.playersConnected[2]: connectPlayer(2)
-		else: disconnectPlayer(2)
-	if Input.is_key_pressed(KEY_3):
-		if !Global.playersConnected[3]: connectPlayer(3)
-		else: disconnectPlayer(3)
 
 func handleBackground():
 	$MovingBackground.position.x -= 0.4
@@ -104,11 +88,5 @@ func handleBackground():
 		$Dim.color.a = dim
 
 func _process(delta):
-	var connectedControllers = Input.get_connected_joypads()
-	for i in range(Global.playersConnected.size()):
-		if Global.playersConnected[i] && !connectedControllers.has(i + 1):
-			disconnectPlayer(i)
-		if !Global.playersConnected[i] && connectedControllers.has(i + 1):
-			connectPlayer(i)
-			
 	handleBackground()
+	handleLabels()

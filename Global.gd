@@ -2,9 +2,10 @@ extends Node2D
 
 onready var CustomLabel = preload("res://objects/CustomLabel.tscn")
 onready var Player = preload("res://objects/Player.tscn")
+onready var Lobby = get_node('/root/Lobby')
 
 const VERSION = '1.3.0'
-const PLAYER_COLORS = {
+const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
 	2: Color(0.5, 0.9, 0.0),
@@ -57,6 +58,8 @@ const MOCKED_CTRL_KEYS = {
 		'r' : KEY_P
 	}
 }
+const FRICTION = 0.5
+const SKIN_COUNT = 6
 
 var playersConnected = [false, false, false, false]
 var playersJoined = [false, false, false, false]
@@ -64,6 +67,13 @@ var playersSkin = [0, 1, 2, 3]
 var playersTeam = [0, 1, 2, 3]
 var playersPoints = [0, 0, 0, 0]
 var playersCrowned = [false, false, false, false]
+
+func connectPlayer(playerId):
+	playersConnected[playerId] = true
+
+func disconnectPlayer(playerId):
+	Lobby.leavePlayer(playerId)
+	playersConnected[playerId] = false
 
 func getNumberOfTeams():
 	var distinctTeams = []
@@ -73,7 +83,22 @@ func getNumberOfTeams():
 	return distinctTeams.size()
 
 func _ready():
+	Input.connect("joy_connection_changed",self,"_joy_connection_changed")
+	
+	var connectedControllers = Input.get_connected_joypads()
+	for i in range(Global.playersConnected.size()):
+		if playersConnected[i] && !connectedControllers.has(i):
+			disconnectPlayer(i)
+		if !playersConnected[i] && connectedControllers.has(i):
+			connectPlayer(i)
+	
 	randomize()
+
+func _joy_connection_changed(id, connected):
+	if connected:
+		connectPlayer(id)
+	if !connected:
+		disconnectPlayer(id)
 
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):

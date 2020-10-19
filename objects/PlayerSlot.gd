@@ -14,10 +14,9 @@ func warningGrowl(message):
 	label.alignment = Label.ALIGN_CENTER
 	Lobby.add_child(label)
 
-#TODO remove
 func _input(event):
-	if Global.playersConnected[playerId]: # this condition should not be necessary in the future
-		if Input.is_joy_button_pressed(playerId + 1, JOY_SONY_X) and !Lobby.countingDown:
+	if Global.playersConnected[playerId] && event.device == playerId:
+		if Input.is_action_just_pressed("ui_accept") and !Lobby.countingDown:
 			if !Global.playersJoined[playerId]:
 				Lobby.joinPlayer(playerId)
 			else:
@@ -27,6 +26,12 @@ func _input(event):
 					warningGrowl("NEEDS AT LEAST 2 TEAMS!")
 				else:
 					Lobby.countingDown = true
+		if Input.is_action_just_pressed("ui_cancel"):
+			if Global.playersJoined[playerId]:
+				if Lobby.countingDown:
+					Lobby.countingDown = false
+				else:
+					Lobby.leavePlayer(playerId)
 	Lobby.handleLabels()
 
 func handleSpawnSprite():
@@ -35,34 +40,27 @@ func handleSpawnSprite():
 	else:
 		$SpawnSprite.hide()
 
-func handleControllerSprite():
-	var color = Color.white
-	if Global.playersConnected[playerId]:
-		if Global.playersJoined[playerId]:
-			color = Global.PLAYER_COLORS[playerId]
-	else:
-		color.a = 0.5
-	$ControllerSprite.modulate = color
-
 func handleHints():
 	$JoinLabel.hide()
 	$CancelLabel.hide()
 	$LeaveLabel.hide()
-	$OfflineLabel.hide()
+	$ControllerSprite.hide()
 	
 	if Global.playersConnected[playerId]:
+		var color = Color.white
 		if Global.playersJoined[playerId]:
+			color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 			if Lobby.countingDown:
 				$CancelLabel.show()
 			else:
 				$LeaveLabel.show()
 		else:
+			color.a = 0.5
 			if !Lobby.countingDown:
 				$JoinLabel.show()
-	else:
-		$OfflineLabel.show()
+		$ControllerSprite.modulate = color
+		$ControllerSprite.show()
 
 func _process(delta):
 	handleSpawnSprite()
-	handleControllerSprite()
 	handleHints()
