@@ -83,7 +83,7 @@ func getNumberOfTeams():
 	return distinctTeams.size()
 
 func _ready():
-	Input.connect("joy_connection_changed",self,"_joy_connection_changed")
+	Input.connect("joy_connection_changed", self, "_joy_connection_changed")
 	
 	var connectedControllers = Input.get_connected_joypads()
 	for i in range(Global.playersConnected.size()):
