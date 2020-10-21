@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://sprites/bg/lava.png" type="Texture" id=1]
+
+[node name="Lava" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 680.0
+margin_bottom = 384.0
+texture = ExtResource( 1 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerSpawner0" type="Position2D" parent="."]
+position = Vector2( 616, 64 )
+
+[node name="PlayerSpawner1" type="Position2D" parent="."]
+position = Vector2( 64, 64 )
+
+[node name="PlayerSpawner2" type="Position2D" parent="."]
+position = Vector2( 64, 320 )
+
+[node name="PlayerSpawner3" type="Position2D" parent="."]
+position = Vector2( 616, 320 )

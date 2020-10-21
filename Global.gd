@@ -58,8 +58,19 @@ const MOCKED_CTRL_KEYS = {
 		'r' : KEY_P
 	}
 }
-const FRICTION = 0.5
 const SKIN_COUNT = 6
+
+var options = {
+	'map': ['random', 'lava', 'western', 'ship', 'space', 'traffic'],
+	'rounds': [1, 3, 5, 9],
+	'hp': [1, 50, 100, 200]
+}
+var optionsSelected = {
+	'map': 0,
+	'rounds': 1,
+	'hp': 2
+}
+var currentOption = options.keys()[0]
 
 var playersConnected = [false, false, false, false]
 var playersJoined = [false, false, false, false]
