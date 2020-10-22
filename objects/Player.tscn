@@ -1,11 +1,24 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://sprites/player/faces.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/circle.png" type="Texture" id=2]
 [ext_resource path="res://objects/Player.gd" type="Script" id=3]
+[ext_resource path="res://sprites/player/spawn_1.png" type="Texture" id=4]
+[ext_resource path="res://sprites/player/spawn_2.png" type="Texture" id=5]
+[ext_resource path="res://sprites/player/spawn_4.png" type="Texture" id=6]
+[ext_resource path="res://sprites/player/spawn_5.png" type="Texture" id=7]
+[ext_resource path="res://sprites/player/spawn_3.png" type="Texture" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 30.0
+} ]
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
 script = ExtResource( 3 )
@@ -19,3 +32,7 @@ hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="SpawnAnim" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+[connection signal="animation_finished" from="SpawnAnim" to="." method="_on_SpawnAnim_animation_finished"]

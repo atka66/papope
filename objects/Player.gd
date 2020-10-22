@@ -2,12 +2,26 @@ extends KinematicBody2D
 
 export var playerId = 0
 
+var hit = false
+var alive = true
+var hp = 100
+var contactedLava = false
+var item = null
+var ammo = 0
+var hurtByLava = false
+var outsideCntdwn = 3
+var invulnerable = false
+var fallWater = false
+var trapped = false
+var hurtIntensity = 0.0
+
 var velocity = Vector2.ZERO
 var speed = 250
 
 func _ready():
 	$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 	$Face.frame = Global.playersSkin[playerId]
+	$SpawnAnim.play()
 
 func _input(event):
 	var hAxis = Input.get_joy_axis(playerId, JOY_AXIS_0)
@@ -34,3 +48,6 @@ func _physics_process(delta):
 func _on_remove(id):
 	if playerId == id:
 		queue_free()
+
+func _on_SpawnAnim_animation_finished():
+	$SpawnAnim.hide()

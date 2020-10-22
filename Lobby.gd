@@ -4,10 +4,6 @@ const hintTimer = 6.0
 
 signal player_remove(id)
 
-# background
-var dim = 1.0
-var appearing = true
-
 var countingDown = false
 
 func createHintLabel():
@@ -64,29 +60,18 @@ func leavePlayer(playerId):
 	Global.playersJoined[playerId] = false
 	emit_signal("player_remove", playerId)
 
+func randomizeBackground():
+	$MovingBackground.frame = ($MovingBackground.frame + (randi() % ($MovingBackground.vframes - 1)) + 1) % $MovingBackground.vframes
+
 func _ready():
+	randomizeBackground()
 	$VersionLabel.set_text('V' + Global.VERSION)
 	while true:
 		yield(createHintLabel(), "completed")
 
-func handleBackground():
-	$MovingBackground.position.x -= 0.4
-	if dim >= 1.0:
-		# reset and randomize a frame (a new one)
-		$MovingBackground.frame = ($MovingBackground.frame + (randi() % ($MovingBackground.vframes - 1)) + 1) % $MovingBackground.vframes
-		$MovingBackground.position.x = 0
-		appearing = true
-	if dim < -2.0:
-		appearing = false
-	
-	if appearing: 
-		dim -= 0.02
-	else:
-		dim += 0.02
-	
-	if dim > 0.0 and dim < 1.0:
-		$Dim.color.a = dim
-
 func _process(delta):
-	handleBackground()
 	handleLabels()
+
+func _on_BackgroundDim_animation_finished(anim_name):
+	randomizeBackground()
+	$BackgroundDimAnim.play()
