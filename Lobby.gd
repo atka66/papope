@@ -37,6 +37,9 @@ func handleLabels():
 	$IngameAimHintLabel.visible = hasConnected
 	$IngameDashHintLabel.visible = hasConnected
 	$IngameUseHintLabel.visible = hasConnected
+	$MapOption.visible = hasConnected
+	$RoundsOption.visible = hasConnected
+	$HpOption.visible = hasConnected
 
 	$WaitingLabel.hide()
 	$TeamLimitLabel.hide()

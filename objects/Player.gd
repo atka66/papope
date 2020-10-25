@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends RigidBody2D
 
 export var playerId = 0
 
@@ -15,8 +15,8 @@ var fallWater = false
 var trapped = false
 var hurtIntensity = 0.0
 
-var velocity = Vector2.ZERO
-var speed = 250
+var thrust = Vector2.ZERO
+var speed = 400
 
 func _ready():
 	$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
@@ -28,7 +28,7 @@ func _input(event):
 	var vAxis = Input.get_joy_axis(playerId, JOY_AXIS_1)
 	if abs(hAxis) < 0.1 : hAxis = 0.0
 	if abs(vAxis) < 0.1 : vAxis = 0.0
-	velocity = Vector2(hAxis, vAxis) * speed
+	thrust = Vector2(hAxis, vAxis) * speed
 	
 	if event.device == playerId:
 		if Input.is_action_just_pressed("pl_skin_next"):
@@ -43,7 +43,7 @@ func _input(event):
 		$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 
 func _physics_process(delta):
-	move_and_slide(velocity)
+	apply_central_impulse(thrust)
 
 func _on_remove(id):
 	if playerId == id:

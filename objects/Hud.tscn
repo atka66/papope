@@ -19,7 +19,12 @@ texture = ExtResource( 2 )
 centered = false
 hframes = 6
 
+[node name="HpBarBg" type="Polygon2D" parent="."]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 17, 32, 111, 32, 111, 39, 17, 39 )
+
 [node name="HpBar" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( 17, 32, 111, 32, 111, 39, 17, 39 )
 
 [node name="HudSprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

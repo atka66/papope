@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://sprites/player/faces.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/circle.png" type="Texture" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://sprites/player/spawn_4.png" type="Texture" id=6]
 [ext_resource path="res://sprites/player/spawn_5.png" type="Texture" id=7]
 [ext_resource path="res://sprites/player/spawn_3.png" type="Texture" id=8]
+
+[sub_resource type="PhysicsMaterial" id=3]
+bounce = 1.0
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -20,7 +23,10 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="Player" type="RigidBody2D"]
+mode = 2
+physics_material_override = SubResource( 3 )
+gravity_scale = 0.0
 script = ExtResource( 3 )
 
 [node name="Body" type="Sprite" parent="."]
