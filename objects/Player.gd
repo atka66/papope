@@ -43,6 +43,7 @@ func _input(event):
 		$Face.frame = Global.playersSkin[playerId]
 		$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 
+# warning-ignore:unused_argument
 func _physics_process(delta):
 	#friction
 	apply_central_impulse(-linear_velocity * frictionCustom)
@@ -58,7 +59,14 @@ func _on_SpawnAnim_animation_finished():
 
 func _on_Player_body_entered(body):
 	if body.get_name() == 'Player':
-		print("happen - " + str(playerId))
-		print(body.position.x)
-		print(position.x)
-		apply_central_impulse(body.position.direction_to(position) * 200)
+		if !hit:
+			body.hit = true
+			var collisionAnim = Global.CollisionAnim.instance()
+			var animScale = (thrust.length() + body.thrust.length()) / 30
+			collisionAnim.scale = Vector2(animScale, animScale)
+			collisionAnim.play()
+			collisionAnim.position = body.global_position - ((body.global_position - global_position) / 2)
+			collisionAnim.look_at(body.global_position)
+			Global.Lobby.add_child(collisionAnim)
+		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
+		hit = false

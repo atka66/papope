@@ -2,6 +2,7 @@ extends Node2D
 
 onready var CustomLabel = preload("res://objects/CustomLabel.tscn")
 onready var Player = preload("res://objects/Player.tscn")
+onready var CollisionAnim = preload("res://objects/CollisionAnim.tscn")
 onready var Lobby = get_node('/root/Lobby')
 
 const VERSION = '1.3.0'

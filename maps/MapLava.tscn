@@ -60,4 +60,14 @@ position = Vector2( -120, 4 )
 
 [node name="Hud1" parent="." instance=ExtResource( 3 )]
 position = Vector2( 688, 4 )
+playerId = 1
+fromRight = true
+
+[node name="Hud2" parent="." instance=ExtResource( 3 )]
+position = Vector2( -120, 340 )
+playerId = 2
+
+[node name="Hud3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 688, 330 )
+playerId = 3
 fromRight = true

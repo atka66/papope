@@ -11,9 +11,9 @@ func _ready():
 	$HpBar.color = playerColor
 	
 	$FaceSprite.frame = Global.playersSkin[playerId]
-	
-	yield(get_tree().create_timer(2.5), "timeout")
-	hspeed = 15
+	if Global.playersJoined[playerId]:
+		yield(get_tree().create_timer(2.5), "timeout")
+		hspeed = 15
 
 func handleHpBar():
 	#var barColor = 
