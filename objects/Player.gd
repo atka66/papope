@@ -16,7 +16,8 @@ var trapped = false
 var hurtIntensity = 0.0
 
 var thrust = Vector2.ZERO
-var speed = 400
+var speed = 40
+var frictionCustom = 0.2
 
 func _ready():
 	$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
@@ -43,6 +44,9 @@ func _input(event):
 		$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 
 func _physics_process(delta):
+	#friction
+	apply_central_impulse(-linear_velocity * frictionCustom)
+	
 	apply_central_impulse(thrust)
 
 func _on_remove(id):
@@ -51,3 +55,10 @@ func _on_remove(id):
 
 func _on_SpawnAnim_animation_finished():
 	$SpawnAnim.hide()
+
+func _on_Player_body_entered(body):
+	if body.get_name() == 'Player':
+		print("happen - " + str(playerId))
+		print(body.position.x)
+		print(position.x)
+		apply_central_impulse(body.position.direction_to(position) * 200)

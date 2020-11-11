@@ -9,13 +9,13 @@
 [ext_resource path="res://sprites/player/spawn_5.png" type="Texture" id=7]
 [ext_resource path="res://sprites/player/spawn_3.png" type="Texture" id=8]
 
-[sub_resource type="PhysicsMaterial" id=3]
+[sub_resource type="PhysicsMaterial" id=1]
 bounce = 1.0
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=2]
 radius = 16.0
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
@@ -24,9 +24,12 @@ animations = [ {
 } ]
 
 [node name="Player" type="RigidBody2D"]
+z_as_relative = false
 mode = 2
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
 script = ExtResource( 3 )
 
 [node name="Body" type="Sprite" parent="."]
@@ -37,8 +40,9 @@ texture = ExtResource( 1 )
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="SpawnAnim" type="AnimatedSprite" parent="."]
-frames = SubResource( 2 )
+frames = SubResource( 3 )
+[connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
 [connection signal="animation_finished" from="SpawnAnim" to="." method="_on_SpawnAnim_animation_finished"]
