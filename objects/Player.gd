@@ -67,6 +67,6 @@ func _on_Player_body_entered(body):
 			collisionAnim.play()
 			collisionAnim.position = body.global_position - ((body.global_position - global_position) / 2)
 			collisionAnim.look_at(body.global_position)
-			Global.Lobby.add_child(collisionAnim)
+			get_tree().get_root().add_child(collisionAnim)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 		hit = false

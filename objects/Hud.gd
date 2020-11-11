@@ -16,7 +16,7 @@ func _ready():
 		hspeed = 15
 
 func handleHpBar():
-	#var barColor = 
+	#$HpBar.scale = Vector2()
 	pass
 
 func _process(delta):
