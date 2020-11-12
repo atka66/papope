@@ -10,7 +10,7 @@ func _ready():
 	mapLabel.aliveTime = 2
 	mapLabel.alignment = Label.ALIGN_LEFT
 	add_child(mapLabel)
-	
+	var a = initSpawnPwrup()
 	yield(get_tree().create_timer(2), "timeout")
 	for i in range(4):
 		if Global.playersJoined[i]:
@@ -19,3 +19,22 @@ func _ready():
 			player.playerId = i
 			add_child(player)
 			yield(get_tree().create_timer(0.25), "timeout")
+
+func initSpawnPwrup():
+	yield(get_tree().create_timer(10), "timeout")
+	spawnPwrup()
+
+func spawnPwrup():
+	var pwrup = Global.Pwrup.instance()
+	var spawner = getRandomSpawner()
+	pwrup.position = spawner.position
+	add_child(pwrup)
+	yield(get_tree().create_timer(6), "timeout")
+	var rerun = spawnPwrup()
+
+func getRandomSpawner():
+	var spawners = []
+	for child in get_children():
+		if child.is_in_group("spawners"):
+			spawners.append(child)
+	return spawners[randi() % len(spawners)]
