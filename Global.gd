@@ -7,6 +7,11 @@ onready var CollisionAnim = preload("res://objects/anim/CollisionAnim.tscn")
 onready var DespawnAnim = preload("res://objects/anim/DespawnAnim.tscn")
 onready var Lobby = get_node('/root/Lobby')
 
+onready var PwrupSprites = {
+	'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),
+	'dynamite' : preload("res://sprites/pwrup/pwrup_dynamite.tres")
+}
+
 const VERSION = '1.3.0'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),

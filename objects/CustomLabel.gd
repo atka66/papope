@@ -15,7 +15,7 @@ func set_text(_text):
 	elif alignment == 2:
 		position.x -= round($Label.get("custom_fonts/font").get_string_size(_text).x) * fontSize
 
-func time_disappear(time):
+func time_disappear():
 	yield(get_tree().create_timer(aliveTime), "timeout")
 	$LabelAnim.play("float_out")
 	yield($LabelAnim, "animation_finished")
@@ -36,4 +36,4 @@ func _ready():
 	
 	$LabelAnim.play("float_in")
 	if aliveTime > 0:
-		time_disappear(aliveTime)
+		time_disappear()

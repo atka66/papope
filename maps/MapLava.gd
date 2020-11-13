@@ -22,15 +22,20 @@ func _ready():
 
 func initSpawnPwrup():
 	yield(get_tree().create_timer(10), "timeout")
-	spawnPwrup()
+	spawnRandomPwrup()
 
-func spawnPwrup():
-	var pwrup = Global.Pwrup.instance()
+func spawnRandomPwrup():
 	var spawner = getRandomSpawner()
+	var pwrupGroupName = spawner.name
+	for spawnersPwrup in get_tree().get_nodes_in_group(pwrupGroupName):
+		spawnersPwrup.remove()
+	var pwrup = Global.Pwrup.instance()
+	pwrup.add_to_group(pwrupGroupName)
+	pwrup.pwrupName = Global.PwrupSprites.keys()[randi() % Global.PwrupSprites.size()]
 	pwrup.position = spawner.position
 	add_child(pwrup)
 	yield(get_tree().create_timer(6), "timeout")
-	var rerun = spawnPwrup()
+	var rerun = spawnRandomPwrup()
 
 func getRandomSpawner():
 	var spawners = []
