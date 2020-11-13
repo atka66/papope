@@ -47,6 +47,18 @@ position = Vector2( 64, 320 )
 [node name="PlayerSpawner3" type="Position2D" parent="."]
 position = Vector2( 616, 320 )
 
+[node name="PwrupSpawner0" type="Sprite" parent="." groups=[
+"spawners",
+]]
+position = Vector2( 288, 192 )
+texture = ExtResource( 4 )
+
+[node name="PwrupSpawner1" type="Sprite" parent="." groups=[
+"spawners",
+]]
+position = Vector2( 384, 192 )
+texture = ExtResource( 4 )
+
 [node name="Dim" type="Polygon2D" parent="."]
 modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 0, 1.49832 )
@@ -73,15 +85,3 @@ playerId = 2
 position = Vector2( 688, 330 )
 playerId = 3
 fromRight = true
-
-[node name="PwrupSpawner0" type="Sprite" parent="." groups=[
-"spawners",
-]]
-position = Vector2( 288, 192 )
-texture = ExtResource( 4 )
-
-[node name="PwrupSpawner1" type="Sprite" parent="." groups=[
-"spawners",
-]]
-position = Vector2( 384, 192 )
-texture = ExtResource( 4 )
