@@ -21,7 +21,7 @@ func _ready():
 			yield(get_tree().create_timer(0.25), "timeout")
 
 func initSpawnPwrup():
-	yield(get_tree().create_timer(10), "timeout")
+	yield(get_tree().create_timer(2), "timeout") #TODO set to 10
 	spawnRandomPwrup()
 
 func spawnRandomPwrup():
@@ -34,7 +34,7 @@ func spawnRandomPwrup():
 	pwrup.pwrupName = Global.PwrupSprites.keys()[randi() % Global.PwrupSprites.size()]
 	pwrup.position = spawner.position
 	add_child(pwrup)
-	yield(get_tree().create_timer(6), "timeout")
+	yield(get_tree().create_timer(3), "timeout") #TODO set to 6
 	var rerun = spawnRandomPwrup()
 
 func getRandomSpawner():

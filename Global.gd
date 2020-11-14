@@ -5,11 +5,15 @@ onready var Player = preload("res://objects/Player.tscn")
 onready var Pwrup = preload("res://objects/Pwrup.tscn")
 onready var CollisionAnim = preload("res://objects/anim/CollisionAnim.tscn")
 onready var DespawnAnim = preload("res://objects/anim/DespawnAnim.tscn")
+onready var WhipcrackAnim = preload("res://objects/anim/WhipcrackAnim.tscn")
 onready var Lobby = get_node('/root/Lobby')
 
 onready var PwrupSprites = {
 	'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),
-	'dynamite' : preload("res://sprites/pwrup/pwrup_dynamite.tres")
+	'dynamite' : preload("res://sprites/pwrup/pwrup_dynamite.tres"),
+	#'shield' : preload("res://sprites/pwrup/pwrup_shield.tres"),
+	#'trap' : preload("res://sprites/pwrup/pwrup_trap.tres"),
+	'whip' : preload("res://sprites/pwrup/pwrup_whip.tres")
 }
 
 const VERSION = '1.3.0'
@@ -17,7 +21,8 @@ const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
 	2: Color(0.5, 0.9, 0.0),
-	3: Color(1.0, 0.7, 0)
+	3: Color(1.0, 0.7, 0),
+	4: Color(0.2, 0.2, 0.2)
 }
 const HINT_STRINGS = [
 	["DEATH MAKES YOU DIE"],
@@ -86,6 +91,7 @@ var playersSkin = [0, 1, 2, 3]
 var playersTeam = [0, 1, 2, 3]
 var playersPoints = [0, 0, 0, 0]
 var playersCrowned = [false, false, false, false]
+var playersFrozen = false
 
 func connectPlayer(playerId):
 	playersConnected[playerId] = true
