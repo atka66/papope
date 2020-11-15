@@ -6,10 +6,13 @@ onready var Pwrup = preload("res://objects/Pwrup.tscn")
 onready var CollisionAnim = preload("res://objects/anim/CollisionAnim.tscn")
 onready var DespawnAnim = preload("res://objects/anim/DespawnAnim.tscn")
 onready var WhipcrackAnim = preload("res://objects/anim/WhipcrackAnim.tscn")
+onready var ExplosionAnim = preload("res://objects/anim/ExplosionAnim.tscn")
+onready var RevolverRay = preload("res://objects/RevolverRay.tscn")
+onready var Dynamite = preload("res://objects/Dynamite.tscn")
 onready var Lobby = get_node('/root/Lobby')
 
 onready var PwrupSprites = {
-	'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),
+	#'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),
 	'dynamite' : preload("res://sprites/pwrup/pwrup_dynamite.tres"),
 	#'shield' : preload("res://sprites/pwrup/pwrup_shield.tres"),
 	#'trap' : preload("res://sprites/pwrup/pwrup_trap.tres"),

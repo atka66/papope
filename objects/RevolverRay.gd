@@ -1,0 +1,8 @@
+extends Node2D
+
+export(int) var length = 0
+
+func _ready():
+	$Line2D.add_point(Vector2(length, 0))
+	yield(get_tree().create_timer(0.02), "timeout")
+	queue_free()

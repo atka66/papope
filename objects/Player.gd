@@ -14,7 +14,6 @@ var outsideCntdwn = 3
 var invulnerable = false
 var fallWater = false
 var trapped = false
-var hurtIntensity = 0.0
 
 var thrust = Vector2.ZERO
 var speed = 40
@@ -50,8 +49,10 @@ func _input(event):
 		$HitScan.cast_to = aimVector
 		$Crosshair.rotation = aimVector.angle()
 		$Crosshair.position = aimVector
-		if item == 'revolver' || item == 'dynamite':
+		if item == 'revolver':
 			$HitScan.cast_to = extendVectorTo(aimVector, 5000)
+			$Crosshair.position *= 200
+		if item == 'dynamite':
 			$Crosshair.position *= 200
 		if item == 'whip':
 			$HitScan.cast_to = extendVectorTo(aimVector, 96)
@@ -101,7 +102,7 @@ func _on_SpawnAnim_animation_finished():
 	$SpawnAnim.hide()
 
 func _on_Player_body_entered(body):
-	if body.get_name() == 'Player':
+	if body.is_in_group('players'):
 		if !hit:
 			body.hit = true
 			var collisionAnim = Global.CollisionAnim.instance()
@@ -149,8 +150,24 @@ func spawnPickupLabel(text):
 
 func useItem():
 		if item == 'revolver':
+			var revolverRay = Global.RevolverRay.instance()
+			var hitPosition = global_position + $HitScan.cast_to
 			if $HitScan.is_colliding():
 				var collider = $HitScan.get_collider()
+				if collider.is_in_group('players'):
+					hitPosition = $HitScan.get_collision_point()
+					collider.hurt(20)
+					collider.apply_central_impulse($HitScan.cast_to.normalized() * 200)
+			revolverRay.position = position
+			revolverRay.rotation = $HitScan.cast_to.angle()
+			revolverRay.length = (position - hitPosition).length()
+			get_tree().get_root().add_child(revolverRay)
+		if item == 'dynamite':
+			var dynamite = Global.Dynamite.instance()
+			dynamite.position = position + ($HitScan.cast_to.normalized()) * 16
+			dynamite.originPlayerId = playerId
+			dynamite.apply_central_impulse($HitScan.cast_to * 190)
+			get_tree().get_root().add_child(dynamite)
 		if item == 'whip':
 			var angle = $HitScan.cast_to.angle()
 			$WhiplashAnim.rotation = angle
@@ -158,14 +175,14 @@ func useItem():
 			$WhiplashAnim.show()
 			$WhiplashAnim.play()
 			var whipcrackAnim = Global.WhipcrackAnim.instance()
-			var crackPosition = global_position + $HitScan.cast_to
+			var hitPosition = global_position + $HitScan.cast_to
 			if $HitScan.is_colliding():
 				var collider = $HitScan.get_collider()
 				if collider.is_in_group('players'):
-					crackPosition = $HitScan.get_collision_point()
+					hitPosition = $HitScan.get_collision_point()
 					collider.hurt(30)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 2500)
-			whipcrackAnim.position = crackPosition
+			whipcrackAnim.position = hitPosition
 			get_tree().get_root().add_child(whipcrackAnim)
 		if item != null:
 			ammo -= 1
@@ -177,8 +194,6 @@ func hurt(damage):
 	if damage > 0 && alive && !invulnerable && !Global.playersFrozen:
 		hp -= damage;
 		#TODO hp removal particle
-		#TODO shake hud
-		hurtIntensity = 1.0;
 
 func _on_WhiplashAnim_animation_finished():
 	$WhiplashAnim.hide()

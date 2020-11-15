@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/pwrup/muzzle_flash.png" type="Texture" id=1]
+[ext_resource path="res://objects/RevolverRay.gd" type="Script" id=2]
+
+[node name="RevolverRay" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="MuzzleFlash" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 14, -8 )
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 14, 0 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
