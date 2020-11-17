@@ -1,14 +1,15 @@
 extends Node2D
 
-onready var CustomLabel = preload("res://objects/CustomLabel.tscn")
+onready var CustomLabel = preload("res://objects/system/CustomLabel.tscn")
 onready var Player = preload("res://objects/Player.tscn")
-onready var Pwrup = preload("res://objects/Pwrup.tscn")
+onready var Countdown = preload("res://objects/system/Countdown.tscn")
+onready var Pwrup = preload("res://objects/pwrup/Pwrup.tscn")
 onready var CollisionAnim = preload("res://objects/anim/CollisionAnim.tscn")
 onready var DespawnAnim = preload("res://objects/anim/DespawnAnim.tscn")
 onready var WhipcrackAnim = preload("res://objects/anim/WhipcrackAnim.tscn")
 onready var ExplosionAnim = preload("res://objects/anim/ExplosionAnim.tscn")
-onready var RevolverRay = preload("res://objects/RevolverRay.tscn")
-onready var Dynamite = preload("res://objects/Dynamite.tscn")
+onready var RevolverRay = preload("res://objects/pwrup/RevolverRay.tscn")
+onready var Dynamite = preload("res://objects/pwrup/Dynamite.tscn")
 onready var Lobby = get_node('/root/Lobby')
 
 onready var PwrupSprites = {
@@ -39,42 +40,13 @@ const HINT_STRINGS = [
 	["YOU CANNOT MOVE IN SPACE", "ONLY DASH"],
 	["SAME COLOR MEANS SAME TEAM"]
 ]
-#TODO remove
-const MOCKED_CTRL_KEYS = {
-	0 : {
-		'l_up' : KEY_W,
-		'l_left' : KEY_A,
-		'l_down' : KEY_S,
-		'l_right' : KEY_D,
-		'x' : KEY_Q,
-		'r' : KEY_E
-	},
-	1 : {
-		'l_up' : KEY_T,
-		'l_left' : KEY_F,
-		'l_down' : KEY_G,
-		'l_right' : KEY_H,
-		'x' : KEY_R,
-		'r' : KEY_Z
-	},
-	2 : {
-		'l_up' : KEY_I,
-		'l_left' : KEY_J,
-		'l_down' : KEY_K,
-		'l_right' : KEY_L,
-		'x' : KEY_U,
-		'r' : KEY_P
-	},
-	3 : {
-		'l_up' : KEY_I,
-		'l_left' : KEY_J,
-		'l_down' : KEY_K,
-		'l_right' : KEY_L,
-		'x' : KEY_U,
-		'r' : KEY_P
-	}
-}
 const SKIN_COUNT = 6
+const TEAM_COLOR_STRINGS = {
+	0: "RED",
+	1: "BLUE",
+	2: "GREEN",
+	3: "YELLOW"
+}
 
 var options = {
 	'map': ['random', 'lava', 'western', 'ship', 'space', 'traffic'],
@@ -95,6 +67,35 @@ var playersTeam = [0, 1, 2, 3]
 var playersPoints = [0, 0, 0, 0]
 var playersCrowned = [false, false, false, false]
 var playersFrozen = false
+var selectedMap = 'none'
+
+func goToMap():
+	var selectedMapIndex;
+	if optionsSelected['map'] == 0:
+		selectedMapIndex = (randi() % (len(options['map']) - 1) + 1)
+	else:
+		selectedMapIndex = optionsSelected['map']
+
+	selectedMap = options['map'][selectedMapIndex];
+	
+	if selectedMap == 'lava': get_tree().change_scene("res://maps/MapLava.tscn")
+	if selectedMap == 'western': get_tree().change_scene("res://maps/MapLava.tscn")
+	if selectedMap == 'ship': get_tree().change_scene("res://maps/MapLava.tscn")
+	if selectedMap == 'space': get_tree().change_scene("res://maps/MapLava.tscn")
+	if selectedMap == 'traffic': get_tree().change_scene("res://maps/MapLava.tscn")
+
+func getWinnerTeam():
+	var aliveTeams = []
+	for player in get_tree().get_nodes_in_group('players'):
+		if player.hp > 0 && !aliveTeams.has(playersTeam[player.playerId]):
+			aliveTeams.append(playersTeam[player.playerId])	
+	
+	if len(aliveTeams) == 0:
+		return -2 # no one is alive, draw (rare)
+	elif len(aliveTeams) == 1:
+		return aliveTeams[0] # if only one alive, return the ID of the team
+	else:
+		return -1 # more than one teams are alive
 
 func connectPlayer(playerId):
 	playersConnected[playerId] = true
@@ -106,7 +107,7 @@ func disconnectPlayer(playerId):
 func getNumberOfTeams():
 	var distinctTeams = []
 	for i in playersTeam.size():
-		if !distinctTeams.has(playersTeam[i]):
+		if playersJoined[i] && !distinctTeams.has(playersTeam[i]):
 			distinctTeams.append(playersTeam[i])
 	return distinctTeams.size()
 

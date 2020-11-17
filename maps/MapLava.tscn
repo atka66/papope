@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://sprites/bg/lava.png" type="Texture" id=1]
-[ext_resource path="res://maps/MapLava.gd" type="Script" id=2]
 [ext_resource path="res://objects/hud/Hud.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/pwrup/spawner.png" type="Texture" id=4]
-[ext_resource path="res://objects/obstacle/Cactus.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/system/MapController.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "disappear"
@@ -25,7 +24,8 @@ tracks/0/keys = {
 [node name="Lava" type="Node2D"]
 z_index = -50
 z_as_relative = false
-script = ExtResource( 2 )
+
+[node name="MapController" parent="." instance=ExtResource( 6 )]
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 680.0
@@ -59,15 +59,6 @@ texture = ExtResource( 4 )
 ]]
 position = Vector2( 384, 192 )
 texture = ExtResource( 4 )
-
-[node name="Cactus1" parent="." instance=ExtResource( 5 )]
-position = Vector2( 251.567, 57.0514 )
-
-[node name="Cactus2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 394.846, 168.795 )
-
-[node name="Cactus3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 206.755, 290.418 )
 
 [node name="Dim" type="Polygon2D" parent="."]
 modulate = Color( 0, 0, 0, 1 )

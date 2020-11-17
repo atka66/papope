@@ -48,7 +48,7 @@ func handleLabels():
 		$WaitingLabel.show()
 	elif Global.getNumberOfTeams() < 2:
 		$TeamLimitLabel.show()
-	else:
+	elif !countingDown:
 		$StartLabel.show()
 
 func joinPlayer(playerId):
@@ -65,6 +65,17 @@ func leavePlayer(playerId):
 
 func randomizeBackground():
 	$MovingBackground.frame = ($MovingBackground.frame + (randi() % ($MovingBackground.vframes - 1)) + 1) % $MovingBackground.vframes
+
+func startCountdown():
+	countingDown = true
+	var countdown = Global.Countdown.instance()
+	countdown.position = Vector2(340, 112)
+	add_child(countdown)
+
+func stopCountdown():
+	countingDown = false
+	for cd in get_tree().get_nodes_in_group("countdown"):
+		cd.queue_free()
 
 func _ready():
 	randomizeBackground()

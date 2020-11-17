@@ -3,6 +3,8 @@ extends Node2D
 export var playerId = 0
 onready var Lobby = get_node('/root/Lobby')
 
+var inputCd = false
+
 func warningGrowl(message):
 	var label = Global.CustomLabel.instance()
 	label.position.x = 340
@@ -15,22 +17,22 @@ func warningGrowl(message):
 	Lobby.add_child(label)
 
 func _input(event):
-	if Global.playersConnected[playerId] && event.device == playerId:
+	if Global.playersConnected[playerId] && event.device == playerId && !inputCd:
+		inputCd = true
 		if Input.is_action_just_pressed("ui_accept") and !Lobby.countingDown:
 			if !Global.playersJoined[playerId]:
 				Lobby.joinPlayer(playerId)
 			else:
-#				if Global.playersJoined.count(true) < 2:
-#					warningGrowl("NEEDS AT LEAST 2 PLAYERS!")
-#				elif Global.getNumberOfTeams() < 2:
-#					warningGrowl("NEEDS AT LEAST 2 TEAMS!")
-#				else:
-					get_tree().change_scene("res://maps/MapLava.tscn")
-					Lobby.countingDown = true
+				if Global.playersJoined.count(true) < 2:
+					warningGrowl("NEEDS AT LEAST 2 PLAYERS!")
+				elif Global.getNumberOfTeams() < 2:
+					warningGrowl("NEEDS AT LEAST 2 TEAMS!")
+				else:
+					Lobby.startCountdown()
 		if Input.is_action_just_pressed("ui_cancel"):
 			if Global.playersJoined[playerId]:
 				if Lobby.countingDown:
-					Lobby.countingDown = false
+					Lobby.stopCountdown()
 				else:
 					Lobby.leavePlayer(playerId)
 		if !Lobby.countingDown:
@@ -74,5 +76,6 @@ func handleHints():
 		$ControllerSprite.show()
 
 func _process(delta):
+	inputCd = false
 	handleSpawnSprite()
 	handleHints()

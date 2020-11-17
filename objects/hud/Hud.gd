@@ -88,7 +88,6 @@ func handlePwrup():
 		if player.ammo < prevAmmo:
 			ammoShakePwr = 5
 
-
 func _process(delta):
 	if hspeed > 0:
 		position.x += hspeed * (-1 if fromRight else 1)
@@ -98,6 +97,8 @@ func _process(delta):
 		handleShake()
 		handleHpBar()
 		handlePwrup()
+		
+		$Container/ScoreLabel.set_text(str(Global.playersPoints[playerId]))
 		
 		prevHp = player.hp
 		prevAmmo = player.ammo

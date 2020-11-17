@@ -15,6 +15,9 @@ func set_text(_text):
 	elif alignment == 2:
 		position.x -= round($Label.get("custom_fonts/font").get_string_size(_text).x) * fontSize
 
+func set_color(_color):
+	$Label.add_color_override("font_color", _color)
+
 func time_disappear():
 	yield(get_tree().create_timer(aliveTime), "timeout")
 	$LabelAnim.play("float_out")
@@ -23,7 +26,7 @@ func time_disappear():
 
 func _ready():
 	set_text(text)
-	$Label.add_color_override("font_color", color)
+	set_color(color)
 	$Label.rect_scale = Vector2(fontSize, fontSize)
 	if !outline:
 		$Label.set_theme(preload("res://fonts/NonOutlinedTheme.tres"))

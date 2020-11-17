@@ -10,7 +10,7 @@ var contactedLava = false
 var item = null
 var ammo = 0
 var hurtByLava = false
-var outsideCntdwn = 3
+var outsideCntdwn = 180
 var invulnerable = false
 var fallWater = false
 var trapped = false
@@ -19,15 +19,19 @@ var thrust = Vector2.ZERO
 var speed = 40
 var frictionCustom = 0.2
 
+var color = Global.TEAM_COLORS[0]
 var inputCd = false
 
 func _ready():
 	$Crosshair.hide()
 	$WhiplashAnim.hide()
+	$OutsideLabel.hide()
 	inLobby = get_tree().get_current_scene().get_name() == 'Lobby'
 	if !inLobby:
 		get_tree().get_current_scene().get_node('Hud' + str(playerId)).player = self
-	$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
+	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
+	$Body.modulate = color
+	$Crosshair.modulate = color
 	$Face.frame = Global.playersSkin[playerId]
 	$SpawnAnim.play()
 
@@ -61,16 +65,15 @@ func _input(event):
 	if event.device == playerId && !inputCd:
 		inputCd = true
 		if inLobby:
-			if Input.is_action_just_pressed("pl_skin_next"):
-				Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
-			if Input.is_action_just_pressed("pl_skin_prev"):
-				Global.playersSkin[playerId] = (Global.playersSkin[playerId] + (Global.SKIN_COUNT - 1)) % Global.SKIN_COUNT
-			if Input.is_action_just_pressed("pl_team_next"):
-				Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
-			if Input.is_action_just_pressed("pl_team_prev"):
-				Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
-			$Face.frame = Global.playersSkin[playerId]
-			$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
+			if !Global.Lobby.countingDown:
+				if Input.is_action_just_pressed("pl_skin_next"):
+					Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
+				if Input.is_action_just_pressed("pl_game_use"):
+					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
+				if Input.is_action_just_pressed("pl_game_dash"):
+					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
+				$Face.frame = Global.playersSkin[playerId]
+				$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 		else:
 			if alive && !Global.playersFrozen && !fallWater:
 				if !trapped:
@@ -81,18 +84,51 @@ func _input(event):
 
 func _process(delta):
 	inputCd = false
-	if hp < 1:
-		$Body.modulate = Global.TEAM_COLORS[4]
-		alive = false
-		hp = 0
-		ammo = 0
-		item = null
-		$Crosshair.hide()
+	if !inLobby:
+		if alive:
+			if outsideCntdwn < 1:
+				hp = 0
+			if hp < 1:
+				$Body.modulate = Global.TEAM_COLORS[4]
+				alive = false
+				hp = 0
+				ammo = 0
+				item = null
+				$Crosshair.hide()
+
+				if !Global.playersFrozen:
+					var aliveTeamId = Global.getWinnerTeam();
+					if aliveTeamId != -1: # round is over
+						get_tree().get_nodes_in_group('controllers')[0].endRound(aliveTeamId)
+			
+			if !Global.playersFrozen && !fallWater:
+				if isOutside():
+					if outsideCntdwn > 0:
+						updateOutsideLabel()
+						$OutsideLabel.show()
+						outsideCntdwn -= 1
+				else:
+					$OutsideLabel.hide()
+					outsideCntdwn = 180
+		else:
+			$OutsideLabel.hide()
+
+func updateOutsideLabel():
+	$OutsideLabel.global_position = Vector2(
+		max(min(global_position.x, 648), 32),
+		max(min(global_position.y, 349), 29)
+	)
+	$OutsideLabel.set_text(str(ceil(float(outsideCntdwn) / 60)))
+	if (outsideCntdwn / 10) % 2:
+		$OutsideLabel.set_color(Color.white)
+	else:
+		$OutsideLabel.set_color(color)
 
 func _physics_process(delta):
 	#friction
 	apply_central_impulse(-linear_velocity * frictionCustom)
-	apply_central_impulse(thrust)
+	if alive && !Global.playersFrozen && !fallWater && !trapped:
+		apply_central_impulse(thrust)
 
 func _on_remove(id):
 	if playerId == id:
@@ -197,3 +233,7 @@ func hurt(damage):
 
 func _on_WhiplashAnim_animation_finished():
 	$WhiplashAnim.hide()
+
+func isOutside():
+	return global_position.x < 0 || global_position.x > 680 || global_position.y < 0 || global_position.y > 384
+		
