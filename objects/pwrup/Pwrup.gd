@@ -15,7 +15,6 @@ func remove():
 	get_tree().get_root().add_child(despawnAnim)
 	queue_free()
 
-
 func _on_Pwrup_body_entered(body):
 	if body.is_in_group('players'):
 		if body.alive:

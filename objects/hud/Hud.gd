@@ -51,6 +51,11 @@ func handleHpBar():
 		delayedHp -= 1
 	$Container/HpBarDelay.scale = Vector2(float(delayedHp) / maxHp, 1)
 
+	if player.invulnerable:
+		$Container/HpBar.color = Color.white
+	else:
+		$Container/HpBar.color = playerColor
+
 func handlePwrup():
 	$Container/HudRevolver.visible = player.item == 'revolver'
 	$Container/AmmoContainer.visible = player.item == 'dynamite' || player.item == 'shield' || player.item == 'trap' || player.item == 'whip'

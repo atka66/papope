@@ -23,6 +23,8 @@ var color = Global.TEAM_COLORS[0]
 var inputCd = false
 
 func _ready():
+	$InvulAnim.play()
+	$InvulAnim.hide()
 	$Crosshair.hide()
 	$WhiplashAnim.hide()
 	$OutsideLabel.hide()
@@ -166,13 +168,21 @@ func pickup(pwrup):
 		$Crosshair.frame = 1
 		ammo = 1
 	if pwrup == 'shield':
+		$Crosshair.hide()
 		ammo = 1
 	if pwrup == 'trap':
+		$Crosshair.hide()
 		ammo = 1
 	if pwrup == 'whip':
 		$Crosshair.show()
 		$Crosshair.frame = 2
 		ammo = 5
+
+func trap():
+	hurt(35)
+	trapped = true
+	yield(get_tree().create_timer(2.0), "timeout")
+	trapped = false
 
 func spawnPickupLabel(text):
 	var pickupLabel = Global.CustomLabel.instance()
@@ -204,6 +214,15 @@ func useItem():
 			dynamite.originPlayerId = playerId
 			dynamite.apply_central_impulse($HitScan.cast_to * 190)
 			get_tree().get_root().add_child(dynamite)
+		if item == 'shield':
+			invulnerable = true
+			$InvulAnim.show()
+			$InvulAnim/Timer.start(5)
+		if item == 'trap':
+			var trap = Global.Trap.instance()
+			trap.rotation_degrees += (randi() % 60) - 30
+			trap.position = position
+			get_tree().get_root().add_child(trap)
 		if item == 'whip':
 			var angle = $HitScan.cast_to.angle()
 			$WhiplashAnim.rotation = angle
@@ -225,6 +244,10 @@ func useItem():
 			if ammo < 1:
 				item = null
 				$Crosshair.hide()
+
+func _endInvul():
+	invulnerable = false
+	$InvulAnim.hide()
 
 func hurt(damage):
 	if damage > 0 && alive && !invulnerable && !Global.playersFrozen:
