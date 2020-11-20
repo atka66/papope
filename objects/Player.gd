@@ -154,6 +154,9 @@ func _on_Player_body_entered(body):
 			get_tree().get_root().add_child(collisionAnim)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 		hit = false
+	if body.is_in_group('cacti'):
+		hurt(10)
+		apply_central_impulse(body.global_position.direction_to(global_position) * 200)
 
 func extendVectorTo(vector, length):
 	return vector * (float(length) / vector.length())
@@ -202,8 +205,8 @@ func useItem():
 			var hitPosition = global_position + $HitScan.cast_to
 			if $HitScan.is_colliding():
 				var collider = $HitScan.get_collider()
+				hitPosition = $HitScan.get_collision_point()
 				if collider.is_in_group('players'):
-					hitPosition = $HitScan.get_collision_point()
 					collider.hurt(20)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 200)
 			revolverRay.position = position

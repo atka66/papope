@@ -221,10 +221,25 @@ texture = ExtResource( 4 )
 position = Vector2( 384, 192 )
 texture = ExtResource( 4 )
 
+[node name="Lava1" parent="." instance=ExtResource( 5 )]
+position = Vector2( 144, 192 )
+scale = Vector2( 7, 2 )
+
+[node name="Lava2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 336, 96 )
+scale = Vector2( 1, 4 )
+
+[node name="Lava3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 528, 192 )
+scale = Vector2( 7, 2 )
+
+[node name="Lava4" parent="." instance=ExtResource( 5 )]
+position = Vector2( 336, 288 )
+scale = Vector2( 1, 4 )
+
 [node name="Dim" type="Polygon2D" parent="."]
 visible = false
 modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 0, 1.49832 )
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
 
@@ -248,19 +263,3 @@ playerId = 2
 position = Vector2( 688, 330 )
 playerId = 3
 fromRight = true
-
-[node name="Lava1" parent="." instance=ExtResource( 5 )]
-position = Vector2( 144, 192 )
-scale = Vector2( 7, 2 )
-
-[node name="Lava2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 336, 96 )
-scale = Vector2( 1, 4 )
-
-[node name="Lava3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 528, 192 )
-scale = Vector2( 7, 2 )
-
-[node name="Lava4" parent="." instance=ExtResource( 5 )]
-position = Vector2( 336, 288 )
-scale = Vector2( 1, 4 )

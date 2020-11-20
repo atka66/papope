@@ -80,7 +80,7 @@ func goToMap():
 	selectedMap = options['map'][selectedMapIndex];
 	
 	if selectedMap == 'lava': get_tree().change_scene("res://maps/MapLava.tscn")
-	if selectedMap == 'western': get_tree().change_scene("res://maps/MapLava.tscn")
+	if selectedMap == 'western': get_tree().change_scene("res://maps/MapWestern.tscn")
 	if selectedMap == 'ship': get_tree().change_scene("res://maps/MapLava.tscn")
 	if selectedMap == 'space': get_tree().change_scene("res://maps/MapLava.tscn")
 	if selectedMap == 'traffic': get_tree().change_scene("res://maps/MapLava.tscn")
