@@ -130,9 +130,10 @@ func updateOutsideLabel():
 
 func _physics_process(delta):
 	#friction
-	apply_central_impulse(-linear_velocity * frictionCustom)
-	if alive && !Global.playersFrozen && !fallWater && !trapped:
-		apply_central_impulse(thrust)
+	if !fallWater:
+		apply_central_impulse(-linear_velocity * frictionCustom)
+		if alive && !Global.playersFrozen && !trapped:
+			apply_central_impulse(thrust)
 
 func _on_remove(id):
 	if playerId == id:

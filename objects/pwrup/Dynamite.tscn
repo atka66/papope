@@ -11,7 +11,7 @@ radius = 8.0
 
 [node name="Dynamite" type="RigidBody2D"]
 collision_layer = 4
-collision_mask = 13
+collision_mask = 29
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
 contacts_reported = 3

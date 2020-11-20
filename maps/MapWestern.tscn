@@ -94,7 +94,7 @@
 5/shapes = [  ]
 5/z_index = 0
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Dim:modulate")
@@ -109,7 +109,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 
-[node name="Lava" type="Node2D"]
+[node name="Western" type="Node2D"]
 z_index = -50
 z_as_relative = false
 
@@ -198,7 +198,7 @@ polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
 
 [node name="DimAnim" type="AnimationPlayer" parent="."]
 autoplay = "disappear"
-anims/disappear = SubResource( 5 )
+anims/disappear = SubResource( 2 )
 
 [node name="Hud0" parent="." instance=ExtResource( 3 )]
 position = Vector2( -120, 4 )

@@ -158,6 +158,8 @@ pl_game_dash={
 2d_physics/layer_2="pwrups"
 2d_physics/layer_3="obstacles"
 2d_physics/layer_4="deadplayers"
+2d_physics/layer_5="block"
+2d_physics/layer_6="watertrigger"
 
 [rendering]
 
