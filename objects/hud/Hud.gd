@@ -47,9 +47,9 @@ func handleShake():
 
 func handleHpBar():
 	$Container/HpBar.scale = Vector2(float(player.hp) / maxHp, 1)
+	$Container/HpBarDelay.scale = Vector2(float(delayedHp) / maxHp, 1)
 	if delayedHp > player.hp:
 		delayedHp -= 1
-	$Container/HpBarDelay.scale = Vector2(float(delayedHp) / maxHp, 1)
 
 	if player.invulnerable:
 		$Container/HpBar.color = Color.white

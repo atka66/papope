@@ -6,10 +6,9 @@ var inLobby = false
 var hit = false
 var alive = true
 var hp = Global.options['hp'][Global.optionsSelected['hp']]
-var contactedLava = false
 var item = null
 var ammo = 0
-var hurtByLava = false
+var contactsLava = false
 var outsideCntdwn = 180
 var invulnerable = false
 var fallWater = false
@@ -28,6 +27,7 @@ func _ready():
 	$Crosshair.hide()
 	$WhiplashAnim.hide()
 	$OutsideLabel.hide()
+	$SmokeParticles.emitting = false
 	inLobby = get_tree().get_current_scene().get_name() == 'Lobby'
 	if !inLobby:
 		get_tree().get_current_scene().get_node('Hud' + str(playerId)).player = self
@@ -88,6 +88,8 @@ func _process(delta):
 	inputCd = false
 	if !inLobby:
 		if alive:
+			if contactsLava:
+				hurt(1)
 			if outsideCntdwn < 1:
 				hp = 0
 			if hp < 1:
@@ -154,7 +156,7 @@ func _on_Player_body_entered(body):
 		hit = false
 
 func extendVectorTo(vector, length):
-	return vector * (length / vector.length())
+	return vector * (float(length) / vector.length())
 
 func pickup(pwrup):
 	spawnPickupLabel(pwrup)

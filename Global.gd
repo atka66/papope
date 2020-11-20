@@ -14,9 +14,9 @@ onready var Trap = preload("res://objects/pwrup/Trap.tscn")
 onready var Lobby = get_node('/root/Lobby')
 
 onready var PwrupSprites = {
-	#'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),
-	#'dynamite' : preload("res://sprites/pwrup/pwrup_dynamite.tres"),
-	#'shield' : preload("res://sprites/pwrup/pwrup_shield.tres"),
+	'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),
+	'dynamite' : preload("res://sprites/pwrup/pwrup_dynamite.tres"),
+	'shield' : preload("res://sprites/pwrup/pwrup_shield.tres"),
 	'trap' : preload("res://sprites/pwrup/pwrup_trap.tres"),
 	'whip' : preload("res://sprites/pwrup/pwrup_whip.tres")
 }

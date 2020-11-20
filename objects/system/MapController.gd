@@ -1,6 +1,7 @@
 extends Node2D
 
 func _ready():
+	get_parent().get_node("Dim").show()
 	Global.playersFrozen = true
 	var mapLabel = Global.CustomLabel.instance()
 	mapLabel.position.x = 64
