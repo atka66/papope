@@ -1,8 +1,7 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://sprites/bg/space_1.png" type="Texture" id=1]
 [ext_resource path="res://sprites/bg/space_3.png" type="Texture" id=2]
-[ext_resource path="res://objects/hud/Hud.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/pwrup/spawner.png" type="Texture" id=4]
 [ext_resource path="res://sprites/bg/space_2.png" type="Texture" id=5]
 [ext_resource path="res://objects/system/MapController.tscn" type="PackedScene" id=6]
@@ -10,6 +9,7 @@
 [ext_resource path="res://objects/obstacle/Block.tscn" type="PackedScene" id=8]
 [ext_resource path="res://objects/obstacle/SpaceTrigger.tscn" type="PackedScene" id=9]
 [ext_resource path="res://objects/obstacle/Spaceray.tscn" type="PackedScene" id=10]
+[ext_resource path="res://maps/Background.gd" type="Script" id=11]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -262,22 +262,7 @@ scale_random = 1.0
 13/shapes = [  ]
 13/z_index = 0
 
-[sub_resource type="Animation" id=6]
-length = 2.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("Dim:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0.5, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
-}
-
-[node name="Space" type="Node2D"]
+[node name="Map" type="Node2D"]
 z_index = -50
 z_as_relative = false
 
@@ -289,6 +274,7 @@ margin_right = 696.0
 margin_bottom = 384.0
 texture = SubResource( 1 )
 stretch_mode = 2
+script = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -376,33 +362,5 @@ position = Vector2( 640, 32 )
 scale = Vector2( 2, 20 )
 
 [node name="SpaceTrigger" parent="." instance=ExtResource( 9 )]
-visible = false
 position = Vector2( 176, 32 )
 scale = Vector2( 20, 20 )
-
-[node name="Dim" type="Polygon2D" parent="."]
-visible = false
-modulate = Color( 0, 0, 0, 1 )
-color = Color( 0, 0, 0, 1 )
-polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
-
-[node name="DimAnim" type="AnimationPlayer" parent="."]
-autoplay = "disappear"
-anims/disappear = SubResource( 6 )
-
-[node name="Hud0" parent="." instance=ExtResource( 3 )]
-position = Vector2( -120, 4 )
-
-[node name="Hud1" parent="." instance=ExtResource( 3 )]
-position = Vector2( 688, 4 )
-playerId = 1
-fromRight = true
-
-[node name="Hud2" parent="." instance=ExtResource( 3 )]
-position = Vector2( -120, 340 )
-playerId = 2
-
-[node name="Hud3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 688, 330 )
-playerId = 3
-fromRight = true

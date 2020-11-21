@@ -2,6 +2,8 @@ extends Node2D
 
 onready var CustomLabel = preload("res://objects/system/CustomLabel.tscn")
 onready var Player = preload("res://objects/Player.tscn")
+onready var Hud = preload("res://objects/hud/Hud.tscn")
+onready var Dim = preload("res://objects/system/Dim.tscn")
 onready var Countdown = preload("res://objects/system/Countdown.tscn")
 onready var Pwrup = preload("res://objects/pwrup/Pwrup.tscn")
 onready var CollisionAnim = preload("res://objects/anim/CollisionAnim.tscn")

@@ -1,10 +1,6 @@
 extends Node2D
 
 func _ready():
-	if get_parent().name == 'Space':
-		var texture = get_parent().get_node("Background").texture
-		texture.current_frame = randi() % texture.frames
-	get_parent().get_node("Dim").show()
 	Global.playersFrozen = true
 	var mapLabel = Global.CustomLabel.instance()
 	mapLabel.position.x = 64
@@ -14,7 +10,8 @@ func _ready():
 	mapLabel.outline = true
 	mapLabel.aliveTime = 2
 	mapLabel.alignment = Label.ALIGN_LEFT
-	add_child(mapLabel)
+	get_tree().get_root().add_child(mapLabel)
+	get_tree().get_root().add_child(Global.Dim.instance())
 	var a = initSpawnPwrup()
 	var b = initCountdown()
 	yield(get_tree().create_timer(2), "timeout")
@@ -23,7 +20,7 @@ func _ready():
 			var player = Global.Player.instance()
 			player.position = get_parent().get_node("PlayerSpawner" + str(i)).position
 			player.playerId = i
-			add_child(player)
+			get_parent().add_child(player)
 			yield(get_tree().create_timer(0.25), "timeout")
 
 func initSpawnPwrup():
@@ -54,7 +51,7 @@ func initCountdown():
 	yield(get_tree().create_timer(1), "timeout")
 	var countdown = Global.Countdown.instance()
 	countdown.position = Vector2(340, 64)
-	add_child(countdown)
+	get_parent().add_child(countdown)
 
 func endRound(aliveTeamId):
 	Global.playersFrozen = true
@@ -73,6 +70,6 @@ func endRound(aliveTeamId):
 	winLabel.outline = true
 	winLabel.aliveTime = 3
 	winLabel.alignment = Label.ALIGN_CENTER
-	get_tree().get_root().add_child(winLabel)
+	get_parent().add_child(winLabel)
 	yield(get_tree().create_timer(3), "timeout")
 	Global.goToMap()

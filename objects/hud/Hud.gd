@@ -1,6 +1,5 @@
 extends Node2D
 
-export var playerId = 0
 export(bool) var fromRight = false
 
 var player = null
@@ -16,17 +15,12 @@ var maxHp = Global.options['hp'][Global.optionsSelected['hp']]
 var delayedHp = maxHp
 
 func _ready():
-	if !Global.playersJoined[playerId]:
-		queue_free()
-
-	playerColor = Global.TEAM_COLORS[Global.playersTeam[playerId]]
+	playerColor = Global.TEAM_COLORS[Global.playersTeam[player.playerId]]
 	$Container/FaceBg.color = playerColor
 	$Container/HpBar.color = playerColor
 	
-	$Container/FaceSprite.frame = Global.playersSkin[playerId]
-	if Global.playersJoined[playerId]:
-		yield(get_tree().create_timer(2.5), "timeout")
-		hspeed = 15
+	$Container/FaceSprite.frame = Global.playersSkin[player.playerId]
+	hspeed = 15
 
 func handleShake():
 	if player.hp < prevHp:
@@ -103,7 +97,7 @@ func _process(delta):
 		handleHpBar()
 		handlePwrup()
 		
-		$Container/ScoreLabel.set_text(str(Global.playersPoints[playerId]))
+		$Container/ScoreLabel.set_text(str(Global.playersPoints[player.playerId]))
 		
 		prevHp = player.hp
 		prevAmmo = player.ammo
