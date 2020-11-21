@@ -160,6 +160,8 @@ pl_game_dash={
 2d_physics/layer_4="deadplayers"
 2d_physics/layer_5="block"
 2d_physics/layer_6="watertrigger"
+2d_physics/layer_7="spacetrigger"
+2d_physics/layer_8="spaceray"
 
 [rendering]
 

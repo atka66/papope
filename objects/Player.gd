@@ -13,6 +13,7 @@ var outsideCntdwn = 180
 var invulnerable = false
 var fallWater = false
 var trapped = false
+var inSpace = false
 
 var thrust = Vector2.ZERO
 var speed = 40
@@ -78,9 +79,9 @@ func _input(event):
 				$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 		else:
 			if alive && !Global.playersFrozen && !fallWater:
-				if !trapped:
+				if !trapped && linear_velocity.length() < 1000:
 					if Input.is_action_just_pressed('pl_game_dash'):
-						apply_central_impulse(thrust.normalized() * 750)
+						apply_central_impulse(linear_velocity.normalized() * 750)
 				if Input.is_action_just_pressed('pl_game_use'):
 					useItem()
 
@@ -130,7 +131,7 @@ func updateOutsideLabel():
 
 func _physics_process(delta):
 	#friction
-	if !fallWater:
+	if !fallWater && !inSpace:
 		apply_central_impulse(-linear_velocity * frictionCustom)
 		if alive && !Global.playersFrozen && !trapped:
 			apply_central_impulse(thrust)
@@ -258,6 +259,8 @@ func _endInvul():
 func hurt(damage):
 	if damage > 0 && alive && !invulnerable && !Global.playersFrozen:
 		hp -= damage;
+		$Hurt/HurtAnim.stop()
+		$Hurt/HurtAnim.play()
 		#TODO hp removal particle
 
 func _on_WhiplashAnim_animation_finished():

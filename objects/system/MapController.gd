@@ -1,6 +1,9 @@
 extends Node2D
 
 func _ready():
+	if get_parent().name == 'Space':
+		var texture = get_parent().get_node("Background").texture
+		texture.current_frame = randi() % texture.frames
 	get_parent().get_node("Dim").show()
 	Global.playersFrozen = true
 	var mapLabel = Global.CustomLabel.instance()
