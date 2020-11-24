@@ -35,7 +35,7 @@ func _input(event):
 					Lobby.stopCountdown()
 				else:
 					Lobby.leavePlayer(playerId)
-		if !Lobby.countingDown:
+		if Global.ALLOW_PLAYERS_SET_OPTIONS && !Lobby.countingDown:
 			if Input.is_action_just_pressed("pl_nav_up"):
 				Global.currentOption = Global.options.keys()[(Global.options.keys().find(Global.currentOption) + (len(Global.options) - 1)) % len(Global.options)]
 			if Input.is_action_just_pressed("pl_nav_down"):

@@ -13,6 +13,7 @@ onready var ExplosionAnim = preload("res://objects/anim/ExplosionAnim.tscn")
 onready var RevolverRay = preload("res://objects/pwrup/RevolverRay.tscn")
 onready var Dynamite = preload("res://objects/pwrup/Dynamite.tscn")
 onready var Trap = preload("res://objects/pwrup/Trap.tscn")
+onready var Car = preload("res://objects/obstacle/Car.tscn")
 onready var Lobby = get_node('/root/Lobby')
 
 onready var PwrupSprites = {
@@ -50,6 +51,11 @@ const TEAM_COLOR_STRINGS = {
 	2: "GREEN",
 	3: "YELLOW"
 }
+
+# constants for configuring purposes
+#TODO assign into a config file
+const PWRUP_RESPAWN_TIME = 3 #TODO default 6
+const ALLOW_PLAYERS_SET_OPTIONS = true #TODO default true
 
 var options = {
 	'map': ['random', 'lava', 'western', 'ship', 'space', 'traffic'],

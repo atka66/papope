@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://sprites/bg/traffic.png" type="Texture" id=1]
+[ext_resource path="res://objects/obstacle/Block.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/system/TrafficLane.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/pwrup/spawner.png" type="Texture" id=4]
 [ext_resource path="res://objects/system/MapController.tscn" type="PackedScene" id=6]
 
@@ -54,3 +56,26 @@ texture = ExtResource( 4 )
 ]]
 position = Vector2( 576, 192 )
 texture = ExtResource( 4 )
+
+[node name="Block1" parent="." instance=ExtResource( 2 )]
+position = Vector2( -64, -80 )
+scale = Vector2( 50, 1 )
+
+[node name="Block2" parent="." instance=ExtResource( 2 )]
+position = Vector2( -64, 448 )
+scale = Vector2( 50, 1 )
+
+[node name="TrafficLane1" parent="." instance=ExtResource( 3 )]
+position = Vector2( 776, 96 )
+scale = Vector2( 50, 1 )
+fromRight = true
+
+[node name="TrafficLane2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 776, 160 )
+fromRight = true
+
+[node name="TrafficLane3" parent="." instance=ExtResource( 3 )]
+position = Vector2( -96, 224 )
+
+[node name="TrafficLane4" parent="." instance=ExtResource( 3 )]
+position = Vector2( -96, 288 )

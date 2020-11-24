@@ -30,8 +30,7 @@ func handleLabels():
 	$MenuMovementHintLabel.visible = hasConnected
 	$MenuChangeSkinHintLabel.visible = hasConnected
 	$MenuChangeTeamHintLabel.visible = hasConnected
-	##TODO depend on setting
-	$MenuNagivationHintLabel.visible = hasConnected
+	$MenuNagivationHintLabel.visible = Global.ALLOW_PLAYERS_SET_OPTIONS && hasConnected
 	$IngameHintLabel.visible = hasConnected
 	$IngameMovementHintLabel.visible = hasConnected
 	$IngameAimHintLabel.visible = hasConnected

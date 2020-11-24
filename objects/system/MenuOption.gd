@@ -10,5 +10,5 @@ func _ready():
 func _process(delta):
 	$SelectionLabel.set_text(str(Global.options[option][Global.optionsSelected[option]]))
 	var isArrowsVisible = show_arrows and option.nocasecmp_to(Global.currentOption) == 0
-	$LeftArrow.visible = isArrowsVisible
-	$RightArrow.visible = isArrowsVisible
+	$LeftArrow.visible = Global.ALLOW_PLAYERS_SET_OPTIONS && isArrowsVisible
+	$RightArrow.visible = Global.ALLOW_PLAYERS_SET_OPTIONS && isArrowsVisible
