@@ -44,6 +44,12 @@ const HINT_STRINGS = [
 	["YOU CANNOT MOVE IN SPACE", "ONLY DASH"],
 	["SAME COLOR MEANS SAME TEAM"]
 ]
+const ACHIEVEMENTS = {
+	'ud': ['underdog', 'low overall score'], # has at most the half of the needed score at the end
+	'dm': ['demolition man', 'excels in dynamite tossing'],
+	'gs': ['gunslinger', 'accurate with the revolver'],
+	'im': ['iron man', 'absorbed a lot of damage']
+}
 const SKIN_COUNT = 6
 const TEAM_COLOR_STRINGS = {
 	0: "RED",
@@ -74,24 +80,29 @@ var playersJoined = [false, false, false, false]
 var playersSkin = [0, 1, 2, 3]
 var playersTeam = [0, 1, 2, 3]
 var playersPoints = [0, 0, 0, 0]
+
 var playersCrowned = [false, false, false, false]
 var playersFrozen = false
+var playersAchievements = [[], [], [], []]
 var selectedMap = 'none'
 
 func goToMap():
-	var selectedMapIndex;
-	if optionsSelected['map'] == 0:
-		selectedMapIndex = (randi() % (len(options['map']) - 1) + 1)
-	else:
-		selectedMapIndex = optionsSelected['map']
+	if getWinnerTeamByScore() < 0:
+		var selectedMapIndex;
+		if optionsSelected['map'] == 0:
+			selectedMapIndex = (randi() % (len(options['map']) - 1) + 1)
+		else:
+			selectedMapIndex = optionsSelected['map']
 
-	selectedMap = options['map'][selectedMapIndex];
-	
-	if selectedMap == 'lava': get_tree().change_scene("res://maps/MapLava.tscn")
-	if selectedMap == 'western': get_tree().change_scene("res://maps/MapWestern.tscn")
-	if selectedMap == 'ship': get_tree().change_scene("res://maps/MapShip.tscn")
-	if selectedMap == 'space': get_tree().change_scene("res://maps/MapSpace.tscn")
-	if selectedMap == 'traffic': get_tree().change_scene("res://maps/MapTraffic.tscn")
+		selectedMap = options['map'][selectedMapIndex];
+		
+		if selectedMap == 'lava': get_tree().change_scene("res://maps/MapLava.tscn")
+		if selectedMap == 'western': get_tree().change_scene("res://maps/MapWestern.tscn")
+		if selectedMap == 'ship': get_tree().change_scene("res://maps/MapShip.tscn")
+		if selectedMap == 'space': get_tree().change_scene("res://maps/MapSpace.tscn")
+		if selectedMap == 'traffic': get_tree().change_scene("res://maps/MapTraffic.tscn")
+	else:
+		get_tree().change_scene("res://maps/PostGame.tscn")
 
 func getWinnerTeam():
 	var aliveTeams = []
@@ -105,6 +116,12 @@ func getWinnerTeam():
 		return aliveTeams[0] # if only one alive, return the ID of the team
 	else:
 		return -1 # more than one teams are alive
+
+func getWinnerTeamByScore():
+	for i in range(4):
+		if playersPoints[i] == options['rounds'][optionsSelected['rounds']]:
+			return playersTeam[i]
+	return -1
 
 func connectPlayer(playerId):
 	playersConnected[playerId] = true

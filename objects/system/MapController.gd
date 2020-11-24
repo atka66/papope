@@ -52,7 +52,7 @@ func initCountdown():
 func endRound(aliveTeamId):
 	Global.playersFrozen = true
 	if aliveTeamId > -1: # team points are accounted
-		for i in Global.playersTeam:
+		for i in range(4):
 			if Global.playersJoined[i] && Global.playersTeam[i] == aliveTeamId:
 				Global.playersPoints[i] += 1
 	
