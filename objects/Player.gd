@@ -25,6 +25,8 @@ var inputCd = false
 func _ready():
 	$InvulAnim.play()
 	$InvulAnim.hide()
+	if !Global.playersCrowned[playerId]:
+		$Crown.hide()
 	$Crosshair.hide()
 	$WhiplashAnim.hide()
 	$OutsideLabel.hide()
@@ -78,7 +80,7 @@ func _input(event):
 	if event.device == playerId && !inputCd:
 		inputCd = true
 		if inLobby:
-			if !Global.Lobby.countingDown:
+			if !get_node('/root/Lobby').countingDown:
 				if Input.is_action_just_pressed("pl_skin_next"):
 					Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
 				if Input.is_action_just_pressed("pl_game_use"):

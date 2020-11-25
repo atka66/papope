@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://sprites/player/faces.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/circle.png" type="Texture" id=2]
@@ -19,12 +19,13 @@
 [ext_resource path="res://sprites/player/invul_3.png" type="Texture" id=17]
 [ext_resource path="res://sprites/player/invul_4.png" type="Texture" id=18]
 [ext_resource path="res://sprites/player/invul_1.png" type="Texture" id=19]
+[ext_resource path="res://sprites/player/crown.png" type="Texture" id=20]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=2]
 resource_name = "fade"
 length = 0.2
 tracks/0/type = "value"
@@ -40,7 +41,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ) ],
 "loop": true,
@@ -48,10 +49,10 @@ animations = [ {
 "speed": 20.0
 } ]
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=4]
 radius = 16.0
 
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
@@ -59,7 +60,7 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
 "frames": [ ExtResource( 13 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 12 ), ExtResource( 10 ) ],
 "loop": true,
@@ -67,10 +68,10 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="Gradient" id=11]
+[sub_resource type="Gradient" id=7]
 
-[sub_resource type="GradientTexture" id=12]
-gradient = SubResource( 11 )
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
 
 [sub_resource type="Curve" id=9]
 min_value = -1.0
@@ -79,13 +80,13 @@ _data = [ Vector2( 0, 0 ), 0.0, 0.863636, 0, 1, Vector2( 0.35, 0.302273 ), 0.0, 
 [sub_resource type="CurveTexture" id=10]
 curve = SubResource( 9 )
 
-[sub_resource type="Curve" id=7]
+[sub_resource type="Curve" id=11]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=8]
-curve = SubResource( 7 )
+[sub_resource type="CurveTexture" id=12]
+curve = SubResource( 11 )
 
-[sub_resource type="ParticlesMaterial" id=6]
+[sub_resource type="ParticlesMaterial" id=13]
 lifetime_randomness = 0.5
 trail_divisor = 30
 emission_shape = 2
@@ -100,8 +101,8 @@ orbit_velocity_random = 0.0
 orbit_velocity_curve = SubResource( 10 )
 scale = 10.0
 scale_random = 0.7
-scale_curve = SubResource( 8 )
-color_ramp = SubResource( 12 )
+scale_curve = SubResource( 12 )
+color_ramp = SubResource( 8 )
 
 [node name="Player" type="RigidBody2D" groups=[
 "players",
@@ -127,19 +128,23 @@ texture = ExtResource( 19 )
 
 [node name="HurtAnim" type="AnimationPlayer" parent="Hurt"]
 autoplay = "fade"
-anims/fade = SubResource( 13 )
+anims/fade = SubResource( 2 )
 
 [node name="InvulAnim" type="AnimatedSprite" parent="."]
-frames = SubResource( 2 )
+frames = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="InvulAnim"]
 wait_time = 5.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="SpawnAnim" type="AnimatedSprite" parent="."]
-frames = SubResource( 4 )
+frames = SubResource( 5 )
+
+[node name="Crown" type="Sprite" parent="."]
+position = Vector2( 0, -18 )
+texture = ExtResource( 20 )
 
 [node name="HitScan" type="RayCast2D" parent="."]
 enabled = true
@@ -150,7 +155,7 @@ texture = ExtResource( 9 )
 hframes = 3
 
 [node name="WhiplashAnim" type="AnimatedSprite" parent="."]
-frames = SubResource( 5 )
+frames = SubResource( 6 )
 centered = false
 offset = Vector2( -16, -32 )
 
@@ -163,7 +168,7 @@ outline = true
 position = Vector2( 0, 12 )
 amount = 200
 lifetime = 0.3
-process_material = SubResource( 6 )
+process_material = SubResource( 13 )
 [connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
 [connection signal="timeout" from="InvulAnim/Timer" to="." method="_endInvul"]
 [connection signal="animation_finished" from="SpawnAnim" to="." method="_on_SpawnAnim_animation_finished"]

@@ -57,6 +57,9 @@ func _ready():
 		showAchievement(200 - (i * 40), Global.playersAchievements[playerId][i])
 		yield(get_tree().create_timer(0.25), "timeout")
 	
+func _input(event):
+	if Input.is_action_just_pressed("ui_accept"):
+		get_tree().change_scene("res://Lobby.tscn")
 func showAchievement(y, achievement):
 	var nameLabel = Global.CustomLabel.instance()
 	nameLabel.position = Vector2(12, y)

@@ -59,6 +59,7 @@ func joinPlayer(playerId):
 	slot.add_child(player)
 
 func leavePlayer(playerId):
+	Global.playersCrowned[playerId] = false
 	Global.playersJoined[playerId] = false
 	emit_signal("player_remove", playerId)
 
@@ -76,7 +77,17 @@ func stopCountdown():
 	for cd in get_tree().get_nodes_in_group("countdown"):
 		cd.queue_free()
 
+func initPlayers():
+	Global.playersFrozen = false
+	Global.playersPoints = [0, 0, 0, 0]
+	Global.playersAchievements = [[], [], [], []]
+	for i in len(Global.playersJoined):
+		if Global.playersJoined[i]:
+			joinPlayer(i)
+
 func _ready():
+	initPlayers()
+	
 	randomizeBackground()
 	$VersionLabel.set_text('V' + Global.VERSION)
 	while true:
