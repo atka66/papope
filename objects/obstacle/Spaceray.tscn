@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://objects/obstacle/Spaceray.gd" type="Script" id=1]
 [ext_resource path="res://sprites/obstacle/spaceray_1.png" type="Texture" id=2]
@@ -19,6 +19,33 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 0.062, 1 ) ]
 }
+
+[sub_resource type="ParticlesMaterial" id=4]
+trail_divisor = 5
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 30.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 250.0
+initial_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+scale_random = 1.0
+
+[sub_resource type="ParticlesMaterial" id=5]
+render_priority = 5
+trail_divisor = 5
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 30.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 250.0
+initial_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+scale_random = 1.0
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -45,8 +72,21 @@ anims/narrow = SubResource( 1 )
 collision_layer = 128
 collision_mask = 13
 
+[node name="ParticlesTop" type="Particles2D" parent="Phase2"]
+position = Vector2( 0, -224 )
+amount = 100
+lifetime = 0.7
+process_material = SubResource( 4 )
+
+[node name="ParticlesBottom" type="Particles2D" parent="Phase2"]
+position = Vector2( 0, 224 )
+amount = 100
+lifetime = 0.7
+process_material = SubResource( 5 )
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Phase2"]
 frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Phase2"]
