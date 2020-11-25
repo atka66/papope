@@ -76,14 +76,19 @@ var optionsSelected = {
 var currentOption = options.keys()[0]
 
 var playersConnected = [false, false, false, false]
-var playersJoined = [false, false, false, false]
+#var playersJoined = [false, false, false, false]
+#var playersSkin = [0, 1, 2, 3]
+#var playersTeam = [0, 1, 2, 3]
+#var playersPoints = [0, 0, 0, 0]
+var playersJoined = [true, true, false, true]
 var playersSkin = [0, 1, 2, 3]
 var playersTeam = [0, 1, 2, 3]
-var playersPoints = [0, 0, 0, 0]
+var playersPoints = [0, 3, 0, 1]
 
 var playersCrowned = [false, false, false, false]
 var playersFrozen = false
-var playersAchievements = [[], [], [], []]
+#var playersAchievements = [[], [], [], []]
+var playersAchievements = [['ud', 'gs'], [], [], ['gs', 'im', 'dm']]
 var selectedMap = 'none'
 
 func goToMap():
