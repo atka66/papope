@@ -88,7 +88,7 @@ func distributeAchievements():
 		if Global.playersSkin[playerId] == 0:
 			achievement = Global.Achi.JATSZUNK_MAST
 		else:
-			achievement = Global.Achi.UNDER_DOG
+			achievement = Global.Achi.UNDERDOG
 		Global.registerAchievement(playerId, achievement)
 	# check stat achievements
 	var playerStats = Global.playersStats[playerId]

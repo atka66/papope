@@ -44,12 +44,12 @@ const HINT_STRINGS = [
 	["SAME COLOR MEANS SAME TEAM"]
 ]
 enum Achi {
-	UNDER_DOG, DEMOLITION_MAN, GUNSLINGER, HUTS_HUTS, DAREDEVIL,
+	UNDERDOG, DEMOLITION_MAN, GUNSLINGER, HUTS_HUTS, DAREDEVIL,
 	GUERRILLA, CARELESS, JUDAS, NO_REFUNDS, DEAD_BY_CHOICE,
 	JATSZUNK_MAST
 }
 const ACHIEVEMENTS = {
-	Achi.UNDER_DOG : ['underdog', 'low overall score'], # has <= 1/4 of the needed score at the end (score limit min 3)
+	Achi.UNDERDOG : ['underdog', 'low overall score'], # has <= 1/4 of the needed score at the end (score limit min 3)
 	Achi.DEMOLITION_MAN : ['demolition man', 'great dynamite damage'], # dynamite dmg / thrown dynamites > 75
 	Achi.GUNSLINGER : ['gunslinger', 'accurate with the revolver'], # revolver accuracy over 75%
 	Achi.HUTS_HUTS : ['huts-huts', 'accurate with the whip'], # whip accuracy over 75%
@@ -59,7 +59,7 @@ const ACHIEVEMENTS = {
 	Achi.JUDAS : ['judas', 'killed his own teammate'], # killed his own teammate with revolver, dynamite or whip
 	Achi.NO_REFUNDS : ['no refunds!', 'the shield could not save him'], # die while having active shield
 	Achi.DEAD_BY_CHOICE : ['dead by choice', 'died with shield in inventory'], # die while having shield in inventory
-	Achi.JATSZUNK_MAST : ['jatszunk mast!', 'be underdog with bazsi skins'] # be underdog with bazsi skin (0)
+	Achi.JATSZUNK_MAST : ['jatszunk mast!', 'be underdog with bazsi skin'] # be underdog with bazsi skin (0)
 }
 const SKIN_COUNT = 6
 const TEAM_COLOR_STRINGS = {
@@ -88,18 +88,16 @@ var currentOption = options.keys()[0]
 
 var playersConnected = [false, false, false, false]
 var playersJoined = [false, false, false, false]
+var playersPoints = [0, 0, 0, 0]
+#var playersJoined = [true, true, true, true]
+#var playersPoints = [0, 3, 2, 2]
 var playersSkin = [0, 1, 2, 3]
 var playersTeam = [0, 1, 2, 3]
-var playersPoints = [0, 0, 0, 0]
-#var playersJoined = [true, true, false, true]
-#var playersSkin = [0, 1, 2, 3]
-#var playersTeam = [0, 1, 2, 3]
-#var playersPoints = [0, 3, 0, 1]
 
 var playersCrowned = [false, false, false, false]
 var playersFrozen = false
 var playersAchievements = [[], [], [], []]
-#var playersAchievements = [['ud', 'gs'], [], [], ['gs', 'im', 'dm']]
+#var playersAchievements = [[Achi.UNDERDOG, Achi.JATSZUNK_MAST], [], [], []]
 enum Stat {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT}
 var playersStats = []
 var selectedMap = 'none'
