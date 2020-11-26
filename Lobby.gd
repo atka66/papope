@@ -84,6 +84,16 @@ func initPlayers():
 	for i in len(Global.playersJoined):
 		if Global.playersJoined[i]:
 			joinPlayer(i)
+	Global.playersStats = []
+	for i in range(4):
+		Global.playersStats.append(
+			{
+				Global.Stat.REV_USE: 0, Global.Stat.REV_HIT: 0,
+				Global.Stat.DYN_USE: 0, Global.Stat.DYN_DMG: 0,
+				Global.Stat.WHP_USE: 0, Global.Stat.WHP_HIT: 0,
+				Global.Stat.TRP_USE: 0, Global.Stat.TRP_HIT: 0,
+			}
+		)
 
 func _ready():
 	initPlayers()

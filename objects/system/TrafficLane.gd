@@ -12,5 +12,5 @@ func spawnCar():
 	car.fromRight = fromRight
 	car.position = position
 	car.speed = carSpeed
-	get_tree().get_root().add_child(car)
+	get_parent().add_child(car)
 	var rerun = spawnCar()

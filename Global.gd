@@ -43,12 +43,23 @@ const HINT_STRINGS = [
 	["YOU CANNOT MOVE IN SPACE", "ONLY DASH"],
 	["SAME COLOR MEANS SAME TEAM"]
 ]
+enum Achi {
+	UNDER_DOG, DEMOLITION_MAN, GUNSLINGER, HUTS_HUTS, DAREDEVIL,
+	GUERRILLA, CARELESS, JUDAS, NO_REFUNDS, DEAD_BY_CHOICE,
+	JATSZUNK_MAST
+}
 const ACHIEVEMENTS = {
-	'ud': ['underdog', 'low overall score'], # has at most the half of the needed score at the end
-	'dm': ['demolition man', 'excels in dynamite tossing'],
-	'gs': ['gunslinger', 'accurate with the revolver'],
-	'im': ['iron man', 'absorbed a lot of damage'],
-	'ff': ['team-killer', 'killed his own teammate']
+	Achi.UNDER_DOG : ['underdog', 'low overall score'], # has <= 1/4 of the needed score at the end (score limit min 3)
+	Achi.DEMOLITION_MAN : ['demolition man', 'great dynamite damage'], # dynamite dmg / thrown dynamites > 75
+	Achi.GUNSLINGER : ['gunslinger', 'accurate with the revolver'], # revolver accuracy over 75%
+	Achi.HUTS_HUTS : ['huts-huts', 'accurate with the whip'], # whip accuracy over 75%
+	Achi.DAREDEVIL : ['daredevil', 'won a round with low health'], # win a round with <= 10% of health
+	Achi.GUERRILLA : ['guerrilla', 'well placed traps'], # sprung traps (on enemy) / laid traps > 75%
+	Achi.CARELESS : ['careless', 'stepped in his own trap'], # sprung his own trap
+	Achi.JUDAS : ['judas', 'killed his own teammate'], # killed his own teammate with revolver, dynamite or whip
+	Achi.NO_REFUNDS : ['no refunds!', 'the shield could not save him'], # die while having active shield
+	Achi.DEAD_BY_CHOICE : ['dead by choice', 'died with shield in inventory'], # die while having shield in inventory
+	Achi.JATSZUNK_MAST : ['jatszunk mast!', 'be underdog with bazsi skins'] # be underdog with bazsi skin (0)
 }
 const SKIN_COUNT = 6
 const TEAM_COLOR_STRINGS = {
@@ -89,6 +100,8 @@ var playersCrowned = [false, false, false, false]
 var playersFrozen = false
 var playersAchievements = [[], [], [], []]
 #var playersAchievements = [['ud', 'gs'], [], [], ['gs', 'im', 'dm']]
+enum Stat {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT}
+var playersStats = []
 var selectedMap = 'none'
 
 func goToMap():
@@ -162,3 +175,10 @@ func _joy_connection_changed(id, connected):
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
+
+func registerAchievement(playerId, achievement):
+	if !(achievement in Global.playersAchievements[playerId]):
+		Global.playersAchievements[playerId].append(achievement)
+
+func incrementStat(playerId, stat, i):
+	Global.playersStats[playerId][stat] += i

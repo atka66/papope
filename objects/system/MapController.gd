@@ -50,6 +50,11 @@ func initCountdown():
 	get_parent().add_child(countdown)
 
 func endRound(aliveTeamId):
+	# check daredevil achievement
+	for player in get_tree().get_nodes_in_group('players'):
+		if Global.playersJoined[player.playerId] && player.alive && player.hp <= Global.options['hp'][Global.optionsSelected['hp']] / 10:
+			Global.registerAchievement(player.playerId, Global.Achi.DAREDEVIL)
+	
 	Global.playersFrozen = true
 	if aliveTeamId > -1: # team points are accounted
 		for i in range(4):

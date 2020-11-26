@@ -108,8 +108,12 @@ func _process(delta):
 			if hp < 1:
 				$Body.modulate = Global.TEAM_COLORS[4]
 				alive = false
+				if invulnerable:
+					Global.registerAchievement(playerId, Global.Achi.NO_REFUNDS)
 				hp = 0
 				ammo = 0
+				if item == 'shield':
+					Global.registerAchievement(playerId, Global.Achi.DEAD_BY_CHOICE)
 				item = null
 				$Crosshair.hide()
 
@@ -198,7 +202,6 @@ func pickup(pwrup):
 		ammo = 5
 
 func trap():
-	hurt(35)
 	trapped = true
 	yield(get_tree().create_timer(2.0), "timeout")
 	trapped = false
@@ -215,19 +218,25 @@ func spawnPickupLabel(text):
 
 func useItem():
 		if item == 'revolver':
+			Global.incrementStat(playerId, Global.Stat.REV_USE, 1)
 			var revolverRay = Global.RevolverRay.instance()
 			var hitPosition = global_position + $HitScan.cast_to
 			if $HitScan.is_colliding():
 				var collider = $HitScan.get_collider()
 				hitPosition = $HitScan.get_collision_point()
 				if collider.is_in_group('players'):
+					if collider.wouldRighteouslyBeHitBy(playerId):
+						Global.incrementStat(playerId, Global.Stat.REV_HIT, 1)
 					collider.hurt(20)
+					if wasTeammateJustKilled(collider):
+						Global.registerAchievement(playerId, Global.Achi.JUDAS)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 200)
 			revolverRay.position = position
 			revolverRay.rotation = $HitScan.cast_to.angle()
 			revolverRay.length = (position - hitPosition).length()
 			get_tree().get_root().add_child(revolverRay)
 		if item == 'dynamite':
+			Global.incrementStat(playerId, Global.Stat.DYN_USE, 1)
 			var dynamite = Global.Dynamite.instance()
 			dynamite.position = position + ($HitScan.cast_to.normalized()) * 16
 			dynamite.originPlayerId = playerId
@@ -238,11 +247,14 @@ func useItem():
 			$InvulAnim.show()
 			$InvulAnim/Timer.start(5)
 		if item == 'trap':
+			Global.incrementStat(playerId, Global.Stat.TRP_USE, 1)
 			var trap = Global.Trap.instance()
+			trap.originPlayerId = playerId
 			trap.rotation_degrees += (randi() % 60) - 30
 			trap.position = position
 			get_tree().get_root().add_child(trap)
 		if item == 'whip':
+			Global.incrementStat(playerId, Global.Stat.WHP_USE, 1)
 			var angle = $HitScan.cast_to.angle()
 			$WhiplashAnim.rotation = angle
 			$WhiplashAnim.frame = 0
@@ -253,8 +265,12 @@ func useItem():
 			if $HitScan.is_colliding():
 				var collider = $HitScan.get_collider()
 				if collider.is_in_group('players'):
+					if collider.wouldRighteouslyBeHitBy(playerId):
+						Global.incrementStat(playerId, Global.Stat.WHP_HIT, 1)
 					hitPosition = $HitScan.get_collision_point()
 					collider.hurt(30)
+					if wasTeammateJustKilled(collider): # if teammate was just killed
+						Global.registerAchievement(playerId, Global.Achi.JUDAS)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 2500)
 			whipcrackAnim.position = hitPosition
 			get_tree().get_root().add_child(whipcrackAnim)
@@ -281,3 +297,11 @@ func _on_WhiplashAnim_animation_finished():
 func isOutside():
 	return global_position.x < 0 || global_position.x > 680 || global_position.y < 0 || global_position.y > 384
 		
+func wasTeammateJustKilled(other):
+	return other.alive && other.hp <= 0 && isTeammate(other.playerId)
+
+func isTeammate(otherPlayerId):
+	return Global.playersTeam[otherPlayerId] == Global.playersTeam[playerId]
+
+func wouldRighteouslyBeHitBy(inflictorId):
+	return alive && !invulnerable && !isTeammate(inflictorId)
