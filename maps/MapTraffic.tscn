@@ -13,7 +13,7 @@ z_as_relative = false
 [node name="MapController" parent="." instance=ExtResource( 6 )]
 
 [node name="BgNode" type="Node2D" parent="."]
-z_index = -52
+z_index = -55
 z_as_relative = false
 
 [node name="TextureRect" type="TextureRect" parent="BgNode"]
@@ -80,14 +80,10 @@ texture = ExtResource( 4 )
 [node name="Block1" parent="." instance=ExtResource( 2 )]
 position = Vector2( -64, -80 )
 scale = Vector2( 50, 1 )
-z_index = -2
-z_as_relative = false
 
 [node name="Block2" parent="." instance=ExtResource( 2 )]
 position = Vector2( -64, 448 )
 scale = Vector2( 50, 1 )
-z_index = -2
-z_as_relative = false
 
 [node name="TrafficLane1" parent="." instance=ExtResource( 3 )]
 position = Vector2( 776, 96 )

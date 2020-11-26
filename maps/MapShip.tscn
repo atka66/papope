@@ -677,7 +677,7 @@ z_as_relative = false
 [node name="MapController" parent="." instance=ExtResource( 6 )]
 
 [node name="BgNode" type="Node2D" parent="."]
-z_index = -52
+z_index = -55
 z_as_relative = false
 
 [node name="TextureRect" type="TextureRect" parent="BgNode"]
@@ -768,73 +768,49 @@ texture = ExtResource( 4 )
 
 [node name="Mast" parent="." instance=ExtResource( 5 )]
 position = Vector2( 328, 176 )
-z_index = 1
-z_as_relative = false
 
 [node name="Block1" parent="." instance=ExtResource( 7 )]
 position = Vector2( 128, 64 )
 scale = Vector2( 5, 2 )
-z_index = -2
-z_as_relative = false
 
 [node name="Block2" parent="." instance=ExtResource( 7 )]
 position = Vector2( 272, 64 )
 scale = Vector2( 8, 2 )
-z_index = -2
-z_as_relative = false
 
 [node name="Block3" parent="." instance=ExtResource( 7 )]
 position = Vector2( 464, 64 )
 scale = Vector2( 5, 2 )
-z_index = -2
-z_as_relative = false
 
 [node name="Block4" parent="." instance=ExtResource( 7 )]
 position = Vector2( 128, 256 )
 scale = Vector2( 9, 2 )
-z_index = -2
-z_as_relative = false
 
 [node name="Block5" parent="." instance=ExtResource( 7 )]
 position = Vector2( 400, 256 )
 scale = Vector2( 9, 2 )
-z_index = -2
-z_as_relative = false
 
 [node name="Block6" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, -80 )
 scale = Vector2( 42, 1 )
-z_index = -2
-z_as_relative = false
 
 [node name="Block7" parent="." instance=ExtResource( 7 )]
 position = Vector2( 160, 448 )
 scale = Vector2( 22, 1 )
-z_index = -2
-z_as_relative = false
 
 [node name="WaterTrigger1" parent="." instance=ExtResource( 10 )]
 position = Vector2( 96, -64 )
 scale = Vector2( 1, 24 )
-z_index = -2
-z_as_relative = false
 
 [node name="WaterTrigger2" parent="." instance=ExtResource( 10 )]
 position = Vector2( 96, 320 )
 rotation = -0.436332
 scale = Vector2( 1, 10 )
-z_index = -2
-z_as_relative = false
 
 [node name="WaterTrigger3" parent="." instance=ExtResource( 10 )]
 position = Vector2( 560, -64 )
 scale = Vector2( 1, 24 )
-z_index = -2
-z_as_relative = false
 
 [node name="WaterTrigger4" parent="." instance=ExtResource( 10 )]
 position = Vector2( 560, 320 )
 rotation = 0.436332
 scale = Vector2( 1, 10 )
-z_index = -2
-z_as_relative = false

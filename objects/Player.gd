@@ -235,6 +235,7 @@ func useItem():
 			revolverRay.rotation = $HitScan.cast_to.angle()
 			revolverRay.length = (position - hitPosition).length()
 			get_tree().get_root().add_child(revolverRay)
+			$RevolverShoot.play()
 		if item == 'dynamite':
 			Global.incrementStat(playerId, Global.Stat.DYN_USE, 1)
 			var dynamite = Global.Dynamite.instance()

@@ -159,7 +159,7 @@ z_as_relative = false
 [node name="MapController" parent="." instance=ExtResource( 6 )]
 
 [node name="BgNode" type="Node2D" parent="."]
-z_index = -52
+z_index = -55
 z_as_relative = false
 
 [node name="TextureRect" type="TextureRect" parent="BgNode"]

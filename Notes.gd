@@ -4,9 +4,9 @@
 # [Nodes]
 #
 # -103 : {MapController}
-# -99  : [Stars]
-# -98  : [Comets]
-# -52  : [BgNode], [MovingBackground]
+# -55  : [BgNode], [MovingBackground]
+# -54  : [Stars]
+# -53  : [Comets]
 # -51  : [BgTiles1]
 # -50  : [BgTiles2]
 # -49  : [BackgroundDim]
