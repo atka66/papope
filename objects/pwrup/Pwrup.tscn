@@ -38,6 +38,8 @@ radius = 8.0
 [node name="Pwrup" type="Area2D" groups=[
 "pwrups",
 ]]
+z_index = 3
+z_as_relative = false
 collision_layer = 2147483650
 script = ExtResource( 1 )
 
@@ -51,6 +53,8 @@ playing = true
 offset = Vector2( 0, -8 )
 
 [node name="SpawnAnim" type="AnimatedSprite" parent="."]
+z_index = 5
+z_as_relative = false
 frames = SubResource( 2 )
 offset = Vector2( 0, -8 )
 

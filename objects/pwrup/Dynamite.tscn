@@ -6,7 +6,7 @@
 [sub_resource type="PhysicsMaterial" id=1]
 bounce = 1.0
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticlesMaterial" id=2]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -15,12 +15,14 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 color = Color( 1, 1, 0, 1 )
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=3]
 radius = 8.0
 
 [node name="Dynamite" type="RigidBody2D" groups=[
 "dynamites",
 ]]
+z_index = -1
+z_as_relative = false
 collision_layer = 4
 collision_mask = 29
 physics_material_override = SubResource( 1 )
@@ -36,8 +38,8 @@ texture = ExtResource( 1 )
 position = Vector2( 8, 0 )
 amount = 10
 lifetime = 0.1
-process_material = SubResource( 5 )
+process_material = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 [connection signal="body_entered" from="." to="." method="_on_Dynamite_body_entered"]

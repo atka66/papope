@@ -17,6 +17,8 @@ tracks/0/keys = {
 
 [node name="Dim" type="Polygon2D"]
 modulate = Color( 0, 0, 0, 1 )
+z_index = 100
+z_as_relative = false
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
 

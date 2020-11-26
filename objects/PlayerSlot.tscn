@@ -7,8 +7,9 @@
 [ext_resource path="res://sprites/label/x.tres" type="SpriteFrames" id=5]
 [ext_resource path="res://sprites/label/o.tres" type="SpriteFrames" id=6]
 
-
 [node name="PlayerSlot" type="Node2D"]
+z_index = -1
+z_as_relative = false
 script = ExtResource( 2 )
 
 [node name="SpawnSprite" type="Sprite" parent="."]

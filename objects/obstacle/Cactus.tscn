@@ -9,6 +9,8 @@ radius = 8.0
 [node name="Cactus" type="StaticBody2D" groups=[
 "cacti",
 ]]
+z_index = 1
+z_as_relative = false
 collision_layer = 4
 collision_mask = 9
 script = ExtResource( 2 )

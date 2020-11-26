@@ -6,6 +6,8 @@
 radius = 8.0
 
 [node name="Tree" type="StaticBody2D"]
+z_index = 1
+z_as_relative = false
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

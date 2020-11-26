@@ -8,7 +8,7 @@
 [ext_resource path="res://objects/system/CustomLabel.tscn" type="PackedScene" id=6]
 
 [node name="Hud" type="Node2D"]
-z_index = 102
+z_index = 90
 z_as_relative = false
 script = ExtResource( 3 )
 

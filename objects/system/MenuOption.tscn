@@ -20,11 +20,15 @@ color = Color( 0.501961, 0.501961, 0.501961, 1 )
 
 [node name="LeftArrow" type="Sprite" parent="."]
 position = Vector2( -112, 5 )
+z_index = 101
+z_as_relative = false
 texture = ExtResource( 1 )
 hframes = 2
 
 [node name="RightArrow" type="Sprite" parent="."]
 position = Vector2( 112, 5 )
+z_index = 101
+z_as_relative = false
 texture = ExtResource( 1 )
 hframes = 2
 frame = 1

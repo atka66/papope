@@ -158,7 +158,11 @@ z_as_relative = false
 
 [node name="MapController" parent="." instance=ExtResource( 6 )]
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="BgNode" type="Node2D" parent="."]
+z_index = -52
+z_as_relative = false
+
+[node name="TextureRect" type="TextureRect" parent="BgNode"]
 margin_right = 680.0
 margin_bottom = 384.0
 texture = ExtResource( 1 )
@@ -167,7 +171,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="BgTiles1" type="TileMap" parent="."]
+z_index = -51
+z_as_relative = false
 tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
@@ -175,6 +181,8 @@ tile_data = PoolIntArray( 9, 7, 0, 10, 4, 0, 11, 8, 0, 65545, 3, 0, 65546, 9, 0,
 
 [node name="EmberParticles" type="Particles2D" parent="."]
 position = Vector2( 340, 192 )
+z_index = 6
+z_as_relative = false
 amount = 200
 lifetime = 5.0
 visibility_rect = Rect2( 0, 0, 680, 384 )
@@ -182,26 +190,38 @@ process_material = SubResource( 4 )
 
 [node name="PlayerSpawner0" type="Position2D" parent="."]
 position = Vector2( 64, 64 )
+z_index = -2
+z_as_relative = false
 
 [node name="PlayerSpawner1" type="Position2D" parent="."]
 position = Vector2( 616, 64 )
+z_index = -2
+z_as_relative = false
 
 [node name="PlayerSpawner2" type="Position2D" parent="."]
 position = Vector2( 64, 320 )
+z_index = -2
+z_as_relative = false
 
 [node name="PlayerSpawner3" type="Position2D" parent="."]
 position = Vector2( 616, 320 )
+z_index = -2
+z_as_relative = false
 
 [node name="PwrupSpawner0" type="Sprite" parent="." groups=[
 "spawners",
 ]]
 position = Vector2( 288, 192 )
+z_index = -2
+z_as_relative = false
 texture = ExtResource( 4 )
 
 [node name="PwrupSpawner1" type="Sprite" parent="." groups=[
 "spawners",
 ]]
 position = Vector2( 384, 192 )
+z_index = -2
+z_as_relative = false
 texture = ExtResource( 4 )
 
 [node name="Lava1" parent="." instance=ExtResource( 5 )]

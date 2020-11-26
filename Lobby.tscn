@@ -17,7 +17,7 @@
 resource_name = "loop"
 length = 5.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Dim:modulate")
+tracks/0/path = NodePath("BackgroundDim:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -45,12 +45,16 @@ tracks/1/keys = {
 script = ExtResource( 5 )
 
 [node name="MovingBackground" type="Sprite" parent="."]
+z_index = -52
+z_as_relative = false
 texture = ExtResource( 2 )
 centered = false
 vframes = 5
 
-[node name="Dim" type="Polygon2D" parent="."]
+[node name="BackgroundDim" type="Polygon2D" parent="."]
 modulate = Color( 0, 0, 0, 1 )
+z_index = -49
+z_as_relative = false
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
 

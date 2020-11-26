@@ -5,10 +5,11 @@ func _on_WaterTrigger_body_entered(body):
 		if !body.fallWater:
 			body.fallWater = true
 			body.gravity_scale = 30
-			var velX = 0.5
+			var vector = -body.linear_velocity
+			var vel = Vector2(0.7, -1)
 			if body.global_position.x < 340:
-				velX *= -1
-			body.apply_central_impulse(Vector2(velX, -1) * 300)
+				vel.x *= -1
+			body.apply_central_impulse(vector + (vel * 500))
 			yield(get_tree().create_timer(0.7), "timeout")
 			if !Global.playersFrozen:
 				body.hp = 0

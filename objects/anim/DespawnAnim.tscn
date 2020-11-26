@@ -16,6 +16,8 @@ animations = [ {
 } ]
 
 [node name="DespawnAnim" type="AnimatedSprite"]
+z_index = 5
+z_as_relative = false
 frames = SubResource( 1 )
 script = ExtResource( 6 )
 [connection signal="animation_finished" from="." to="." method="_on_DespawnAnim_animation_finished"]

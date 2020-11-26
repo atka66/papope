@@ -151,6 +151,8 @@ enabled = true
 collision_mask = 13
 
 [node name="Crosshair" type="Sprite" parent="."]
+z_index = 89
+z_as_relative = false
 texture = ExtResource( 9 )
 hframes = 3
 

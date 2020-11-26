@@ -21,6 +21,8 @@ tracks/0/keys = {
 }
 
 [node name="HudRevolver" type="Node2D"]
+z_index = 91
+z_as_relative = false
 
 [node name="DrumRotate" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Drum")

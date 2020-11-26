@@ -16,6 +16,8 @@ animations = [ {
 } ]
 
 [node name="CollisionAnim" type="AnimatedSprite"]
+z_index = 5
+z_as_relative = false
 frames = SubResource( 1 )
 offset = Vector2( -0.5, 0 )
 script = ExtResource( 3 )

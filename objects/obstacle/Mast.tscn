@@ -6,6 +6,8 @@
 extents = Vector2( 8, 8 )
 
 [node name="Mast" type="StaticBody2D"]
+z_index = 1
+z_as_relative = false
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
