@@ -8,7 +8,7 @@ func _ready():
 func spawnCar():
 	var carSpeed = (randi() % 2) + 5
 	yield(get_tree().create_timer((randf() * 3) + 2), "timeout")
-	var car = Global.Car.instance()
+	var car = Res.Car.instance()
 	car.fromRight = fromRight
 	car.position = position
 	car.speed = carSpeed

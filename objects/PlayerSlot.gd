@@ -6,7 +6,7 @@ onready var Lobby = get_node('/root/Lobby')
 var inputCd = false
 
 func warningGrowl(message):
-	var label = Global.CustomLabel.instance()
+	var label = Res.CustomLabel.instance()
 	label.position.x = 340
 	label.position.y = 200
 	label.text = message

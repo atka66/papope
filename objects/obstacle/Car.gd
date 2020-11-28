@@ -20,6 +20,8 @@ func _process(delta):
 
 func _on_Car_body_entered(body):
 	if body.is_in_group('players'):
+		$AudioCollision.stream = Res.AudioCollisionCar[randi() % len(Res.AudioCollisionCar)]
+		$AudioCollision.play()
 		body.hurt(20)
 		var vector = -body.linear_velocity
 		

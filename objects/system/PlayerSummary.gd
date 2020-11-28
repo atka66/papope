@@ -17,7 +17,7 @@ func _ready():
 	yield(get_tree().create_timer(2.0), "timeout")
 	
 	var points = Global.playersPoints[playerId]
-	var pointsLabel = Global.CustomLabel.instance()
+	var pointsLabel = Res.CustomLabel.instance()
 	pointsLabel.position = Vector2(85, 232)
 	pointsLabel.text = str(points)
 	pointsLabel.fontSize = 4
@@ -25,7 +25,7 @@ func _ready():
 	pointsLabel.aliveTime = 0
 	pointsLabel.alignment = Label.ALIGN_CENTER
 	add_child(pointsLabel)
-	var pointsTextLabel = Global.CustomLabel.instance()
+	var pointsTextLabel = Res.CustomLabel.instance()
 	pointsTextLabel.position = Vector2(85, 256)
 	if points == 1:
 		pointsTextLabel.text = "point"
@@ -41,13 +41,14 @@ func _ready():
 	
 	if winner:
 		$Background/BackgroundAnim.play("appear")
-		var winnerLabel = Global.CustomLabel.instance()
+		var winnerLabel = Res.CustomLabel.instance()
 		winnerLabel.position = Vector2(85, 348)
 		winnerLabel.text = 'winner!'
 		winnerLabel.fontSize = 3
 		winnerLabel.outline = true
 		winnerLabel.aliveTime = 0
 		winnerLabel.alignment = Label.ALIGN_CENTER
+		winnerLabel.audio = Res.AudioWinner
 		add_child(winnerLabel)
 		$WinParticles.show()
 		$Background.show()
@@ -63,7 +64,7 @@ func _input(event):
 		get_tree().change_scene("res://Lobby.tscn")
 
 func showAchievement(y, achievement):
-	var nameLabel = Global.CustomLabel.instance()
+	var nameLabel = Res.CustomLabel.instance()
 	nameLabel.position = Vector2(12, y)
 	nameLabel.text = Global.ACHIEVEMENTS[achievement][0]
 	nameLabel.fontSize = 2
@@ -71,7 +72,7 @@ func showAchievement(y, achievement):
 	nameLabel.aliveTime = 0
 	nameLabel.alignment = Label.ALIGN_LEFT
 	add_child(nameLabel)
-	var descriptionLabel = Global.CustomLabel.instance()
+	var descriptionLabel = Res.CustomLabel.instance()
 	descriptionLabel.position = Vector2(12, y + 12)
 	descriptionLabel.text = Global.ACHIEVEMENTS[achievement][1]
 	descriptionLabel.fontSize = 1

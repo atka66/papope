@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/hurt_dynamite.ogg-43f230e5a48845968c24cdef8c1a7c15.oggstr"
+
+[deps]
+
+source_file="res://sounds/player/hurt_dynamite.ogg"
+dest_files=[ "res://.import/hurt_dynamite.ogg-43f230e5a48845968c24cdef8c1a7c15.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

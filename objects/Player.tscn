@@ -1,13 +1,9 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://sprites/player/faces.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/circle.png" type="Texture" id=2]
 [ext_resource path="res://objects/Player.gd" type="Script" id=3]
-[ext_resource path="res://sprites/player/spawn_1.png" type="Texture" id=4]
-[ext_resource path="res://sprites/player/spawn_2.png" type="Texture" id=5]
-[ext_resource path="res://sprites/player/spawn_4.png" type="Texture" id=6]
-[ext_resource path="res://sprites/player/spawn_5.png" type="Texture" id=7]
-[ext_resource path="res://sprites/player/spawn_3.png" type="Texture" id=8]
+[ext_resource path="res://sounds/collision/block.ogg" type="AudioStream" id=4]
 [ext_resource path="res://sprites/player/crosshair.png" type="Texture" id=9]
 [ext_resource path="res://sprites/player/whiplash_5.png" type="Texture" id=10]
 [ext_resource path="res://sprites/player/whiplash_2.png" type="Texture" id=11]
@@ -20,6 +16,14 @@
 [ext_resource path="res://sprites/player/invul_4.png" type="Texture" id=18]
 [ext_resource path="res://sprites/player/invul_1.png" type="Texture" id=19]
 [ext_resource path="res://sprites/player/crown.png" type="Texture" id=20]
+[ext_resource path="res://sounds/pwrup/rev_hit.ogg" type="AudioStream" id=21]
+[ext_resource path="res://sounds/player/death.ogg" type="AudioStream" id=22]
+[ext_resource path="res://sounds/player/fellwater.ogg" type="AudioStream" id=23]
+[ext_resource path="res://sounds/player/hurt_dynamite.ogg" type="AudioStream" id=24]
+[ext_resource path="res://sounds/player/hurt_whip.ogg" type="AudioStream" id=25]
+[ext_resource path="res://sounds/player/inlava.ogg" type="AudioStream" id=26]
+[ext_resource path="res://sounds/player/slipinwater.ogg" type="AudioStream" id=28]
+[ext_resource path="res://sounds/pwrup/pickup.ogg" type="AudioStream" id=29]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -51,14 +55,6 @@ animations = [ {
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 16.0
-
-[sub_resource type="SpriteFrames" id=5]
-animations = [ {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "default",
-"speed": 30.0
-} ]
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
@@ -136,11 +132,10 @@ frames = SubResource( 3 )
 [node name="Timer" type="Timer" parent="InvulAnim"]
 wait_time = 5.0
 
+[node name="Audio" type="AudioStreamPlayer2D" parent="InvulAnim"]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 4 )
-
-[node name="SpawnAnim" type="AnimatedSprite" parent="."]
-frames = SubResource( 5 )
 
 [node name="Crown" type="Sprite" parent="."]
 position = Vector2( 0, -18 )
@@ -161,6 +156,8 @@ frames = SubResource( 6 )
 centered = false
 offset = Vector2( -16, -32 )
 
+[node name="Audio" type="AudioStreamPlayer2D" parent="WhiplashAnim"]
+
 [node name="OutsideLabel" parent="." instance=ExtResource( 15 )]
 fontSize = 2
 alignment = 1
@@ -171,7 +168,39 @@ position = Vector2( 0, 12 )
 amount = 200
 lifetime = 0.3
 process_material = SubResource( 13 )
+
+[node name="AudioRevHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 21 )
+
+[node name="AudioDash" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AudioDeath" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 22 )
+
+[node name="AudioFellwater" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 23 )
+
+[node name="AudioHurtCactus" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AudioHurtDynamite" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 24 )
+
+[node name="AudioHurtWhip" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 25 )
+
+[node name="AudioInLava" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 26 )
+
+[node name="AudioSlipInWater" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 28 )
+
+[node name="AudioPlaceTrap" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 29 )
+
+[node name="AudioCollisionBlock" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+
+[node name="AudioCollisionPlayer" type="AudioStreamPlayer2D" parent="."]
 [connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
 [connection signal="timeout" from="InvulAnim/Timer" to="." method="_endInvul"]
-[connection signal="animation_finished" from="SpawnAnim" to="." method="_on_SpawnAnim_animation_finished"]
 [connection signal="animation_finished" from="WhiplashAnim" to="." method="_on_WhiplashAnim_animation_finished"]

@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://sprites/pwrup/dynamite.png" type="Texture" id=1]
 [ext_resource path="res://objects/pwrup/Dynamite.gd" type="Script" id=2]
+[ext_resource path="res://sounds/pwrup/dyn_throw.ogg" type="AudioStream" id=3]
+[ext_resource path="res://sounds/collision/block.ogg" type="AudioStream" id=4]
 
 [sub_resource type="PhysicsMaterial" id=1]
 bounce = 1.0
@@ -42,4 +44,10 @@ process_material = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
+
+[node name="AudioThrow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+
+[node name="AudioCollision" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
 [connection signal="body_entered" from="." to="." method="_on_Dynamite_body_entered"]

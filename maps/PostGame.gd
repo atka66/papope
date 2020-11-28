@@ -8,4 +8,4 @@ func _ready():
 				Global.playersCrowned[i] = true
 			else:
 				Global.playersCrowned[i] = false
-	get_tree().get_root().add_child(Global.Dim.instance())
+	get_tree().get_root().add_child(Res.Dim.instance())

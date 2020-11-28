@@ -17,4 +17,6 @@ hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
 [connection signal="body_entered" from="." to="." method="_on_Trap_body_entered"]

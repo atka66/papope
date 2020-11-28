@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/hurt_cactus_1.ogg-bbe9223ced93d7633bbacd49b62d3a30.oggstr"
+
+[deps]
+
+source_file="res://sounds/player/hurt_cactus_1.ogg"
+dest_files=[ "res://.import/hurt_cactus_1.ogg-bbe9223ced93d7633bbacd49b62d3a30.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -33,7 +33,7 @@ func _ready():
 	$SmokeParticles.emitting = false
 	inLobby = get_tree().get_current_scene().get_name() == 'Lobby'
 	if !inLobby:
-		var hud = Global.Hud.instance()
+		var hud = Res.Hud.instance()
 		var position = Vector2.ZERO
 		if playerId == 0: position = Vector2(-120, 4)
 		if playerId == 1: position = Vector2(688, 4)
@@ -48,7 +48,9 @@ func _ready():
 	$Body.modulate = color
 	$Crosshair.modulate = color
 	$Face.frame = Global.playersSkin[playerId]
-	$SpawnAnim.play()
+	var spawnAnim = Res.SpawnAnim.instance()
+	spawnAnim.position = global_position
+	get_tree().get_root().add_child(spawnAnim)
 
 func _input(event):
 	var lhAxis = Input.get_joy_axis(playerId, JOY_AXIS_0)
@@ -93,6 +95,8 @@ func _input(event):
 			if alive && !Global.playersFrozen && !fallWater:
 				if !trapped && linear_velocity.length() < 1000:
 					if Input.is_action_just_pressed('pl_game_dash'):
+						$AudioDash.stream = Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)]
+						$AudioDash.play()
 						apply_central_impulse(linear_velocity.normalized() * 750)
 				if Input.is_action_just_pressed('pl_game_use'):
 					useItem()
@@ -107,6 +111,7 @@ func _process(delta):
 				hp = 0
 			if hp < 1:
 				$Body.modulate = Global.TEAM_COLORS[4]
+				$AudioDeath.play()
 				alive = false
 				if invulnerable:
 					Global.registerAchievement(playerId, Global.Achi.NO_REFUNDS)
@@ -156,14 +161,11 @@ func _on_remove(id):
 	if playerId == id:
 		queue_free()
 
-func _on_SpawnAnim_animation_finished():
-	$SpawnAnim.hide()
-
 func _on_Player_body_entered(body):
 	if body.is_in_group('players'):
 		if !hit:
 			body.hit = true
-			var collisionAnim = Global.CollisionAnim.instance()
+			var collisionAnim = Res.CollisionAnim.instance()
 			var animScale = (thrust.length() + body.thrust.length()) / 30
 			collisionAnim.scale = Vector2(animScale, animScale)
 			collisionAnim.play()
@@ -173,8 +175,13 @@ func _on_Player_body_entered(body):
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 		hit = false
 	if body.is_in_group('cacti'):
+		$AudioHurtCactus.stream = Res.AudioPlayerHurtCactus[randi() % len(Res.AudioPlayerHurtCactus)]
+		$AudioHurtCactus.play()
 		hurt(10)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 200)
+	if body.is_in_group('blockcollidors'):
+		if linear_velocity.length() > 250:
+			$AudioCollisionBlock.play()
 
 func extendVectorTo(vector, length):
 	return vector * (float(length) / vector.length())
@@ -207,49 +214,57 @@ func trap():
 	trapped = false
 
 func spawnPickupLabel(text):
-	var pickupLabel = Global.CustomLabel.instance()
+	var pickupLabel = Res.CustomLabel.instance()
 	pickupLabel.position = Vector2(0, -32)
 	pickupLabel.text = text
 	pickupLabel.fontSize = 2
 	pickupLabel.outline = false
 	pickupLabel.aliveTime = 1
 	pickupLabel.alignment = Label.ALIGN_CENTER
+	pickupLabel.audio = Res.AudioPwrupPickup
 	add_child(pickupLabel)
 
 func useItem():
 		if item == 'revolver':
 			Global.incrementStat(playerId, Global.Stat.REV_USE, 1)
-			var revolverRay = Global.RevolverRay.instance()
+			var revolverRay = Res.RevolverRay.instance()
 			var hitPosition = global_position + $HitScan.cast_to
 			if $HitScan.is_colliding():
 				var collider = $HitScan.get_collider()
 				hitPosition = $HitScan.get_collision_point()
 				if collider.is_in_group('players'):
+					collider.get_node("AudioRevHit").play()
 					if collider.wouldRighteouslyBeHitBy(playerId):
 						Global.incrementStat(playerId, Global.Stat.REV_HIT, 1)
 					collider.hurt(20)
 					if wasTeammateJustKilled(collider):
 						Global.registerAchievement(playerId, Global.Achi.JUDAS)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 200)
+				else:
+					var ricochet = Res.RevolverRicochet.instance()
+					ricochet.position = hitPosition
+					get_parent().add_child(ricochet)
 			revolverRay.position = position
 			revolverRay.rotation = $HitScan.cast_to.angle()
 			revolverRay.length = (position - hitPosition).length()
 			get_tree().get_root().add_child(revolverRay)
-			$RevolverShoot.play()
 		if item == 'dynamite':
 			Global.incrementStat(playerId, Global.Stat.DYN_USE, 1)
-			var dynamite = Global.Dynamite.instance()
+			var dynamite = Res.Dynamite.instance()
 			dynamite.position = position + ($HitScan.cast_to.normalized()) * 16
 			dynamite.originPlayerId = playerId
 			dynamite.apply_central_impulse($HitScan.cast_to * 190)
 			get_tree().get_root().add_child(dynamite)
 		if item == 'shield':
+			$InvulAnim/Audio.stream = Res.AudioShieldStart
+			$InvulAnim/Audio.play()
 			invulnerable = true
 			$InvulAnim.show()
 			$InvulAnim/Timer.start(5)
 		if item == 'trap':
+			$AudioPlaceTrap.play()
 			Global.incrementStat(playerId, Global.Stat.TRP_USE, 1)
-			var trap = Global.Trap.instance()
+			var trap = Res.Trap.instance()
 			trap.originPlayerId = playerId
 			trap.rotation_degrees += (randi() % 60) - 30
 			trap.position = position
@@ -261,11 +276,12 @@ func useItem():
 			$WhiplashAnim.frame = 0
 			$WhiplashAnim.show()
 			$WhiplashAnim.play()
-			var whipcrackAnim = Global.WhipcrackAnim.instance()
+			var whipcrackAnim = Res.WhipcrackAnim.instance()
 			var hitPosition = global_position + $HitScan.cast_to
 			if $HitScan.is_colliding():
 				var collider = $HitScan.get_collider()
 				if collider.is_in_group('players'):
+					collider.get_node('AudioHurtWhip').play()
 					if collider.wouldRighteouslyBeHitBy(playerId):
 						Global.incrementStat(playerId, Global.Stat.WHP_HIT, 1)
 					hitPosition = $HitScan.get_collision_point()
@@ -282,6 +298,9 @@ func useItem():
 				$Crosshair.hide()
 
 func _endInvul():
+	$InvulAnim/Timer.stop()
+	$InvulAnim/Audio.stream = Res.AudioShieldEnd
+	$InvulAnim/Audio.play()
 	invulnerable = false
 	$InvulAnim.hide()
 

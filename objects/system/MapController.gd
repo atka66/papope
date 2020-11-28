@@ -2,7 +2,7 @@ extends Node2D
 
 func _ready():
 	Global.playersFrozen = true
-	var mapLabel = Global.CustomLabel.instance()
+	var mapLabel = Res.CustomLabel.instance()
 	mapLabel.position.x = 64
 	mapLabel.position.y = 288
 	mapLabel.text = Global.selectedMap
@@ -10,14 +10,15 @@ func _ready():
 	mapLabel.outline = true
 	mapLabel.aliveTime = 2
 	mapLabel.alignment = Label.ALIGN_LEFT
+	mapLabel.audio = Res.AudioRoundStart
 	get_tree().get_root().add_child(mapLabel)
-	get_tree().get_root().add_child(Global.Dim.instance())
+	get_tree().get_root().add_child(Res.Dim.instance())
 	var a = _pwrupSpawnLoop()
 	var b = initCountdown()
 	yield(get_tree().create_timer(2), "timeout")
 	for i in range(4):
 		if Global.playersJoined[i]:
-			var player = Global.Player.instance()
+			var player = Res.Player.instance()
 			player.position = get_parent().get_node("PlayerSpawner" + str(i)).position
 			player.playerId = i
 			get_parent().add_child(player)
@@ -29,9 +30,9 @@ func _pwrupSpawnLoop():
 	var pwrupGroupName = spawner.name
 	for spawnersPwrup in get_tree().get_nodes_in_group(pwrupGroupName):
 		spawnersPwrup.remove()
-	var pwrup = Global.Pwrup.instance()
+	var pwrup = Res.Pwrup.instance()
 	pwrup.add_to_group(pwrupGroupName)
-	pwrup.pwrupName = Global.PwrupSprites.keys()[randi() % Global.PwrupSprites.size()]
+	pwrup.pwrupName = Res.PwrupSprites.keys()[randi() % Res.PwrupSprites.size()]
 	pwrup.position = spawner.position
 	get_parent().add_child(pwrup)
 	var rerun = _pwrupSpawnLoop()
@@ -45,7 +46,7 @@ func getRandomSpawner():
 
 func initCountdown():
 	yield(get_tree().create_timer(1), "timeout")
-	var countdown = Global.Countdown.instance()
+	var countdown = Res.Countdown.instance()
 	countdown.position = Vector2(340, 64)
 	get_parent().add_child(countdown)
 
@@ -64,7 +65,7 @@ func endRound(aliveTeamId):
 	var toastText = "draw"
 	if aliveTeamId != -2:
 		toastText = Global.TEAM_COLOR_STRINGS[aliveTeamId] + " WINS"
-	var winLabel = Global.CustomLabel.instance()
+	var winLabel = Res.CustomLabel.instance()
 	winLabel.position = Vector2(340, 64)
 	winLabel.text = toastText
 	winLabel.fontSize = 2

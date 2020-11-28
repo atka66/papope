@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/whip_huts_2.ogg-108691b60bb552dc0566b506bd0c9dd2.oggstr"
+
+[deps]
+
+source_file="res://sounds/pwrup/whip_huts_2.ogg"
+dest_files=[ "res://.import/whip_huts_2.ogg-108691b60bb552dc0566b506bd0c9dd2.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

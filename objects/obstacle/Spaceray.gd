@@ -13,15 +13,21 @@ func _rayLoop():
 	yield(get_tree().create_timer(0.5), "timeout")
 	$Phase1.hide()
 	$Phase2.show()
+	playAudio(Res.AudioSpacerayStart)
 	$Phase2/CollisionShape2D.disabled = false
 	yield(get_tree().create_timer(4.5), "timeout")
+	playAudio(Res.AudioSpacerayStop)
 	$Phase2.hide()
 	$Phase2/CollisionShape2D.disabled = true
 	var rerun = _rayLoop()
 
+func playAudio(audio):
+	$Audio.stream = audio
+	$Audio.play()
 
 func _on_Phase2_body_entered(body):
 	if body.is_in_group('players'):
+		$AudioCollisionPlayer.play()
 		body.hurt(25)
 		var vector = Vector2(-body.linear_velocity.x, 0)
 		

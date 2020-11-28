@@ -1,28 +1,5 @@
 extends Node2D
 
-onready var CustomLabel = preload("res://objects/system/CustomLabel.tscn")
-onready var Player = preload("res://objects/Player.tscn")
-onready var Hud = preload("res://objects/hud/Hud.tscn")
-onready var Dim = preload("res://objects/system/Dim.tscn")
-onready var Countdown = preload("res://objects/system/Countdown.tscn")
-onready var Pwrup = preload("res://objects/pwrup/Pwrup.tscn")
-onready var CollisionAnim = preload("res://objects/anim/CollisionAnim.tscn")
-onready var DespawnAnim = preload("res://objects/anim/DespawnAnim.tscn")
-onready var WhipcrackAnim = preload("res://objects/anim/WhipcrackAnim.tscn")
-onready var ExplosionAnim = preload("res://objects/anim/ExplosionAnim.tscn")
-onready var RevolverRay = preload("res://objects/pwrup/RevolverRay.tscn")
-onready var Dynamite = preload("res://objects/pwrup/Dynamite.tscn")
-onready var Trap = preload("res://objects/pwrup/Trap.tscn")
-onready var Car = preload("res://objects/obstacle/Car.tscn")
-
-onready var PwrupSprites = {
-	'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),
-	'dynamite' : preload("res://sprites/pwrup/pwrup_dynamite.tres"),
-	'shield' : preload("res://sprites/pwrup/pwrup_shield.tres"),
-	'trap' : preload("res://sprites/pwrup/pwrup_trap.tres"),
-	'whip' : preload("res://sprites/pwrup/pwrup_whip.tres")
-}
-
 const VERSION = '1.3.0'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),

@@ -7,6 +7,7 @@ export(bool) var outline = false
 export(Color) var color = Color.white
 export(Array, SpriteFrames) var frames
 export(float) var aliveTime = 0
+export(AudioStreamOGGVorbis) var audio = null
 
 func set_text(_text):
 	$Label.text = _text
@@ -22,9 +23,13 @@ func time_disappear():
 	yield(get_tree().create_timer(aliveTime), "timeout")
 	$LabelAnim.play("float_out")
 	yield($LabelAnim, "animation_finished")
+	yield($Audio, "finished")
 	queue_free()
 
 func _ready():
+	if audio:
+		$Audio.stream = audio
+		$Audio.play()
 	set_text(text)
 	set_color(color)
 	$Label.rect_scale = Vector2(fontSize, fontSize)
