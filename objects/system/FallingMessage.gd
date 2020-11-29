@@ -9,6 +9,11 @@ var velocity = Vector2.ZERO
 var gravity = 15
 
 func _ready():
+	position = Vector2(
+		max(min(position.x, 648), 32),
+		max(min(position.y, 349), 29)
+	)
+	
 	velocity = Vector2(((randi() % 4) + 1) * (((randi() % 2) * 2) - 1), -((randi() % 3) + 10)) * 20
 	rotation = velocity.x / 200
 	var label = Res.CustomLabel.instance()
@@ -33,4 +38,5 @@ func _process(delta):
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
+	yield(get_node('CustomLabel/Audio'), "finished")
 	queue_free()

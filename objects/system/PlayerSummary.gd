@@ -69,6 +69,7 @@ func showAchievement(y, achievement):
 	nameLabel.text = Global.ACHIEVEMENTS[achievement][0]
 	nameLabel.fontSize = 2
 	nameLabel.outline = true
+	nameLabel.audio = Res.AudioMsg
 	nameLabel.aliveTime = 0
 	nameLabel.alignment = Label.ALIGN_LEFT
 	add_child(nameLabel)

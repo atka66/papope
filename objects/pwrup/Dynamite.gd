@@ -25,7 +25,7 @@ func explode():
 	Global.incrementStat(originPlayerId, Global.Stat.DYN_DMG, fullDmg)
 	var explosionAnim = Res.ExplosionAnim.instance()
 	explosionAnim.position = position
-	get_tree().get_root().add_child(explosionAnim)
+	get_tree().get_current_scene().add_child(explosionAnim)
 	queue_free()
 
 func _on_Dynamite_body_entered(body):

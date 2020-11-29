@@ -12,7 +12,7 @@ func _on_SpawnAnim_animation_finished():
 func remove():
 	var despawnAnim = Res.DespawnAnim.instance()
 	despawnAnim.position = global_position - Vector2(0, 8)
-	get_tree().get_root().add_child(despawnAnim)
+	get_tree().get_current_scene().add_child(despawnAnim)
 	queue_free()
 
 func _on_Pwrup_body_entered(body):

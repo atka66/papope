@@ -12,8 +12,8 @@ func _on_WaterTrigger_body_entered(body):
 				vel.x *= -1
 			body.apply_central_impulse(vector + (vel * 500))
 			yield(get_tree().create_timer(0.7), "timeout")
+			body.get_node('AudioFellwater').play()
 			if !Global.playersFrozen:
-				body.get_node('AudioFellwater').play()
 				body.hp = 0
 			body.gravity_scale = 0
 			body.fallWater = false

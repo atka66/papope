@@ -11,6 +11,7 @@ func _ready():
 	mapLabel.aliveTime = 2
 	mapLabel.alignment = Label.ALIGN_LEFT
 	mapLabel.audio = Res.AudioRoundStart
+	#scene _ready methods are unable to get parents or current scene
 	get_tree().get_root().add_child(mapLabel)
 	get_tree().get_root().add_child(Res.Dim.instance())
 	var a = _pwrupSpawnLoop()
@@ -64,11 +65,11 @@ func endRound(aliveTeamId):
 	
 	var toastText = "draw"
 	if aliveTeamId != -2:
-		toastText = Global.TEAM_COLOR_STRINGS[aliveTeamId] + " WINS"
+		toastText = Global.TEAM_COLOR_STRINGS[aliveTeamId] + " wins"
 	var winLabel = Res.CustomLabel.instance()
 	winLabel.position = Vector2(340, 64)
 	winLabel.text = toastText
-	winLabel.fontSize = 2
+	winLabel.fontSize = 3
 	winLabel.outline = true
 	winLabel.aliveTime = 3
 	winLabel.alignment = Label.ALIGN_CENTER

@@ -112,7 +112,7 @@ func _process(delta):
 			if hp < 1:
 				$Body.modulate = Global.TEAM_COLORS[4]
 				alive = false
-				spawnFallingMessage('dead', Color.gray, 3, Res.AudioPlayerDeath)
+				spawnFallingMessage('dead', Color.darkgray, 3, Res.AudioPlayerDeath)
 				if invulnerable:
 					Global.registerAchievement(playerId, Global.Achi.NO_REFUNDS)
 				hp = 0
@@ -171,7 +171,7 @@ func _on_Player_body_entered(body):
 			collisionAnim.play()
 			collisionAnim.position = body.global_position - ((body.global_position - global_position) / 2)
 			collisionAnim.look_at(body.global_position)
-			get_tree().get_root().add_child(collisionAnim)
+			get_tree().get_current_scene().add_child(collisionAnim)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 		hit = false
 	if body.is_in_group('cacti'):
@@ -210,6 +210,7 @@ func pickup(pwrup):
 
 func trap():
 	trapped = true
+	spawnFallingMessage("trapped!", Color.tomato, 2, null)
 	yield(get_tree().create_timer(2.0, false), "timeout")
 	trapped = false
 
@@ -236,18 +237,19 @@ func useItem():
 			revolverRay.position = position
 			revolverRay.rotation = $HitScan.cast_to.angle()
 			revolverRay.length = (position - hitPosition).length()
-			get_tree().get_root().add_child(revolverRay)
+			get_tree().get_current_scene().add_child(revolverRay)
 		if item == 'dynamite':
 			Global.incrementStat(playerId, Global.Stat.DYN_USE, 1)
 			var dynamite = Res.Dynamite.instance()
 			dynamite.position = position + ($HitScan.cast_to.normalized()) * 16
 			dynamite.originPlayerId = playerId
 			dynamite.apply_central_impulse($HitScan.cast_to * 190)
-			get_tree().get_root().add_child(dynamite)
+			get_tree().get_current_scene().add_child(dynamite)
 		if item == 'shield':
 			$InvulAnim/Audio.stream = Res.AudioShieldStart
 			$InvulAnim/Audio.play()
 			invulnerable = true
+			spawnFallingMessage("shielded!", Color.lightblue, 2, null)
 			$InvulAnim.show()
 			$InvulAnim/Timer.start(5)
 		if item == 'trap':
@@ -257,7 +259,7 @@ func useItem():
 			trap.originPlayerId = playerId
 			trap.rotation_degrees += (randi() % 60) - 30
 			trap.position = position
-			get_tree().get_root().add_child(trap)
+			get_tree().get_current_scene().add_child(trap)
 		if item == 'whip':
 			Global.incrementStat(playerId, Global.Stat.WHP_USE, 1)
 			var angle = $HitScan.cast_to.angle()
@@ -279,7 +281,7 @@ func useItem():
 						Global.registerAchievement(playerId, Global.Achi.JUDAS)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 2500)
 			whipcrackAnim.position = hitPosition
-			get_tree().get_root().add_child(whipcrackAnim)
+			get_tree().get_current_scene().add_child(whipcrackAnim)
 		if item != null:
 			ammo -= 1
 			if ammo < 1:
@@ -326,4 +328,4 @@ func spawnFallingMessage(text, color, size, audio):
 	message.size = size
 	message.audio = audio
 	message.position = global_position
-	get_parent().get_parent().add_child(message)
+	get_parent().add_child(message)

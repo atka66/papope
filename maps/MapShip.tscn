@@ -798,8 +798,8 @@ position = Vector2( 160, 448 )
 scale = Vector2( 22, 1 )
 
 [node name="WaterTrigger1" parent="." instance=ExtResource( 10 )]
-position = Vector2( 96, -64 )
-scale = Vector2( 1, 24 )
+position = Vector2( -16, -64 )
+scale = Vector2( 8, 32 )
 
 [node name="WaterTrigger2" parent="." instance=ExtResource( 10 )]
 position = Vector2( 96, 320 )
@@ -808,7 +808,7 @@ scale = Vector2( 1, 10 )
 
 [node name="WaterTrigger3" parent="." instance=ExtResource( 10 )]
 position = Vector2( 560, -64 )
-scale = Vector2( 1, 24 )
+scale = Vector2( 8, 32 )
 
 [node name="WaterTrigger4" parent="." instance=ExtResource( 10 )]
 position = Vector2( 560, 320 )
