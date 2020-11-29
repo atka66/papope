@@ -16,17 +16,17 @@ func _ready():
 	get_tree().get_root().add_child(Res.Dim.instance())
 	var a = _pwrupSpawnLoop()
 	var b = initCountdown()
-	yield(get_tree().create_timer(2, false), "timeout")
+	yield(get_tree().create_timer(2), "timeout")
 	for i in range(4):
 		if Global.playersJoined[i]:
 			var player = Res.Player.instance()
 			player.position = get_parent().get_node("PlayerSpawner" + str(i)).position
 			player.playerId = i
 			get_parent().add_child(player)
-			yield(get_tree().create_timer(0.25, false), "timeout")
+			yield(get_tree().create_timer(0.25), "timeout")
 
 func _pwrupSpawnLoop():
-	yield(get_tree().create_timer(Global.PWRUP_RESPAWN_TIME, false), "timeout")
+	yield(get_tree().create_timer(Global.PWRUP_RESPAWN_TIME), "timeout")
 	var spawner = getRandomSpawner()
 	var pwrupGroupName = spawner.name
 	for spawnersPwrup in get_tree().get_nodes_in_group(pwrupGroupName):
@@ -46,7 +46,7 @@ func getRandomSpawner():
 	return spawners[randi() % len(spawners)]
 
 func initCountdown():
-	yield(get_tree().create_timer(1, false), "timeout")
+	yield(get_tree().create_timer(1), "timeout")
 	var countdown = Res.Countdown.instance()
 	countdown.position = Vector2(340, 64)
 	get_parent().add_child(countdown)
@@ -74,5 +74,5 @@ func endRound(aliveTeamId):
 	winLabel.aliveTime = 3
 	winLabel.alignment = Label.ALIGN_CENTER
 	get_parent().add_child(winLabel)
-	yield(get_tree().create_timer(3, false), "timeout")
+	yield(get_tree().create_timer(3), "timeout")
 	Global.goToMap()

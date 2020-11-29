@@ -13,7 +13,7 @@ func showCount(cnt, size, audio):
 func _ready():
 	for i in range(3):
 		showCount(str(3 - i), 2, Res.AudioMsg)
-		yield(get_tree().create_timer(1, false), "timeout")
+		yield(get_tree().create_timer(1), "timeout")
 	if (get_tree().get_current_scene().get_name() == 'Lobby'):
 		Global.goToMap()
 	else:

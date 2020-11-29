@@ -4,7 +4,7 @@ var armed = false
 var originPlayerId = 0
 
 func _ready():
-	yield(get_tree().create_timer(1.0, false), "timeout")
+	yield(get_tree().create_timer(1.0), "timeout")
 	armed = true
 	$Sprite.hide()
 
@@ -28,5 +28,5 @@ func trigger():
 	armed = false
 	$Sprite.frame = 1
 	$Sprite.show()
-	yield(get_tree().create_timer(2.0, false), "timeout")
+	yield(get_tree().create_timer(2.0), "timeout")
 	queue_free()

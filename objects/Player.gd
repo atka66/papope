@@ -214,7 +214,7 @@ func pickup(pwrup):
 func trap():
 	trapped = true
 	spawnFallingMessage("trapped!", Color.tomato, 2, null)
-	yield(get_tree().create_timer(2.0, false), "timeout")
+	yield(get_tree().create_timer(2.0), "timeout")
 	trapped = false
 
 func useItem():

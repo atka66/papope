@@ -5,7 +5,7 @@ export var originPlayerId = 0
 func _ready():
 	$AudioThrow.play()
 	$Sprite.rotation_degrees = randi() % 360
-	yield(get_tree().create_timer(1.0, false), "timeout")
+	yield(get_tree().create_timer(1.0), "timeout")
 	explode()
 
 func _process(delta):

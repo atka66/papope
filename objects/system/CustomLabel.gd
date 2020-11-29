@@ -21,7 +21,7 @@ func set_color(_color):
 	$Label.add_color_override("font_color", _color)
 
 func time_disappear():
-	yield(get_tree().create_timer(aliveTime, false), "timeout")
+	yield(get_tree().create_timer(aliveTime), "timeout")
 	if animate:
 		$LabelAnim.play("float_out")
 		yield($LabelAnim, "animation_finished")
