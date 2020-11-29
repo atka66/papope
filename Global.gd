@@ -159,3 +159,9 @@ func registerAchievement(playerId, achievement):
 
 func incrementStat(playerId, stat, i):
 	Global.playersStats[playerId][stat] += i
+
+func extendVectorTo(vector, length):
+	if vector.length() == 0:
+		return Vector2.ZERO
+	else:
+		return vector * (float(length) / vector.length())

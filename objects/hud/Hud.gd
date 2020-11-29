@@ -28,6 +28,7 @@ func handleShake():
 	if hudShakePwr > 0:
 		$Container.position = Vector2((randi() % (hudShakePwr * 2)) - hudShakePwr, (randi() % (hudShakePwr * 2)) - hudShakePwr)
 		hudShakePwr -= 1
+		Input.start_joy_vibration(player.playerId, 1.0, 1.0, 0.2)
 	else:
 		$Container.position = Vector2.ZERO
 
@@ -42,7 +43,6 @@ func handleHpBar():
 	$Container/HpBarDelay.scale = Vector2(float(delayedHp) / maxHp, 1)
 	if delayedHp > player.hp:
 		delayedHp -= 1
-		Input.start_joy_vibration(player.playerId, 1.0, 1.0, 0.2)
 
 	if player.invulnerable:
 		$Container/HpBar.color = Color.white
