@@ -8,6 +8,7 @@ export(Color) var color = Color.white
 export(Array, SpriteFrames) var frames
 export(float) var aliveTime = 0
 export(AudioStreamOGGVorbis) var audio = null
+export(bool) var animate = true
 
 func set_text(_text):
 	$Label.text = _text
@@ -20,9 +21,10 @@ func set_color(_color):
 	$Label.add_color_override("font_color", _color)
 
 func time_disappear():
-	yield(get_tree().create_timer(aliveTime), "timeout")
-	$LabelAnim.play("float_out")
-	yield($LabelAnim, "animation_finished")
+	yield(get_tree().create_timer(aliveTime, false), "timeout")
+	if animate:
+		$LabelAnim.play("float_out")
+		yield($LabelAnim, "animation_finished")
 	yield($Audio, "finished")
 	queue_free()
 
@@ -42,6 +44,9 @@ func _ready():
 		$AnimatedSprite2.set_sprite_frames(frames[1])
 		$AnimatedSprite2.play()
 	
-	$LabelAnim.play("float_in")
+	if animate:
+		$LabelAnim.play("float_in")
+	else:
+		$Label.modulate = Color.white
 	if aliveTime > 0:
 		time_disappear()

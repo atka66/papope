@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var CustomLabel = preload("res://objects/system/CustomLabel.tscn")
+onready var FallingMessage = preload("res://objects/system/FallingMessage.tscn")
 onready var Player = preload("res://objects/Player.tscn")
 onready var Hud = preload("res://objects/hud/Hud.tscn")
 onready var Dim = preload("res://objects/system/Dim.tscn")
@@ -46,6 +47,7 @@ onready var AudioPlayerHurtCactus = [
 	preload("res://sounds/player/hurt_cactus_1.ogg"),
 	preload("res://sounds/player/hurt_cactus_2.ogg")
 ]
+onready var AudioPlayerDeath = preload("res://sounds/player/death.ogg")
 onready var AudioCollisionBlock = preload("res://sounds/collision/block.ogg")
 onready var AudioCollisionCar = [
 	preload("res://sounds/collision/car_1.ogg"),

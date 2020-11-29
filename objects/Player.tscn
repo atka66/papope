@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://sprites/player/faces.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/circle.png" type="Texture" id=2]
@@ -17,7 +17,6 @@
 [ext_resource path="res://sprites/player/invul_1.png" type="Texture" id=19]
 [ext_resource path="res://sprites/player/crown.png" type="Texture" id=20]
 [ext_resource path="res://sounds/pwrup/rev_hit.ogg" type="AudioStream" id=21]
-[ext_resource path="res://sounds/player/death.ogg" type="AudioStream" id=22]
 [ext_resource path="res://sounds/player/fellwater.ogg" type="AudioStream" id=23]
 [ext_resource path="res://sounds/player/hurt_dynamite.ogg" type="AudioStream" id=24]
 [ext_resource path="res://sounds/player/hurt_whip.ogg" type="AudioStream" id=25]
@@ -56,7 +55,7 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=4]
 radius = 16.0
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
 "frames": [ ExtResource( 13 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 12 ), ExtResource( 10 ) ],
 "loop": true,
@@ -64,25 +63,25 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="Gradient" id=7]
+[sub_resource type="Gradient" id=6]
 
-[sub_resource type="GradientTexture" id=8]
-gradient = SubResource( 7 )
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
 
-[sub_resource type="Curve" id=9]
+[sub_resource type="Curve" id=8]
 min_value = -1.0
 _data = [ Vector2( 0, 0 ), 0.0, 0.863636, 0, 1, Vector2( 0.35, 0.302273 ), 0.0, 0.0, 0, 0, Vector2( 0.75, -0.315909 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.215909 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=10]
-curve = SubResource( 9 )
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
 
-[sub_resource type="Curve" id=11]
+[sub_resource type="Curve" id=10]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=12]
-curve = SubResource( 11 )
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
 
-[sub_resource type="ParticlesMaterial" id=13]
+[sub_resource type="ParticlesMaterial" id=12]
 lifetime_randomness = 0.5
 trail_divisor = 30
 emission_shape = 2
@@ -94,11 +93,11 @@ gravity = Vector3( 0, -200, 0 )
 initial_velocity = 150.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-orbit_velocity_curve = SubResource( 10 )
+orbit_velocity_curve = SubResource( 9 )
 scale = 10.0
 scale_random = 0.7
-scale_curve = SubResource( 12 )
-color_ramp = SubResource( 8 )
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 7 )
 
 [node name="Player" type="RigidBody2D" groups=[
 "players",
@@ -152,7 +151,7 @@ texture = ExtResource( 9 )
 hframes = 3
 
 [node name="WhiplashAnim" type="AnimatedSprite" parent="."]
-frames = SubResource( 6 )
+frames = SubResource( 5 )
 centered = false
 offset = Vector2( -16, -32 )
 
@@ -167,15 +166,12 @@ outline = true
 position = Vector2( 0, 12 )
 amount = 200
 lifetime = 0.3
-process_material = SubResource( 13 )
+process_material = SubResource( 12 )
 
 [node name="AudioRevHit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 21 )
 
 [node name="AudioDash" type="AudioStreamPlayer2D" parent="."]
-
-[node name="AudioDeath" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 22 )
 
 [node name="AudioFellwater" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 23 )

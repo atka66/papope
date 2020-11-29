@@ -111,8 +111,8 @@ func _process(delta):
 				hp = 0
 			if hp < 1:
 				$Body.modulate = Global.TEAM_COLORS[4]
-				$AudioDeath.play()
 				alive = false
+				spawnFallingMessage('dead', Color.gray, 3, Res.AudioPlayerDeath)
 				if invulnerable:
 					Global.registerAchievement(playerId, Global.Achi.NO_REFUNDS)
 				hp = 0
@@ -187,7 +187,7 @@ func extendVectorTo(vector, length):
 	return vector * (float(length) / vector.length())
 
 func pickup(pwrup):
-	spawnPickupLabel(pwrup)
+	spawnFallingMessage(pwrup, Color.lightgreen, 2, Res.AudioPwrupPickup)
 	item = pwrup
 	if pwrup == 'revolver':
 		$Crosshair.show()
@@ -210,19 +210,8 @@ func pickup(pwrup):
 
 func trap():
 	trapped = true
-	yield(get_tree().create_timer(2.0), "timeout")
+	yield(get_tree().create_timer(2.0, false), "timeout")
 	trapped = false
-
-func spawnPickupLabel(text):
-	var pickupLabel = Res.CustomLabel.instance()
-	pickupLabel.position = Vector2(0, -32)
-	pickupLabel.text = text
-	pickupLabel.fontSize = 2
-	pickupLabel.outline = false
-	pickupLabel.aliveTime = 1
-	pickupLabel.alignment = Label.ALIGN_CENTER
-	pickupLabel.audio = Res.AudioPwrupPickup
-	add_child(pickupLabel)
 
 func useItem():
 		if item == 'revolver':
@@ -305,11 +294,15 @@ func _endInvul():
 	$InvulAnim.hide()
 
 func hurt(damage):
-	if damage > 0 && alive && !invulnerable && !Global.playersFrozen:
-		hp -= damage;
-		$Hurt/HurtAnim.stop()
-		$Hurt/HurtAnim.play()
-		#TODO hp removal particle
+	if damage > 0 && alive && !Global.playersFrozen:
+		var fallingMessageSize = int(damage / 20) + 1
+		if invulnerable:
+			spawnFallingMessage('0', Color.white, fallingMessageSize, null)
+		else:
+			spawnFallingMessage(str(int(damage)), Color.tomato, fallingMessageSize, null)
+			hp -= damage;
+			$Hurt/HurtAnim.stop()
+			$Hurt/HurtAnim.play()
 
 func _on_WhiplashAnim_animation_finished():
 	$WhiplashAnim.hide()
@@ -325,3 +318,12 @@ func isTeammate(otherPlayerId):
 
 func wouldRighteouslyBeHitBy(inflictorId):
 	return alive && !invulnerable && !isTeammate(inflictorId)
+
+func spawnFallingMessage(text, color, size, audio):
+	var message = Res.FallingMessage.instance()
+	message.text = text
+	message.color = color
+	message.size = size
+	message.audio = audio
+	message.position = global_position
+	get_parent().get_parent().add_child(message)
