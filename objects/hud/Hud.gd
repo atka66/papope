@@ -49,6 +49,9 @@ func handleHpBar():
 		$Container/HpBar.color = Color.white
 	else:
 		$Container/HpBar.color = playerColor
+	
+	$Container/HpBarFlicker.scale = $Container/HpBar.scale
+	$Container/HpBarFlicker.visible = player.hp < maxHp * 0.2
 
 func handlePwrup():
 	$Container/HudRevolver.visible = player.item == 'revolver'

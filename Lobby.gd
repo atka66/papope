@@ -22,7 +22,7 @@ func createHintLabel():
 	yield(get_tree().create_timer(hintTimer), "timeout")
 
 func handleLabels():
-	var hasConnected = Global.playersConnected.has(true)
+	var hasConnected = Global.playersJoined.has(true)
 	$PapopeLabel.visible = !hasConnected
 	$SubtitleLabel.visible = !hasConnected
 

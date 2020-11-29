@@ -112,7 +112,10 @@ func _process(delta):
 			if hp < 1:
 				$Body.modulate = Global.TEAM_COLORS[4]
 				alive = false
-				spawnFallingMessage('dead', Color.darkgray, 3, Res.AudioPlayerDeath)
+				spawnFallingMessage(
+					Global.DEATH_STRINGS[randi() % len(Global.DEATH_STRINGS)]
+					, Color.darkgray, 3, Res.AudioPlayerDeath
+				)
 				if invulnerable:
 					Global.registerAchievement(playerId, Global.Achi.NO_REFUNDS)
 				hp = 0

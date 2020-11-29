@@ -8,7 +8,7 @@ var inputCd = false
 func warningGrowl(message):
 	var label = Res.CustomLabel.instance()
 	label.position.x = 340
-	label.position.y = 200
+	label.position.y = 220
 	label.text = message
 	label.fontSize = 2
 	label.outline = true

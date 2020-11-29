@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://sprites/hud/hud.png" type="Texture" id=1]
 [ext_resource path="res://sprites/hud/hud_players.png" type="Texture" id=2]
@@ -6,6 +6,24 @@
 [ext_resource path="res://objects/hud/HudRevolver.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/hud/HudAmmo.tscn" type="PackedScene" id=5]
 [ext_resource path="res://objects/system/CustomLabel.tscn" type="PackedScene" id=6]
+
+[sub_resource type="Animation" id=1]
+resource_name = "flicker"
+length = 0.2
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="Hud" type="Node2D"]
 z_index = 90
@@ -38,6 +56,14 @@ polygon = PoolVector2Array( 0, 0, 94, 0, 94, 7, 0, 7 )
 [node name="HpBar" type="Polygon2D" parent="Container"]
 position = Vector2( 17, 32 )
 polygon = PoolVector2Array( 0, 0, 94, 0, 94, 7, 0, 7 )
+
+[node name="HpBarFlicker" type="Polygon2D" parent="Container"]
+position = Vector2( 17, 32 )
+polygon = PoolVector2Array( 0, 0, 94, 0, 94, 7, 0, 7 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Container/HpBarFlicker"]
+autoplay = "flicker"
+anims/flicker = SubResource( 1 )
 
 [node name="HudSprite" type="Sprite" parent="Container"]
 texture = ExtResource( 1 )
