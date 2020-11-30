@@ -21,7 +21,7 @@ const HINT_STRINGS = [
 	["YOU CANNOT MOVE IN SPACE", "ONLY DASH"],
 	["SAME COLOR MEANS SAME TEAM"]
 ]
-const DEATH_STRINGS = ['oof', 'ouch', 'rip', 'dead', 'oops', 'bummer']
+const DEATH_STRINGS = ['oof', 'ouch', 'rip', 'dead', 'oops', 'sad', 'bye']
 enum Achi {
 	UNDERDOG, DEMOLITION_MAN, GUNSLINGER, HUTS_HUTS, DAREDEVIL,
 	GUERRILLA, CARELESS, JUDAS, NO_REFUNDS, DEAD_BY_CHOICE,

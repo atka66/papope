@@ -94,11 +94,14 @@ func _process(delta):
 		position.x += hspeed * (-1 if fromRight else 1)
 		hspeed -= 1
 		
-	if (player):
+	if player:
 		handleShake()
 		handleHpBar()
 		handlePwrup()
 		
+		if !player.alive:
+			$Container/FaceBg.color = Global.TEAM_COLORS[4]
+
 		$Container/ScoreLabel.set_text(str(Global.playersPoints[player.playerId]))
 		
 		prevHp = player.hp
