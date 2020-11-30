@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/stop.ogg-d139378486601240fecbd1d7b33e4d37.oggstr"
+
+[deps]
+
+source_file="res://sounds/spaceray/stop.ogg"
+dest_files=[ "res://.import/stop.ogg-d139378486601240fecbd1d7b33e4d37.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

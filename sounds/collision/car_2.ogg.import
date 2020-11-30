@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/car_2.ogg-0bc9a5b6f84355f66aa90b144482cb39.oggstr"
+
+[deps]
+
+source_file="res://sounds/collision/car_2.ogg"
+dest_files=[ "res://.import/car_2.ogg-0bc9a5b6f84355f66aa90b144482cb39.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

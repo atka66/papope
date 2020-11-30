@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/round_go.ogg-0d65fa7e252879ff31eacfc1735c7513.oggstr"
+
+[deps]
+
+source_file="res://sounds/system/round_go.ogg"
+dest_files=[ "res://.import/round_go.ogg-0d65fa7e252879ff31eacfc1735c7513.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

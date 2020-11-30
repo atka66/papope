@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://objects/anim/WhipcrackAnim.gd" type="Script" id=1]
+[ext_resource path="res://sprites/player/whipcrack_1.png" type="Texture" id=2]
+[ext_resource path="res://sprites/player/whipcrack_2.png" type="Texture" id=3]
+[ext_resource path="res://sprites/player/whipcrack_3.png" type="Texture" id=4]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 50.0
+} ]
+
+[node name="WhipcrackAnim" type="AnimatedSprite"]
+z_index = 5
+z_as_relative = false
+frames = SubResource( 1 )
+script = ExtResource( 1 )
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+[connection signal="animation_finished" from="." to="." method="_on_WhipcrackAnim_animation_finished"]

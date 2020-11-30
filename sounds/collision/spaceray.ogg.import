@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/spaceray.ogg-44e6608760d8f44956ecab0dce31c1f5.oggstr"
+
+[deps]
+
+source_file="res://sounds/collision/spaceray.ogg"
+dest_files=[ "res://.import/spaceray.ogg-44e6608760d8f44956ecab0dce31c1f5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

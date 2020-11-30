@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://maps/PostGame.gd" type="Script" id=1]
+[ext_resource path="res://objects/system/PlayerSummary.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/system/CustomLabel.tscn" type="PackedScene" id=3]
+
+[node name="PostGame" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="ResultsLabel" parent="." instance=ExtResource( 3 )]
+position = Vector2( 340, 16 )
+text = "results"
+fontSize = 4
+alignment = 1
+outline = true
+
+[node name="PlayerSummary0" parent="." instance=ExtResource( 2 )]
+
+[node name="PlayerSummary1" parent="." instance=ExtResource( 2 )]
+position = Vector2( 170, 0 )
+playerId = 1
+
+[node name="PlayerSummary2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 340, 0 )
+playerId = 2
+
+[node name="PlayerSummary3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 510, 0 )
+playerId = 3

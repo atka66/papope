@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://objects/system/MapController.gd" type="Script" id=1]
+
+[node name="MapController" type="Node2D" groups=[
+"controllers",
+]]
+z_index = -103
+z_as_relative = false
+script = ExtResource( 1 )

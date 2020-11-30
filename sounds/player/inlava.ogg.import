@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/inlava.ogg-3ad30c3f660d522ef683beb55d32f12d.oggstr"
+
+[deps]
+
+source_file="res://sounds/player/inlava.ogg"
+dest_files=[ "res://.import/inlava.ogg-3ad30c3f660d522ef683beb55d32f12d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
