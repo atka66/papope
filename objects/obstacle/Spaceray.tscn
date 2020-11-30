@@ -94,7 +94,6 @@ process_material = SubResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Phase2"]
 frames = SubResource( 4 )
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Phase2"]
