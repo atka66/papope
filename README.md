@@ -1,5 +1,5 @@
 # Papope
-Papope is a fast-paced couch multiplayer fighting game made in _Game Maker Studio 2_.
+Papope is a fast-paced couch multiplayer fighting game made in _Godot_.
 ## Download
 You can download the latest release from [**HERE**](https://atka66.itch.io/papope).
 ## How to play
