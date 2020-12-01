@@ -1,6 +1,6 @@
 extends Node2D
 
-const VERSION = '1.3.0'
+const VERSION = '1.3.1_beta'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
@@ -50,7 +50,7 @@ const TEAM_COLOR_STRINGS = {
 
 # constants for configuring purposes
 #TODO assign into a config file
-const PWRUP_RESPAWN_TIME = 3 #TODO default 6
+const PWRUP_RESPAWN_TIME = 6 #TODO default 6
 const ALLOW_PLAYERS_SET_OPTIONS = true #TODO default true
 
 var options = {
