@@ -1,3 +1,9 @@
+### TODOs
+# * handle disconnected players
+# * config file
+# * new map (pacman)
+# * new gamemode (perks)
+
 ### Layers
 #
 # {Scenes}
