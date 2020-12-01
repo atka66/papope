@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://objects/system/PlayerSummary.gd" type="Script" id=1]
 [ext_resource path="res://sprites/hud/hud_players.png" type="Texture" id=2]
@@ -11,7 +11,7 @@ colors = PoolColorArray( 0, 0, 0, 1, 0.501961, 0.501961, 0.501961, 1, 0, 0, 0, 1
 gradient = SubResource( 1 )
 width = 170
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 resource_name = "appear"
 length = 0.5
 tracks/0/type = "value"
@@ -27,32 +27,15 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Gradient" id=7]
+[sub_resource type="Gradient" id=4]
 colors = PoolColorArray( 1, 1, 1, 0.501961, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=8]
-gradient = SubResource( 7 )
-
-[sub_resource type="ParticlesMaterial" id=3]
-emission_shape = 2
-emission_box_extents = Vector3( 64, 1, 0 )
-flag_disable_z = true
-direction = Vector3( 0, -1, 0 )
-spread = 0.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 400.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 3.0
-scale_random = 1.0
-color_ramp = SubResource( 8 )
-
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=5]
 offsets = PoolRealArray( 0, 0.5, 1 )
 colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=5]
-gradient = SubResource( 4 )
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
 width = 32
 
 [node name="PlayerSummary" type="Node2D"]
@@ -64,17 +47,25 @@ texture = SubResource( 2 )
 polygon = PoolVector2Array( 0, 0, 170, 0, 170, 384, 0, 384 )
 
 [node name="BackgroundAnim" type="AnimationPlayer" parent="Background"]
-anims/appear = SubResource( 6 )
+anims/appear = SubResource( 3 )
 
-[node name="WinParticles" type="Particles2D" parent="."]
+[node name="WinParticles" type="CPUParticles2D" parent="."]
 position = Vector2( 85, 384 )
 amount = 100
-process_material = SubResource( 3 )
+emission_shape = 2
+emission_rect_extents = Vector2( 64, 1 )
+direction = Vector2( 0, -1 )
+spread = 0.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 400.0
+scale_amount = 3.0
+scale_amount_random = 1.0
+color_ramp = SubResource( 4 )
 
 [node name="Team" type="Polygon2D" parent="."]
 position = Vector2( 85, 332 )
 scale = Vector2( 2, 2 )
-texture = SubResource( 5 )
+texture = SubResource( 6 )
 texture_offset = Vector2( 16, 0 )
 polygon = PoolVector2Array( -16, 0, 16, 0, 16, 4, -16, 4 )
 

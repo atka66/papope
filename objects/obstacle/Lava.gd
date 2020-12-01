@@ -1,9 +1,8 @@
 extends Area2D
 
 func _ready():
-	$Particles.process_material = preload("res://resources/LavaPar.tres").duplicate()
 	$Particles.scale = Vector2.ONE / scale
-	$Particles.process_material.emission_box_extents *= Vector3(scale.x, scale.y, 0)
+	$Particles.emission_rect_extents *= Vector2(scale.x, scale.y)
 	$Particles.amount *= scale.x * scale.y
 
 func _on_Lava_body_entered(body):
