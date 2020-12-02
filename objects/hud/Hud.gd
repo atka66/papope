@@ -102,6 +102,7 @@ func _process(delta):
 		if !player.alive:
 			$Container/FaceBg.color = Global.TEAM_COLORS[4]
 
+
 		$Container/ScoreLabel.set_text(str(Global.playersPoints[player.playerId]))
 		
 		prevHp = player.hp

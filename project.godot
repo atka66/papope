@@ -28,6 +28,7 @@ config/windows_native_icon="res://papope.ico"
 
 Global="*res://Global.gd"
 Res="*res://Res.gd"
+Settings="*res://Settings.gd"
 
 [display]
 

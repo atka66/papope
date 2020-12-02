@@ -63,11 +63,11 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=9]
 min_value = -1.0
 _data = [ Vector2( 0, 0 ), 0.0, 0.863636, 0, 1, Vector2( 0.35, 0.302273 ), 0.0, 0.0, 0, 0, Vector2( 0.75, -0.315909 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.215909 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Curve" id=7]
+[sub_resource type="Curve" id=10]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="Gradient" id=8]
@@ -146,10 +146,10 @@ direction = Vector2( 0, -1 )
 spread = 25.0
 gravity = Vector2( 0, -200 )
 initial_velocity = 150.0
-orbit_velocity_curve = SubResource( 6 )
+orbit_velocity_curve = SubResource( 9 )
 scale_amount = 10.0
 scale_amount_random = 0.7
-scale_amount_curve = SubResource( 7 )
+scale_amount_curve = SubResource( 10 )
 color_ramp = SubResource( 8 )
 
 [node name="AudioRevHit" type="AudioStreamPlayer2D" parent="."]

@@ -21,7 +21,7 @@ func _input(event):
 		inputCd = true
 		if Input.is_action_just_pressed("ui_accept") and !Lobby.countingDown:
 			if !Global.playersJoined[playerId]:
-				Lobby.joinPlayer(playerId)
+				Global.joinPlayer(playerId)
 			else:
 				if Global.playersJoined.count(true) < 2:
 					warningGrowl("NEEDS AT LEAST 2 PLAYERS!")
@@ -34,8 +34,9 @@ func _input(event):
 				if Lobby.countingDown:
 					Lobby.stopCountdown()
 				else:
-					Lobby.leavePlayer(playerId)
-		if Global.ALLOW_PLAYERS_SET_OPTIONS && !Lobby.countingDown:
+					Global.playersCrowned[playerId] = false
+					Global.leavePlayer(playerId)
+		if Settings.ALLOW_PLAYERS_SET_OPTIONS && !Lobby.countingDown:
 			if Input.is_action_just_pressed("pl_nav_up"):
 				Global.currentOption = Global.options.keys()[(Global.options.keys().find(Global.currentOption) + (len(Global.options) - 1)) % len(Global.options)]
 			if Input.is_action_just_pressed("pl_nav_down"):

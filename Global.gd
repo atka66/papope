@@ -1,5 +1,7 @@
 extends Node2D
 
+signal player_remove(id)
+
 const VERSION = '1.3.1_beta'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
@@ -47,11 +49,6 @@ const TEAM_COLOR_STRINGS = {
 	2: "GREEN",
 	3: "YELLOW"
 }
-
-# constants for configuring purposes
-#TODO assign into a config file
-const PWRUP_RESPAWN_TIME = 6 #TODO default 6
-const ALLOW_PLAYERS_SET_OPTIONS = true #TODO default true
 
 var options = {
 	'map': ['random', 'lava', 'western', 'ship', 'space', 'traffic'],
@@ -123,6 +120,21 @@ func connectPlayer(playerId):
 
 func disconnectPlayer(playerId):
 	playersConnected[playerId] = false
+	leavePlayer(playerId)
+	if get_tree().get_current_scene().get_name() != 'Lobby':
+		get_tree().change_scene("res://Lobby.tscn")
+
+func joinPlayer(playerId):
+	playersJoined[playerId] = true
+	var slot = get_node('/root/Lobby/PlayerSlot' + str(playerId))
+	var player = Res.Player.instance()
+	connect("player_remove", player, "_on_remove")
+	player.playerId = playerId
+	slot.add_child(player)
+
+func leavePlayer(playerId):
+	playersJoined[playerId] = false
+	emit_signal("player_remove", playerId)
 
 func getNumberOfTeams():
 	var distinctTeams = []
@@ -135,7 +147,7 @@ func _ready():
 	Input.connect("joy_connection_changed", self, "_joy_connection_changed")
 	
 	var connectedControllers = Input.get_connected_joypads()
-	for i in range(Global.playersConnected.size()):
+	for i in range(playersConnected.size()):
 		if playersConnected[i] && !connectedControllers.has(i):
 			disconnectPlayer(i)
 		if !playersConnected[i] && connectedControllers.has(i):
@@ -157,11 +169,11 @@ func _input(event):
 			get_tree().change_scene("res://Lobby.tscn")
 
 func registerAchievement(playerId, achievement):
-	if !(achievement in Global.playersAchievements[playerId]):
-		Global.playersAchievements[playerId].append(achievement)
+	if !(achievement in playersAchievements[playerId]):
+		playersAchievements[playerId].append(achievement)
 
 func incrementStat(playerId, stat, i):
-	Global.playersStats[playerId][stat] += i
+	playersStats[playerId][stat] += i
 
 func extendVectorTo(vector, length):
 	if vector.length() == 0:

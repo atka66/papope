@@ -2,8 +2,6 @@ extends Node2D
 
 const hintTimer = 6.0
 
-signal player_remove(id)
-
 var countingDown = false
 
 func createHintLabel():
@@ -30,7 +28,7 @@ func handleLabels():
 	$MenuMovementHintLabel.visible = hasConnected
 	$MenuChangeSkinHintLabel.visible = hasConnected
 	$MenuChangeTeamHintLabel.visible = hasConnected
-	$MenuNagivationHintLabel.visible = Global.ALLOW_PLAYERS_SET_OPTIONS && hasConnected
+	$MenuNagivationHintLabel.visible = Settings.ALLOW_PLAYERS_SET_OPTIONS && hasConnected
 	$IngameHintLabel.visible = hasConnected
 	$IngameMovementHintLabel.visible = hasConnected
 	$IngameAimHintLabel.visible = hasConnected
@@ -50,19 +48,6 @@ func handleLabels():
 	elif !countingDown:
 		$StartLabel.show()
 
-func joinPlayer(playerId):
-	Global.playersJoined[playerId] = true
-	var slot = get_node('PlayerSlot' + str(playerId))
-	var player = Res.Player.instance()
-	connect("player_remove", player, "_on_remove")
-	player.playerId = playerId
-	slot.add_child(player)
-
-func leavePlayer(playerId):
-	Global.playersCrowned[playerId] = false
-	Global.playersJoined[playerId] = false
-	emit_signal("player_remove", playerId)
-
 func randomizeBackground():
 	$MovingBackground.frame = ($MovingBackground.frame + (randi() % ($MovingBackground.vframes - 1)) + 1) % $MovingBackground.vframes
 
@@ -81,9 +66,14 @@ func initPlayers():
 	Global.playersFrozen = false
 	Global.playersPoints = [0, 0, 0, 0]
 	Global.playersAchievements = [[], [], [], []]
-	for i in len(Global.playersJoined):
-		if Global.playersJoined[i]:
-			joinPlayer(i)
+
+	for i in range(4):
+		if Settings.DISCONNECT_ON_INIT:
+			Global.playersJoined[i] = false
+		else:
+			if Global.playersConnected[i] && Global.playersJoined[i]:
+				Global.joinPlayer(i)
+	
 	Global.playersStats = []
 	for i in range(4):
 		Global.playersStats.append(

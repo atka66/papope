@@ -1,6 +1,7 @@
 extends Node2D
 
 export(int) var playerId = 0
+var canProceed = false
 
 func _ready():
 	if !Global.playersJoined[playerId]:
@@ -39,6 +40,8 @@ func _ready():
 	
 	yield(get_tree().create_timer(1.0), "timeout")
 	
+	canProceed = true
+	
 	if winner:
 		$Background/BackgroundAnim.play("appear")
 		var winnerLabel = Res.CustomLabel.instance()
@@ -60,7 +63,7 @@ func _ready():
 		yield(get_tree().create_timer(0.2), "timeout")
 	
 func _input(event):
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") && canProceed:
 		get_tree().change_scene("res://Lobby.tscn")
 
 func showAchievement(y, achievement):
