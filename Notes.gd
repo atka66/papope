@@ -1,5 +1,5 @@
 ### TODOs
-# * config file
+# * avoid physics clipping through blocks or larger block hitbox sizes
 # * new map (pacman)
 # * new gamemode (perks)
 

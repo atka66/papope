@@ -170,6 +170,12 @@ pl_game_dash={
 2d_physics/layer_7="spacetrigger"
 2d_physics/layer_8="spaceray"
 
+[papope]
+
+pwrup_respawn_time=6
+allow_players_set_options=true
+disconnect_on_init=false
+
 [rendering]
 
 quality/driver/driver_name="GLES2"

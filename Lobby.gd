@@ -28,7 +28,7 @@ func handleLabels():
 	$MenuMovementHintLabel.visible = hasConnected
 	$MenuChangeSkinHintLabel.visible = hasConnected
 	$MenuChangeTeamHintLabel.visible = hasConnected
-	$MenuNagivationHintLabel.visible = Settings.ALLOW_PLAYERS_SET_OPTIONS && hasConnected
+	$MenuNagivationHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
 	$IngameHintLabel.visible = hasConnected
 	$IngameMovementHintLabel.visible = hasConnected
 	$IngameAimHintLabel.visible = hasConnected
@@ -68,7 +68,7 @@ func initPlayers():
 	Global.playersAchievements = [[], [], [], []]
 
 	for i in range(4):
-		if Settings.DISCONNECT_ON_INIT:
+		if ProjectSettings.get("papope/disconnect_on_init"):
 			Global.playersJoined[i] = false
 		else:
 			if Global.playersConnected[i] && Global.playersJoined[i]:

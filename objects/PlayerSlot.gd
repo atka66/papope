@@ -36,7 +36,7 @@ func _input(event):
 				else:
 					Global.playersCrowned[playerId] = false
 					Global.leavePlayer(playerId)
-		if Settings.ALLOW_PLAYERS_SET_OPTIONS && !Lobby.countingDown:
+		if ProjectSettings.get("papope/allow_players_set_options") && !Lobby.countingDown:
 			if Input.is_action_just_pressed("pl_nav_up"):
 				Global.currentOption = Global.options.keys()[(Global.options.keys().find(Global.currentOption) + (len(Global.options) - 1)) % len(Global.options)]
 			if Input.is_action_just_pressed("pl_nav_down"):

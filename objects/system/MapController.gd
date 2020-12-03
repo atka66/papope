@@ -26,7 +26,7 @@ func _ready():
 			yield(get_tree().create_timer(0.25), "timeout")
 
 func _pwrupSpawnLoop():
-	yield(get_tree().create_timer(Settings.PWRUP_RESPAWN_TIME), "timeout")
+	yield(get_tree().create_timer(ProjectSettings.get("papope/pwrup_respawn_time")), "timeout")
 	var spawner = getRandomSpawner()
 	var pwrupGroupName = spawner.name
 	for spawnersPwrup in get_tree().get_nodes_in_group(pwrupGroupName):
