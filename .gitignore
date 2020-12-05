@@ -1,6 +1,7 @@
-
 # Godot-specific ignores
 .import/
+papope.exe
+papope.pck
 
 # Mono-specific ignores
 .mono/
