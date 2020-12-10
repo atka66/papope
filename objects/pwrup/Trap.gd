@@ -22,6 +22,13 @@ func _on_Trap_body_entered(body):
 			var bodyTrap = body.trap()
 			var trigger = trigger()
 
+
+func _on_Trap_area_entered(area):
+	if armed:
+		if area.is_in_group('ghosts'):
+			area.die()
+			var trigger = trigger()
+
 func trigger():
 	$Audio.stream = Res.AudioWhipHuts[randi() % len(Res.AudioWhipHuts)]
 	$Audio.play()

@@ -171,7 +171,7 @@ func _on_Player_body_entered(body):
 		if !hit:
 			body.hit = true
 			var collisionAnim = Res.CollisionAnim.instance()
-			var animScale = (thrust.length() + body.thrust.length()) / 30
+			var animScale = (thrust.length() + body.thrust.length()) / 20
 			collisionAnim.scale = Vector2(animScale, animScale)
 			collisionAnim.play()
 			collisionAnim.position = body.global_position - ((body.global_position - global_position) / 2)

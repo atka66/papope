@@ -40,6 +40,7 @@
 # 1    : {Tree}, {Mast}, {Cactus}
 # 2    : {Car}
 # 3    : {Pwrup}, [WhiplashAnim]
+# 4    : {Ghost}, {DeadGhost}
 # 5    : {SpawnAnim}, {CollisionAnim}, {DespawnAnim}, {ExplosionAnim}, {WhipcrackAnim}
 # 6    : [EmberParticles], {Spaceray}
 # 50   : [FgTiles1]

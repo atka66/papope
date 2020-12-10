@@ -19,4 +19,5 @@ hframes = 2
 shape = SubResource( 1 )
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
+[connection signal="area_entered" from="." to="." method="_on_Trap_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_Trap_body_entered"]
