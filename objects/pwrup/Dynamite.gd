@@ -18,7 +18,7 @@ func explode():
 		var dist = position.distance_to(player.position)
 		if dist < 150:
 			var power = 150 - dist;
-			player.apply_central_impulse(position.direction_to(player.position) * power * 20)
+			player.apply_central_impulse(position.direction_to(player.position) * power * 10)
 			var dmg = power / 1.5
 			if player.wouldRighteouslyBeHitBy(originPlayerId):
 				fullDmg += dmg

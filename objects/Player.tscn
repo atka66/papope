@@ -80,7 +80,7 @@ collision_mask = 15
 mode = 2
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
-contacts_reported = 1
+contacts_reported = 2
 contact_monitor = true
 script = ExtResource( 3 )
 

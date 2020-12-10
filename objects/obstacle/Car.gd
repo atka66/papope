@@ -31,6 +31,6 @@ func _on_Car_body_entered(body):
 		if global_position.y > body.global_position.y:
 			vel.y *= -1
 		
-		body.apply_central_impulse(vector + (vel * 1200))
+		body.apply_central_impulse(vector + (vel * 600))
 	if body.is_in_group('dynamites'):
 		body.explode()

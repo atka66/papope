@@ -16,8 +16,8 @@ var trapped = false
 var inSpace = false
 
 var thrust = Vector2.ZERO
-var speed = 40
-var frictionCustom = 0.2
+var speed = 20
+var frictionCustom = 0.1
 
 var color = Global.TEAM_COLORS[0]
 var inputCd = false
@@ -99,7 +99,7 @@ func _input(event):
 					if Input.is_action_just_pressed('pl_game_dash'):
 						$AudioDash.stream = Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)]
 						$AudioDash.play()
-						apply_central_impulse(linear_velocity.normalized() * 750)
+						apply_central_impulse(linear_velocity.normalized() * 400)
 				if Input.is_action_just_pressed('pl_game_use'):
 					useItem()
 
@@ -177,13 +177,13 @@ func _on_Player_body_entered(body):
 			collisionAnim.position = body.global_position - ((body.global_position - global_position) / 2)
 			collisionAnim.look_at(body.global_position)
 			get_tree().get_current_scene().add_child(collisionAnim)
-		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
+		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):
 		$AudioHurtCactus.stream = Res.AudioPlayerHurtCactus[randi() % len(Res.AudioPlayerHurtCactus)]
 		$AudioHurtCactus.play()
 		hurt(10)
-		apply_central_impulse(body.global_position.direction_to(global_position) * 200)
+		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 	if body.is_in_group('blockcollidors'):
 		if linear_velocity.length() > 250:
 			$AudioCollisionBlock.play()
@@ -234,7 +234,7 @@ func useItem():
 					collider.hurt(20)
 					if wasTeammateJustKilled(collider):
 						Global.registerAchievement(playerId, Global.Achi.JUDAS)
-					collider.apply_central_impulse($HitScan.cast_to.normalized() * 200)
+					collider.apply_central_impulse($HitScan.cast_to.normalized() * 100)
 				else:
 					var ricochet = Res.RevolverRicochet.instance()
 					ricochet.position = hitPosition
@@ -284,7 +284,7 @@ func useItem():
 					collider.hurt(30)
 					if wasTeammateJustKilled(collider): # if teammate was just killed
 						Global.registerAchievement(playerId, Global.Achi.JUDAS)
-					collider.apply_central_impulse($HitScan.cast_to.normalized() * 2500)
+					collider.apply_central_impulse($HitScan.cast_to.normalized() * 1000)
 			whipcrackAnim.position = hitPosition
 			get_tree().get_current_scene().add_child(whipcrackAnim)
 		if item != null:
