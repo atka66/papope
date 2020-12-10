@@ -790,12 +790,12 @@ position = Vector2( 400, 256 )
 scale = Vector2( 9, 2 )
 
 [node name="Block6" parent="." instance=ExtResource( 7 )]
-position = Vector2( 0, -80 )
-scale = Vector2( 42, 1 )
+position = Vector2( 0, -128 )
+scale = Vector2( 42, 4 )
 
 [node name="Block7" parent="." instance=ExtResource( 7 )]
 position = Vector2( 160, 448 )
-scale = Vector2( 22, 1 )
+scale = Vector2( 22, 4 )
 
 [node name="WaterTrigger1" parent="." instance=ExtResource( 10 )]
 position = Vector2( -16, -64 )

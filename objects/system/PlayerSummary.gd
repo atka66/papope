@@ -40,8 +40,6 @@ func _ready():
 	
 	yield(get_tree().create_timer(1.0), "timeout")
 	
-	canProceed = true
-	
 	if winner:
 		$Background/BackgroundAnim.play("appear")
 		var winnerLabel = Res.CustomLabel.instance()
@@ -57,6 +55,8 @@ func _ready():
 		$Background.show()
 	
 	yield(get_tree().create_timer(1.5), "timeout")
+	
+	canProceed = true
 	
 	for i in len(Global.playersAchievements[playerId]):
 		showAchievement(200 - (i * 40), Global.playersAchievements[playerId][i])

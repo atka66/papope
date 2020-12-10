@@ -22,6 +22,8 @@ var frictionCustom = 0.2
 var color = Global.TEAM_COLORS[0]
 var inputCd = false
 
+var wrapPosition = null
+
 func _ready():
 	$InvulAnim.play()
 	$InvulAnim.hide()
@@ -332,3 +334,9 @@ func spawnFallingMessage(text, color, size, audio):
 	message.audio = audio
 	message.position = global_position
 	get_parent().add_child(message)
+
+# handle wrapping on pacman map
+func _integrate_forces(state):
+	if wrapPosition != null:
+		state.transform.origin = wrapPosition
+		wrapPosition = null

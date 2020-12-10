@@ -78,12 +78,12 @@ z_as_relative = false
 texture = ExtResource( 4 )
 
 [node name="Block1" parent="." instance=ExtResource( 2 )]
-position = Vector2( -64, -80 )
-scale = Vector2( 50, 1 )
+position = Vector2( -64, -128 )
+scale = Vector2( 50, 4 )
 
 [node name="Block2" parent="." instance=ExtResource( 2 )]
 position = Vector2( -64, 448 )
-scale = Vector2( 50, 1 )
+scale = Vector2( 50, 4 )
 
 [node name="TrafficLane1" parent="." instance=ExtResource( 3 )]
 position = Vector2( 776, 96 )

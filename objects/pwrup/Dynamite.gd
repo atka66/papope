@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 export var originPlayerId = 0
+var wrapPosition = null
 
 func _ready():
 	$AudioThrow.play()
@@ -35,3 +36,9 @@ func _on_Dynamite_body_entered(body):
 		explode()
 	if !body.is_in_group('players'):
 		$AudioCollision.play()
+
+# handle wrapping on pacman map
+func _integrate_forces(state):
+	if wrapPosition != null:
+		state.transform.origin = wrapPosition
+		wrapPosition = null

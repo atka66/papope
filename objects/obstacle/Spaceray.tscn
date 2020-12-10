@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://objects/obstacle/Spaceray.gd" type="Script" id=1]
 [ext_resource path="res://sprites/obstacle/spaceray_1.png" type="Texture" id=2]
@@ -21,7 +21,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.062, 1 ) ]
 }
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
 "loop": true,
@@ -29,7 +29,23 @@ animations = [ {
 "speed": 15.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="Animation" id=4]
+resource_name = "pulse"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.1, 1 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 32, 192 )
 
 [node name="Spaceray" type="Node2D"]
@@ -78,10 +94,15 @@ scale_amount = 2.0
 scale_amount_random = 1.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Phase2"]
-frames = SubResource( 3 )
+scale = Vector2( 1.05832, 1 )
+frames = SubResource( 2 )
 frame = 1
 playing = true
 
+[node name="Phase2Anim" type="AnimationPlayer" parent="Phase2/AnimatedSprite"]
+autoplay = "pulse"
+anims/pulse = SubResource( 4 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Phase2"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 [connection signal="body_entered" from="Phase2" to="." method="_on_Phase2_body_entered"]
