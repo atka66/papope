@@ -2,6 +2,25 @@
 # * avoid physics clipping through blocks or larger block hitbox sizes
 # * new map (pacman)
 # * new gamemode (perks)
+#   * in perks mode players get a perk card from a set of randomized perk cards before each round
+#   * these perks will stay with them until the end of the game (stacking every round)
+#   * perks can be both advantageous and disadvantageous
+#   * planned perks:
+#     # positive
+#     * akimbo     - pickups are doubled
+#     * thick      - incoming damage halved
+#     * speed      - 50% faster movement
+#     * thorns     - collision damages
+#     * tiny       - size halved
+#     # negative
+#     * drunk      - inverted movement and aim
+#     * backfire   - fires the opposite direction
+#     * slow       - 25% slower movement
+#     * large      - size doubled
+#     * no legs    - can only dash
+#     * no hands   - cannot pick up pickups
+#     * time bomb  - dies after 20 seconds
+#     * slippery   - no friction
 
 ### Layers
 #
