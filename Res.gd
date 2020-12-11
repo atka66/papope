@@ -69,3 +69,5 @@ onready var PwrupSprites = {
 	'trap' : preload("res://sprites/pwrup/pwrup_trap.tres"),
 	'whip' : preload("res://sprites/pwrup/pwrup_whip.tres")
 }
+
+# perks icons

@@ -34,6 +34,7 @@ func handleLabels():
 	$IngameAimHintLabel.visible = hasConnected
 	$IngameDashHintLabel.visible = hasConnected
 	$IngameUseHintLabel.visible = hasConnected
+	$ModeOption.visible = hasConnected
 	$MapOption.visible = hasConnected
 	$RoundsOption.visible = hasConnected
 	$HpOption.visible = hasConnected
@@ -78,11 +79,11 @@ func initPlayers():
 	for i in range(4):
 		Global.playersStats.append(
 			{
-				Global.Stat.REV_USE: 0, Global.Stat.REV_HIT: 0,
-				Global.Stat.DYN_USE: 0, Global.Stat.DYN_DMG: 0,
-				Global.Stat.WHP_USE: 0, Global.Stat.WHP_HIT: 0,
-				Global.Stat.TRP_USE: 0, Global.Stat.TRP_HIT: 0,
-				Global.Stat.PELLETS: 0, Global.Stat.GHOST_KILL: 0
+				Global.StatEnum.REV_USE: 0, Global.StatEnum.REV_HIT: 0,
+				Global.StatEnum.DYN_USE: 0, Global.StatEnum.DYN_DMG: 0,
+				Global.StatEnum.WHP_USE: 0, Global.StatEnum.WHP_HIT: 0,
+				Global.StatEnum.TRP_USE: 0, Global.StatEnum.TRP_HIT: 0,
+				Global.StatEnum.PELLETS: 0, Global.StatEnum.GHOST_KILL: 0
 			}
 		)
 

@@ -24,27 +24,36 @@ const HINT_STRINGS = [
 	["SAME COLOR MEANS SAME TEAM"]
 ]
 const DEATH_STRINGS = ['oof', 'ouch', 'rip', 'dead', 'oops', 'sad', 'bye']
-enum Achi {
+enum AchiEnum {
 	UNDERDOG, DEMOLITION_MAN, GUNSLINGER, HUTS_HUTS, DAREDEVIL,
 	GUERRILLA, CARELESS, JUDAS, NO_REFUNDS, DEAD_BY_CHOICE,
 	JATSZUNK_MAST, WAKA_WAKA, GHOSTBUSTER, SPOOKED
 }
 const ACHIEVEMENTS = {
-	Achi.UNDERDOG : ['underdog', 'low overall score'], # has <= 1/4 of the needed score at the end (score limit min 3)
-	Achi.DEMOLITION_MAN : ['demolition man', 'great dynamite damage'], # dynamite dmg / thrown dynamites > 75
-	Achi.GUNSLINGER : ['gunslinger', 'accurate with the revolver'], # revolver accuracy over 75%
-	Achi.HUTS_HUTS : ['huts-huts', 'accurate with the whip'], # whip accuracy over 75%
-	Achi.DAREDEVIL : ['daredevil', 'won a round with low health'], # win a round with <= 10% of health
-	Achi.GUERRILLA : ['guerrilla', 'well placed traps'], # sprung traps (on enemy) / laid traps > 75%
-	Achi.CARELESS : ['careless', 'stepped in his own trap'], # sprung his own trap
-	Achi.JUDAS : ['judas', 'killed his own teammate'], # killed his own teammate with revolver, dynamite or whip
-	Achi.NO_REFUNDS : ['no refunds!', 'the shield could not save him'], # die while having active shield
-	Achi.DEAD_BY_CHOICE : ['dead by choice', 'died with shield in inventory'], # die while having shield in inventory
-	Achi.JATSZUNK_MAST : ['jatszunk mast!', 'be underdog with bazsi skin'], # be underdog with bazsi skin (0)
-	Achi.WAKA_WAKA : ['waka waka', 'ate a lot of pellets'], # ate a lot of pellets
-	Achi.GHOSTBUSTER : ['ghostbuster', 'killed a lot of ghosts'], # killed 5 ghosts
-	Achi.SPOOKED : ['spooked', 'scared of ghosts'] # killed by a ghost
+	AchiEnum.UNDERDOG : ['underdog', 'low overall score'], # has <= 1/4 of the needed score at the end (score limit min 3)
+	AchiEnum.DEMOLITION_MAN : ['demolition man', 'great dynamite damage'], # dynamite dmg / thrown dynamites > 75
+	AchiEnum.GUNSLINGER : ['gunslinger', 'accurate with the revolver'], # revolver accuracy over 75%
+	AchiEnum.HUTS_HUTS : ['huts-huts', 'accurate with the whip'], # whip accuracy over 75%
+	AchiEnum.DAREDEVIL : ['daredevil', 'won a round with low health'], # win a round with <= 10% of health
+	AchiEnum.GUERRILLA : ['guerrilla', 'well placed traps'], # sprung traps (on enemy) / laid traps > 75%
+	AchiEnum.CARELESS : ['careless', 'stepped in his own trap'], # sprung his own trap
+	AchiEnum.JUDAS : ['judas', 'killed his own teammate'], # killed his own teammate with revolver, dynamite or whip
+	AchiEnum.NO_REFUNDS : ['no refunds!', 'the shield could not save him'], # die while having active shield
+	AchiEnum.DEAD_BY_CHOICE : ['dead by choice', 'died with shield in inventory'], # die while having shield in inventory
+	AchiEnum.JATSZUNK_MAST : ['jatszunk mast!', 'be underdog with bazsi skin'], # be underdog with bazsi skin (0)
+	AchiEnum.WAKA_WAKA : ['waka waka', 'ate a lot of pellets'], # ate a lot of pellets
+	AchiEnum.GHOSTBUSTER : ['ghostbuster', 'killed a lot of ghosts'], # killed 5 ghosts
+	AchiEnum.SPOOKED : ['spooked', 'scared of ghosts'] # killed by a ghost
 }
+enum PerkEnum {
+	AKIMBO, THICK, SPEED, THORNS, TINY,
+	DRUNK, BACKFIRE, SLOW, LARGE, NO_LEGS, 
+	NO_HANDS, TIME_BOMB, SLIPPERY
+}
+const PERKS = {
+	PerkEnum.AKIMBO: ['akimbo']
+}
+
 const SKIN_COUNT = 6
 const TEAM_COLOR_STRINGS = {
 	0: "RED",
@@ -54,11 +63,13 @@ const TEAM_COLOR_STRINGS = {
 }
 
 var options = {
+	'mode': ['normal', 'perks'],
 	'map': ['random', 'lava', 'western', 'ship', 'space', 'traffic', 'pacman'],
 	'rounds': [1, 3, 5, 9],
 	'hp': [1, 50, 100, 200]
 }
 var optionsSelected = {
+	'mode': 0,
 	'map': 0,
 	'rounds': 1,
 	'hp': 2
@@ -76,9 +87,12 @@ var playersTeam = [0, 1, 2, 3]
 var playersCrowned = [false, false, false, false]
 var playersFrozen = false
 var playersAchievements = [[], [], [], []]
-#var playersAchievements = [[Achi.UNDERDOG, Achi.JATSZUNK_MAST], [], [], []]
-enum Stat {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT, PELLETS, GHOST_KILL}
+#var playersAchievements = [[AchiEnum.UNDERDOG, AchiEnum.JATSZUNK_MAST], [], [], []]
+enum StatEnum {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT, PELLETS, GHOST_KILL}
 var playersStats = []
+
+var playersPerks = [[], [], [], []]
+
 var selectedMap = 'none'
 
 func goToMap():

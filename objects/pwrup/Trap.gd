@@ -15,9 +15,9 @@ func _on_Trap_body_entered(body):
 			var trigger = trigger()
 		if body.is_in_group('players'):
 			if body.wouldRighteouslyBeHitBy(originPlayerId):
-				Global.incrementStat(originPlayerId, Global.Stat.TRP_HIT, 1)
+				Global.incrementStat(originPlayerId, Global.StatEnum.TRP_HIT, 1)
 			if body.alive && body.playerId == originPlayerId:
-				Global.registerAchievement(originPlayerId, Global.Achi.CARELESS)
+				Global.registerAchievement(originPlayerId, Global.AchiEnum.CARELESS)
 			body.hurt(35)
 			var bodyTrap = body.trap()
 			var trigger = trigger()
@@ -26,7 +26,7 @@ func _on_Trap_body_entered(body):
 func _on_Trap_area_entered(area):
 	if armed:
 		if area.is_in_group('ghosts'):
-			Global.incrementStat(originPlayerId, Global.Stat.GHOST_KILL, 1)
+			Global.incrementStat(originPlayerId, Global.StatEnum.GHOST_KILL, 1)
 			area.die()
 			var trigger = trigger()
 

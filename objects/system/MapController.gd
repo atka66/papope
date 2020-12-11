@@ -15,6 +15,10 @@ func _ready():
 	get_tree().get_root().add_child(mapLabel)
 	get_tree().get_root().add_child(Res.Dim.instance())
 	var a = _pwrupSpawnLoop()
+	
+	# perks mode card dealing
+	#if Global.options['mode'][Global.optionsSelected['mode']] == 'perks'
+	
 	var b = initCountdown()
 	yield(get_tree().create_timer(2), "timeout")
 	for i in range(4):
@@ -55,7 +59,7 @@ func endRound(aliveTeamId):
 	# check daredevil achievement
 	for player in get_tree().get_nodes_in_group('players'):
 		if Global.playersJoined[player.playerId] && player.alive && player.hp <= Global.options['hp'][Global.optionsSelected['hp']] / 10:
-			Global.registerAchievement(player.playerId, Global.Achi.DAREDEVIL)
+			Global.registerAchievement(player.playerId, Global.AchiEnum.DAREDEVIL)
 	
 	Global.playersFrozen = true
 	if aliveTeamId > -1: # team points are accounted
@@ -79,10 +83,9 @@ func endRound(aliveTeamId):
 
 func showCount(pos, cnt):
 	var label = Res.CustomLabel.instance()
-	label.position = pos
+	label.position = pos - Vector2(0, 6)
 	label.text = cnt
 	label.fontSize = 3
-	label.outline = true
 	label.aliveTime = 1
 	label.alignment = Label.ALIGN_CENTER
 	label.color = Color.blue

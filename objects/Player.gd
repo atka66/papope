@@ -122,11 +122,11 @@ func _process(delta):
 					, Color.darkgray, 3, Res.AudioPlayerDeath
 				)
 				if invulnerable:
-					Global.registerAchievement(playerId, Global.Achi.NO_REFUNDS)
+					Global.registerAchievement(playerId, Global.AchiEnum.NO_REFUNDS)
 				hp = 0
 				ammo = 0
 				if item == 'shield':
-					Global.registerAchievement(playerId, Global.Achi.DEAD_BY_CHOICE)
+					Global.registerAchievement(playerId, Global.AchiEnum.DEAD_BY_CHOICE)
 				item = null
 				$Crosshair.hide()
 
@@ -224,7 +224,7 @@ func trap():
 
 func useItem():
 		if item == 'revolver':
-			Global.incrementStat(playerId, Global.Stat.REV_USE, 1)
+			Global.incrementStat(playerId, Global.StatEnum.REV_USE, 1)
 			var revolverRay = Res.RevolverRay.instance()
 			var hitPosition = global_position + $HitScan.cast_to
 			if $HitScan.is_colliding():
@@ -233,13 +233,13 @@ func useItem():
 				if collider.is_in_group('players'):
 					collider.get_node("AudioRevHit").play()
 					if collider.wouldRighteouslyBeHitBy(playerId):
-						Global.incrementStat(playerId, Global.Stat.REV_HIT, 1)
+						Global.incrementStat(playerId, Global.StatEnum.REV_HIT, 1)
 					collider.hurt(20)
 					if wasTeammateJustKilled(collider):
-						Global.registerAchievement(playerId, Global.Achi.JUDAS)
+						Global.registerAchievement(playerId, Global.AchiEnum.JUDAS)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 100)
 				elif collider.is_in_group('ghosts'):
-					Global.incrementStat(playerId, Global.Stat.GHOST_KILL, 1)
+					Global.incrementStat(playerId, Global.StatEnum.GHOST_KILL, 1)
 					collider.die()
 				else:
 					var ricochet = Res.RevolverRicochet.instance()
@@ -250,7 +250,7 @@ func useItem():
 			revolverRay.length = (position - hitPosition).length()
 			get_tree().get_current_scene().add_child(revolverRay)
 		if item == 'dynamite':
-			Global.incrementStat(playerId, Global.Stat.DYN_USE, 1)
+			Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
 			var dynamite = Res.Dynamite.instance()
 			dynamite.position = position + ($HitScan.cast_to.normalized()) * 16
 			dynamite.originPlayerId = playerId
@@ -265,14 +265,14 @@ func useItem():
 			$InvulAnim/Timer.start(5)
 		if item == 'trap':
 			$AudioPlaceTrap.play()
-			Global.incrementStat(playerId, Global.Stat.TRP_USE, 1)
+			Global.incrementStat(playerId, Global.StatEnum.TRP_USE, 1)
 			var trap = Res.Trap.instance()
 			trap.originPlayerId = playerId
 			trap.rotation_degrees += (randi() % 60) - 30
 			trap.position = position
 			get_tree().get_current_scene().add_child(trap)
 		if item == 'whip':
-			Global.incrementStat(playerId, Global.Stat.WHP_USE, 1)
+			Global.incrementStat(playerId, Global.StatEnum.WHP_USE, 1)
 			var angle = $HitScan.cast_to.angle()
 			$WhiplashAnim.rotation = angle
 			$WhiplashAnim.frame = 0
@@ -285,14 +285,14 @@ func useItem():
 				if collider.is_in_group('players'):
 					collider.get_node('AudioHurtWhip').play()
 					if collider.wouldRighteouslyBeHitBy(playerId):
-						Global.incrementStat(playerId, Global.Stat.WHP_HIT, 1)
+						Global.incrementStat(playerId, Global.StatEnum.WHP_HIT, 1)
 					hitPosition = $HitScan.get_collision_point()
 					collider.hurt(30)
 					if wasTeammateJustKilled(collider): # if teammate was just killed
-						Global.registerAchievement(playerId, Global.Achi.JUDAS)
+						Global.registerAchievement(playerId, Global.AchiEnum.JUDAS)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 1000)
 				if collider.is_in_group('ghosts'):
-					Global.incrementStat(playerId, Global.Stat.GHOST_KILL, 1)
+					Global.incrementStat(playerId, Global.StatEnum.GHOST_KILL, 1)
 					collider.die()
 			whipcrackAnim.position = hitPosition
 			get_tree().get_current_scene().add_child(whipcrackAnim)

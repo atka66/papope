@@ -192,6 +192,10 @@ alignment = 1
 outline = true
 frames = [ ExtResource( 3 ) ]
 
+[node name="ModeOption" parent="." instance=ExtResource( 13 )]
+position = Vector2( 186, 127 )
+option = "mode"
+
 [node name="MapOption" parent="." instance=ExtResource( 13 )]
 position = Vector2( 186, 152 )
 option = "map"

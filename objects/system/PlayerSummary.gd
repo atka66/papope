@@ -91,31 +91,31 @@ func distributeAchievements():
 	if optionPoints >= 3 && Global.playersPoints[playerId] <= optionPoints / 4:
 		var achievement = null
 		if Global.playersSkin[playerId] == 0:
-			achievement = Global.Achi.JATSZUNK_MAST
+			achievement = Global.AchiEnum.JATSZUNK_MAST
 		else:
-			achievement = Global.Achi.UNDERDOG
+			achievement = Global.AchiEnum.UNDERDOG
 		Global.registerAchievement(playerId, achievement)
 	# check stat achievements
 	var playerStats = Global.playersStats[playerId]
-	var dyn_use = playerStats[Global.Stat.DYN_USE]
-	var dyn_dmg = playerStats[Global.Stat.DYN_DMG]
-	var rev_use = playerStats[Global.Stat.REV_USE]
-	var rev_hit = playerStats[Global.Stat.REV_HIT]
-	var whp_use = playerStats[Global.Stat.WHP_USE]
-	var whp_hit = playerStats[Global.Stat.WHP_HIT]
-	var trp_use = playerStats[Global.Stat.TRP_USE]
-	var trp_hit = playerStats[Global.Stat.TRP_HIT]
-	var pellets = playerStats[Global.Stat.PELLETS]
-	var ghost_kill = playerStats[Global.Stat.GHOST_KILL]
+	var dyn_use = playerStats[Global.StatEnum.DYN_USE]
+	var dyn_dmg = playerStats[Global.StatEnum.DYN_DMG]
+	var rev_use = playerStats[Global.StatEnum.REV_USE]
+	var rev_hit = playerStats[Global.StatEnum.REV_HIT]
+	var whp_use = playerStats[Global.StatEnum.WHP_USE]
+	var whp_hit = playerStats[Global.StatEnum.WHP_HIT]
+	var trp_use = playerStats[Global.StatEnum.TRP_USE]
+	var trp_hit = playerStats[Global.StatEnum.TRP_HIT]
+	var pellets = playerStats[Global.StatEnum.PELLETS]
+	var ghost_kill = playerStats[Global.StatEnum.GHOST_KILL]
 	if dyn_use > 3 && float(dyn_dmg) / dyn_use > 75:
-		Global.registerAchievement(playerId, Global.Achi.DEMOLITION_MAN)
+		Global.registerAchievement(playerId, Global.AchiEnum.DEMOLITION_MAN)
 	if rev_use > 3 && float(rev_hit) / rev_use > 0.75:
-		Global.registerAchievement(playerId, Global.Achi.GUNSLINGER)
+		Global.registerAchievement(playerId, Global.AchiEnum.GUNSLINGER)
 	if whp_use > 3 && float(whp_hit) / whp_use > 0.75:
-		Global.registerAchievement(playerId, Global.Achi.HUTS_HUTS)
+		Global.registerAchievement(playerId, Global.AchiEnum.HUTS_HUTS)
 	if trp_use > 3 && float(trp_hit) / trp_use > 0.75:
-		Global.registerAchievement(playerId, Global.Achi.GUERRILLA)
+		Global.registerAchievement(playerId, Global.AchiEnum.GUERRILLA)
 	if pellets >= 50:
-		Global.registerAchievement(playerId, Global.Achi.WAKA_WAKA)
+		Global.registerAchievement(playerId, Global.AchiEnum.WAKA_WAKA)
 	if ghost_kill >= 5:
-		Global.registerAchievement(playerId, Global.Achi.GHOSTBUSTER)
+		Global.registerAchievement(playerId, Global.AchiEnum.GHOSTBUSTER)

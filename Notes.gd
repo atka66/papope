@@ -1,6 +1,4 @@
 ### TODOs
-# * avoid physics clipping through blocks or larger block hitbox sizes
-# * new map (pacman)
 # * new gamemode (perks)
 #   * in perks mode players get a perk card from a set of randomized perk cards before each round
 #   * these perks will stay with them until the end of the game (stacking every round)

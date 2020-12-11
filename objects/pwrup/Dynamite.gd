@@ -23,7 +23,7 @@ func explode():
 			if player.wouldRighteouslyBeHitBy(originPlayerId):
 				fullDmg += dmg
 			player.hurt(dmg)
-	Global.incrementStat(originPlayerId, Global.Stat.DYN_DMG, fullDmg)
+	Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, fullDmg)
 	var explosionAnim = Res.ExplosionAnim.instance()
 	explosionAnim.position = position
 	get_tree().get_current_scene().add_child(explosionAnim)
