@@ -106,6 +106,7 @@ func distributeAchievements():
 	var trp_use = playerStats[Global.Stat.TRP_USE]
 	var trp_hit = playerStats[Global.Stat.TRP_HIT]
 	var pellets = playerStats[Global.Stat.PELLETS]
+	var ghost_kill = playerStats[Global.Stat.GHOST_KILL]
 	if dyn_use > 3 && float(dyn_dmg) / dyn_use > 75:
 		Global.registerAchievement(playerId, Global.Achi.DEMOLITION_MAN)
 	if rev_use > 3 && float(rev_hit) / rev_use > 0.75:
@@ -114,5 +115,7 @@ func distributeAchievements():
 		Global.registerAchievement(playerId, Global.Achi.HUTS_HUTS)
 	if trp_use > 3 && float(trp_hit) / trp_use > 0.75:
 		Global.registerAchievement(playerId, Global.Achi.GUERRILLA)
-	if pellets > 50:
+	if pellets >= 50:
 		Global.registerAchievement(playerId, Global.Achi.WAKA_WAKA)
+	if ghost_kill >= 5:
+		Global.registerAchievement(playerId, Global.Achi.GHOSTBUSTER)

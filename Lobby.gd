@@ -82,7 +82,7 @@ func initPlayers():
 				Global.Stat.DYN_USE: 0, Global.Stat.DYN_DMG: 0,
 				Global.Stat.WHP_USE: 0, Global.Stat.WHP_HIT: 0,
 				Global.Stat.TRP_USE: 0, Global.Stat.TRP_HIT: 0,
-				Global.Stat.PELLETS: 0
+				Global.Stat.PELLETS: 0, Global.Stat.GHOST_KILL: 0
 			}
 		)
 

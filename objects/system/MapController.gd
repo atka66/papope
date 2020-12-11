@@ -76,3 +76,24 @@ func endRound(aliveTeamId):
 	get_parent().add_child(winLabel)
 	yield(get_tree().create_timer(3), "timeout")
 	Global.goToMap()
+
+func showCount(pos, cnt):
+	var label = Res.CustomLabel.instance()
+	label.position = pos
+	label.text = cnt
+	label.fontSize = 3
+	label.outline = true
+	label.aliveTime = 1
+	label.alignment = Label.ALIGN_CENTER
+	label.color = Color.blue
+	get_parent().add_child(label)
+
+func initGhostSpawn():
+	var spawnNode = get_parent().get_node('GhostPathNode' + str(randi() % 2))
+	var cd = ProjectSettings.get("papope/ghost_respawn_time")
+	for i in range(cd):
+		showCount(spawnNode.position, str(cd - i))
+		yield(get_tree().create_timer(1), "timeout")
+	var ghost = Res.Ghost.instance()
+	ghost.destNode = spawnNode
+	get_parent().add_child(ghost)

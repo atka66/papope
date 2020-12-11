@@ -26,6 +26,7 @@ func _on_Trap_body_entered(body):
 func _on_Trap_area_entered(area):
 	if armed:
 		if area.is_in_group('ghosts'):
+			Global.incrementStat(originPlayerId, Global.Stat.GHOST_KILL, 1)
 			area.die()
 			var trigger = trigger()
 

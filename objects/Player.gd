@@ -99,7 +99,7 @@ func _input(event):
 					if Input.is_action_just_pressed('pl_game_dash'):
 						$AudioDash.stream = Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)]
 						$AudioDash.play()
-						apply_central_impulse(linear_velocity.normalized() * 400)
+						apply_central_impulse(linear_velocity.normalized() * 600)
 				if Input.is_action_just_pressed('pl_game_use'):
 					useItem()
 
@@ -235,6 +235,9 @@ func useItem():
 					if wasTeammateJustKilled(collider):
 						Global.registerAchievement(playerId, Global.Achi.JUDAS)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 100)
+				elif collider.is_in_group('ghosts'):
+					Global.incrementStat(playerId, Global.Stat.GHOST_KILL, 1)
+					collider.die()
 				else:
 					var ricochet = Res.RevolverRicochet.instance()
 					ricochet.position = hitPosition
@@ -285,6 +288,9 @@ func useItem():
 					if wasTeammateJustKilled(collider): # if teammate was just killed
 						Global.registerAchievement(playerId, Global.Achi.JUDAS)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 1000)
+				if collider.is_in_group('ghosts'):
+					Global.incrementStat(playerId, Global.Stat.GHOST_KILL, 1)
+					collider.die()
 			whipcrackAnim.position = hitPosition
 			get_tree().get_current_scene().add_child(whipcrackAnim)
 		if item != null:

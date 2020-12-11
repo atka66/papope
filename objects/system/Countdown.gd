@@ -19,3 +19,5 @@ func _ready():
 	else:
 		showCount("go!", 3, Res.AudioRoundGo)
 		Global.playersFrozen = false
+		if Global.selectedMap == 'pacman':
+			var spawn = get_parent().get_node('MapController').initGhostSpawn()

@@ -27,7 +27,7 @@ const DEATH_STRINGS = ['oof', 'ouch', 'rip', 'dead', 'oops', 'sad', 'bye']
 enum Achi {
 	UNDERDOG, DEMOLITION_MAN, GUNSLINGER, HUTS_HUTS, DAREDEVIL,
 	GUERRILLA, CARELESS, JUDAS, NO_REFUNDS, DEAD_BY_CHOICE,
-	JATSZUNK_MAST, WAKA_WAKA
+	JATSZUNK_MAST, WAKA_WAKA, GHOSTBUSTER, SPOOKED
 }
 const ACHIEVEMENTS = {
 	Achi.UNDERDOG : ['underdog', 'low overall score'], # has <= 1/4 of the needed score at the end (score limit min 3)
@@ -41,7 +41,9 @@ const ACHIEVEMENTS = {
 	Achi.NO_REFUNDS : ['no refunds!', 'the shield could not save him'], # die while having active shield
 	Achi.DEAD_BY_CHOICE : ['dead by choice', 'died with shield in inventory'], # die while having shield in inventory
 	Achi.JATSZUNK_MAST : ['jatszunk mast!', 'be underdog with bazsi skin'], # be underdog with bazsi skin (0)
-	Achi.WAKA_WAKA : ['waka waka', 'ate a lot of pellets'] # ate a lot of pellets
+	Achi.WAKA_WAKA : ['waka waka', 'ate a lot of pellets'], # ate a lot of pellets
+	Achi.GHOSTBUSTER : ['ghostbuster', 'killed a lot of ghosts'], # killed 5 ghosts
+	Achi.SPOOKED : ['spooked', 'scared of ghosts'] # killed by a ghost
 }
 const SKIN_COUNT = 6
 const TEAM_COLOR_STRINGS = {
@@ -75,7 +77,7 @@ var playersCrowned = [false, false, false, false]
 var playersFrozen = false
 var playersAchievements = [[], [], [], []]
 #var playersAchievements = [[Achi.UNDERDOG, Achi.JATSZUNK_MAST], [], [], []]
-enum Stat {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT, PELLETS}
+enum Stat {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT, PELLETS, GHOST_KILL}
 var playersStats = []
 var selectedMap = 'none'
 

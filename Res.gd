@@ -17,6 +17,7 @@ onready var RevolverRicochet = preload("res://objects/pwrup/RevolverRicochet.tsc
 onready var Dynamite = preload("res://objects/pwrup/Dynamite.tscn")
 onready var Trap = preload("res://objects/pwrup/Trap.tscn")
 onready var Car = preload("res://objects/obstacle/Car.tscn")
+onready var Ghost = preload("res://objects/obstacle/Ghost.tscn")
 onready var DeadGhost = preload("res://objects/obstacle/DeadGhost.tscn")
 
 onready var AudioMsg = preload("res://sounds/system/msg.ogg")
