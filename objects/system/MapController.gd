@@ -8,19 +8,24 @@ func _ready():
 	mapLabel.text = Global.selectedMap
 	mapLabel.fontSize = 6
 	mapLabel.outline = true
-	mapLabel.aliveTime = 2
+	mapLabel.aliveTime = 1
 	mapLabel.alignment = Label.ALIGN_LEFT
 	mapLabel.audio = Res.AudioRoundStart
 	#scene _ready methods are unable to get parents or current scene
-	get_tree().get_root().add_child(mapLabel)
-	get_tree().get_root().add_child(Res.Dim.instance())
+	add_child(mapLabel)
+	add_child(Res.Dim.instance())
 	var a = _pwrupSpawnLoop()
+
+	yield(get_tree().create_timer(1), "timeout")
 	
 	# perks mode card dealing
-	#if Global.options['mode'][Global.optionsSelected['mode']] == 'perks'
+	if Global.options['mode'][Global.optionsSelected['mode']] == 'perks':
+		var perkOverlay = Res.PerkOverlay.instance()
+		add_child(perkOverlay)
+		yield(perkOverlay, "finished")
 	
 	var b = initCountdown()
-	yield(get_tree().create_timer(2), "timeout")
+	yield(get_tree().create_timer(1), "timeout")
 	for i in range(4):
 		if Global.playersJoined[i]:
 			var player = Res.Player.instance()
@@ -50,7 +55,6 @@ func getRandomSpawner():
 	return spawners[randi() % len(spawners)]
 
 func initCountdown():
-	yield(get_tree().create_timer(1), "timeout")
 	var countdown = Res.Countdown.instance()
 	countdown.position = Vector2(340, 64)
 	get_parent().add_child(countdown)

@@ -46,12 +46,26 @@ const ACHIEVEMENTS = {
 	AchiEnum.SPOOKED : ['spooked', 'scared of ghosts'] # killed by a ghost
 }
 enum PerkEnum {
-	AKIMBO, THICK, SPEED, THORNS, TINY,
-	DRUNK, BACKFIRE, SLOW, LARGE, NO_LEGS, 
-	NO_HANDS, TIME_BOMB, SLIPPERY
+	AKIMBO, THICK, SPEED
+	#, THORNS, TINY, CUDDLES,
+	#DRUNK, BACKFIRE, SLOW, LARGE, NO_LEGS,
+	#NO_HANDS, TIME_BOMB, SLIPPERY
 }
 const PERKS = {
-	PerkEnum.AKIMBO: ['akimbo']
+	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled'],
+	PerkEnum.THICK: ['thick', 'incoming damage halved'], 
+	PerkEnum.SPEED: ['speed', '50% faster movement']
+	#PerkEnum.THORNS: ['', ''],
+	#PerkEnum.TINY: ['', ''],
+	#PerkEnum.CUDDLES: ['', ''],
+	#PerkEnum.DRUNK: ['', ''],
+	#PerkEnum.BACKFIRE: ['', ''],
+	#PerkEnum.SLOW: ['', ''],
+	#PerkEnum.LARGE: ['', ''],
+	#PerkEnum.NO_LEGS: ['', ''],
+	#PerkEnum.NO_HANDS: ['', ''],
+	#PerkEnum.TIME_BOMB: ['', ''],
+	#PerkEnum.SLIPPERY: ['', '']
 }
 
 const SKIN_COUNT = 6

@@ -8,8 +8,9 @@
 #     * akimbo     - pickups are doubled
 #     * thick      - incoming damage halved
 #     * speed      - 50% faster movement
-#     * thorns     - collision damages
+#     * thorns     - collision damages others
 #     * tiny       - size halved
+#     * cuddles    - collision heals self
 #     # negative
 #     * drunk      - inverted movement and aim
 #     * backfire   - fires the opposite direction
@@ -45,5 +46,5 @@
 # 89   : [Crosshair]
 # 90   : {Hud}
 # 91   : {HudRevolver}, {HudAmmo}
-# 100  : {Dim}
+# 100  : {Dim}, {PerkOverlay}
 # 101  : {CustomLabel}, [LeftArrow], [RightArrow]

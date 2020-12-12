@@ -2,11 +2,12 @@ extends Area2D
 
 var speed = 2
 var destNode = null
+var moving = false
 const GHOST_COLORS = [Color.red, Color.pink, Color.aqua, Color.coral]
 
 func _ready():
 	position = destNode.position
-	$Body.modulate = GHOST_COLORS[randi() % len(GHOST_COLORS)]
+	$Container/Body.modulate = GHOST_COLORS[randi() % len(GHOST_COLORS)]
 
 func _on_Ghost_body_entered(body):
 	if body.is_in_group('players') && !Global.playersFrozen:
@@ -26,17 +27,24 @@ func die():
 	queue_free()
 
 func _process(delta):
-	if destNode.position.x > position.x:
-		$Eyes.frame = 0
-	if destNode.position.y < position.y:
-		$Eyes.frame = 1
-	if destNode.position.x < position.x:
-		$Eyes.frame = 2
-	if destNode.position.y > position.y:
-		$Eyes.frame = 3
+	if moving:
+		if destNode.position.x > position.x:
+			$Container/Eyes.frame = 0
+		if destNode.position.y < position.y:
+			$Container/Eyes.frame = 1
+		if destNode.position.x < position.x:
+			$Container/Eyes.frame = 2
+		if destNode.position.y > position.y:
+			$Container/Eyes.frame = 3
 
-	if position == destNode.position:
-		var randomNodeId = destNode.neighbors[randi() % len(destNode.neighbors)]
-		destNode = get_parent().get_node('GhostPathNode' + str(randomNodeId))
-	else:
-		position = position.move_toward(destNode.position, speed)
+		if position == destNode.position:
+			var randomNodeId = destNode.neighbors[randi() % len(destNode.neighbors)]
+			destNode = get_parent().get_node('GhostPathNode' + str(randomNodeId))
+		else:
+			position = position.move_toward(destNode.position, speed)
+
+
+func _on_Anim_animation_finished(anim_name):
+	if anim_name == 'appear':
+		moving = true
+		$Anim.play("move")
