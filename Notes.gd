@@ -1,13 +1,8 @@
 ### TODOs
 # * being trapped should be indicated
-# * perks
+# * perks (??s might be discarded)
 #     # positive
-#     * akimbo     - pickups are doubled
-#     * armored    - incoming damage halved
-#     * speed      - 50% faster movement
-#     * spiky      - collision damages others
-#     * tiny       - size halved     (might be a bugfest)
-#     * cuddles    - collision heals self
+#     * ?? tiny       - size halved     (might be a bugfest)
 #     # negative
 #     * drunk      - inverted movement and aim
 #     * backfire   - fires the opposite direction

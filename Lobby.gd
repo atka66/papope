@@ -67,6 +67,7 @@ func initPlayers():
 	Global.playersFrozen = false
 	Global.playersPoints = [0, 0, 0, 0]
 	Global.playersAchievements = [[], [], [], []]
+	Global.playersPerks = [[], [], [], []]
 
 	for i in range(4):
 		if ProjectSettings.get("papope/disconnect_on_init"):

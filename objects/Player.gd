@@ -183,6 +183,13 @@ func _on_Player_body_entered(body):
 			collisionAnim.position = body.global_position - ((body.global_position - global_position) / 2)
 			collisionAnim.look_at(body.global_position)
 			get_tree().get_current_scene().add_child(collisionAnim)
+		if Global.playersPerks[playerId].has(Global.PerkEnum.SPIKY):
+			body.hurt(5)
+			$AudioRevHit.play()
+		if Global.playersPerks[playerId].has(Global.PerkEnum.CUDDLES):
+			heal(5)
+			#TODO some audio
+			#$AudioRevHit.play()
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):
@@ -327,6 +334,12 @@ func hurt(damage):
 			hp -= actualDamage;
 			$Hurt/HurtAnim.stop()
 			$Hurt/HurtAnim.play()
+
+func heal(amount):
+	if amount > 0 && alive && !Global.playersFrozen:
+		var fallingMessageSize = int(amount / 20) + 1
+		spawnFallingMessage(str(int(amount)), Color.lightgreen, fallingMessageSize, null)
+		hp = min(hp + amount, Global.options['hp'][Global.optionsSelected['hp']])
 
 func _on_WhiplashAnim_animation_finished():
 	$WhiplashAnim.hide()
