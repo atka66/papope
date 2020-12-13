@@ -1,4 +1,5 @@
 ### TODOs
+# * being trapped should be indicated
 # * new gamemode (perks)
 #   * in perks mode players get a perk card from a set of randomized perk cards before each round
 #   * these perks will stay with them until the end of the game (stacking every round)
@@ -6,20 +7,23 @@
 #   * planned perks:
 #     # positive
 #     * akimbo     - pickups are doubled
-#     * thick      - incoming damage halved
+#     * armored    - incoming damage halved
 #     * speed      - 50% faster movement
-#     * thorns     - collision damages others
-#     * tiny       - size halved
+#     * spiky     - collision damages others
+#     * tiny       - size halved     (might be a bugfest)
 #     * cuddles    - collision heals self
 #     # negative
 #     * drunk      - inverted movement and aim
 #     * backfire   - fires the opposite direction
 #     * slow       - 25% slower movement
-#     * large      - size doubled
+#     * large      - size doubled    (might be a bugfest)
 #     * no legs    - can only dash
-#     * no hands   - cannot pick up pickups
+#     * no hands   - cannot use pickups
 #     * time bomb  - dies after 20 seconds
 #     * slippery   - no friction
+#     * nothing    - nothing happened
+#     * amnesia    - previous perks removed
+#     * chicken    - you are a chicken
 
 ### Layers
 #

@@ -4,6 +4,7 @@ onready var CustomLabel = preload("res://objects/system/CustomLabel.tscn")
 onready var FallingMessage = preload("res://objects/system/FallingMessage.tscn")
 onready var Player = preload("res://objects/Player.tscn")
 onready var Hud = preload("res://objects/hud/Hud.tscn")
+onready var Perk = preload("res://objects/hud/Perk.tscn")
 onready var PerkOverlay = preload("res://objects/perk/PerkOverlay.tscn")
 onready var PerkCard = preload("res://objects/perk/PerkCard.tscn")
 onready var Dim = preload("res://objects/system/Dim.tscn")
@@ -71,5 +72,3 @@ onready var PwrupSprites = {
 	'trap' : preload("res://sprites/pwrup/pwrup_trap.tres"),
 	'whip' : preload("res://sprites/pwrup/pwrup_whip.tres")
 }
-
-# perks icons

@@ -46,15 +46,15 @@ const ACHIEVEMENTS = {
 	AchiEnum.SPOOKED : ['spooked', 'scared of ghosts'] # killed by a ghost
 }
 enum PerkEnum {
-	AKIMBO, THICK, SPEED
+	AKIMBO, ARMORED, SPEED
 	#, THORNS, TINY, CUDDLES,
 	#DRUNK, BACKFIRE, SLOW, LARGE, NO_LEGS,
 	#NO_HANDS, TIME_BOMB, SLIPPERY
 }
 const PERKS = {
-	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled'],
-	PerkEnum.THICK: ['thick', 'incoming damage halved'], 
-	PerkEnum.SPEED: ['speed', '50% faster movement']
+	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 0],
+	PerkEnum.ARMORED: ['thick', 'incoming damage halved', 1], 
+	PerkEnum.SPEED: ['speed', '50% faster movement', 2]
 	#PerkEnum.THORNS: ['', ''],
 	#PerkEnum.TINY: ['', ''],
 	#PerkEnum.CUDDLES: ['', ''],
@@ -104,8 +104,8 @@ var playersAchievements = [[], [], [], []]
 #var playersAchievements = [[AchiEnum.UNDERDOG, AchiEnum.JATSZUNK_MAST], [], [], []]
 enum StatEnum {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT, PELLETS, GHOST_KILL}
 var playersStats = []
-
 var playersPerks = [[], [], [], []]
+#var playersPerks = [[PerkEnum.AKIMBO, PerkEnum.SPEED], [], [], []]
 
 var selectedMap = 'none'
 

@@ -1,30 +1,34 @@
 extends Node2D
 
-var perk
+var perkInt
 var revealed = false
 
 func _ready():
-	perk = Global.PERKS[randi() % len(Global.PERKS)]
+	perkInt = randi() % len(Global.PerkEnum)
+	var perkData = Global.PERKS[perkInt]
+	print(perkData)
 	$Shine.hide()
+	$CardSprite/PerkSprite.hframes = len(Global.PerkEnum)
+	$CardSprite/PerkSprite.frame = perkData[2]
 	$CardSprite/PerkSprite.hide()
-	$CardSprite/PerkName.set_text(perk[0])
+	$CardSprite/PerkName.set_text(perkData[0])
 	$CardSprite/PerkName.hide()
-	$PerkName.set_text(perk[0])
+	$PerkName.set_text(perkData[0])
 	$PerkName.hide()
-	$PerkDesc.set_text(perk[1])
+	$PerkDesc.set_text(perkData[1])
 	$PerkDesc.hide()
 
 func reveal():
 	revealed = true
-	$Shine.show()
 	$Anim.play('reveal1')
 	yield(get_tree().create_timer(2), "timeout")
 
 func _on_Anim_animation_finished(anim_name):
 	if anim_name == 'reveal1':
-		$CardSprite/PerkSprite.show()
-		$CardSprite/PerkName.show()
-		$PerkName.show()
-		$PerkDesc.show()
-		$CardSprite.frame = 1
-		$Anim.play('reveal2')
+			$CardSprite/PerkSprite.show()
+			$CardSprite/PerkName.show()
+			$PerkName.show()
+			$PerkDesc.show()
+			$CardSprite.frame = 1
+			$Anim.play('reveal2')
+			$Shine.show()

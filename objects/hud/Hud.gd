@@ -20,6 +20,15 @@ func _ready():
 	$Container/HpBar.color = playerColor
 	
 	$Container/FaceSprite.frame = Global.playersSkin[player.playerId]
+	
+	var perks = Global.playersPerks[player.playerId]
+	for i in range(len(perks)):
+		var perk = Res.Perk.instance()
+		perk.hframes = len(Global.PerkEnum)
+		perk.frame = Global.PERKS[perks[i]][2]
+		perk.position = Vector2(2 + (i * 18), 42)
+		add_child(perk)
+	
 	hspeed = 15
 
 func handleShake():
