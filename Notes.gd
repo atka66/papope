@@ -1,20 +1,10 @@
 ### TODOs
-# * being trapped should be indicated
+# * being trapped should be indicated with a sprite
 # * perks (??s might be discarded)
-#     # positive
-#     * ?? tiny       - size halved     (might be a bugfest)
-#     # negative
-#     * drunk      - inverted movement and aim
-#     * backfire   - fires the opposite direction
-#     * slow       - 25% slower movement
-#     * large      - size doubled    (might be a bugfest)
-#     * no legs    - can only dash
-#     * no hands   - cannot use pickups
-#     * time bomb  - dies after 20 seconds
-#     * slippery   - no friction
-#     * nothing    - nothing happened
-#     * amnesia    - previous perks removed
-#     * chicken    - you are a chicken
+#     * [DISCARDED] tiny     - size halved   (might be a bugfest)
+#     * [DISCARDED] large    - size doubled  (too tight in pacman man)
+#     * ?? slippery   - no friction          (speed limit is needed)
+#     * ?? chicken    - you are a chicken    (learn to draw chicken)
 
 ### Layers
 #

@@ -46,25 +46,24 @@ const ACHIEVEMENTS = {
 	AchiEnum.SPOOKED : ['spooked', 'scared of ghosts'] # killed by a ghost
 }
 enum PerkEnum {
-	AKIMBO, ARMORED, SPEED, SPIKY, TINY, CUDDLES
-	#DRUNK, BACKFIRE, SLOW, LARGE, NO_LEGS,
-	#NO_HANDS, TIME_BOMB, SLIPPERY
+	AKIMBO, ARMORED, SPEED, SPIKY, CUDDLES, REVERSE,
+	BACKFIRE, SLOW, NO_LEGS, NO_HANDS, TIME_BOMB,
+	NOTHING, RESET
 }
 const PERKS = {
 	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 0],
 	PerkEnum.ARMORED: ['armored', 'incoming damage halved', 1], 
 	PerkEnum.SPEED: ['speed', '50% faster movement', 2],
-	PerkEnum.SPIKY: ['spiky', 'collision damages others', 3],
-	PerkEnum.TINY: ['tiny', 'size halved', 4],
-	PerkEnum.CUDDLES: ['cuddles', 'collision heals self', 5]
-	#PerkEnum.DRUNK: ['', ''],
-	#PerkEnum.BACKFIRE: ['', ''],
-	#PerkEnum.SLOW: ['', ''],
-	#PerkEnum.LARGE: ['', ''],
-	#PerkEnum.NO_LEGS: ['', ''],
-	#PerkEnum.NO_HANDS: ['', ''],
-	#PerkEnum.TIME_BOMB: ['', ''],
-	#PerkEnum.SLIPPERY: ['', '']
+	PerkEnum.SPIKY: ['spiky', 'touching players hurts them', 3],
+	PerkEnum.CUDDLES: ['cuddles', 'touching players heals self', 4],
+	PerkEnum.REVERSE: ['reverse', 'inverted movement', 5],
+	PerkEnum.BACKFIRE: ['backfire', 'inverted aim', 6],
+	PerkEnum.SLOW: ['slow', '25% slower movement', 7],
+	PerkEnum.NO_LEGS: ['no legs', 'can only dash', 8],
+	PerkEnum.NO_HANDS: ['no hands', 'cannot use pickups', 9],
+	PerkEnum.TIME_BOMB: ['time bomb', 'dies after 20 seconds', 10],
+	PerkEnum.NOTHING: ['nothing', 'nothing happens', 11],
+	PerkEnum.RESET: ['reset', 'previous perks removed', 12]
 }
 
 const SKIN_COUNT = 6

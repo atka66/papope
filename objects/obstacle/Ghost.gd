@@ -1,6 +1,7 @@
 extends Area2D
 
 var speed = 2
+var prevNode = null
 var destNode = null
 var moving = false
 const GHOST_COLORS = [Color.red, Color.pink, Color.aqua, Color.coral]
@@ -38,8 +39,17 @@ func _process(delta):
 			$Container/Eyes.frame = 3
 
 		if position == destNode.position:
-			var randomNodeId = destNode.neighbors[randi() % len(destNode.neighbors)]
-			destNode = get_parent().get_node('GhostPathNode' + str(randomNodeId))
+			var candidateNode = null
+			if len(destNode.neighbors) > 1:
+				var randomNode = prevNode
+				while randomNode == prevNode:
+					var randomNodeId = destNode.neighbors[randi() % len(destNode.neighbors)]
+					randomNode = get_parent().get_node('GhostPathNode' + str(randomNodeId))
+				candidateNode = randomNode
+			else:
+				candidateNode = get_parent().get_node('GhostPathNode' + str(destNode.neighbors[0]))
+			prevNode = destNode
+			destNode = candidateNode
 		else:
 			position = position.move_toward(destNode.position, speed)
 

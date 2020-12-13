@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://objects/perk/PerkOverlay.gd" type="Script" id=1]
-[ext_resource path="res://objects/system/CustomLabel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/perk/PlayerPerks.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/perk/cardbase.png" type="Texture" id=4]
 
@@ -265,13 +264,6 @@ anims/disappear = SubResource( 2 )
 color = Color( 0, 0, 0, 0.752941 )
 polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
 
-[node name="Title" parent="." instance=ExtResource( 2 )]
-position = Vector2( 340, 16 )
-text = "perk dealing.."
-fontSize = 4
-alignment = 1
-outline = true
-
 [node name="PlayerPerks0" parent="." instance=ExtResource( 3 )]
 
 [node name="PlayerPerks1" parent="." instance=ExtResource( 3 )]
@@ -289,7 +281,6 @@ playerId = 3
 [node name="Card3" type="Sprite" parent="."]
 position = Vector2( 340, 448 )
 rotation = 0.261799
-scale = Vector2( 1, 1 )
 texture = ExtResource( 4 )
 hframes = 2
 

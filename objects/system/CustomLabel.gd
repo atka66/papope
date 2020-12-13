@@ -47,6 +47,7 @@ func _ready():
 	if animate:
 		$LabelAnim.play("float_in")
 	else:
+		$Label.rect_position = Vector2.ZERO
 		$Label.modulate = Color.white
 	if aliveTime > 0:
 		time_disappear()

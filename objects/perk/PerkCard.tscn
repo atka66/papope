@@ -75,18 +75,11 @@ texture = ExtResource( 1 )
 hframes = 2
 
 [node name="PerkSprite" type="Sprite" parent="CardSprite"]
-position = Vector2( 0, -8 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
 
-[node name="PerkName" parent="CardSprite" instance=ExtResource( 3 )]
-position = Vector2( 0, 48 )
-alignment = 1
-outline = true
-animate = false
-
 [node name="PerkName" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0, 72 )
+position = Vector2( 0, 64 )
 fontSize = 2
 alignment = 1
 outline = true
