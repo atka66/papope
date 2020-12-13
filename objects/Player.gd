@@ -53,6 +53,9 @@ func _ready():
 	var spawnAnim = Res.SpawnAnim.instance()
 	spawnAnim.position = global_position
 	get_tree().get_root().add_child(spawnAnim)
+	
+	if Global.playersPerks[playerId].has(Global.PerkEnum.SPEED):
+		speed *= 1.5
 
 func isPressed(event, action):
 	return event.is_action_pressed(action) && Input.is_action_just_pressed(action)
