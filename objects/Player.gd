@@ -58,7 +58,7 @@ func _ready():
 	get_tree().get_root().add_child(spawnAnim)
 	
 	if Global.playersPerks[playerId].has(Global.PerkEnum.FAST):
-		speed *= 1.5
+		speed *= 2
 	if Global.playersPerks[playerId].has(Global.PerkEnum.SLOW):
 		speed *= 0.5
 
