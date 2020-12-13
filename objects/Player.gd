@@ -312,13 +312,16 @@ func _endInvul():
 	$InvulAnim.hide()
 
 func hurt(damage):
-	if damage > 0 && alive && !Global.playersFrozen:
-		var fallingMessageSize = int(damage / 20) + 1
+	var actualDamage = damage
+	if Global.playersPerks[playerId].has(Global.PerkEnum.ARMORED):
+		actualDamage = int(ceil(float(damage) / 2))
+	if actualDamage > 0 && alive && !Global.playersFrozen:
+		var fallingMessageSize = int(actualDamage / 20) + 1
 		if invulnerable:
 			spawnFallingMessage('0', Color.white, fallingMessageSize, null)
 		else:
-			spawnFallingMessage(str(int(damage)), Color.tomato, fallingMessageSize, null)
-			hp -= damage;
+			spawnFallingMessage(str(int(actualDamage)), Color.tomato, fallingMessageSize, null)
+			hp -= actualDamage;
 			$Hurt/HurtAnim.stop()
 			$Hurt/HurtAnim.play()
 
