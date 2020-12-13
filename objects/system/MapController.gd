@@ -14,7 +14,6 @@ func _ready():
 	#scene _ready methods are unable to get parents or current scene
 	add_child(mapLabel)
 	add_child(Res.Dim.instance())
-	var a = _pwrupSpawnLoop()
 
 	yield(get_tree().create_timer(1), "timeout")
 	
@@ -24,6 +23,7 @@ func _ready():
 		add_child(perkOverlay)
 		yield(perkOverlay, "finished")
 	
+	var a = _pwrupSpawnLoop()
 	var b = initCountdown()
 	yield(get_tree().create_timer(1), "timeout")
 	for i in range(4):

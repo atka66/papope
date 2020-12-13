@@ -46,18 +46,17 @@ const ACHIEVEMENTS = {
 	AchiEnum.SPOOKED : ['spooked', 'scared of ghosts'] # killed by a ghost
 }
 enum PerkEnum {
-	AKIMBO, ARMORED, SPEED
-	#, THORNS, TINY, CUDDLES,
+	AKIMBO, ARMORED, SPEED, SPIKY, TINY, CUDDLES
 	#DRUNK, BACKFIRE, SLOW, LARGE, NO_LEGS,
 	#NO_HANDS, TIME_BOMB, SLIPPERY
 }
 const PERKS = {
 	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 0],
-	PerkEnum.ARMORED: ['thick', 'incoming damage halved', 1], 
-	PerkEnum.SPEED: ['speed', '50% faster movement', 2]
-	#PerkEnum.THORNS: ['', ''],
-	#PerkEnum.TINY: ['', ''],
-	#PerkEnum.CUDDLES: ['', ''],
+	PerkEnum.ARMORED: ['armored', 'incoming damage halved', 1], 
+	PerkEnum.SPEED: ['speed', '50% faster movement', 2],
+	PerkEnum.SPIKY: ['spiky', 'collision damages others', 3],
+	PerkEnum.TINY: ['tiny', 'size halved', 4],
+	PerkEnum.CUDDLES: ['cuddles', 'collision heals self', 5]
 	#PerkEnum.DRUNK: ['', ''],
 	#PerkEnum.BACKFIRE: ['', ''],
 	#PerkEnum.SLOW: ['', ''],

@@ -215,6 +215,8 @@ func pickup(pwrup):
 		$Crosshair.show()
 		$Crosshair.frame = 2
 		ammo = 5
+	if Global.playersPerks[playerId].has(Global.PerkEnum.AKIMBO):
+		ammo *= 2
 
 func trap():
 	trapped = true

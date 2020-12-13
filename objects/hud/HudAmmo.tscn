@@ -29,3 +29,28 @@ hframes = 4
 position = Vector2( 20, 0 )
 texture = ExtResource( 1 )
 hframes = 4
+
+[node name="Ammo5" type="Sprite" parent="."]
+position = Vector2( 25, 0 )
+texture = ExtResource( 1 )
+hframes = 4
+
+[node name="Ammo6" type="Sprite" parent="."]
+position = Vector2( 30, 0 )
+texture = ExtResource( 1 )
+hframes = 4
+
+[node name="Ammo7" type="Sprite" parent="."]
+position = Vector2( 35, 0 )
+texture = ExtResource( 1 )
+hframes = 4
+
+[node name="Ammo8" type="Sprite" parent="."]
+position = Vector2( 40, 0 )
+texture = ExtResource( 1 )
+hframes = 4
+
+[node name="Ammo9" type="Sprite" parent="."]
+position = Vector2( 45, 0 )
+texture = ExtResource( 1 )
+hframes = 4

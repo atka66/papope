@@ -75,8 +75,11 @@ z_index = 0
 z_as_relative = true
 fontSize = 2
 
-[node name="HudRevolver" parent="Container" instance=ExtResource( 4 )]
+[node name="HudRevolver0" parent="Container" instance=ExtResource( 4 )]
 position = Vector2( 66, 14 )
+
+[node name="HudRevolver1" parent="Container" instance=ExtResource( 4 )]
+position = Vector2( 98, 14 )
 
 [node name="AmmoContainer" type="Node2D" parent="Container"]
 position = Vector2( 66, 14 )

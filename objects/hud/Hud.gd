@@ -26,8 +26,8 @@ func _ready():
 		var perk = Res.Perk.instance()
 		perk.hframes = len(Global.PerkEnum)
 		perk.frame = Global.PERKS[perks[i]][2]
-		perk.position = Vector2(2 + (i * 18), 42)
-		add_child(perk)
+		perk.position = Vector2(1 + (i * 17), 41)
+		$Container.add_child(perk)
 	
 	hspeed = 15
 
@@ -62,41 +62,50 @@ func handleHpBar():
 	$Container/HpBarFlicker.visible = player.hp < maxHp * 0.2
 
 func handlePwrup():
-	$Container/HudRevolver.visible = player.item == 'revolver'
+	$Container/HudRevolver0.visible = player.item == 'revolver'
+	$Container/HudRevolver1.visible = player.item == 'revolver' && player.ammo > 6
 	$Container/AmmoContainer.visible = player.item == 'dynamite' || player.item == 'shield' || player.item == 'trap' || player.item == 'whip'
-	if player.item == 'revolver':
-		for i in range(6):
-			get_node('Container/HudRevolver/Drum/Ammo' + str(i)).visible = i < player.ammo
-		if player.ammo < prevAmmo:
-			$Container/HudRevolver/DrumRotate.play('rotate')
-	if player.item == 'dynamite':
-		for i in range(5):
-			var ammoNode = get_node('Container/AmmoContainer/HudAmmo/Ammo' + str(i))
-			ammoNode.frame = 0
-			ammoNode.visible = i < player.ammo
-		if player.ammo < prevAmmo:
-			ammoShakePwr = 5
-	if player.item == 'shield':
-		for i in range(5):
-			var ammoNode = get_node('Container/AmmoContainer/HudAmmo/Ammo' + str(i))
-			ammoNode.frame = 1
-			ammoNode.visible = i < player.ammo
-		if player.ammo < prevAmmo:
-			ammoShakePwr = 5
-	if player.item == 'trap':
-		for i in range(5):
-			var ammoNode = get_node('Container/AmmoContainer/HudAmmo/Ammo' + str(i))
-			ammoNode.frame = 2
-			ammoNode.visible = i < player.ammo
-		if player.ammo < prevAmmo:
-			ammoShakePwr = 5
-	if player.item == 'whip':
-		for i in range(5):
-			var ammoNode = get_node('Container/AmmoContainer/HudAmmo/Ammo' + str(i))
-			ammoNode.frame = 3
-			ammoNode.visible = i < player.ammo
-		if player.ammo < prevAmmo:
-			ammoShakePwr = 5
+	match player.item:
+		'revolver':
+			if player.ammo > 6:
+				for i in range(6):
+					get_node('Container/HudRevolver0/Drum/Ammo' + str(i)).show()
+					get_node('Container/HudRevolver1/Drum/Ammo' + str(i)).visible = (i + 6) < player.ammo
+				if player.ammo < prevAmmo:
+					$Container/HudRevolver1/DrumRotate.play('rotate')
+			else:
+				for i in range(6):
+					get_node('Container/HudRevolver0/Drum/Ammo' + str(i)).visible = i < player.ammo
+				if player.ammo < prevAmmo:
+					$Container/HudRevolver0/DrumRotate.play('rotate')
+		'dynamite':
+			for i in range(10):
+				var ammoNode = get_node('Container/AmmoContainer/HudAmmo/Ammo' + str(i))
+				ammoNode.frame = 0
+				ammoNode.visible = i < player.ammo
+			if player.ammo < prevAmmo:
+				ammoShakePwr = 5
+		'shield':
+			for i in range(10):
+				var ammoNode = get_node('Container/AmmoContainer/HudAmmo/Ammo' + str(i))
+				ammoNode.frame = 1
+				ammoNode.visible = i < player.ammo
+			if player.ammo < prevAmmo:
+				ammoShakePwr = 5
+		'trap':
+			for i in range(10):
+				var ammoNode = get_node('Container/AmmoContainer/HudAmmo/Ammo' + str(i))
+				ammoNode.frame = 2
+				ammoNode.visible = i < player.ammo
+			if player.ammo < prevAmmo:
+				ammoShakePwr = 5
+		'whip':
+			for i in range(10):
+				var ammoNode = get_node('Container/AmmoContainer/HudAmmo/Ammo' + str(i))
+				ammoNode.frame = 3
+				ammoNode.visible = i < player.ammo
+			if player.ammo < prevAmmo:
+				ammoShakePwr = 5
 
 func _process(delta):
 	if hspeed > 0:

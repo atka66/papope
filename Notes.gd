@@ -1,15 +1,11 @@
 ### TODOs
 # * being trapped should be indicated
-# * new gamemode (perks)
-#   * in perks mode players get a perk card from a set of randomized perk cards before each round
-#   * these perks will stay with them until the end of the game (stacking every round)
-#   * perks can be both advantageous and disadvantageous
-#   * planned perks:
+# * perks
 #     # positive
 #     * akimbo     - pickups are doubled
 #     * armored    - incoming damage halved
 #     * speed      - 50% faster movement
-#     * spiky     - collision damages others
+#     * spiky      - collision damages others
 #     * tiny       - size halved     (might be a bugfest)
 #     * cuddles    - collision heals self
 #     # negative
