@@ -48,7 +48,7 @@ const ACHIEVEMENTS = {
 enum PerkEnum {
 	AKIMBO, ARMORED, FAST, SPIKY, CUDDLES, REVERSE,
 	BACKFIRE, SLOW, NO_LEGS, NO_HANDS, TIME_BOMB,
-	NOTHING, RESET
+	NOTHING, RESET, RIGHT
 }
 const PERKS = {
 	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 0],
@@ -63,7 +63,8 @@ const PERKS = {
 	PerkEnum.NO_HANDS: ['no hands', 'cannot pick up items', 9],
 	PerkEnum.TIME_BOMB: ['time bomb', 'dies after 20 seconds', 10],
 	PerkEnum.NOTHING: ['nothing', 'nothing happens', 11],
-	PerkEnum.RESET: ['reset', 'previous perks removed', 12]
+	PerkEnum.RESET: ['reset', 'previous perks removed', 12],
+	PerkEnum.RIGHT: ['right', 'because i cannot look left', 13]
 }
 
 const SKIN_COUNT = 6

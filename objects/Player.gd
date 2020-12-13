@@ -91,6 +91,9 @@ func _input(event):
 
 		if Global.playersPerks[playerId].has(Global.PerkEnum.BACKFIRE):
 			aimVector *= -1
+		
+		if Global.playersPerks[playerId].has(Global.PerkEnum.RIGHT):
+			aimVector.x = max(0, aimVector.x)
 
 		$HitScan.cast_to = aimVector
 		$Crosshair.rotation = aimVector.angle()
@@ -230,6 +233,8 @@ func _on_Player_body_entered(body):
 			$AudioCollisionBlock.play()
 
 func extendVectorTo(vector, length):
+	if vector.length() == 0:
+		return Vector2.RIGHT
 	return vector * (float(length) / vector.length())
 
 func pickup(pwrup):
