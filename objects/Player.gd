@@ -32,6 +32,7 @@ func _ready():
 	if !Global.playersCrowned[playerId]:
 		$Crown.hide()
 	$Crosshair.hide()
+	$Lock.hide()
 	$WhiplashAnim.hide()
 	$OutsideLabel.hide()
 	$SmokeParticles.emitting = false
@@ -257,9 +258,11 @@ func pickup(pwrup):
 
 func trap():
 	trapped = true
+	$Lock.show()
 	spawnFallingMessage("trapped!", Color.tomato, 2, null)
 	yield(get_tree().create_timer(2.0), "timeout")
 	trapped = false
+	$Lock.hide()
 
 func useItem():
 		if item == 'revolver':
