@@ -17,7 +17,7 @@ func _ready():
 	rotation = velocity.x / 200
 
 	var label = Res.CustomLabel.instance()
-	label.position.y = 16
+	label.position.y = 0
 	label.color = color
 	label.text = text
 	label.fontSize = size
