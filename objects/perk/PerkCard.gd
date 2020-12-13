@@ -1,11 +1,10 @@
 extends Node2D
 
-var perkInt
+export(Global.PerkEnum) var perk
 var revealed = false
 
 func _ready():
-	perkInt = randi() % len(Global.PerkEnum)
-	var perkData = Global.PERKS[perkInt]
+	var perkData = Global.PERKS[perk]
 	$Shine.hide()
 	$CardSprite/PerkSprite.hframes = len(Global.PerkEnum)
 	$CardSprite/PerkSprite.frame = perkData[2]

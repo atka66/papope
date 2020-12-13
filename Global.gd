@@ -46,21 +46,21 @@ const ACHIEVEMENTS = {
 	AchiEnum.SPOOKED : ['spooked', 'scared of ghosts'] # killed by a ghost
 }
 enum PerkEnum {
-	AKIMBO, ARMORED, SPEED, SPIKY, CUDDLES, REVERSE,
+	AKIMBO, ARMORED, FAST, SPIKY, CUDDLES, REVERSE,
 	BACKFIRE, SLOW, NO_LEGS, NO_HANDS, TIME_BOMB,
 	NOTHING, RESET
 }
 const PERKS = {
 	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 0],
 	PerkEnum.ARMORED: ['armored', 'incoming damage halved', 1], 
-	PerkEnum.SPEED: ['speed', '50% faster movement', 2],
+	PerkEnum.FAST: ['fast', '+50% movement speed', 2],
 	PerkEnum.SPIKY: ['spiky', 'touching players hurts them', 3],
 	PerkEnum.CUDDLES: ['cuddles', 'touching players heals self', 4],
 	PerkEnum.REVERSE: ['reverse', 'inverted movement', 5],
 	PerkEnum.BACKFIRE: ['backfire', 'inverted aim', 6],
-	PerkEnum.SLOW: ['slow', '25% slower movement', 7],
+	PerkEnum.SLOW: ['slow', '-50% movement speed', 7],
 	PerkEnum.NO_LEGS: ['no legs', 'can only dash', 8],
-	PerkEnum.NO_HANDS: ['no hands', 'cannot use pickups', 9],
+	PerkEnum.NO_HANDS: ['no hands', 'cannot pick up items', 9],
 	PerkEnum.TIME_BOMB: ['time bomb', 'dies after 20 seconds', 10],
 	PerkEnum.NOTHING: ['nothing', 'nothing happens', 11],
 	PerkEnum.RESET: ['reset', 'previous perks removed', 12]
@@ -103,7 +103,7 @@ var playersAchievements = [[], [], [], []]
 enum StatEnum {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT, PELLETS, GHOST_KILL}
 var playersStats = []
 var playersPerks = [[], [], [], []]
-#var playersPerks = [[PerkEnum.AKIMBO, PerkEnum.SPEED], [], [], []]
+#var playersPerks = [[PerkEnum.AKIMBO, PerkEnum.FAST], [], [], []]
 
 var selectedMap = 'none'
 

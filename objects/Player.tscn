@@ -146,6 +146,13 @@ fontSize = 2
 alignment = 1
 outline = true
 
+[node name="TimebombLabel" parent="." instance=ExtResource( 15 )]
+position = Vector2( 0, -5 )
+fontSize = 2
+alignment = 1
+outline = true
+color = Color( 0.752941, 0, 0, 1 )
+
 [node name="SmokeParticles" type="CPUParticles2D" parent="."]
 position = Vector2( 0, 12 )
 amount = 10

@@ -9,7 +9,8 @@ var hp = Global.options['hp'][Global.optionsSelected['hp']]
 var item = null
 var ammo = 0
 var contactsLava = false
-var outsideCntdwn = 180
+var outsideCntdwn = 60 * 3
+var timeBombCd = 60 * 20
 var invulnerable = false
 var fallWater = false
 var trapped = false
@@ -17,6 +18,7 @@ var inSpace = false
 
 var thrust = Vector2.ZERO
 var speed = 20
+var dashMul = 30
 var frictionCustom = 0.1
 
 var color = Global.TEAM_COLORS[0]
@@ -54,8 +56,10 @@ func _ready():
 	spawnAnim.position = global_position
 	get_tree().get_root().add_child(spawnAnim)
 	
-	if Global.playersPerks[playerId].has(Global.PerkEnum.SPEED):
+	if Global.playersPerks[playerId].has(Global.PerkEnum.FAST):
 		speed *= 1.5
+	if Global.playersPerks[playerId].has(Global.PerkEnum.SLOW):
+		speed *= 0.5
 
 func isPressed(event, action):
 	return event.is_action_pressed(action) && Input.is_action_just_pressed(action)
@@ -65,7 +69,15 @@ func _input(event):
 	var lvAxis = Input.get_joy_axis(playerId, JOY_AXIS_1)
 	if abs(lhAxis) < 0.1 : lhAxis = 0.0
 	if abs(lvAxis) < 0.1 : lvAxis = 0.0
-	thrust = Vector2(lhAxis, lvAxis) * speed
+	
+	if Global.playersPerks[playerId].has(Global.PerkEnum.REVERSE):
+		lhAxis *= -1
+		lvAxis *= -1
+	
+	if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS):
+		thrust = Vector2.ZERO
+	else:
+		thrust = Vector2(lhAxis, lvAxis) * speed
 
 	if alive:
 		var aimVector = Vector2(
@@ -75,6 +87,10 @@ func _input(event):
 		# correct axis if pointing at origin
 		if aimVector.x == 0.0 && aimVector.y == 0.0:
 			aimVector.x = 0.001;
+
+		if Global.playersPerks[playerId].has(Global.PerkEnum.BACKFIRE):
+			aimVector *= -1
+
 		$HitScan.cast_to = aimVector
 		$Crosshair.rotation = aimVector.angle()
 		$Crosshair.position = aimVector
@@ -105,7 +121,10 @@ func _input(event):
 					if isPressed(event, 'pl_game_dash'):
 						$AudioDash.stream = Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)]
 						$AudioDash.play()
-						apply_central_impulse(linear_velocity.normalized() * 600)
+						if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS) && !inSpace:
+							apply_central_impulse(Vector2(lhAxis, lvAxis).normalized() * speed * dashMul)
+						else:
+							apply_central_impulse(linear_velocity.normalized() * speed * dashMul)
 				if isPressed(event, 'pl_game_use'):
 					useItem()
 
@@ -115,7 +134,7 @@ func _process(delta):
 		if alive:
 			if contactsLava:
 				hurt(1)
-			if outsideCntdwn < 1:
+			if outsideCntdwn < 1 || timeBombCd < 1:
 				hp = 0
 			if hp < 1:
 				$Body.modulate = Global.TEAM_COLORS[4]
@@ -132,6 +151,7 @@ func _process(delta):
 					Global.registerAchievement(playerId, Global.AchiEnum.DEAD_BY_CHOICE)
 				item = null
 				$Crosshair.hide()
+				$TimebombLabel.hide()
 
 				if !Global.playersFrozen:
 					var aliveTeamId = Global.getWinnerTeam();
@@ -139,6 +159,12 @@ func _process(delta):
 						get_tree().get_nodes_in_group('controllers')[0].endRound(aliveTeamId)
 			
 			if !Global.playersFrozen && !fallWater:
+				if Global.playersPerks[playerId].has(Global.PerkEnum.TIME_BOMB):
+					$TimebombLabel.global_position = position
+					$TimebombLabel.global_position.y -= 5
+					$TimebombLabel.set_text(str(ceil(float(timeBombCd) / 60)))
+					$TimebombLabel.show()
+					timeBombCd -= 1
 				if isOutside():
 					if outsideCntdwn > 0:
 						updateOutsideLabel()
@@ -183,13 +209,14 @@ func _on_Player_body_entered(body):
 			collisionAnim.position = body.global_position - ((body.global_position - global_position) / 2)
 			collisionAnim.look_at(body.global_position)
 			get_tree().get_current_scene().add_child(collisionAnim)
-		if Global.playersPerks[playerId].has(Global.PerkEnum.SPIKY):
-			body.hurt(5)
-			$AudioRevHit.play()
-		if Global.playersPerks[playerId].has(Global.PerkEnum.CUDDLES):
-			heal(5)
-			#TODO some audio
-			#$AudioRevHit.play()
+		if body.alive:
+			if Global.playersPerks[playerId].has(Global.PerkEnum.SPIKY):
+				body.hurt(5)
+				$AudioRevHit.play()
+			if Global.playersPerks[playerId].has(Global.PerkEnum.CUDDLES):
+				heal(5)
+				#TODO some audio
+				#$AudioRevHit.play()
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):
