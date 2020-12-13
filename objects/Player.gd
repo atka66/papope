@@ -360,13 +360,15 @@ func hurt(damage):
 			spawnFallingMessage(str(int(actualDamage)), Color.tomato, fallingMessageSize, null)
 			hp -= actualDamage;
 			$Hurt/HurtAnim.stop()
-			$Hurt/HurtAnim.play()
+			$Hurt/HurtAnim.play('hurt')
 
 func heal(amount):
 	if amount > 0 && alive && !Global.playersFrozen:
 		var fallingMessageSize = int(amount / 20) + 1
 		spawnFallingMessage(str(int(amount)), Color.lightgreen, fallingMessageSize, null)
 		hp = min(hp + amount, Global.options['hp'][Global.optionsSelected['hp']])
+		$Hurt/HurtAnim.stop()
+		$Hurt/HurtAnim.play('heal')
 
 func _on_WhiplashAnim_animation_finished():
 	$WhiplashAnim.hide()
