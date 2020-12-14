@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ghostwalk.ogg-e66108b6400a435c9835e8ee2b53b8a6.oggstr"
+
+[deps]
+
+source_file="res://sounds/player/ghostwalk.ogg"
+dest_files=[ "res://.import/ghostwalk.ogg-e66108b6400a435c9835e8ee2b53b8a6.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

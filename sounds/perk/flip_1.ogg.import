@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/flip_1.ogg-feb1e4fa22e81fb909f5a9fdc1df09b4.oggstr"
+
+[deps]
+
+source_file="res://sounds/perk/flip_1.ogg"
+dest_files=[ "res://.import/flip_1.ogg-feb1e4fa22e81fb909f5a9fdc1df09b4.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

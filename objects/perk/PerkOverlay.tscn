@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://objects/perk/PerkOverlay.gd" type="Script" id=1]
+[ext_resource path="res://sounds/perk/appear.ogg" type="AudioStream" id=2]
 [ext_resource path="res://objects/perk/PlayerPerks.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/perk/cardbase.png" type="Texture" id=4]
 
@@ -20,7 +21,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 resource_name = "deckappear"
 length = 1.5
 tracks/0/type = "value"
@@ -231,9 +232,31 @@ tracks/15/keys = {
 "method": "hide"
 } ]
 }
+tracks/16/type = "method"
+tracks/16/path = NodePath(".")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0.5, 0.7, 0.9, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [ 0 ],
+"method": "playToss"
+}, {
+"args": [ 1 ],
+"method": "playToss"
+}, {
+"args": [ 2 ],
+"method": "playToss"
+}, {
+"args": [ 3 ],
+"method": "playToss"
+} ]
+}
 
-[sub_resource type="Animation" id=2]
-resource_name = "disappear"
+[sub_resource type="Animation" id=3]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -257,8 +280,8 @@ script = ExtResource( 1 )
 [node name="Anim" type="AnimationPlayer" parent="."]
 autoplay = "appear"
 anims/appear = SubResource( 1 )
-anims/deckappear = SubResource( 3 )
-anims/disappear = SubResource( 2 )
+anims/deckappear = SubResource( 4 )
+anims/disappear = SubResource( 3 )
 
 [node name="Dim" type="Polygon2D" parent="."]
 color = Color( 0, 0, 0, 0.752941 )
@@ -284,11 +307,15 @@ rotation = 0.261799
 texture = ExtResource( 4 )
 hframes = 2
 
+[node name="AudioToss" type="AudioStreamPlayer2D" parent="Card3"]
+
 [node name="Card2" type="Sprite" parent="."]
 position = Vector2( 340, 448 )
 rotation = 0.0872665
 texture = ExtResource( 4 )
 hframes = 2
+
+[node name="AudioToss" type="AudioStreamPlayer2D" parent="Card2"]
 
 [node name="Card1" type="Sprite" parent="."]
 position = Vector2( 340, 448 )
@@ -296,9 +323,17 @@ rotation = -0.0872665
 texture = ExtResource( 4 )
 hframes = 2
 
+[node name="AudioToss" type="AudioStreamPlayer2D" parent="Card1"]
+
 [node name="Card0" type="Sprite" parent="."]
 position = Vector2( 340, 448 )
 rotation = -0.261799
 texture = ExtResource( 4 )
 hframes = 2
+
+[node name="AudioToss" type="AudioStreamPlayer2D" parent="Card0"]
+
+[node name="AudioAppear" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 340, 384 )
+stream = ExtResource( 2 )
 [connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]

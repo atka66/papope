@@ -17,6 +17,8 @@ func _ready():
 func reveal():
 	revealed = true
 	$Anim.play('reveal1')
+	$AudioFlip.stream = Res.AudioCardFlip[randi() % len(Res.AudioCardFlip)]
+	$AudioFlip.play()
 
 func _on_Anim_animation_finished(anim_name):
 	if anim_name == 'reveal1':

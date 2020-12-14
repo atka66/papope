@@ -1,6 +1,7 @@
 extends AnimatedSprite
 
 func _ready():
+	$Audio.stream = Res.AudioRevRicochet[randi() % len(Res.AudioRevRicochet)]
 	$Audio.play()
 	play()
 

@@ -88,4 +88,6 @@ outline = true
 position = Vector2( 0, 92 )
 alignment = 1
 outline = true
+
+[node name="AudioFlip" type="AudioStreamPlayer2D" parent="."]
 [connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]

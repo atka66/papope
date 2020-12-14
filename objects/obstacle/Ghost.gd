@@ -9,6 +9,7 @@ const GHOST_COLORS = [Color.red, Color.pink, Color.aqua, Color.coral]
 func _ready():
 	position = destNode.position
 	$Container/Body.modulate = GHOST_COLORS[randi() % len(GHOST_COLORS)]
+	$AudioAppear.play()
 
 func _on_Ghost_body_entered(body):
 	if body.is_in_group('players') && !Global.playersFrozen:
@@ -57,4 +58,10 @@ func _process(delta):
 func _on_Anim_animation_finished(anim_name):
 	if anim_name == 'appear':
 		moving = true
+		$AudioWalk.play()
 		$Anim.play("move")
+
+
+func _on_AudioWalk_finished():
+	if moving:
+		$AudioWalk.play()

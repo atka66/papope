@@ -29,7 +29,7 @@
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=2]
 resource_name = "heal"
 length = 0.2
 tracks/0/type = "value"
@@ -45,8 +45,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 1, 0, 1 ), Color( 0, 1, 0, 1 ), Color( 0, 1, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "hurt"
+[sub_resource type="Animation" id=3]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -61,7 +60,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="SpriteFrames" id=3]
+[sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [ ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 19 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ) ],
 "loop": true,
@@ -69,10 +68,10 @@ animations = [ {
 "speed": 20.0
 } ]
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=5]
 radius = 16.0
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=6]
 animations = [ {
 "frames": [ ExtResource( 13 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 12 ), ExtResource( 10 ) ],
 "loop": true,
@@ -80,22 +79,22 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="Gradient" id=6]
+[sub_resource type="Gradient" id=7]
 offsets = PoolRealArray( 0 )
 colors = PoolColorArray( 1, 1, 1, 1 )
 
-[sub_resource type="GradientTexture" id=7]
-gradient = SubResource( 6 )
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
 width = 3
 
-[sub_resource type="Curve" id=8]
+[sub_resource type="Curve" id=9]
 min_value = -1.0
 _data = [ Vector2( 0, 0 ), 0.0, 1.54141, 0, 1, Vector2( 0.330275, 0.509091 ), 0.0, 0.0, 0, 0, Vector2( 0.752294, -0.654545 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.272727 ), -4.8021, 0.0, 0, 0 ]
 
-[sub_resource type="Curve" id=9]
+[sub_resource type="Curve" id=10]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Gradient" id=10]
+[sub_resource type="Gradient" id=11]
 offsets = PoolRealArray( 0, 0.7, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0.858824, 0.858824, 0.858824, 1, 1, 1, 1, 0 )
 
@@ -123,11 +122,11 @@ texture = ExtResource( 19 )
 
 [node name="HurtAnim" type="AnimationPlayer" parent="Hurt"]
 autoplay = "hurt"
-anims/heal = SubResource( 11 )
-anims/hurt = SubResource( 2 )
+anims/heal = SubResource( 2 )
+anims/hurt = SubResource( 3 )
 
 [node name="InvulAnim" type="AnimatedSprite" parent="."]
-frames = SubResource( 3 )
+frames = SubResource( 4 )
 
 [node name="Timer" type="Timer" parent="InvulAnim"]
 wait_time = 5.0
@@ -135,7 +134,7 @@ wait_time = 5.0
 [node name="Audio" type="AudioStreamPlayer2D" parent="InvulAnim"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Crown" type="Sprite" parent="."]
 position = Vector2( 0, -18 )
@@ -156,7 +155,7 @@ texture = ExtResource( 9 )
 hframes = 3
 
 [node name="WhiplashAnim" type="AnimatedSprite" parent="."]
-frames = SubResource( 5 )
+frames = SubResource( 6 )
 centered = false
 offset = Vector2( -16, -32 )
 
@@ -179,18 +178,18 @@ position = Vector2( 0, 12 )
 amount = 10
 lifetime = 0.3
 lifetime_randomness = 0.5
-texture = SubResource( 7 )
+texture = SubResource( 8 )
 emission_shape = 2
 emission_rect_extents = Vector2( 1, 1 )
 direction = Vector2( 0, -1 )
 spread = 25.0
 gravity = Vector2( 0, -200 )
 initial_velocity = 150.0
-orbit_velocity_curve = SubResource( 8 )
+orbit_velocity_curve = SubResource( 9 )
 scale_amount = 10.0
 scale_amount_random = 0.7
-scale_amount_curve = SubResource( 9 )
-color_ramp = SubResource( 10 )
+scale_amount_curve = SubResource( 10 )
+color_ramp = SubResource( 11 )
 
 [node name="AudioRevHit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 21 )

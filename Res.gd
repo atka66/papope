@@ -64,6 +64,11 @@ onready var AudioCollisionPlayer = [
 	preload("res://sounds/collision/player_2.ogg"),
 	preload("res://sounds/collision/player_3.ogg")
 ]
+onready var AudioCardFlip = [
+	preload("res://sounds/perk/flip_1.ogg"),
+	preload("res://sounds/perk/flip_2.ogg"),
+	preload("res://sounds/perk/flip_3.ogg")
+]
 
 onready var PwrupSprites = {
 	'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),
