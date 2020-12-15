@@ -23,6 +23,8 @@ func explode():
 			if player.wouldRighteouslyBeHitBy(originPlayerId):
 				fullDmg += dmg
 			player.hurt(dmg)
+			if player.wasJustKilled(player) && !player.isTeammate(originPlayerId):
+				Global.addKill(originPlayerId)
 	Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, fullDmg)
 	var explosionAnim = Res.ExplosionAnim.instance()
 	explosionAnim.position = position

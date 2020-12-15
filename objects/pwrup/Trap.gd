@@ -19,6 +19,8 @@ func _on_Trap_body_entered(body):
 			if body.alive && body.playerId == originPlayerId:
 				Global.registerAchievement(originPlayerId, Global.AchiEnum.CARELESS)
 			body.hurt(35)
+			if body.wasJustKilled(body) && !body.isTeammate(originPlayerId):
+				Global.addKill(originPlayerId)
 			var bodyTrap = body.trap()
 			var trigger = trigger()
 

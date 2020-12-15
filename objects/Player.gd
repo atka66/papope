@@ -27,6 +27,7 @@ var inputCd = false
 var wrapPosition = null
 
 func _ready():
+	Global.playersKills[playerId] = 0
 	$InvulAnim.play()
 	$InvulAnim.hide()
 	if !Global.playersCrowned[playerId]:
@@ -280,8 +281,11 @@ func useItem():
 					if collider.wouldRighteouslyBeHitBy(playerId):
 						Global.incrementStat(playerId, Global.StatEnum.REV_HIT, 1)
 					collider.hurt(20)
-					if wasTeammateJustKilled(collider):
-						Global.registerAchievement(playerId, Global.AchiEnum.TRAITOR)
+					if wasJustKilled(collider):
+						if isTeammate(collider.playerId):
+							Global.registerAchievement(playerId, Global.AchiEnum.TRAITOR)
+						else:
+							Global.addKill(playerId)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 100)
 				elif collider.is_in_group('ghosts'):
 					Global.incrementStat(playerId, Global.StatEnum.GHOST_KILL, 1)
@@ -333,8 +337,11 @@ func useItem():
 						Global.incrementStat(playerId, Global.StatEnum.WHP_HIT, 1)
 					hitPosition = $HitScan.get_collision_point()
 					collider.hurt(30)
-					if wasTeammateJustKilled(collider): # if teammate was just killed
-						Global.registerAchievement(playerId, Global.AchiEnum.TRAITOR)
+					if wasJustKilled(collider):
+						if isTeammate(collider.playerId):
+							Global.registerAchievement(playerId, Global.AchiEnum.TRAITOR)
+						else:
+							Global.addKill(playerId)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 1000)
 				if collider.is_in_group('ghosts'):
 					Global.incrementStat(playerId, Global.StatEnum.GHOST_KILL, 1)
@@ -381,9 +388,9 @@ func _on_WhiplashAnim_animation_finished():
 
 func isOutside():
 	return global_position.x < 0 || global_position.x > 680 || global_position.y < 0 || global_position.y > 384
-		
-func wasTeammateJustKilled(other):
-	return other.alive && other.hp <= 0 && isTeammate(other.playerId)
+	
+func wasJustKilled(other):
+	return other.alive && other.hp <= 0
 
 func isTeammate(otherPlayerId):
 	return Global.playersTeam[otherPlayerId] == Global.playersTeam[playerId]

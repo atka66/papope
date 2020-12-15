@@ -91,12 +91,14 @@ var optionsSelected = {
 var currentOption = options.keys()[0]
 
 var playersConnected = [false, false, false, false]
+#var playersConnected = [true, true, true, true]
 var playersJoined = [false, false, false, false]
-var playersPoints = [0, 0, 0, 0]
 #var playersJoined = [true, true, true, true]
+var playersPoints = [0, 0, 0, 0]
 #var playersPoints = [0, 3, 2, 2]
 var playersSkin = [0, 1, 2, 3]
 var playersTeam = [0, 1, 2, 3]
+var playersKills = [0, 0, 0, 0]
 
 var playersCrowned = [false, false, false, false]
 var playersFrozen = false
@@ -212,3 +214,8 @@ func extendVectorTo(vector, length):
 		return Vector2.ZERO
 	else:
 		return vector * (float(length) / vector.length())
+
+func addKill(playerId):
+	Global.playersKills[playerId] += 1
+	if Global.playersKills[playerId] == 3:
+		Global.registerAchievement(playerId, Global.AchiEnum.TRIPLE_KILL)

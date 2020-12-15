@@ -1,10 +1,9 @@
 ### TODOs
 # * players should jump around when touching lava
 # * time bomb perk explosion should be actual explosion
-# * achievements
-#     * triple kill   - kill 3 enemies in one round
 # * perks (??s might be discarded)
 #     * long arm      - extended throw and whip distance
+#     * ethereal      - pass through players
 #     * [DISCARDED] tiny     - size halved   (might be a bugfest)
 #     * [DISCARDED] large    - size doubled  (too tight in pacman man)
 #     * ?? slippery   - no friction          (speed limit is needed)
