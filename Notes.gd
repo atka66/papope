@@ -1,8 +1,7 @@
 ### TODOs
-# * players should jump around when touching lava
 # * time bomb perk explosion should be actual explosion
+# * edit outline out of crosshair and use shader instead
 # * perks (??s might be discarded)
-#     * long arm      - extended throw and whip distance
 #     * ethereal      - pass through players
 #     * [DISCARDED] tiny     - size halved   (might be a bugfest)
 #     * [DISCARDED] large    - size doubled  (too tight in pacman man)

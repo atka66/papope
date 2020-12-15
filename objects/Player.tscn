@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://sprites/player/faces.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/circle.png" type="Texture" id=2]
@@ -68,6 +68,22 @@ animations = [ {
 "speed": 20.0
 } ]
 
+[sub_resource type="Animation" id=12]
+resource_name = "jump"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 0.5, 1, 0.5 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -12 ), Vector2( 0, 0 ) ]
+}
+
 [sub_resource type="CircleShape2D" id=5]
 radius = 16.0
 
@@ -110,43 +126,55 @@ contacts_reported = 2
 contact_monitor = true
 script = ExtResource( 3 )
 
-[node name="Body" type="Sprite" parent="."]
+[node name="BodyParts" type="Node2D" parent="."]
+
+[node name="Body" type="Sprite" parent="BodyParts"]
 texture = ExtResource( 2 )
 
-[node name="Face" type="Sprite" parent="."]
+[node name="Face" type="Sprite" parent="BodyParts"]
 texture = ExtResource( 1 )
 hframes = 6
 
-[node name="Hurt" type="Sprite" parent="."]
+[node name="Hurt" type="Sprite" parent="BodyParts"]
 texture = ExtResource( 19 )
 
-[node name="HurtAnim" type="AnimationPlayer" parent="Hurt"]
+[node name="HurtAnim" type="AnimationPlayer" parent="BodyParts/Hurt"]
 autoplay = "hurt"
 anims/heal = SubResource( 2 )
 anims/hurt = SubResource( 3 )
 
-[node name="InvulAnim" type="AnimatedSprite" parent="."]
+[node name="InvulAnim" type="AnimatedSprite" parent="BodyParts"]
 frames = SubResource( 4 )
 
-[node name="Timer" type="Timer" parent="InvulAnim"]
+[node name="Timer" type="Timer" parent="BodyParts/InvulAnim"]
 wait_time = 5.0
 
-[node name="Audio" type="AudioStreamPlayer2D" parent="InvulAnim"]
+[node name="Audio" type="AudioStreamPlayer2D" parent="BodyParts/InvulAnim"]
+
+[node name="Crown" type="Sprite" parent="BodyParts"]
+position = Vector2( 0, -18 )
+texture = ExtResource( 20 )
+
+[node name="TimebombLabel" parent="BodyParts" instance=ExtResource( 15 )]
+position = Vector2( 0, -5 )
+fontSize = 2
+alignment = 1
+outline = true
+color = Color( 0.752941, 0, 0, 1 )
+
+[node name="Lock" type="Sprite" parent="BodyParts"]
+texture = ExtResource( 5 )
+
+[node name="Anim" type="AnimationPlayer" parent="BodyParts"]
+anims/jump = SubResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 5 )
-
-[node name="Crown" type="Sprite" parent="."]
-position = Vector2( 0, -18 )
-texture = ExtResource( 20 )
 
 [node name="HitScan" type="RayCast2D" parent="."]
 enabled = true
 collision_mask = 4621
 collide_with_areas = true
-
-[node name="Lock" type="Sprite" parent="."]
-texture = ExtResource( 5 )
 
 [node name="Crosshair" type="Sprite" parent="."]
 z_index = 89
@@ -165,13 +193,6 @@ offset = Vector2( -16, -32 )
 fontSize = 2
 alignment = 1
 outline = true
-
-[node name="TimebombLabel" parent="." instance=ExtResource( 15 )]
-position = Vector2( 0, -5 )
-fontSize = 2
-alignment = 1
-outline = true
-color = Color( 0.752941, 0, 0, 1 )
 
 [node name="SmokeParticles" type="CPUParticles2D" parent="."]
 position = Vector2( 0, 12 )
@@ -221,5 +242,5 @@ stream = ExtResource( 4 )
 
 [node name="AudioCollisionPlayer" type="AudioStreamPlayer2D" parent="."]
 [connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
-[connection signal="timeout" from="InvulAnim/Timer" to="." method="_endInvul"]
+[connection signal="timeout" from="BodyParts/InvulAnim/Timer" to="." method="_endInvul"]
 [connection signal="animation_finished" from="WhiplashAnim" to="." method="_on_WhiplashAnim_animation_finished"]

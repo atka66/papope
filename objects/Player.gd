@@ -28,12 +28,12 @@ var wrapPosition = null
 
 func _ready():
 	Global.playersKills[playerId] = 0
-	$InvulAnim.play()
-	$InvulAnim.hide()
+	$BodyParts/InvulAnim.play()
+	$BodyParts/InvulAnim.hide()
 	if !Global.playersCrowned[playerId]:
-		$Crown.hide()
+		$BodyParts/Crown.hide()
 	$Crosshair.hide()
-	$Lock.hide()
+	$BodyParts/Lock.hide()
 	$WhiplashAnim.hide()
 	$OutsideLabel.hide()
 	$SmokeParticles.emitting = false
@@ -51,9 +51,9 @@ func _ready():
 		hud.fromRight = (playerId % 2 == 1)
 		get_parent().add_child(hud)
 	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
-	$Body.modulate = color
+	$BodyParts/Body.modulate = color
 	$Crosshair.modulate = color
-	$Face.frame = Global.playersSkin[playerId]
+	$BodyParts/Face.frame = Global.playersSkin[playerId]
 	var spawnAnim = Res.SpawnAnim.instance()
 	spawnAnim.position = global_position
 	get_tree().get_root().add_child(spawnAnim)
@@ -108,6 +108,10 @@ func _input(event):
 			$HitScan.cast_to = extendVectorTo(aimVector, 96)
 			$Crosshair.position *= 96
 
+		if Global.playersPerks[playerId].has(Global.PerkEnum.LONG_ARMS):
+			$HitScan.cast_to *= 2
+			$Crosshair.position *= 2
+
 	if event.device == playerId && !inputCd:
 		inputCd = true
 		if inLobby:
@@ -118,8 +122,8 @@ func _input(event):
 					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
 				if isPressed(event, "pl_game_dash"):
 					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
-				$Face.frame = Global.playersSkin[playerId]
-				$Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
+				$BodyParts/Face.frame = Global.playersSkin[playerId]
+				$BodyParts/Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 		else:
 			if alive && !Global.playersFrozen && !fallWater:
 				if !trapped && linear_velocity.length() < 1000:
@@ -137,12 +141,13 @@ func _process(delta):
 	inputCd = false
 	if !inLobby:
 		if alive:
-			if contactsLava:
+			if contactsLava && !invulnerable:
+				$BodyParts/Anim.play("jump")
 				hurt(1)
 			if outsideCntdwn < 1 || timeBombCd < 1:
 				hp = 0
 			if hp < 1:
-				$Body.modulate = Global.TEAM_COLORS[4]
+				$BodyParts/Body.modulate = Global.TEAM_COLORS[4]
 				alive = false
 				spawnFallingMessage(
 					Global.DEATH_STRINGS[randi() % len(Global.DEATH_STRINGS)]
@@ -154,7 +159,7 @@ func _process(delta):
 				ammo = 0
 				item = null
 				$Crosshair.hide()
-				$TimebombLabel.hide()
+				$BodyParts/TimebombLabel.hide()
 
 				if !Global.playersFrozen:
 					var aliveTeamId = Global.getWinnerTeam();
@@ -163,10 +168,10 @@ func _process(delta):
 			
 			if !Global.playersFrozen && !fallWater:
 				if Global.playersPerks[playerId].has(Global.PerkEnum.TIME_BOMB):
-					$TimebombLabel.global_position = position
-					$TimebombLabel.global_position.y -= 5
-					$TimebombLabel.set_text(str(ceil(float(timeBombCd) / 60)))
-					$TimebombLabel.show()
+					$BodyParts/TimebombLabel.global_position = position
+					$BodyParts/TimebombLabel.global_position.y -= 5
+					$BodyParts/TimebombLabel.set_text(str(ceil(float(timeBombCd) / 60)))
+					$BodyParts/TimebombLabel.show()
 					timeBombCd -= 1
 				if isOutside():
 					if outsideCntdwn > 0:
@@ -262,11 +267,11 @@ func pickup(pwrup):
 
 func trap():
 	trapped = true
-	$Lock.show()
+	$BodyParts/Lock.show()
 	spawnFallingMessage("trapped!", Color.tomato, 2, null)
 	yield(get_tree().create_timer(2.0), "timeout")
 	trapped = false
-	$Lock.hide()
+	$BodyParts/Lock.hide()
 
 func useItem():
 		if item == 'revolver':
@@ -301,17 +306,17 @@ func useItem():
 		if item == 'dynamite':
 			Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
 			var dynamite = Res.Dynamite.instance()
-			dynamite.position = position + ($HitScan.cast_to.normalized()) * 16
+			dynamite.position = position + ($HitScan.cast_to.normalized()) * 20
 			dynamite.originPlayerId = playerId
 			dynamite.apply_central_impulse($HitScan.cast_to * 190)
 			get_tree().get_current_scene().add_child(dynamite)
 		if item == 'shield':
-			$InvulAnim/Audio.stream = Res.AudioShieldStart
-			$InvulAnim/Audio.play()
+			$BodyParts/InvulAnim/Audio.stream = Res.AudioShieldStart
+			$BodyParts/InvulAnim/Audio.play()
 			invulnerable = true
 			spawnFallingMessage("shielded!", Color.lightblue, 2, null)
-			$InvulAnim.show()
-			$InvulAnim/Timer.start(5)
+			$BodyParts/InvulAnim.show()
+			$BodyParts/InvulAnim/Timer.start(5)
 		if item == 'trap':
 			$AudioPlaceTrap.play()
 			Global.incrementStat(playerId, Global.StatEnum.TRP_USE, 1)
@@ -355,11 +360,11 @@ func useItem():
 				$Crosshair.hide()
 
 func _endInvul():
-	$InvulAnim/Timer.stop()
-	$InvulAnim/Audio.stream = Res.AudioShieldEnd
-	$InvulAnim/Audio.play()
+	$BodyParts/InvulAnim/Timer.stop()
+	$BodyParts/InvulAnim/Audio.stream = Res.AudioShieldEnd
+	$BodyParts/InvulAnim/Audio.play()
 	invulnerable = false
-	$InvulAnim.hide()
+	$BodyParts/InvulAnim.hide()
 
 func hurt(damage):
 	var actualDamage = damage
@@ -372,16 +377,16 @@ func hurt(damage):
 		else:
 			spawnFallingMessage(str(int(actualDamage)), Color.tomato, fallingMessageSize, null)
 			hp -= actualDamage;
-			$Hurt/HurtAnim.stop()
-			$Hurt/HurtAnim.play('hurt')
+			$BodyParts/Hurt/HurtAnim.stop()
+			$BodyParts/Hurt/HurtAnim.play('hurt')
 
 func heal(amount):
 	if amount > 0 && alive && !Global.playersFrozen:
 		var fallingMessageSize = int(amount / 20) + 1
 		spawnFallingMessage(str(int(amount)), Color.lightgreen, fallingMessageSize, null)
 		hp = min(hp + amount, Global.options['hp'][Global.optionsSelected['hp']])
-		$Hurt/HurtAnim.stop()
-		$Hurt/HurtAnim.play('heal')
+		$BodyParts/Hurt/HurtAnim.stop()
+		$BodyParts/Hurt/HurtAnim.play('heal')
 
 func _on_WhiplashAnim_animation_finished():
 	$WhiplashAnim.hide()
