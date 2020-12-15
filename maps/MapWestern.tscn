@@ -143,7 +143,7 @@ z_as_relative = false
 [node name="PwrupSpawner0" type="Sprite" parent="." groups=[
 "spawners",
 ]]
-position = Vector2( 64, 320 )
+position = Vector2( 64, 288 )
 z_index = -2
 z_as_relative = false
 texture = ExtResource( 4 )
@@ -151,7 +151,7 @@ texture = ExtResource( 4 )
 [node name="PwrupSpawner1" type="Sprite" parent="." groups=[
 "spawners",
 ]]
-position = Vector2( 608, 64 )
+position = Vector2( 608, 96 )
 z_index = -2
 z_as_relative = false
 texture = ExtResource( 4 )
@@ -160,13 +160,13 @@ texture = ExtResource( 4 )
 position = Vector2( 96, 128 )
 
 [node name="Cactus2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 128, 320 )
+position = Vector2( 128, 288 )
 
 [node name="Cactus3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 608, 128 )
+position = Vector2( 608, 160 )
 
 [node name="Cactus4" parent="." instance=ExtResource( 5 )]
-position = Vector2( 544, 64 )
+position = Vector2( 544, 96 )
 
 [node name="Cactus5" parent="." instance=ExtResource( 5 )]
 position = Vector2( 224, 64 )
@@ -178,7 +178,7 @@ position = Vector2( 256, 224 )
 position = Vector2( 448, 320 )
 
 [node name="Cactus8" parent="." instance=ExtResource( 5 )]
-position = Vector2( 64, 256 )
+position = Vector2( 64, 224 )
 
 [node name="Cactus9" parent="." instance=ExtResource( 5 )]
 position = Vector2( 416, 160 )
@@ -190,4 +190,4 @@ position = Vector2( 640, 256 )
 position = Vector2( 208, 320 )
 
 [node name="Tree2" parent="." instance=ExtResource( 7 )]
-position = Vector2( 512, 128 )
+position = Vector2( 432, 80 )

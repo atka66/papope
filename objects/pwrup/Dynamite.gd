@@ -13,21 +13,9 @@ func _process(delta):
 	$Sprite.rotation_degrees += 10
 
 func explode():
-	var fullDmg = 0
-	for player in get_tree().get_nodes_in_group('players'):
-		var dist = position.distance_to(player.position)
-		if dist < 150:
-			var power = 150 - dist;
-			player.apply_central_impulse(position.direction_to(player.position) * power * 10)
-			var dmg = power / 1.5
-			if player.wouldRighteouslyBeHitBy(originPlayerId):
-				fullDmg += dmg
-			player.hurt(dmg)
-			if player.wasJustKilled(player) && !player.isTeammate(originPlayerId):
-				Global.addKill(originPlayerId)
-	Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, fullDmg)
 	var explosionAnim = Res.ExplosionAnim.instance()
 	explosionAnim.position = position
+	explosionAnim.originPlayerId = originPlayerId
 	get_tree().get_current_scene().add_child(explosionAnim)
 	queue_free()
 

@@ -1,8 +1,6 @@
 ### TODOs
-# * time bomb perk explosion should be actual explosion
-# * edit outline out of crosshair and use shader instead
 # * perks (??s might be discarded)
-#     * ethereal      - pass through players
+#     * [DISCARDED] ethereal - pass through players
 #     * [DISCARDED] tiny     - size halved   (might be a bugfest)
 #     * [DISCARDED] large    - size doubled  (too tight in pacman man)
 #     * ?? slippery   - no friction          (speed limit is needed)

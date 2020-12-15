@@ -144,8 +144,15 @@ func _process(delta):
 			if contactsLava && !invulnerable:
 				$BodyParts/Anim.play("jump")
 				hurt(1)
-			if outsideCntdwn < 1 || timeBombCd < 1:
+			if outsideCntdwn < 1:
 				hp = 0
+			if timeBombCd < 1:
+				hp = 0
+				var explosionAnim = Res.ExplosionAnim.instance()
+				explosionAnim.position = global_position
+				explosionAnim.position += Vector2((randf() * 2) - 1, (randf() * 2) - 1)
+				explosionAnim.originPlayerId = playerId
+				get_tree().get_current_scene().add_child(explosionAnim)
 			if hp < 1:
 				$BodyParts/Body.modulate = Global.TEAM_COLORS[4]
 				alive = false
