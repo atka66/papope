@@ -59,7 +59,7 @@ func _ready():
 	canProceed = true
 	
 	for i in len(Global.playersAchievements[playerId]):
-		showAchievement(200 - (i * 40), Global.playersAchievements[playerId][i])
+		showAchievement(200 - (i * 28), Global.playersAchievements[playerId][i])
 		yield(get_tree().create_timer(0.2), "timeout")
 	
 func _input(event):
@@ -119,3 +119,6 @@ func distributeAchievements():
 		Global.registerAchievement(playerId, Global.AchiEnum.WAKA_WAKA)
 	if ghost_kill >= 5:
 		Global.registerAchievement(playerId, Global.AchiEnum.GHOSTBUSTER)
+
+	if len(Global.playersAchievements[playerId]) > 6:
+		Global.playersAchievements[playerId].insert(7, Global.AchiEnum.AINT_GON_FIT)

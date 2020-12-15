@@ -151,8 +151,6 @@ func _process(delta):
 					Global.registerAchievement(playerId, Global.AchiEnum.NO_REFUNDS)
 				hp = 0
 				ammo = 0
-				if item == 'shield':
-					Global.registerAchievement(playerId, Global.AchiEnum.DEAD_BY_CHOICE)
 				item = null
 				$Crosshair.hide()
 				$TimebombLabel.hide()
@@ -283,7 +281,7 @@ func useItem():
 						Global.incrementStat(playerId, Global.StatEnum.REV_HIT, 1)
 					collider.hurt(20)
 					if wasTeammateJustKilled(collider):
-						Global.registerAchievement(playerId, Global.AchiEnum.JUDAS)
+						Global.registerAchievement(playerId, Global.AchiEnum.TRAITOR)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 100)
 				elif collider.is_in_group('ghosts'):
 					Global.incrementStat(playerId, Global.StatEnum.GHOST_KILL, 1)
@@ -336,7 +334,7 @@ func useItem():
 					hitPosition = $HitScan.get_collision_point()
 					collider.hurt(30)
 					if wasTeammateJustKilled(collider): # if teammate was just killed
-						Global.registerAchievement(playerId, Global.AchiEnum.JUDAS)
+						Global.registerAchievement(playerId, Global.AchiEnum.TRAITOR)
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 1000)
 				if collider.is_in_group('ghosts'):
 					Global.incrementStat(playerId, Global.StatEnum.GHOST_KILL, 1)
