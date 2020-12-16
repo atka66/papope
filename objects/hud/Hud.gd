@@ -19,8 +19,6 @@ func _ready():
 	$Container/FaceBg.color = playerColor
 	$Container/HpBar.color = playerColor
 	
-	$Container/FaceSprite.frame = Global.playersSkin[player.playerId]
-	
 	var perks = Global.playersPerks[player.playerId]
 	for i in range(len(perks)):
 		var perk = Res.Perk.instance()
@@ -30,6 +28,11 @@ func _ready():
 		$Container.add_child(perk)
 	
 	hspeed = 15
+	
+	if Global.playersPerks[player.playerId].has(Global.PerkEnum.CHICKEN):
+		$Container/FaceSprite.frame = 6
+	else:
+		$Container/FaceSprite.frame = Global.playersSkin[player.playerId]
 
 func handleShake():
 	if player.hp < prevHp:

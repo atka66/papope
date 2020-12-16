@@ -49,7 +49,7 @@ const ACHIEVEMENTS = {
 enum PerkEnum {
 	AKIMBO, ARMORED, FAST, SPIKY, CUDDLES, REVERSE,
 	BACKFIRE, SLOW, NO_LEGS, NO_HANDS, TIME_BOMB,
-	NOTHING, RESET, RIGHT, LONG_ARMS
+	NOTHING, RESET, RIGHT, LONG_ARMS, CHICKEN
 }
 const PERKS = {
 	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 0],
@@ -66,7 +66,8 @@ const PERKS = {
 	PerkEnum.NOTHING: ['nothing', 'nothing happens', 11],
 	PerkEnum.RESET: ['reset', 'previous perks removed', 12],
 	PerkEnum.RIGHT: ['right', 'because i cannot look left', 13],
-	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 14]
+	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 14],
+	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 15]
 }
 
 const SKIN_COUNT = 6

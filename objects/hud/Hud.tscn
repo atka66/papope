@@ -43,7 +43,7 @@ polygon = PoolVector2Array( 16, 0, 48, 0, 48, 32, 16, 32 )
 position = Vector2( 16, 0 )
 texture = ExtResource( 2 )
 centered = false
-hframes = 6
+hframes = 7
 
 [node name="HpBarBg" type="Polygon2D" parent="Container"]
 color = Color( 0, 0, 0, 1 )

@@ -10,7 +10,10 @@ func _ready():
 		hide()
 		isFinished = true
 	$Team.color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
-	$Face.frame = Global.playersSkin[playerId]
+	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+		$Face.frame = 6
+	else:
+		$Face.frame = Global.playersSkin[playerId]
 	$RevealLabel.hide()
 
 func dealt():

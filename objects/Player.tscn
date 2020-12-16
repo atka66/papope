@@ -68,7 +68,7 @@ animations = [ {
 "speed": 20.0
 } ]
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=5]
 resource_name = "jump"
 length = 0.2
 tracks/0/type = "value"
@@ -84,10 +84,10 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -12 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=6]
 radius = 16.0
 
-[sub_resource type="Shader" id=13]
+[sub_resource type="Shader" id=7]
 code = "shader_type canvas_item;
 uniform float outline_width = 2.0;
 uniform vec4 outline_color: hint_color;
@@ -129,12 +129,12 @@ void fragment(){
     }
 }"
 
-[sub_resource type="ShaderMaterial" id=14]
-shader = SubResource( 13 )
+[sub_resource type="ShaderMaterial" id=8]
+shader = SubResource( 7 )
 shader_param/outline_width = 1.0
 shader_param/outline_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=9]
 animations = [ {
 "frames": [ ExtResource( 13 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 12 ), ExtResource( 10 ) ],
 "loop": true,
@@ -142,22 +142,22 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="Gradient" id=7]
+[sub_resource type="Gradient" id=10]
 offsets = PoolRealArray( 0 )
 colors = PoolColorArray( 1, 1, 1, 1 )
 
-[sub_resource type="GradientTexture" id=8]
-gradient = SubResource( 7 )
+[sub_resource type="GradientTexture" id=11]
+gradient = SubResource( 10 )
 width = 3
 
-[sub_resource type="Curve" id=9]
+[sub_resource type="Curve" id=12]
 min_value = -1.0
 _data = [ Vector2( 0, 0 ), 0.0, 1.54141, 0, 1, Vector2( 0.330275, 0.509091 ), 0.0, 0.0, 0, 0, Vector2( 0.752294, -0.654545 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.272727 ), -4.8021, 0.0, 0, 0 ]
 
-[sub_resource type="Curve" id=10]
+[sub_resource type="Curve" id=13]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="Gradient" id=11]
+[sub_resource type="Gradient" id=14]
 offsets = PoolRealArray( 0, 0.7, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 0.858824, 0.858824, 0.858824, 1, 1, 1, 1, 0 )
 
@@ -180,7 +180,7 @@ texture = ExtResource( 2 )
 
 [node name="Face" type="Sprite" parent="BodyParts"]
 texture = ExtResource( 1 )
-hframes = 6
+hframes = 7
 
 [node name="Hurt" type="Sprite" parent="BodyParts"]
 texture = ExtResource( 19 )
@@ -213,10 +213,10 @@ color = Color( 0.752941, 0, 0, 1 )
 texture = ExtResource( 5 )
 
 [node name="Anim" type="AnimationPlayer" parent="BodyParts"]
-anims/jump = SubResource( 12 )
+anims/jump = SubResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="HitScan" type="RayCast2D" parent="."]
 enabled = true
@@ -224,7 +224,7 @@ collision_mask = 4621
 collide_with_areas = true
 
 [node name="Crosshair" type="Sprite" parent="."]
-material = SubResource( 14 )
+material = SubResource( 8 )
 z_index = 89
 z_as_relative = false
 texture = ExtResource( 9 )
@@ -232,7 +232,7 @@ hframes = 3
 
 [node name="WhiplashAnim" type="AnimatedSprite" parent="."]
 position = Vector2( 0.198425, 0 )
-frames = SubResource( 6 )
+frames = SubResource( 9 )
 centered = false
 offset = Vector2( -16, -32 )
 
@@ -248,18 +248,18 @@ position = Vector2( 0, 12 )
 amount = 10
 lifetime = 0.3
 lifetime_randomness = 0.5
-texture = SubResource( 8 )
+texture = SubResource( 11 )
 emission_shape = 2
 emission_rect_extents = Vector2( 1, 1 )
 direction = Vector2( 0, -1 )
 spread = 25.0
 gravity = Vector2( 0, -200 )
 initial_velocity = 150.0
-orbit_velocity_curve = SubResource( 9 )
+orbit_velocity_curve = SubResource( 12 )
 scale_amount = 10.0
 scale_amount_random = 0.7
-scale_amount_curve = SubResource( 10 )
-color_ramp = SubResource( 11 )
+scale_amount_curve = SubResource( 13 )
+color_ramp = SubResource( 14 )
 
 [node name="AudioRevHit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 21 )

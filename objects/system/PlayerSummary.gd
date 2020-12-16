@@ -13,7 +13,10 @@ func _ready():
 	$Background.hide()
 	$Background.color = color
 	$Team.color = color
-	$Face.frame = Global.playersSkin[playerId]
+	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+		$Face.frame = 6
+	else:
+		$Face.frame = Global.playersSkin[playerId]
 	
 	yield(get_tree().create_timer(2.0), "timeout")
 	

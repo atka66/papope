@@ -53,7 +53,6 @@ func _ready():
 	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 	$BodyParts/Body.modulate = color
 	$Crosshair.modulate = color
-	$BodyParts/Face.frame = Global.playersSkin[playerId]
 	var spawnAnim = Res.SpawnAnim.instance()
 	spawnAnim.position = global_position
 	get_tree().get_root().add_child(spawnAnim)
@@ -62,6 +61,10 @@ func _ready():
 		speed *= 2
 	if Global.playersPerks[playerId].has(Global.PerkEnum.SLOW):
 		speed *= 0.5
+	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+		$BodyParts/Face.frame = 6
+	else:
+		$BodyParts/Face.frame = Global.playersSkin[playerId]
 
 func isPressed(event, action):
 	return event.is_action_pressed(action) && Input.is_action_just_pressed(action)

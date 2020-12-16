@@ -27,7 +27,7 @@ polygon = PoolVector2Array( -16, 0, 16, 0, 16, 4, -16, 4 )
 position = Vector2( 85, 300 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
-hframes = 6
+hframes = 7
 
 [node name="RevealLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 85, 224 )
