@@ -27,7 +27,7 @@ const DEATH_STRINGS = ['oof', 'ouch', 'rip', 'dead', 'oops', 'sad', 'bye']
 enum AchiEnum {
 	UNDERDOG, DEMOLITION_MAN, GUNSLINGER, HUTS_HUTS, DAREDEVIL,
 	GUERRILLA, CARELESS, TRAITOR, NO_REFUNDS, JATSZUNK_MAST, 
-	WAKA_WAKA, GHOSTBUSTER, SPOOKED, TRIPLE_KILL, AINT_GON_FIT
+	WAKA_WAKA, GHOSTBUSTER, SPOOKED, TRIPLE_KILL, AINT_GON_FIT, BOK_BOK
 }
 const ACHIEVEMENTS = {
 	AchiEnum.UNDERDOG : ['underdog', 'low overall score'], # has <= 1/4 of the needed score at the end (score limit min 3)
@@ -44,7 +44,8 @@ const ACHIEVEMENTS = {
 	AchiEnum.GHOSTBUSTER : ['ghostbuster', 'killed a lot of ghosts'], # killed 5 ghosts
 	AchiEnum.SPOOKED : ['spooked', 'scared of ghosts'], # killed by a ghost
 	AchiEnum.TRIPLE_KILL : ['triple kill', 'killed 3 enemies in one round'], # 3 enemies killed in 1 round
-	AchiEnum.AINT_GON_FIT : ['aint gon fit', 'that is a lot of achievements!'] # has at least 7 achievements
+	AchiEnum.AINT_GON_FIT : ['aint gon fit', 'that is a lot of achievements!'], # has at least 7 achievements
+	AchiEnum.BOK_BOK : ['bok bok', 'i am a chicken']
 }
 enum PerkEnum {
 	AKIMBO, ARMORED, FAST, SPIKY, CUDDLES, REVERSE,

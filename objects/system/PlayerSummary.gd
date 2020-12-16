@@ -2,12 +2,13 @@ extends Node2D
 
 export(int) var playerId = 0
 var canProceed = false
+var winner = false
 
 func _ready():
 	if !Global.playersJoined[playerId]:
 		queue_free()
+	winner = Global.playersTeam[playerId] == Global.getWinnerTeamByScore()
 	distributeAchievements()
-	var winner = Global.playersTeam[playerId] == Global.getWinnerTeamByScore()
 	var color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 	$WinParticles.hide()
 	$Background.hide()
@@ -122,6 +123,9 @@ func distributeAchievements():
 		Global.registerAchievement(playerId, Global.AchiEnum.WAKA_WAKA)
 	if ghost_kill >= 5:
 		Global.registerAchievement(playerId, Global.AchiEnum.GHOSTBUSTER)
+
+	if winner && Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+		Global.registerAchievement(playerId, Global.AchiEnum.BOK_BOK)
 
 	if len(Global.playersAchievements[playerId]) > 6:
 		Global.playersAchievements[playerId].insert(7, Global.AchiEnum.AINT_GON_FIT)
