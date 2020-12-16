@@ -7,6 +7,8 @@ Every player needs a controller to play this game.
 ## Sources
 * **Tileset** - RPG Maker 2000 has been a great influence in most of the tilesets
 * **Sound** - Most of the sound effects are from Valve's DotA2 (sourced from https://dota2.gamepedia.com/Dota_2_Wiki) - To avoid copyright issues these sounds will be replaced
+## Credits
+* **Godot CRT screen shader** - https://github.com/henriquelalves/SimpleGodotCRTShader
 ## Contribution
 Feel free to leave improvement ideas and report bugs!
 

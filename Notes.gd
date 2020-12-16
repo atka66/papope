@@ -9,6 +9,7 @@
 ### Layers
 #
 # {Scenes}
+# {_Scenes but not by Z setting_}
 # [Nodes]
 #
 # -103 : {MapController}
@@ -28,6 +29,7 @@
 # 5    : {SpawnAnim}, {CollisionAnim}, {DespawnAnim}, {ExplosionAnim}, {WhipcrackAnim}
 # 6    : [EmberParticles], {Spaceray}
 # 50   : [FgTiles1]
+# 80   : [ShaderNode], {_WorldEnvironment_}
 # 89   : [Crosshair]
 # 90   : {Hud}
 # 91   : {HudRevolver}, {HudAmmo}
