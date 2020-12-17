@@ -63,6 +63,7 @@ func _ready():
 		speed *= 0.5
 	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
 		$BodyParts/Face.frame = 6
+		emitFeathers(10)
 	else:
 		$BodyParts/Face.frame = Global.playersSkin[playerId]
 
@@ -133,6 +134,8 @@ func _input(event):
 					if isPressed(event, 'pl_game_dash'):
 						$AudioDash.stream = Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)]
 						$AudioDash.play()
+						if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+							emitFeathers(10)
 						if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS) && !inSpace:
 							apply_central_impulse(Vector2(lhAxis, lvAxis).normalized() * speed * dashMul)
 						else:
@@ -387,6 +390,8 @@ func hurt(damage):
 		else:
 			spawnFallingMessage(str(int(actualDamage)), Color.tomato, fallingMessageSize, null)
 			hp -= actualDamage;
+			if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+				emitFeathers(actualDamage)
 			$BodyParts/Hurt/HurtAnim.stop()
 			$BodyParts/Hurt/HurtAnim.play('hurt')
 
@@ -427,3 +432,9 @@ func _integrate_forces(state):
 	if wrapPosition != null:
 		state.transform.origin = wrapPosition
 		wrapPosition = null
+
+func emitFeathers(amount):
+	var featherPar = Res.FeatherPar.instance()
+	featherPar.amount = amount
+	featherPar.emitting = true
+	add_child(featherPar)

@@ -125,7 +125,7 @@ func distributeAchievements():
 		Global.registerAchievement(playerId, Global.AchiEnum.GHOSTBUSTER)
 
 	if winner && Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
-		Global.registerAchievement(playerId, Global.AchiEnum.BOK_BOK)
+		Global.registerAchievement(playerId, Global.AchiEnum.CHICKEN_DINNER)
 
 	if len(Global.playersAchievements[playerId]) > 6:
 		Global.playersAchievements[playerId].insert(7, Global.AchiEnum.AINT_GON_FIT)

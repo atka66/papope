@@ -23,7 +23,7 @@
 # -50  : [BgTiles2]
 # -49  : [BackgroundDim]
 # -2   : {PlayerSpawner}, {PwrupSpawner}, {Block}, {WaterTrigger}, {SpaceTrigger}, {Lava}, {TrafficLane}
-# -1   : {Dynamite}, {Trap}, {RevolverRay}, {PlayerSlot}
+# -1   : {Dynamite}, {Trap}, {RevolverRay}, {PlayerSlot}, [FeatherPar]
 # 0    : {Player}
 # 1    : {Tree}, {Mast}, {Cactus}
 # 2    : {Car}
