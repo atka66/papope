@@ -64,6 +64,9 @@ func _ready():
 	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
 		$BodyParts/Face.frame = 6
 		emitFeathers(10)
+		$AudioSlipInWater.stream = Res.AudioChickenHurt[randi() % len(Res.AudioChickenHurt)]
+		$AudioHurtDynamite.stream = Res.AudioChickenHurt[randi() % len(Res.AudioChickenHurt)]
+		var chickenIdleSound = chickenIdleSound()
 	else:
 		$BodyParts/Face.frame = Global.playersSkin[playerId]
 
@@ -162,6 +165,7 @@ func _process(delta):
 			if hp < 1:
 				$BodyParts/Body.modulate = Global.TEAM_COLORS[4]
 				alive = false
+				$AudioChickenIdle.stop()
 				spawnFallingMessage(
 					Global.DEATH_STRINGS[randi() % len(Global.DEATH_STRINGS)]
 					, Color.darkgray, 3, Res.AudioPlayerDeath
@@ -241,7 +245,10 @@ func _on_Player_body_entered(body):
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):
-		$AudioHurtCactus.stream = Res.AudioPlayerHurtCactus[randi() % len(Res.AudioPlayerHurtCactus)]
+		if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+			$AudioHurtCactus.stream = Res.AudioChickenHurt[randi() % len(Res.AudioChickenHurt)]
+		else:
+			$AudioHurtCactus.stream = Res.AudioPlayerHurtCactus[randi() % len(Res.AudioPlayerHurtCactus)]
 		$AudioHurtCactus.play()
 		hurt(10)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
@@ -438,3 +445,11 @@ func emitFeathers(amount):
 	featherPar.amount = amount
 	featherPar.emitting = true
 	add_child(featherPar)
+
+func chickenIdleSound():
+	var duration = (randf() * 3) + 2
+	yield(get_tree().create_timer(duration), "timeout")
+	if alive:
+		$AudioChickenIdle.stream = Res.AudioChickenIdle[randi() % len(Res.AudioChickenIdle)]
+		$AudioChickenIdle.play()
+		var rerun = chickenIdleSound()

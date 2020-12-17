@@ -70,6 +70,16 @@ onready var AudioCardFlip = [
 	preload("res://sounds/perk/flip_2.ogg"),
 	preload("res://sounds/perk/flip_3.ogg")
 ]
+onready var AudioChickenIdle = [
+	preload("res://sounds/chicken/idle_1.ogg"),
+	preload("res://sounds/chicken/idle_2.ogg"),
+	preload("res://sounds/chicken/idle_3.ogg")
+]
+onready var AudioChickenHurt = [
+	preload("res://sounds/chicken/hurt_1.ogg"),
+	preload("res://sounds/chicken/hurt_2.ogg"),
+	preload("res://sounds/chicken/hurt_3.ogg")
+]
 
 onready var PwrupSprites = {
 	'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),

@@ -1,8 +1,4 @@
 ### TODOs
-# * chicken perk 
-#     * winning with perk should earn achievement
-#     * randomly dropped feathers on walk and taking damage
-#     * chicken noises
 # * perks (??s might be discarded)
 #     * [DISCARDED] ethereal - pass through players
 #     * [DISCARDED] tiny     - size halved   (might be a bugfest)
