@@ -1,9 +1,11 @@
 ### TODOs
+# * spaceray init sound
+# * palette change on ship map
 # * perks (??s might be discarded)
 #     * [DISCARDED] ethereal - pass through players
 #     * [DISCARDED] tiny     - size halved   (might be a bugfest)
 #     * [DISCARDED] large    - size doubled  (too tight in pacman man)
-#     * ?? slippery   - no friction          (speed limit is needed)
+#     * [DISCARDED] slippery   - no friction (speed limit is needed)
 
 ### Layers
 #
