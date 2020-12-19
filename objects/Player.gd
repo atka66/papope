@@ -70,9 +70,6 @@ func _ready():
 	else:
 		$BodyParts/Face.frame = Global.playersSkin[playerId]
 
-func isPressed(event, action):
-	return event.is_action_pressed(action) && Input.is_action_just_pressed(action)
-
 func _input(event):
 	var lhAxis = Input.get_joy_axis(playerId, JOY_AXIS_0)
 	var lvAxis = Input.get_joy_axis(playerId, JOY_AXIS_1)
@@ -123,18 +120,18 @@ func _input(event):
 		inputCd = true
 		if inLobby:
 			if !get_node('/root/Lobby').countingDown:
-				if isPressed(event, "pl_skin_next"):
+				if event.is_action_pressed("pl_skin_next"):
 					Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
-				if isPressed(event, "pl_game_use"):
+				if event.is_action_pressed("pl_game_use"):
 					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
-				if isPressed(event, "pl_game_dash"):
+				if event.is_action_pressed("pl_game_dash"):
 					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
 				$BodyParts/Face.frame = Global.playersSkin[playerId]
 				$BodyParts/Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 		else:
 			if alive && !Global.playersFrozen && !fallWater:
 				if !trapped && linear_velocity.length() < 1000:
-					if isPressed(event, 'pl_game_dash'):
+					if event.is_action_pressed('pl_game_dash'):
 						$AudioDash.stream = Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)]
 						$AudioDash.play()
 						if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
@@ -143,7 +140,7 @@ func _input(event):
 							apply_central_impulse(Vector2(lhAxis, lvAxis).normalized() * speed * dashMul)
 						else:
 							apply_central_impulse(linear_velocity.normalized() * speed * dashMul)
-				if isPressed(event, 'pl_game_use'):
+				if event.is_action_pressed('pl_game_use'):
 					useItem()
 
 func _process(delta):
