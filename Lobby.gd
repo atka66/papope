@@ -74,7 +74,7 @@ func initPlayers():
 			Global.playersJoined[i] = false
 		else:
 			if Global.playersConnected[i] && Global.playersJoined[i]:
-				Global.joinPlayer(i)
+				Global.joinPlayer(i, true)
 	
 	Global.playersStats = []
 	for i in range(4):

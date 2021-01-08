@@ -15,6 +15,7 @@ var invulnerable = false
 var fallWater = false
 var trapped = false
 var inSpace = false
+var silent = false
 
 var thrust = Vector2.ZERO
 var speed = 20
@@ -53,9 +54,10 @@ func _ready():
 	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 	$BodyParts/Body.modulate = color
 	$Crosshair.modulate = color
-	var spawnAnim = Res.SpawnAnim.instance()
-	spawnAnim.position = global_position
-	get_tree().get_root().add_child(spawnAnim)
+	if !silent:
+		var spawnAnim = Res.SpawnAnim.instance()
+		spawnAnim.position = global_position
+		get_tree().get_root().add_child(spawnAnim)
 	
 	if Global.playersPerks[playerId].has(Global.PerkEnum.FAST):
 		speed *= 2

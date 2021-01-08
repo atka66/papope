@@ -119,7 +119,7 @@ func distributeAchievements():
 		Global.registerAchievement(playerId, Global.AchiEnum.HUTS_HUTS)
 	if trp_use > 3 && float(trp_hit) / trp_use > 0.75:
 		Global.registerAchievement(playerId, Global.AchiEnum.GUERRILLA)
-	if pellets >= 50:
+	if pellets >= 100:
 		Global.registerAchievement(playerId, Global.AchiEnum.WAKA_WAKA)
 	if ghost_kill >= 5:
 		Global.registerAchievement(playerId, Global.AchiEnum.GHOSTBUSTER)

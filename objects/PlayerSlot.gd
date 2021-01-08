@@ -21,7 +21,7 @@ func _input(event):
 		inputCd = true
 		if Input.is_action_just_pressed("ui_accept") and !Lobby.countingDown:
 			if !Global.playersJoined[playerId]:
-				Global.joinPlayer(playerId)
+				Global.joinPlayer(playerId, false)
 			else:
 				if Global.playersJoined.count(true) < 2:
 					warningGrowl("NEEDS AT LEAST 2 PLAYERS!")

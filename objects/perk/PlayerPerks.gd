@@ -28,7 +28,7 @@ func dealt():
 
 func _input(event):
 	var cardNode = get_node("PerkCard")
-	if event.device == playerId && cardNode && Input.is_action_just_pressed("ui_accept"):
+	if event.device == playerId && cardNode && event.is_action_pressed("ui_accept"):
 		if !cardNode.revealed:
 			$RevealLabel.hide()
 			cardNode.reveal()

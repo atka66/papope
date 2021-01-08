@@ -137,7 +137,7 @@ func getWinnerTeam():
 	var aliveTeams = []
 	for player in get_tree().get_nodes_in_group('players'):
 		if player.hp > 0 && !aliveTeams.has(playersTeam[player.playerId]):
-			aliveTeams.append(playersTeam[player.playerId])	
+			aliveTeams.append(playersTeam[player.playerId])
 	
 	if len(aliveTeams) == 0:
 		return -2 # no one is alive, draw (rare)
@@ -161,12 +161,13 @@ func disconnectPlayer(playerId):
 	if get_tree().get_current_scene().get_name() != 'Lobby':
 		get_tree().change_scene("res://Lobby.tscn")
 
-func joinPlayer(playerId):
+func joinPlayer(playerId, silent):
 	playersJoined[playerId] = true
 	var slot = get_node('/root/Lobby/PlayerSlot' + str(playerId))
 	var player = Res.Player.instance()
 	connect("player_remove", player, "_on_remove")
 	player.playerId = playerId
+	player.silent = silent
 	slot.add_child(player)
 
 func leavePlayer(playerId):

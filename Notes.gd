@@ -1,7 +1,10 @@
 ### TODOs
-# * spaceray init sound
+# * spaceray sounds
 # * palette change on ship map
 # * perks (??s might be discarded)
+#     * vampire - dealing damage heals
+#     * 
+#     * [TO BE DISCARDED] no hands
 #     * [DISCARDED] ethereal - pass through players
 #     * [DISCARDED] tiny     - size halved   (might be a bugfest)
 #     * [DISCARDED] large    - size doubled  (too tight in pacman man)
