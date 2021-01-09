@@ -10,20 +10,18 @@ func _rayLoop():
 	yield(get_tree().create_timer(15.0), "timeout")
 	$Phase1.show()
 	$Phase1/Phase1Anim.play()
-	yield(get_tree().create_timer(0.5), "timeout")
+	$AudioStart.play()
+	yield(get_tree().create_timer(0.8), "timeout")
 	$Phase1.hide()
 	$Phase2.show()
-	playAudio(Res.AudioSpacerayStart)
+	$AudioOngoing.play()
 	$Phase2/CollisionShape2D.disabled = false
-	yield(get_tree().create_timer(4.5), "timeout")
-	playAudio(Res.AudioSpacerayStop)
+	yield(get_tree().create_timer(4.2), "timeout")
+	$AudioOngoing.stop()
+	$AudioStop.play()
 	$Phase2.hide()
 	$Phase2/CollisionShape2D.disabled = true
 	var rerun = _rayLoop()
-
-func playAudio(audio):
-	$Audio.stream = audio
-	$Audio.play()
 
 func _on_Phase2_body_entered(body):
 	if body.is_in_group('players'):

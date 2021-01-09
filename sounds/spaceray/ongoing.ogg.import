@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ongoing.ogg-c4eae34823efb3308528b66ee99f41c7.oggstr"
+
+[deps]
+
+source_file="res://sounds/spaceray/ongoing.ogg"
+dest_files=[ "res://.import/ongoing.ogg-c4eae34823efb3308528b66ee99f41c7.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
