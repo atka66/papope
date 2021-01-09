@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://objects/obstacle/Spaceray.gd" type="Script" id=1]
 [ext_resource path="res://sprites/obstacle/spaceray_1.png" type="Texture" id=2]
@@ -24,6 +24,10 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.062, 1 ) ]
 }
 
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0, 0.5, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
@@ -34,7 +38,9 @@ animations = [ {
 
 [sub_resource type="Animation" id=3]
 resource_name = "pulse"
+length = 0.5
 loop = true
+step = 0.25
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 2
@@ -42,10 +48,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 1 ),
+"times": PoolRealArray( 0, 0.25, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.1, 1 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1 ), Vector2( 1, 1 ) ]
 }
 
 [sub_resource type="RectangleShape2D" id=4]
@@ -75,38 +81,44 @@ polygon = PoolVector2Array( -16, -192, 16, -192, 16, 192, -16, 192 )
 autoplay = "narrow"
 anims/narrow = SubResource( 1 )
 
+[node name="ParticlesBottom" type="CPUParticles2D" parent="."]
+position = Vector2( 0, 192 )
+amount = 100
+lifetime = 0.5
+emission_shape = 2
+emission_rect_extents = Vector2( 32, 1 )
+direction = Vector2( 0, -1 )
+spread = 30.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 500.0
+initial_velocity_random = 1.0
+damping = 100.0
+scale_amount = 2.0
+scale_amount_random = 1.0
+color_ramp = SubResource( 5 )
+
+[node name="ParticlesTop" type="CPUParticles2D" parent="."]
+position = Vector2( 0, -192 )
+amount = 100
+lifetime = 0.5
+emission_shape = 2
+emission_rect_extents = Vector2( 32, 1 )
+direction = Vector2( 0, 1 )
+spread = 30.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 500.0
+initial_velocity_random = 1.0
+damping = 100.0
+scale_amount = 2.0
+scale_amount_random = 1.0
+color_ramp = SubResource( 5 )
+
 [node name="Phase2" type="Area2D" parent="."]
 collision_layer = 128
 collision_mask = 13
 
-[node name="ParticlesTop" type="CPUParticles2D" parent="Phase2"]
-position = Vector2( 0, -224 )
-amount = 100
-lifetime = 0.7
-direction = Vector2( 0, 1 )
-spread = 30.0
-gravity = Vector2( 0, 0 )
-initial_velocity = 250.0
-initial_velocity_random = 0.5
-scale_amount = 2.0
-scale_amount_random = 1.0
-
-[node name="ParticlesBottom" type="CPUParticles2D" parent="Phase2"]
-position = Vector2( 0, 224 )
-amount = 100
-lifetime = 0.7
-direction = Vector2( 0, -1 )
-spread = 30.0
-gravity = Vector2( 0, 0 )
-initial_velocity = 250.0
-initial_velocity_random = 0.5
-scale_amount = 2.0
-scale_amount_random = 1.0
-
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Phase2"]
-scale = Vector2( 1.05832, 1 )
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
 [node name="Phase2Anim" type="AnimationPlayer" parent="Phase2/AnimatedSprite"]

@@ -3,6 +3,8 @@ extends Node2D
 func _ready():
 	$Phase1.hide()
 	$Phase2.hide()
+	$ParticlesTop.emitting = false
+	$ParticlesBottom.emitting = false
 	$Phase2/CollisionShape2D.disabled = true
 	var loop = _rayLoop()
 
@@ -14,12 +16,16 @@ func _rayLoop():
 	yield(get_tree().create_timer(0.8), "timeout")
 	$Phase1.hide()
 	$Phase2.show()
+	$ParticlesTop.emitting = true
+	$ParticlesBottom.emitting = true
 	$AudioOngoing.play()
 	$Phase2/CollisionShape2D.disabled = false
 	yield(get_tree().create_timer(4.2), "timeout")
 	$AudioOngoing.stop()
 	$AudioStop.play()
 	$Phase2.hide()
+	$ParticlesTop.emitting = false
+	$ParticlesBottom.emitting = false
 	$Phase2/CollisionShape2D.disabled = true
 	var rerun = _rayLoop()
 
