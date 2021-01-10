@@ -1,9 +1,8 @@
 ### TODOs
-# * spaceray sounds
 # * palette change on ship map
-# * perks (??s might be discarded)
+# * perks
 #     * vampire - dealing damage heals
-#     * 
+#     * regeneration - regenerates health over time
 #     * [TO BE DISCARDED] no hands
 #     * [DISCARDED] ethereal - pass through players
 #     * [DISCARDED] tiny     - size halved   (might be a bugfest)
