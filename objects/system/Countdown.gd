@@ -15,6 +15,15 @@ func _ready():
 		showCount(str(3 - i), 2, Res.AudioMsg)
 		yield(get_tree().create_timer(1), "timeout")
 	if (get_tree().get_current_scene().get_name() == 'Lobby'):
+		# assign max HPs and go to map
+		for i in range(4):
+			match Global.options['mode'][Global.optionsSelected['mode']]:
+				'normal':
+					Global.playersMaxHp[i] = 100
+				'one-hit':
+					Global.playersMaxHp[i] = 1
+				'perks':
+					Global.playersMaxHp[i] = 100
 		Global.goToMap()
 	else:
 		showCount("go!", 3, Res.AudioRoundGo)

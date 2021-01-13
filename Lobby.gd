@@ -37,7 +37,6 @@ func handleLabels():
 	$ModeOption.visible = hasConnected
 	$MapOption.visible = hasConnected
 	$RoundsOption.visible = hasConnected
-	$HpOption.visible = hasConnected
 
 	$WaitingLabel.hide()
 	$TeamLimitLabel.hide()

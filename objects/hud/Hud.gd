@@ -11,10 +11,12 @@ var ammoShakePwr = 0
 
 var prevAmmo = 0
 var prevHp = 0
-var maxHp = Global.options['hp'][Global.optionsSelected['hp']]
-var delayedHp = maxHp
+var maxHp = 1
+var delayedHp = 1
 
 func _ready():
+	maxHp = Global.playersMaxHp[player.playerId]
+	delayedHp = maxHp
 	playerColor = Global.TEAM_COLORS[Global.playersTeam[player.playerId]]
 	$Container/FaceBg.color = playerColor
 	$Container/HpBar.color = playerColor

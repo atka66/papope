@@ -5,7 +5,7 @@ export var playerId = 0
 var inLobby = false
 var hit = false
 var alive = true
-var hp = Global.options['hp'][Global.optionsSelected['hp']]
+var hp = 1
 var item = null
 var ammo = 0
 var contactsLava = false
@@ -28,6 +28,7 @@ var inputCd = false
 var wrapPosition = null
 
 func _ready():
+	hp = Global.playersMaxHp[playerId]
 	Global.playersKills[playerId] = 0
 	$BodyParts/InvulAnim.play()
 	$BodyParts/InvulAnim.hide()
@@ -405,7 +406,7 @@ func heal(amount):
 	if amount > 0 && alive && !Global.playersFrozen:
 		var fallingMessageSize = int(amount / 20) + 1
 		spawnFallingMessage(str(int(amount)), Color.lightgreen, fallingMessageSize, null)
-		hp = min(hp + amount, Global.options['hp'][Global.optionsSelected['hp']])
+		hp = min(hp + amount, Global.playersMaxHp[playerId])
 		$BodyParts/Hurt/HurtAnim.stop()
 		$BodyParts/Hurt/HurtAnim.play('heal')
 

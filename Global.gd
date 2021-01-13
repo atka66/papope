@@ -79,16 +79,14 @@ const TEAM_COLOR_STRINGS = {
 }
 
 var options = {
-	'mode': ['normal', 'perks'],
+	'mode': ['normal', 'one-hit', 'perks'],
 	'map': ['random', 'lava', 'western', 'ship', 'space', 'traffic', 'pacman'],
-	'rounds': [1, 3, 5, 9],
-	'hp': [1, 50, 100, 200]
+	'rounds': [1, 3, 5, 9]
 }
 var optionsSelected = {
 	'mode': 0,
 	'map': 0,
-	'rounds': 1,
-	'hp': 2
+	'rounds': 1
 }
 var currentOption = options.keys()[0]
 
@@ -101,6 +99,7 @@ var playersPoints = [0, 0, 0, 0]
 var playersSkin = [0, 1, 2, 3]
 var playersTeam = [0, 1, 2, 3]
 var playersKills = [0, 0, 0, 0]
+var playersMaxHp = [1, 1, 1, 1]
 
 var playersCrowned = [false, false, false, false]
 var playersFrozen = false
