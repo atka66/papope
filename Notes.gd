@@ -1,13 +1,12 @@
 ### TODOs
-# * palette change on ship map
 # * perks
 #     * vampire - dealing damage heals
 #     * regeneration - regenerates health over time
-#     * [TO BE DISCARDED] no hands
+#     * [DISCARDED] no hands - simply not fun, kills other perks
 #     * [DISCARDED] ethereal - pass through players
 #     * [DISCARDED] tiny     - size halved   (might be a bugfest)
 #     * [DISCARDED] large    - size doubled  (too tight in pacman man)
-#     * [DISCARDED] slippery   - no friction (speed limit is needed)
+#     * [DISCARDED] slippery - no friction (speed limit is needed)
 
 ### Layers
 #

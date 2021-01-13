@@ -18,6 +18,5 @@ func remove():
 func _on_Pwrup_body_entered(body):
 	if body.is_in_group('players'):
 		if body.alive && !Global.playersFrozen:
-			if !Global.playersPerks[body.playerId].has(Global.PerkEnum.NO_HANDS):
-				body.pickup(pwrupName)
-				remove()
+			body.pickup(pwrupName)
+			remove()

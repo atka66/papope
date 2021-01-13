@@ -183,6 +183,7 @@ texture = ExtResource( 1 )
 hframes = 7
 
 [node name="Hurt" type="Sprite" parent="BodyParts"]
+modulate = Color( 0, 1, 0, 1 )
 texture = ExtResource( 19 )
 
 [node name="HurtAnim" type="AnimationPlayer" parent="BodyParts/Hurt"]

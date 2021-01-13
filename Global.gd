@@ -49,7 +49,7 @@ const ACHIEVEMENTS = {
 }
 enum PerkEnum {
 	AKIMBO, ARMORED, FAST, SPIKY, CUDDLES, REVERSE,
-	BACKFIRE, SLOW, NO_LEGS, NO_HANDS, TIME_BOMB,
+	BACKFIRE, SLOW, NO_LEGS, TIME_BOMB,
 	NOTHING, RESET, RIGHT, LONG_ARMS, CHICKEN
 }
 const PERKS = {
@@ -62,13 +62,12 @@ const PERKS = {
 	PerkEnum.BACKFIRE: ['backfire', 'inverted aim', 6],
 	PerkEnum.SLOW: ['slow', 'halved movement speed', 7],
 	PerkEnum.NO_LEGS: ['no legs', 'can only dash', 8],
-	PerkEnum.NO_HANDS: ['no hands', 'cannot pick up items', 9],
-	PerkEnum.TIME_BOMB: ['time bomb', 'dies after 20 seconds', 10],
-	PerkEnum.NOTHING: ['nothing', 'nothing happens', 11],
-	PerkEnum.RESET: ['reset', 'previous perks removed', 12],
-	PerkEnum.RIGHT: ['right', 'because i cannot look left', 13],
-	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 14],
-	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 15]
+	PerkEnum.TIME_BOMB: ['time bomb', 'dies after 20 seconds', 9],
+	PerkEnum.NOTHING: ['nothing', 'nothing happens', 10],
+	PerkEnum.RESET: ['reset', 'previous perks removed', 11],
+	PerkEnum.RIGHT: ['right', 'because i cannot look left', 12],
+	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 13],
+	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 14]
 }
 
 const SKIN_COUNT = 6
@@ -94,9 +93,9 @@ var optionsSelected = {
 var currentOption = options.keys()[0]
 
 var playersConnected = [false, false, false, false]
-#var playersConnected = [true, true, true, true]
+#var playersConnected = [true, false, false, false]
 var playersJoined = [false, false, false, false]
-#var playersJoined = [true, true, true, true]
+#var playersJoined = [true, false, false, false]
 var playersPoints = [0, 0, 0, 0]
 #var playersPoints = [0, 3, 2, 2]
 var playersSkin = [0, 1, 2, 3]
