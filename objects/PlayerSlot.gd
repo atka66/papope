@@ -42,9 +42,11 @@ func _input(event):
 			if Input.is_action_just_pressed("pl_nav_down"):
 				Global.currentOption = Global.options.keys()[(Global.options.keys().find(Global.currentOption) + 1) % len(Global.options)]
 			if Input.is_action_just_pressed("pl_nav_left"):
+				$AudioOption.play()
 				var optionCount = len(Global.options[Global.currentOption])
 				Global.optionsSelected[Global.currentOption] = (Global.optionsSelected[Global.currentOption] + (optionCount - 1)) % optionCount
 			if Input.is_action_just_pressed("pl_nav_right"):
+				$AudioOption.play()
 				var optionCount = len(Global.options[Global.currentOption])
 				Global.optionsSelected[Global.currentOption] = (Global.optionsSelected[Global.currentOption] + 1) % optionCount
 	Lobby.handleLabels()
