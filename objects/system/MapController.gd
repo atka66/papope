@@ -17,8 +17,8 @@ func _ready():
 
 	yield(get_tree().create_timer(1), "timeout")
 	
-	# perks mode card dealing
-	if Global.options['mode'][Global.optionsSelected['mode']] == 'perks':
+	# cards mode card dealing
+	if Global.options['mode'][Global.optionsSelected['mode']] == 'cards':
 		var perkOverlay = Res.PerkOverlay.instance()
 		add_child(perkOverlay)
 		yield(perkOverlay, "finished")

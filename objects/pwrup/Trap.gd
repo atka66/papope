@@ -18,7 +18,9 @@ func _on_Trap_body_entered(body):
 				Global.incrementStat(originPlayerId, Global.StatEnum.TRP_HIT, 1)
 			if body.alive && body.playerId == originPlayerId:
 				Global.registerAchievement(originPlayerId, Global.AchiEnum.CARELESS)
-			body.hurt(35)
+			body.hurt(Global.DAMAGE_TRAP)
+			if body.playerId != originPlayerId && Global.playersPerks[originPlayerId].has(Global.PerkEnum.VAMPIRE):
+				Global.getPlayerNode(originPlayerId).heal(Global.DAMAGE_TRAP)
 			if body.wasJustKilled(body) && !body.isTeammate(originPlayerId):
 				Global.addKill(originPlayerId)
 			var bodyTrap = body.trap()

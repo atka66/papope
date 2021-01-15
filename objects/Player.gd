@@ -72,6 +72,14 @@ func _ready():
 		var chickenIdleSound = chickenIdleSound()
 	else:
 		$BodyParts/Face.frame = Global.playersSkin[playerId]
+	
+	if Global.playersPerks[playerId].has(Global.PerkEnum.REGENERATION):
+		var loop = _regenLoop()
+
+func _regenLoop():
+	heal(Global.HEAL_REGENERATION)
+	yield(get_tree().create_timer(1.0), "timeout")
+	var rerun = _regenLoop()
 
 func _input(event):
 	var lhAxis = Input.get_joy_axis(playerId, JOY_AXIS_0)
@@ -152,7 +160,7 @@ func _process(delta):
 		if alive:
 			if contactsLava && !invulnerable:
 				$BodyParts/Anim.play("jump")
-				hurt(1)
+				hurt(Global.DAMAGE_LAVA)
 			if outsideCntdwn < 1:
 				hp = 0
 			if timeBombCd < 1:
@@ -167,8 +175,8 @@ func _process(delta):
 				alive = false
 				$AudioChickenIdle.stop()
 				spawnFallingMessage(
-					Global.DEATH_STRINGS[randi() % len(Global.DEATH_STRINGS)]
-					, Color.darkgray, 3, Res.AudioPlayerDeath
+					Global.DEATH_STRINGS[randi() % len(Global.DEATH_STRINGS)], 
+					Color.darkgray, 3, Res.AudioPlayerDeath
 				)
 				if invulnerable:
 					Global.registerAchievement(playerId, Global.AchiEnum.NO_REFUNDS)
@@ -236,10 +244,12 @@ func _on_Player_body_entered(body):
 			get_tree().get_current_scene().add_child(collisionAnim)
 		if body.alive:
 			if Global.playersPerks[playerId].has(Global.PerkEnum.SPIKY):
-				body.hurt(5)
+				body.hurt(Global.DAMAGE_SPIKY)
+				if Global.playersPerks[playerId].has(Global.PerkEnum.VAMPIRE):
+					heal(Global.DAMAGE_SPIKY)
 				$AudioRevHit.play()
 			if Global.playersPerks[playerId].has(Global.PerkEnum.CUDDLES):
-				heal(5)
+				heal(Global.HEAL_CUDDLES)
 				#TODO some audio
 				#$AudioRevHit.play()
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
@@ -250,7 +260,7 @@ func _on_Player_body_entered(body):
 		else:
 			$AudioHurtCactus.stream = Res.AudioPlayerHurtCactus[randi() % len(Res.AudioPlayerHurtCactus)]
 		$AudioHurtCactus.play()
-		hurt(10)
+		hurt(Global.DAMAGE_CACTUS)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 	if body.is_in_group('blockcollidors'):
 		if linear_velocity.length() > 250:
@@ -305,7 +315,9 @@ func useItem():
 					collider.get_node("AudioRevHit").play()
 					if collider.wouldRighteouslyBeHitBy(playerId):
 						Global.incrementStat(playerId, Global.StatEnum.REV_HIT, 1)
-					collider.hurt(20)
+					collider.hurt(Global.DAMAGE_REVOLVER)
+					if Global.playersPerks[playerId].has(Global.PerkEnum.VAMPIRE):
+						heal(Global.DAMAGE_REVOLVER)
 					if wasJustKilled(collider):
 						if isTeammate(collider.playerId):
 							Global.registerAchievement(playerId, Global.AchiEnum.TRAITOR)
@@ -314,6 +326,8 @@ func useItem():
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 100)
 				elif collider.is_in_group('ghosts'):
 					Global.incrementStat(playerId, Global.StatEnum.GHOST_KILL, 1)
+					if Global.playersPerks[playerId].has(Global.PerkEnum.VAMPIRE):
+						heal(Global.DAMAGE_REVOLVER)
 					collider.die()
 				else:
 					var ricochet = Res.RevolverRicochet.instance()
@@ -361,7 +375,9 @@ func useItem():
 					if collider.wouldRighteouslyBeHitBy(playerId):
 						Global.incrementStat(playerId, Global.StatEnum.WHP_HIT, 1)
 					hitPosition = $HitScan.get_collision_point()
-					collider.hurt(30)
+					collider.hurt(Global.DAMAGE_WHIP)
+					if Global.playersPerks[playerId].has(Global.PerkEnum.VAMPIRE):
+						heal(Global.DAMAGE_WHIP)
 					if wasJustKilled(collider):
 						if isTeammate(collider.playerId):
 							Global.registerAchievement(playerId, Global.AchiEnum.TRAITOR)
@@ -370,6 +386,8 @@ func useItem():
 					collider.apply_central_impulse($HitScan.cast_to.normalized() * 1000)
 				if collider.is_in_group('ghosts'):
 					Global.incrementStat(playerId, Global.StatEnum.GHOST_KILL, 1)
+					if Global.playersPerks[playerId].has(Global.PerkEnum.VAMPIRE):
+						heal(Global.DAMAGE_WHIP)
 					collider.die()
 			whipcrackAnim.position = hitPosition
 			get_tree().get_current_scene().add_child(whipcrackAnim)

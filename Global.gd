@@ -51,7 +51,7 @@ enum PerkEnum {
 	AKIMBO, ARMORED, FAST, SPIKY, CUDDLES, REVERSE,
 	BACKFIRE, SLOW, NO_LEGS, TIME_BOMB,
 	NOTHING, RESET, RIGHT, LONG_ARMS, CHICKEN,
-	HEALTHY, UNHEALTHY
+	HEALTHY, UNHEALTHY, REGENERATION, VAMPIRE
 }
 const PERKS = {
 	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 0],
@@ -65,13 +65,26 @@ const PERKS = {
 	PerkEnum.NO_LEGS: ['no legs', 'can only dash', 8],
 	PerkEnum.TIME_BOMB: ['time bomb', 'dies after 20 seconds', 9],
 	PerkEnum.NOTHING: ['nothing', 'nothing happens', 10],
-	PerkEnum.RESET: ['reset', 'previous perks removed', 11],
+	PerkEnum.RESET: ['reset', 'previous cards removed', 11],
 	PerkEnum.RIGHT: ['right', 'because i cannot look left', 12],
 	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 13],
 	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 14],
 	PerkEnum.HEALTHY: ['healthy', 'doubled max health', 15],
-	PerkEnum.UNHEALTHY: ['unhealthy', 'halved max health', 16]
+	PerkEnum.UNHEALTHY: ['unhealthy', 'halved max health', 16],
+	PerkEnum.REGENERATION: ['regeneration', 'regenerates health', 17],
+	PerkEnum.VAMPIRE: ['vampire', 'dealing damage heals', 18]
 }
+
+const DAMAGE_LAVA = 1
+const DAMAGE_REVOLVER = 20
+const DAMAGE_WHIP = 30
+const DAMAGE_SPACERAY = 25
+const DAMAGE_CAR = 20
+const DAMAGE_TRAP = 35
+const DAMAGE_CACTUS = 10
+const DAMAGE_SPIKY = 5
+const HEAL_CUDDLES = 5
+const HEAL_REGENERATION = 5
 
 const SKIN_COUNT = 6
 const TEAM_COLOR_STRINGS = {
@@ -82,7 +95,7 @@ const TEAM_COLOR_STRINGS = {
 }
 
 var options = {
-	'mode': ['normal', 'one-hit', 'perks'],
+	'mode': ['normal', 'one-hit', 'cards'],
 	'map': ['random', 'lava', 'western', 'ship', 'space', 'traffic', 'pacman'],
 	'rounds': [1, 3, 5, 9]
 }
@@ -224,3 +237,9 @@ func addKill(playerId):
 	Global.playersKills[playerId] += 1
 	if Global.playersKills[playerId] == 3:
 		Global.registerAchievement(playerId, Global.AchiEnum.TRIPLE_KILL)
+
+func getPlayerNode(playerId):
+	for player in get_tree().get_nodes_in_group('players'):
+		if player.playerId == playerId:
+			return player
+	return null

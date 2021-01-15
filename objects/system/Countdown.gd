@@ -22,7 +22,7 @@ func _ready():
 					Global.playersMaxHp[i] = 100
 				'one-hit':
 					Global.playersMaxHp[i] = 1
-				'perks':
+				'cards':
 					Global.playersMaxHp[i] = 100
 		Global.goToMap()
 	else:

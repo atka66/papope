@@ -1,7 +1,6 @@
 ### TODOs
+# * hell map instead of lava
 # * perks
-#     * vampire      - dealing damage heals
-#     * regeneration - regenerates health over time
 #     * [DISCARDED] no hands - simply not fun, kills other perks
 #     * [DISCARDED] ethereal - pass through players
 #     * [DISCARDED] tiny     - size halved   (might be a bugfest)
