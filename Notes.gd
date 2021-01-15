@@ -1,7 +1,6 @@
 ### TODOs
 # * perks
-#     * healthy - doubled max hp
-#     * vampire - dealing damage heals
+#     * vampire      - dealing damage heals
 #     * regeneration - regenerates health over time
 #     * [DISCARDED] no hands - simply not fun, kills other perks
 #     * [DISCARDED] ethereal - pass through players

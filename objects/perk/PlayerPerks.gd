@@ -36,5 +36,9 @@ func _input(event):
 				Global.playersPerks[playerId] = []
 			elif cardNode.perk != Global.PerkEnum.NOTHING:
 				Global.playersPerks[playerId].append(cardNode.perk)
+				if cardNode.perk == Global.PerkEnum.HEALTHY:
+					Global.playersMaxHp[playerId] *= 2
+				if cardNode.perk == Global.PerkEnum.UNHEALTHY:
+					Global.playersMaxHp[playerId] /= 2
 			yield(get_tree().create_timer(3), "timeout")
 			isFinished = true

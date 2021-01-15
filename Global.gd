@@ -2,7 +2,7 @@ extends Node2D
 
 signal player_remove(id)
 
-const VERSION = '1.3.1_beta'
+const VERSION = '1.3.1'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
@@ -50,7 +50,8 @@ const ACHIEVEMENTS = {
 enum PerkEnum {
 	AKIMBO, ARMORED, FAST, SPIKY, CUDDLES, REVERSE,
 	BACKFIRE, SLOW, NO_LEGS, TIME_BOMB,
-	NOTHING, RESET, RIGHT, LONG_ARMS, CHICKEN
+	NOTHING, RESET, RIGHT, LONG_ARMS, CHICKEN,
+	HEALTHY, UNHEALTHY
 }
 const PERKS = {
 	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 0],
@@ -67,7 +68,9 @@ const PERKS = {
 	PerkEnum.RESET: ['reset', 'previous perks removed', 11],
 	PerkEnum.RIGHT: ['right', 'because i cannot look left', 12],
 	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 13],
-	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 14]
+	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 14],
+	PerkEnum.HEALTHY: ['healthy', 'doubled max health', 15],
+	PerkEnum.UNHEALTHY: ['unhealthy', 'halved max health', 16]
 }
 
 const SKIN_COUNT = 6
