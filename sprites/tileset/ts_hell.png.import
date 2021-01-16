@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ts_lava.png-b791a9c1de38425eb754355f4f78eb96.stex"
+path="res://.import/ts_hell.png-2e7590915bc646916d786d38ff1116cb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/tileset/ts_lava.png"
-dest_files=[ "res://.import/ts_lava.png-b791a9c1de38425eb754355f4f78eb96.stex" ]
+source_file="res://sprites/tileset/ts_hell.png"
+dest_files=[ "res://.import/ts_hell.png-2e7590915bc646916d786d38ff1116cb.stex" ]
 
 [params]
 
