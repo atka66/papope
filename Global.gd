@@ -31,20 +31,20 @@ enum AchiEnum {
 }
 const ACHIEVEMENTS = {
 	AchiEnum.UNDERDOG : ['underdog', 'low overall score'], # has <= 1/4 of the needed score at the end (score limit min 3)
-	AchiEnum.DEMOLITION_MAN : ['demolition man', 'great dynamite damage'], # dynamite dmg / thrown dynamites > 75
+	AchiEnum.DEMOLITION_MAN : ['demo man', 'great dynamite damage'], # dynamite dmg / thrown dynamites > 75
 	AchiEnum.GUNSLINGER : ['gunslinger', 'accurate with the revolver'], # revolver accuracy over 75%
 	AchiEnum.HUTS_HUTS : ['huts-huts', 'accurate with the whip'], # whip accuracy over 75%
 	AchiEnum.DAREDEVIL : ['daredevil', 'won a round with low health'], # win a round with <= 10% of health
 	AchiEnum.GUERRILLA : ['guerrilla', 'well placed traps'], # sprung traps (on enemy) / laid traps > 75%
 	AchiEnum.CARELESS : ['careless', 'stepped in his own trap'], # sprung his own trap
 	AchiEnum.TRAITOR : ['traitor', 'killed his own teammate'], # killed his own teammate with revolver, dynamite or whip
-	AchiEnum.NO_REFUNDS : ['no refunds', 'the shield could not save him'], # die while having active shield
-	AchiEnum.JATSZUNK_MAST : ['jatszunk mast!', 'be underdog with bazsi skin'], # be underdog with bazsi skin (0)
+	AchiEnum.NO_REFUNDS : ['no refunds', 'shield on, still died'], # die while having active shield
+	AchiEnum.JATSZUNK_MAST : ['jatszunk mast', 'be underdog with bazsi skin'], # be underdog with bazsi skin (0)
 	AchiEnum.WAKA_WAKA : ['waka waka', 'ate a lot of pellets'], # ate a lot of pellets
 	AchiEnum.GHOSTBUSTER : ['ghostbuster', 'killed a lot of ghosts'], # killed 5 ghosts
 	AchiEnum.SPOOKED : ['spooked', 'scared of ghosts'], # killed by a ghost
-	AchiEnum.TRIPLE_KILL : ['triple kill', 'killed 3 enemies in one round'], # 3 enemies killed in 1 round
-	AchiEnum.AINT_GON_FIT : ['aint gon fit', 'that is a lot of achievements!'], # has at least 7 achievements
+	AchiEnum.TRIPLE_KILL : ['triple kill', 'killed 3 enemies in a round'], # 3 enemies killed in 1 round
+	AchiEnum.AINT_GON_FIT : ['aint gon fit', 'too many achievements!'], # has at least 7 achievements
 	AchiEnum.CHICKEN_DINNER : ['chicken dinner', 'i am a chicken']
 }
 enum PerkEnum {
@@ -107,11 +107,11 @@ var optionsSelected = {
 var currentOption = options.keys()[0]
 
 var playersConnected = [false, false, false, false]
-#var playersConnected = [true, false, false, false]
+#var playersConnected = [true, true, true, true]
 var playersJoined = [false, false, false, false]
-#var playersJoined = [true, false, false, false]
+#var playersJoined = [true, true, true, true]
 var playersPoints = [0, 0, 0, 0]
-#var playersPoints = [0, 3, 2, 2]
+#var playersPoints = [0, 3, 2, 3]
 var playersSkin = [0, 1, 2, 3]
 var playersTeam = [0, 1, 2, 3]
 var playersKills = [0, 0, 0, 0]
@@ -120,7 +120,7 @@ var playersMaxHp = [1, 1, 1, 1]
 var playersCrowned = [false, false, false, false]
 var playersFrozen = false
 var playersAchievements = [[], [], [], []]
-#var playersAchievements = [[AchiEnum.UNDERDOG, AchiEnum.JATSZUNK_MAST, AchiEnum.TRIPLE_KILL, AchiEnum.UNDERDOG, AchiEnum.JATSZUNK_MAST, AchiEnum.TRIPLE_KILL, AchiEnum.JATSZUNK_MAST], [AchiEnum.TRIPLE_KILL, AchiEnum.TRIPLE_KILL], [], []]
+#var playersAchievements = [[AchiEnum.UNDERDOG, AchiEnum.JATSZUNK_MAST, AchiEnum.NO_REFUNDS, AchiEnum.GUNSLINGER, AchiEnum.DAREDEVIL, AchiEnum.TRIPLE_KILL, AchiEnum.JATSZUNK_MAST], [AchiEnum.TRIPLE_KILL, AchiEnum.TRIPLE_KILL], [], []]
 enum StatEnum {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT, PELLETS, GHOST_KILL}
 var playersStats = []
 var playersPerks = [[], [], [], []]

@@ -1,8 +1,9 @@
 extends Node2D
 
 export(int) var playerId = 0
-var canProceed = false
 var winner = false
+var score = 0
+var scoreCurr = 0
 
 func _ready():
 	if !Global.playersJoined[playerId]:
@@ -10,9 +11,6 @@ func _ready():
 	winner = Global.playersTeam[playerId] == Global.getWinnerTeamByScore()
 	distributeAchievements()
 	var color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
-	$WinParticles.hide()
-	$Background.hide()
-	$Background.color = color
 	$Team.color = color
 	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
 		$Face.frame = 6
@@ -22,72 +20,68 @@ func _ready():
 	yield(get_tree().create_timer(2.0), "timeout")
 	
 	var points = Global.playersPoints[playerId]
+	var pointsText = str(points) + " point"
+	if points != 1:
+		pointsText += "s"
 	var pointsLabel = Res.CustomLabel.instance()
-	pointsLabel.position = Vector2(85, 232)
-	pointsLabel.text = str(points)
-	pointsLabel.fontSize = 4
-	pointsLabel.outline = true
+	pointsLabel.position = Vector2(85, 192)
+	pointsLabel.text = pointsText
+	pointsLabel.fontSize = 3
 	pointsLabel.aliveTime = 0
 	pointsLabel.alignment = Label.ALIGN_CENTER
+	pointsLabel.animate = true
+	pointsLabel.aliveTime = 2
 	add_child(pointsLabel)
-	var pointsTextLabel = Res.CustomLabel.instance()
-	pointsTextLabel.position = Vector2(85, 256)
-	if points == 1:
-		pointsTextLabel.text = "point"
-	else:
-		pointsTextLabel.text = "points"
-	pointsTextLabel.fontSize = 2
-	pointsTextLabel.outline = true
-	pointsTextLabel.aliveTime = 0
-	pointsTextLabel.alignment = Label.ALIGN_CENTER
-	add_child(pointsTextLabel)
+
+	score += points * 1000
 	
-	yield(get_tree().create_timer(1.0), "timeout")
+	yield(get_tree().create_timer(2.0), "timeout")
+	
+	var fun = showAchievements()
+	
+	yield(get_tree().create_timer(3.0), "timeout")
 	
 	if winner:
-		$Background/BackgroundAnim.play("appear")
+		$Face.material = null
+	else:
+		modulate = Color(0.7, 0.7, 0.7)
 		var winnerLabel = Res.CustomLabel.instance()
-		winnerLabel.position = Vector2(85, 348)
-		winnerLabel.text = 'winner!'
 		winnerLabel.fontSize = 3
 		winnerLabel.outline = true
 		winnerLabel.aliveTime = 0
 		winnerLabel.alignment = Label.ALIGN_CENTER
-		winnerLabel.audio = Res.AudioWinner
+		winnerLabel.position = Vector2(85, 92)
+		winnerLabel.color = Color.red
+		winnerLabel.text = 'dead'
+		winnerLabel.animate = false
 		add_child(winnerLabel)
-		$WinParticles.show()
-		$Background.show()
-	
-	yield(get_tree().create_timer(1.5), "timeout")
-	
-	canProceed = true
-	
+
+func showAchievements():
 	for i in len(Global.playersAchievements[playerId]):
-		showAchievement(200 - (i * 28), Global.playersAchievements[playerId][i])
+		showAchievement(192 + (i * 22), Global.playersAchievements[playerId][i])
 		yield(get_tree().create_timer(0.2), "timeout")
-	
-func _input(event):
-	if Input.is_action_just_pressed("ui_accept") && canProceed:
-		get_tree().change_scene("res://Lobby.tscn")
 
 func showAchievement(y, achievement):
 	var nameLabel = Res.CustomLabel.instance()
-	nameLabel.position = Vector2(12, y)
+	nameLabel.position = Vector2(10, y)
 	nameLabel.text = Global.ACHIEVEMENTS[achievement][0]
 	nameLabel.fontSize = 2
-	nameLabel.outline = true
-	nameLabel.audio = Res.AudioMsg
+	nameLabel.outline = false
+	nameLabel.color = Color.black
 	nameLabel.aliveTime = 0
 	nameLabel.alignment = Label.ALIGN_LEFT
+	nameLabel.audio = Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)]
 	add_child(nameLabel)
 	var descriptionLabel = Res.CustomLabel.instance()
-	descriptionLabel.position = Vector2(12, y + 12)
+	descriptionLabel.position = Vector2(14, y + 11)
 	descriptionLabel.text = Global.ACHIEVEMENTS[achievement][1]
 	descriptionLabel.fontSize = 1
 	descriptionLabel.outline = false
+	descriptionLabel.color = Color.black
 	descriptionLabel.aliveTime = 0
 	descriptionLabel.alignment = Label.ALIGN_LEFT
 	add_child(descriptionLabel)
+	score += 100
 
 func distributeAchievements():
 	# check underdog/jatszunkmast achievement
@@ -129,3 +123,10 @@ func distributeAchievements():
 
 	if len(Global.playersAchievements[playerId]) > 6:
 		Global.playersAchievements[playerId].insert(7, Global.AchiEnum.AINT_GON_FIT)
+
+func _process(delta):
+	if scoreCurr < score:
+		scoreCurr += ceil((score - scoreCurr) / 3)
+		if scoreCurr > score:
+			scoreCurr = score
+		$MoneyLabel.set_text(str(scoreCurr))

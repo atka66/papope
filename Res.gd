@@ -28,11 +28,11 @@ onready var AudioMsg = preload("res://sounds/system/msg.ogg")
 onready var AudioOption = preload("res://sounds/system/option.ogg")
 onready var AudioRoundStart = preload("res://sounds/system/round_start.ogg")
 onready var AudioRoundGo = preload("res://sounds/system/round_go.ogg")
-onready var AudioWinner = preload("res://sounds/system/winner.ogg")
 onready var AudioSpacerayStart = preload("res://sounds/spaceray/start.ogg")
 onready var AudioSpacerayOngoing = preload("res://sounds/spaceray/ongoing.ogg")
 onready var AudioSpacerayStop = preload("res://sounds/spaceray/stop.ogg")
 onready var AudioPwrupPickup = preload("res://sounds/pwrup/pickup.ogg")
+onready var AudioRevFire = preload("res://sounds/pwrup/rev_fire.ogg")
 onready var AudioRevRicochet = [
 	preload("res://sounds/pwrup/rev_ricochet_1.ogg"),
 	preload("res://sounds/pwrup/rev_ricochet_2.ogg"),
