@@ -176,6 +176,9 @@ pwrup_respawn_time=6
 allow_players_set_options=true
 disconnect_on_init=false
 ghost_respawn_time=5
+default_option_mode=0
+default_option_map=0
+default_option_rounds=1
 
 [rendering]
 

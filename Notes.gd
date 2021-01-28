@@ -1,5 +1,7 @@
 ### TODOs
-# * hell map instead of lava
+# * CustomLabel icon outline
+# * hell lava wobble shader
+# * renew lobby bg images
 # * perks
 #     * [DISCARDED] no hands - simply not fun, kills other perks
 #     * [DISCARDED] ethereal - pass through players

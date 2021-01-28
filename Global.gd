@@ -100,9 +100,9 @@ var options = {
 	'rounds': [1, 3, 5, 9]
 }
 var optionsSelected = {
-	'mode': 0,
-	'map': 0,
-	'rounds': 1
+	'mode': ProjectSettings.get("papope/default_option_mode"),
+	'map': ProjectSettings.get("papope/default_option_map"),
+	'rounds': ProjectSettings.get("papope/default_option_rounds")
 }
 var currentOption = options.keys()[0]
 
