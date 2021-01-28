@@ -16,4 +16,3 @@ func _on_WaterTrigger_body_entered(body):
 			if !Global.playersFrozen:
 				body.hp = 0
 			body.gravity_scale = 0
-			body.fallWater = false

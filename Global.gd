@@ -208,10 +208,11 @@ func _ready():
 	randomize()
 
 func _joy_connection_changed(id, connected):
-	if connected:
-		connectPlayer(id)
-	if !connected:
-		disconnectPlayer(id)
+	if id < 4:
+		if connected:
+			connectPlayer(id)
+		if !connected:
+			disconnectPlayer(id)
 
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):

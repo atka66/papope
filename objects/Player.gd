@@ -174,10 +174,19 @@ func _process(delta):
 				$BodyParts/Body.modulate = Global.TEAM_COLORS[4]
 				alive = false
 				$AudioChickenIdle.stop()
-				spawnFallingMessage(
-					Global.DEATH_STRINGS[randi() % len(Global.DEATH_STRINGS)], 
-					Color.darkgray, 3, Res.AudioPlayerDeath
-				)
+
+				if fallWater:
+					spawnFallingMessage(
+						Global.DEATH_STRINGS[randi() % len(Global.DEATH_STRINGS)], 
+						Color.darkgray, 3, null
+					)
+					fallWater = false
+				else:
+					spawnFallingMessage(
+						Global.DEATH_STRINGS[randi() % len(Global.DEATH_STRINGS)], 
+						Color.darkgray, 3, Res.AudioPlayerDeath
+					)
+				
 				if invulnerable:
 					Global.registerAchievement(playerId, Global.AchiEnum.NO_REFUNDS)
 				hp = 0

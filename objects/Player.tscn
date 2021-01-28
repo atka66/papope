@@ -268,6 +268,7 @@ stream = ExtResource( 21 )
 
 [node name="AudioFellwater" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 23 )
+volume_db = 12.0
 
 [node name="AudioHurtCactus" type="AudioStreamPlayer2D" parent="."]
 

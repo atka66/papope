@@ -1,6 +1,4 @@
 ### TODOs
-# * explosion sound effects
-# * try out water droplet sound for falling into water
 # * renew lobby bg images
 # * perks
 #     * [DISCARDED] no hands - simply not fun, kills other perks
