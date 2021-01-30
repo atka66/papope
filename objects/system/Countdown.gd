@@ -12,7 +12,7 @@ func showCount(cnt, size, audio):
 
 func _ready():
 	for i in range(3):
-		showCount(str(3 - i), 2, Res.AudioMsg)
+		showCount(str(3 - i), 2, Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)])
 		yield(get_tree().create_timer(1), "timeout")
 	if (get_tree().get_current_scene().get_name() == 'Lobby'):
 		# assign max HPs and go to map

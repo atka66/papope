@@ -15,7 +15,7 @@ func _ready():
 	add_child(mapLabel)
 	add_child(Res.Dim.instance())
 
-	yield(get_tree().create_timer(1), "timeout")
+	yield(get_tree().create_timer(1.5), "timeout")
 	
 	# cards mode card dealing
 	if Global.options['mode'][Global.optionsSelected['mode']] == 'cards':
@@ -79,10 +79,11 @@ func endRound(aliveTeamId):
 	winLabel.text = toastText
 	winLabel.fontSize = 3
 	winLabel.outline = true
-	winLabel.aliveTime = 3
+	winLabel.aliveTime = 4
 	winLabel.alignment = Label.ALIGN_CENTER
+	winLabel.audio = Res.AudioRoundEnd
 	get_parent().add_child(winLabel)
-	yield(get_tree().create_timer(3), "timeout")
+	yield(get_tree().create_timer(4), "timeout")
 	Global.goToMap()
 
 func showCount(pos, cnt):
