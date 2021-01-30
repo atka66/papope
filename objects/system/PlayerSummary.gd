@@ -39,7 +39,7 @@ func _ready():
 	
 	var fun = showAchievements()
 	
-	yield(get_tree().create_timer(3.0), "timeout")
+	yield(get_tree().create_timer(2.0), "timeout")
 	
 	if winner:
 		$Face.material = null
@@ -59,7 +59,7 @@ func _ready():
 func showAchievements():
 	for i in len(Global.playersAchievements[playerId]):
 		showAchievement(192 + (i * 22), Global.playersAchievements[playerId][i])
-		yield(get_tree().create_timer(0.2), "timeout")
+		yield(get_tree().create_timer(0.18), "timeout")
 
 func showAchievement(y, achievement):
 	var nameLabel = Res.CustomLabel.instance()
