@@ -55,6 +55,7 @@ func _ready():
 		winnerLabel.text = 'dead'
 		winnerLabel.animate = false
 		add_child(winnerLabel)
+		$Anim.play("shake")
 
 func showAchievements():
 	for i in len(Global.playersAchievements[playerId]):
