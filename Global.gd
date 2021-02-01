@@ -63,7 +63,7 @@ const PERKS = {
 	PerkEnum.BACKFIRE: ['backfire', 'inverted aim', 6],
 	PerkEnum.SLOW: ['slow', 'halved movement speed', 7],
 	PerkEnum.NO_LEGS: ['no legs', 'can only dash', 8],
-	PerkEnum.TIME_BOMB: ['time bomb', 'dies after 30 seconds', 9],
+	PerkEnum.TIME_BOMB: ['time bomb', 'explodes after 1 minute', 9],
 	PerkEnum.NOTHING: ['nothing', 'nothing happens', 10],
 	PerkEnum.RESET: ['reset', 'previous cards removed', 11],
 	PerkEnum.RIGHT: ['right', 'because i cannot look left', 12],
