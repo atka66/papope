@@ -14,7 +14,7 @@ func _ready():
 func _on_Ghost_body_entered(body):
 	if body.is_in_group('players') && body.alive && !Global.playersFrozen:
 		body.get_node('AudioSlipInWater').play()
-		body.hp = 0
+		body.die(Global.DeathEnum.GHOST)
 		Global.registerAchievement(body.playerId, Global.AchiEnum.SPOOKED)
 	if body.is_in_group('dynamites'):
 		body.explode()

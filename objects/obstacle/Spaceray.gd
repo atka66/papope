@@ -33,6 +33,8 @@ func _on_Phase2_body_entered(body):
 	if body.is_in_group('players'):
 		$AudioCollisionPlayer.play()
 		body.hurt(Global.DAMAGE_SPACERAY)
+		if body.wasJustKilled(body):
+			body.die(Global.DeathEnum.LASER)
 		var vector = Vector2(-body.linear_velocity.x, 0)
 		
 		var vel = Vector2(1, 0)

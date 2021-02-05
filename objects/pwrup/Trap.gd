@@ -21,8 +21,10 @@ func _on_Trap_body_entered(body):
 			body.hurt(Global.DAMAGE_TRAP)
 			if body.playerId != originPlayerId && Global.playersPerks[originPlayerId].has(Global.PerkEnum.VAMPIRE):
 				Global.getPlayerNode(originPlayerId).heal(Global.DAMAGE_TRAP)
-			if body.wasJustKilled(body) && !body.isTeammate(originPlayerId):
-				Global.addKill(originPlayerId)
+			if body.wasJustKilled(body):
+				body.die(Global.DeathEnum.TRAP)
+				if !body.isTeammate(originPlayerId):
+					Global.addKill(originPlayerId)
 			var bodyTrap = body.trap()
 			var trigger = trigger()
 

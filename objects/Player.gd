@@ -5,6 +5,7 @@ export var playerId = 0
 var inLobby = false
 var hit = false
 var alive = true
+var deathReason = Global.DeathEnum.DEFAULT
 var hp = 1
 var item = null
 var ammo = 0
@@ -162,9 +163,9 @@ func _process(delta):
 				$BodyParts/Anim.play("jump")
 				hurt(Global.DAMAGE_LAVA)
 			if outsideCntdwn < 1:
-				hp = 0
+				die(Global.DeathEnum.DEFAULT)
 			if timeBombCd < 1:
-				hp = 0
+				die(Global.DeathEnum.EXPLOSION)
 				var explosionAnim = Res.ExplosionAnim.instance()
 				explosionAnim.position = global_position
 				explosionAnim.position += Vector2((randf() * 2) - 1, (randf() * 2) - 1)
@@ -177,13 +178,13 @@ func _process(delta):
 
 				if fallWater:
 					spawnFallingMessage(
-						Global.DEATH_STRINGS[randi() % len(Global.DEATH_STRINGS)], 
+						Global.getRandomDeathString(deathReason), 
 						Color.darkgray, 3, null
 					)
 					fallWater = false
 				else:
 					spawnFallingMessage(
-						Global.DEATH_STRINGS[randi() % len(Global.DEATH_STRINGS)], 
+						Global.getRandomDeathString(deathReason), 
 						Color.darkgray, 3, Res.AudioPlayerDeath
 					)
 				
@@ -328,6 +329,7 @@ func useItem():
 					if Global.playersPerks[playerId].has(Global.PerkEnum.VAMPIRE):
 						heal(Global.DAMAGE_REVOLVER)
 					if wasJustKilled(collider):
+						collider.die(Global.DeathEnum.REVOLVER)
 						if isTeammate(collider.playerId):
 							Global.registerAchievement(playerId, Global.AchiEnum.TRAITOR)
 						else:
@@ -388,6 +390,7 @@ func useItem():
 					if Global.playersPerks[playerId].has(Global.PerkEnum.VAMPIRE):
 						heal(Global.DAMAGE_WHIP)
 					if wasJustKilled(collider):
+						collider.die(Global.DeathEnum.WHIP)
 						if isTeammate(collider.playerId):
 							Global.registerAchievement(playerId, Global.AchiEnum.TRAITOR)
 						else:
@@ -480,3 +483,7 @@ func chickenIdleSound():
 		$AudioChickenIdle.stream = Res.AudioChickenIdle[randi() % len(Res.AudioChickenIdle)]
 		$AudioChickenIdle.play()
 		var rerun = chickenIdleSound()
+
+func die(reason):
+	hp = 0
+	deathReason = reason

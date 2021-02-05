@@ -1,5 +1,7 @@
 ### TODOs
 # * renew lobby bg images
+# * new map: conveyor belt
+# * keyboard control for lobby
 # * perks
 #     * [DISCARDED] no hands - simply not fun, kills other perks
 #     * [DISCARDED] ethereal - pass through players

@@ -14,5 +14,5 @@ func _on_WaterTrigger_body_entered(body):
 			yield(get_tree().create_timer(0.7), "timeout")
 			body.get_node('AudioFellwater').play()
 			if !Global.playersFrozen:
-				body.hp = 0
+				body.die(Global.DeathEnum.WATER)
 			body.gravity_scale = 0

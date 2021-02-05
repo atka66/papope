@@ -23,7 +23,19 @@ const HINT_STRINGS = [
 	["YOU CANNOT MOVE IN SPACE", "ONLY DASH"],
 	["SAME COLOR MEANS SAME TEAM"]
 ]
-const DEATH_STRINGS = ['oof', 'ouch', 'rip', 'dead', 'oops', 'sad', 'bye']
+enum DeathEnum {
+	DEFAULT, EXPLOSION, REVOLVER, WHIP, WATER, LASER, GHOST, TRAP
+}
+const DEATH_STRINGS = {
+	DeathEnum.DEFAULT : ['oof', 'rip', 'dead', 'oops', 'bye'],
+	DeathEnum.EXPLOSION : ['boom', 'kaboom'],
+	DeathEnum.REVOLVER : ['bang', 'bam'],
+	DeathEnum.WHIP : ['huts', 'crack'],
+	DeathEnum.WATER : ['splash', 'blub'],
+	DeathEnum.LASER : ['zap', 'bzzz'],
+	DeathEnum.GHOST : ['aaah', 'spooked'],
+	DeathEnum.TRAP : ['snap', 'got em']
+}
 enum AchiEnum {
 	UNDERDOG, DEMOLITION_MAN, GUNSLINGER, HUTS_HUTS, DAREDEVIL,
 	GUERRILLA, CARELESS, TRAITOR, NO_REFUNDS, JATSZUNK_MAST, 
@@ -244,3 +256,9 @@ func getPlayerNode(playerId):
 		if player.playerId == playerId:
 			return player
 	return null
+
+func getRandomDeathString(deathType):
+	return [
+		DEATH_STRINGS[DeathEnum.DEFAULT][randi() % len(DEATH_STRINGS[DeathEnum.DEFAULT])],
+		DEATH_STRINGS[deathType][randi() % len(DEATH_STRINGS[deathType])]
+	][randi() % 2]
