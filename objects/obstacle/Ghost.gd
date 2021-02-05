@@ -12,7 +12,7 @@ func _ready():
 	$AudioAppear.play()
 
 func _on_Ghost_body_entered(body):
-	if body.is_in_group('players') && !Global.playersFrozen:
+	if body.is_in_group('players') && body.alive && !Global.playersFrozen:
 		body.get_node('AudioSlipInWater').play()
 		body.hp = 0
 		Global.registerAchievement(body.playerId, Global.AchiEnum.SPOOKED)
