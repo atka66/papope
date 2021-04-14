@@ -170,6 +170,11 @@ pl_game_dash={
 2d_physics/layer_7="spacetrigger"
 2d_physics/layer_8="spaceray"
 
+[logging]
+
+file_logging/enable_file_logging=true
+file_logging/log_path="user://logs/papope.log"
+
 [papope]
 
 pwrup_respawn_time=6
