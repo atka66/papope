@@ -20,6 +20,7 @@ func _ready():
 				if !player.isTeammate(originPlayerId):
 					Global.addKill(originPlayerId)
 	Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, fullDmg)
+	$Audio.stream = Res.AudioExplode[randi() % len(Res.AudioExplode)]
 	$Audio.play()
 	play()
 

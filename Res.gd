@@ -38,6 +38,11 @@ onready var AudioRevRicochet = [
 	preload("res://sounds/pwrup/rev_ricochet_2.ogg"),
 	preload("res://sounds/pwrup/rev_ricochet_3.ogg")
 ]
+onready var AudioExplode = [
+	preload("res://sounds/pwrup/explode_1.ogg"),
+	preload("res://sounds/pwrup/explode_2.ogg"),
+	preload("res://sounds/pwrup/explode_3.ogg")
+]
 onready var AudioShieldStart = preload("res://sounds/pwrup/shield_start.ogg")
 onready var AudioShieldEnd = preload("res://sounds/pwrup/shield_end.ogg")
 onready var AudioWhipHuts = [
