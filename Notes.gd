@@ -2,7 +2,6 @@
 # * renew lobby bg images
 # * new map: conveyor belt
 # * keyboard control for lobby
-# * new dynamite sound and explosion animation
 # * screen shake on explosions
 # * dash should apply some blur
 # * perk icon overflow should be handled
@@ -10,6 +9,7 @@
 #     * crates and barrels in ship
 #     * tumbleweed in western
 # * drum sample for end screen
+# * new round end
 # * perks
 #     * [DISCARDED] no hands - simply not fun, kills other perks
 #     * [DISCARDED] ethereal - pass through players

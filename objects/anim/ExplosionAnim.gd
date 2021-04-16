@@ -1,8 +1,11 @@
-extends AnimatedSprite
+extends Node2D
 
 var originPlayerId
 
 func _ready():
+	$BigBoom.emitting = true
+	$Smoke.emitting = true
+	$Shards.emitting = true
 	var fullDmg = 0
 	for player in get_tree().get_nodes_in_group('players'):
 		var dist = position.distance_to(player.position)
@@ -22,9 +25,7 @@ func _ready():
 	Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, fullDmg)
 	$Audio.stream = Res.AudioExplode[randi() % len(Res.AudioExplode)]
 	$Audio.play()
-	play()
 
-func _on_AnimatedSprite_animation_finished():
-	hide()
-	yield($Audio, "finished")
-	queue_free()
+func _process(delta):
+	if !$BigBoom.emitting && !$Smoke.emitting && !$Shards.emitting:
+		queue_free()
