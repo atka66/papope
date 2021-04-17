@@ -78,14 +78,20 @@ position = Vector2( 512, 256 )
 playerId = 3
 
 [node name="VersionLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 8, 368 )
-fontSize = 2
+position = Vector2( 4, 376 )
+outline = true
 
 [node name="UrlLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 672, 368 )
+position = Vector2( 678, 376 )
 text = "atka66.itch.io/papope"
-fontSize = 2
 alignment = 2
+outline = true
+
+[node name="GodotLabel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 340, 376 )
+text = "made with godot"
+alignment = 1
+outline = true
 
 [node name="PapopeLabel" parent="." instance=ExtResource( 4 )]
 position = Vector2( 172, 128 )
