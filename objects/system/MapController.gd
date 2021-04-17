@@ -1,5 +1,7 @@
 extends Node2D
 
+var screenShakePwr = 0
+
 func _ready():
 	Global.playersFrozen = true
 	var mapLabel = Res.CustomLabel.instance()
@@ -105,3 +107,10 @@ func initGhostSpawn():
 	var ghost = Res.Ghost.instance()
 	ghost.destNode = spawnNode
 	get_parent().add_child(ghost)
+
+func _process(delta):
+	if screenShakePwr > 0:
+		$Camera.position = Vector2((randi() % (screenShakePwr * 2)) - screenShakePwr, (randi() % (screenShakePwr * 2)) - screenShakePwr)
+		screenShakePwr -= 1
+	else:
+		$Camera.position = Vector2.ZERO

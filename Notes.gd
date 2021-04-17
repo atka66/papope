@@ -2,7 +2,6 @@
 # * renew lobby bg images
 # * new map: conveyor belt
 # * keyboard control for lobby
-# * screen shake on explosions
 # * dash should apply some blur
 # * perk icon overflow should be handled
 # * map interactibility:

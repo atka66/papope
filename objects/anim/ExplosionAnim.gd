@@ -1,8 +1,10 @@
 extends Node2D
 
+export(int) var shakePwr = 0
 var originPlayerId
 
 func _ready():
+	Global.shakeScreen(shakePwr)
 	$BigBoom.emitting = true
 	$Smoke.emitting = true
 	$Shards.emitting = true

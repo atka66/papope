@@ -16,6 +16,7 @@ func explode():
 	var explosionAnim = Res.ExplosionAnim.instance()
 	explosionAnim.position = position
 	explosionAnim.originPlayerId = originPlayerId
+	explosionAnim.shakePwr = 10
 	get_tree().get_current_scene().add_child(explosionAnim)
 	queue_free()
 

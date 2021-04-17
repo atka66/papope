@@ -17,8 +17,14 @@ z_index = -55
 z_as_relative = false
 
 [node name="TextureRect" type="TextureRect" parent="BgNode"]
-margin_right = 680.0
-margin_bottom = 384.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -128.0
+margin_top = -384.0
+margin_right = 808.0
+margin_bottom = 768.0
 texture = ExtResource( 1 )
 stretch_mode = 2
 __meta__ = {

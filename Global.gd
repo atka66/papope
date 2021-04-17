@@ -262,3 +262,6 @@ func getRandomDeathString(deathType):
 		DEATH_STRINGS[DeathEnum.DEFAULT][randi() % len(DEATH_STRINGS[DeathEnum.DEFAULT])],
 		DEATH_STRINGS[deathType][randi() % len(DEATH_STRINGS[deathType])]
 	][randi() % 2]
+
+func shakeScreen(shakePwr):
+	get_tree().get_nodes_in_group('controllers')[0].screenShakePwr = shakePwr

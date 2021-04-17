@@ -487,3 +487,4 @@ func chickenIdleSound():
 func die(reason):
 	hp = 0
 	deathReason = reason
+	Global.shakeScreen(10)
