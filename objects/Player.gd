@@ -196,6 +196,8 @@ func _process(delta):
 				$Crosshair.hide()
 				$BodyParts/TimebombLabel.hide()
 
+				Global.shakeScreen(10)
+
 				if !Global.playersFrozen:
 					var aliveTeamId = Global.getWinnerTeam();
 					if aliveTeamId != -1: # round is over
@@ -487,4 +489,3 @@ func chickenIdleSound():
 func die(reason):
 	hp = 0
 	deathReason = reason
-	Global.shakeScreen(10)
