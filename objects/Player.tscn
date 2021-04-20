@@ -11,7 +11,7 @@
 [ext_resource path="res://sprites/player/whiplash_4.png" type="Texture" id=12]
 [ext_resource path="res://sprites/player/whiplash_1.png" type="Texture" id=13]
 [ext_resource path="res://sprites/player/whiplash_3.png" type="Texture" id=14]
-[ext_resource path="res://objects/system/CustomLabel.tscn" type="PackedScene" id=15]
+[ext_resource path="res://objects/system/label/CustomLabel.tscn" type="PackedScene" id=15]
 [ext_resource path="res://sprites/player/invul_2.png" type="Texture" id=16]
 [ext_resource path="res://sprites/player/invul_3.png" type="Texture" id=17]
 [ext_resource path="res://sprites/player/invul_4.png" type="Texture" id=18]
@@ -24,6 +24,7 @@
 [ext_resource path="res://sounds/player/inlava.ogg" type="AudioStream" id=26]
 [ext_resource path="res://sounds/player/slipinwater.ogg" type="AudioStream" id=28]
 [ext_resource path="res://sounds/pwrup/pickup.ogg" type="AudioStream" id=29]
+
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0

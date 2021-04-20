@@ -12,7 +12,7 @@ func showCount(cnt, size, audio):
 
 func _ready():
 	for i in range(3):
-		showCount(str(3 - i), 2, Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)])
+		showCount(str(3 - i), 4, Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)])
 		yield(get_tree().create_timer(1), "timeout")
 	if (get_tree().get_current_scene().get_name() == 'Lobby'):
 		# assign max HPs and go to map
@@ -26,7 +26,7 @@ func _ready():
 					Global.playersMaxHp[i] = 100
 		Global.goToMap()
 	else:
-		showCount("go!", 3, Res.AudioRoundGo)
+		showCount("go!", 6, Res.AudioRoundGo)
 		Global.playersFrozen = false
 		if Global.selectedMap == 'pacman':
 			var spawn = get_parent().get_node('MapController').initGhostSpawn()

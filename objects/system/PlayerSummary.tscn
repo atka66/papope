@@ -3,7 +3,8 @@
 [ext_resource path="res://objects/system/PlayerSummary.gd" type="Script" id=1]
 [ext_resource path="res://sprites/hud/hud_players.png" type="Texture" id=2]
 [ext_resource path="res://sprites/wantedposter.png" type="Texture" id=3]
-[ext_resource path="res://objects/system/CustomLabel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/system/label/CustomLabel.tscn" type="PackedScene" id=4]
+
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.5, 1 )

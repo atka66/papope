@@ -1,14 +1,14 @@
 extends Node2D
 
-onready var CustomLabel = preload("res://objects/system/CustomLabel.tscn")
-onready var FallingMessage = preload("res://objects/system/FallingMessage.tscn")
+onready var CustomLabel = preload("res://objects/system/label/CustomLabel.tscn")
+onready var FallingMessage = preload("res://objects/system/label/FallingMessage.tscn")
 onready var Player = preload("res://objects/Player.tscn")
 onready var Hud = preload("res://objects/hud/Hud.tscn")
 onready var Perk = preload("res://objects/hud/Perk.tscn")
 onready var PerkOverlay = preload("res://objects/perk/PerkOverlay.tscn")
 onready var PerkCard = preload("res://objects/perk/PerkCard.tscn")
 onready var Dim = preload("res://objects/system/Dim.tscn")
-onready var Countdown = preload("res://objects/system/Countdown.tscn")
+onready var Countdown = preload("res://objects/system/label/Countdown.tscn")
 onready var Pwrup = preload("res://objects/pwrup/Pwrup.tscn")
 onready var CollisionAnim = preload("res://objects/anim/CollisionAnim.tscn")
 onready var SpawnAnim = preload("res://objects/anim/SpawnAnim.tscn")

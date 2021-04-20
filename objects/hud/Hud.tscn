@@ -5,7 +5,8 @@
 [ext_resource path="res://objects/hud/Hud.gd" type="Script" id=3]
 [ext_resource path="res://objects/hud/HudRevolver.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/hud/HudAmmo.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/system/CustomLabel.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/system/label/CustomLabel.tscn" type="PackedScene" id=6]
+
 
 [sub_resource type="Animation" id=1]
 resource_name = "flicker"
