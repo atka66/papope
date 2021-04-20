@@ -27,7 +27,7 @@ func handleLabels():
 	$MenuHintLabel.visible = hasConnected
 	$MenuMovementHintLabel.visible = hasConnected
 	$MenuChangeSkinHintLabel.visible = hasConnected
-	$MenuChangeTeamHintLabel.visible = hasConnected
+	$MenuChangeTeamHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
 	$MenuNagivationHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
 	$IngameHintLabel.visible = hasConnected
 	$IngameMovementHintLabel.visible = hasConnected

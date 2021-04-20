@@ -134,12 +134,13 @@ func _input(event):
 			if !get_node('/root/Lobby').countingDown:
 				if event.is_action_pressed("pl_skin_next"):
 					Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
-				if event.is_action_pressed("pl_game_use"):
-					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
-				if event.is_action_pressed("pl_game_dash"):
-					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
-				$BodyParts/Face.frame = Global.playersSkin[playerId]
-				$BodyParts/Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
+					$BodyParts/Face.frame = Global.playersSkin[playerId]
+				if ProjectSettings.get("papope/allow_players_set_options"):
+					if event.is_action_pressed("pl_game_use"):
+						Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
+					if event.is_action_pressed("pl_game_dash"):
+						Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
+					$BodyParts/Body.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 		else:
 			if alive && !Global.playersFrozen && !fallWater:
 				if !trapped && linear_velocity.length() < 1000:
