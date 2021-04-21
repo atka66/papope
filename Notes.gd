@@ -1,9 +1,8 @@
 ### TODOs
 # * renew lobby bg images
 # * new map: conveyor belt
-# * keyboard control for lobby
-# * dash should apply some blur
-# * perk icon overflow should be handled
+# * car passing by and occasional horn sound in traffic
+# * more variety for cars
 # * map interactibility:
 #     * crates and barrels in ship
 #     * tumbleweed in western
