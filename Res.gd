@@ -2,6 +2,8 @@ extends Node2D
 
 onready var CustomLabel = preload("res://objects/system/label/CustomLabel.tscn")
 onready var FallingMessage = preload("res://objects/system/label/FallingMessage.tscn")
+onready var RoundStartBanner = preload("res://objects/system/label/RoundStartBanner.tscn")
+onready var RoundEndBanner = preload("res://objects/system/label/RoundEndBanner.tscn")
 onready var Player = preload("res://objects/Player.tscn")
 onready var Hud = preload("res://objects/hud/Hud.tscn")
 onready var Perk = preload("res://objects/hud/Perk.tscn")
@@ -25,9 +27,7 @@ onready var DeadGhost = preload("res://objects/obstacle/DeadGhost.tscn")
 onready var FeatherPar = preload("res://objects/anim/FeatherPar.tscn")
 
 onready var AudioOption = preload("res://sounds/system/option.ogg")
-onready var AudioRoundStart = preload("res://sounds/system/round_start.ogg")
 onready var AudioRoundGo = preload("res://sounds/system/round_go.ogg")
-onready var AudioRoundEnd = preload("res://sounds/system/round_end.ogg")
 onready var AudioSpacerayStart = preload("res://sounds/spaceray/start.ogg")
 onready var AudioSpacerayOngoing = preload("res://sounds/spaceray/ongoing.ogg")
 onready var AudioSpacerayStop = preload("res://sounds/spaceray/stop.ogg")

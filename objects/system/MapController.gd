@@ -4,17 +4,8 @@ var screenShakePwr = 0
 
 func _ready():
 	Global.playersFrozen = true
-	var mapLabel = Res.CustomLabel.instance()
-	mapLabel.position.x = 64
-	mapLabel.position.y = 288
-	mapLabel.text = Global.selectedMap
-	mapLabel.fontSize = 6
-	mapLabel.outline = true
-	mapLabel.aliveTime = 1
-	mapLabel.alignment = Label.ALIGN_LEFT
-	mapLabel.audio = Res.AudioRoundStart
 	#scene _ready methods are unable to get parents or current scene
-	add_child(mapLabel)
+	add_child(Res.RoundStartBanner.instance())
 	add_child(Res.Dim.instance())
 
 	yield(get_tree().create_timer(1.5), "timeout")
@@ -73,20 +64,9 @@ func endRound(aliveTeamId):
 			if Global.playersJoined[i] && Global.playersTeam[i] == aliveTeamId:
 				Global.playersPoints[i] += 1
 	
-	var toastText = "draw"
-	if aliveTeamId != -2:
-		toastText = Global.TEAM_COLOR_STRINGS[aliveTeamId] + " wins"
-	var winLabel = Res.CustomLabel.instance()
-	winLabel.position = Vector2(340, 64)
-	winLabel.text = toastText
-	winLabel.fontSize = 3
-	winLabel.outline = true
-	winLabel.aliveTime = 4
-	winLabel.alignment = Label.ALIGN_CENTER
-	winLabel.audio = Res.AudioRoundEnd
-	get_parent().add_child(winLabel)
-	yield(get_tree().create_timer(4), "timeout")
-	Global.goToMap()
+	var endBanner = Res.RoundEndBanner.instance()
+	endBanner.aliveTeamId = aliveTeamId
+	get_parent().add_child(endBanner)
 
 func showCount(pos, cnt):
 	var label = Res.CustomLabel.instance()

@@ -1,0 +1,121 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://objects/system/label/CustomLabel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/system/label/RoundEndBanner.gd" type="Script" id=2]
+[ext_resource path="res://sounds/system/round_end.ogg" type="AudioStream" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "draw"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Draw:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 3.3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 160, 160 ), Vector2( 244, 160 ), Vector2( 276, 160 ), Vector2( 340, 160 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Draw:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 3.3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "wins"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Team:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 3.3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 128, 128 ), Vector2( 192, 128 ), Vector2( 224, 128 ), Vector2( 288, 128 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Team:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 3.3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Wins:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 3.5, 3.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 412, 172 ), Vector2( 412, 172 ), Vector2( 348, 172 ), Vector2( 316, 172 ), Vector2( 252, 172 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Wins:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 3.5, 3.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="RoundEndBanner" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Team" parent="." instance=ExtResource( 1 )]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 128, 128 )
+fontSize = 6
+outline = true
+animate = false
+
+[node name="Wins" parent="." instance=ExtResource( 1 )]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 412, 172 )
+text = "wins"
+fontSize = 6
+outline = true
+animate = false
+
+[node name="Draw" parent="." instance=ExtResource( 1 )]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 160, 160 )
+text = "draw"
+fontSize = 6
+alignment = 1
+outline = true
+animate = false
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+anims/draw = SubResource( 1 )
+anims/wins = SubResource( 2 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true
+[connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]
