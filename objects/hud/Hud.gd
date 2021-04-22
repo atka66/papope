@@ -26,7 +26,10 @@ func _ready():
 		var perk = Res.Perk.instance()
 		perk.hframes = len(Global.PerkEnum)
 		perk.frame = Global.PERKS[perks[i]][2]
-		perk.position = Vector2(1 + (i * 17), 41)
+		var x = 1 + (i * 17)
+		if len(perks) > 6:
+			x = 1 + (i * (17 - ((len(perks) - 5) * 1.3)))
+		perk.position = Vector2(x, 41)
 		$Container.add_child(perk)
 	
 	hspeed = 15
