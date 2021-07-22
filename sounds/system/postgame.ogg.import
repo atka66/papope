@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/postgame.ogg-c9a471f6228d88aa996a79118a26dd58.oggstr"
+
+[deps]
+
+source_file="res://sounds/system/postgame.ogg"
+dest_files=[ "res://.import/postgame.ogg-c9a471f6228d88aa996a79118a26dd58.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

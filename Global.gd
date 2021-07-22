@@ -2,7 +2,7 @@ extends Node2D
 
 signal player_remove(id)
 
-const VERSION = '1.3.2'
+const VERSION = '1.3.3 beta'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),

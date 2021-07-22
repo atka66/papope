@@ -209,4 +209,5 @@ option = "map"
 [node name="RoundsOption" parent="." instance=ExtResource( 13 )]
 position = Vector2( 186, 177 )
 option = "rounds"
+
 [connection signal="animation_finished" from="BackgroundDimAnim" to="." method="_on_BackgroundDim_animation_finished"]
