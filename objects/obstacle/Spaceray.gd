@@ -43,3 +43,7 @@ func _on_Phase2_body_entered(body):
 		body.apply_central_impulse(vector + (vel * 800))
 	if body.is_in_group('dynamites'):
 		body.explode()
+
+func _process(delta):
+	if $Phase2.visible:
+		Global.shakeScreen(3)
