@@ -6,7 +6,6 @@
 # * map interactibility:
 #     * crates and barrels in ship
 #     * tumbleweed in western
-# * drum sample for end screen
 # * perks
 #     * [DISCARDED] no hands - simply not fun, kills other perks
 #     * [DISCARDED] ethereal - pass through players

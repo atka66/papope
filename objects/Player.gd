@@ -343,10 +343,11 @@ func useItem():
 					if Global.playersPerks[playerId].has(Global.PerkEnum.VAMPIRE):
 						heal(Global.DAMAGE_REVOLVER)
 					collider.die()
+				elif collider.is_in_group('cacti'):
+					collider.get_node('Anim').play('hit')
+					spawnRicochet(hitPosition)
 				else:
-					var ricochet = Res.RevolverRicochet.instance()
-					ricochet.position = hitPosition
-					get_parent().add_child(ricochet)
+					spawnRicochet(hitPosition)
 			revolverRay.position = position
 			revolverRay.rotation = $HitScan.cast_to.angle()
 			revolverRay.length = (position - hitPosition).length()
@@ -490,3 +491,8 @@ func chickenIdleSound():
 func die(reason):
 	hp = 0
 	deathReason = reason
+
+func spawnRicochet(hitPosition):
+	var ricochet = Res.RevolverRicochet.instance()
+	ricochet.position = hitPosition
+	get_parent().add_child(ricochet)
