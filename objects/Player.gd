@@ -346,6 +346,11 @@ func useItem():
 				elif collider.is_in_group('cacti'):
 					collider.get_node('Anim').play('hit')
 					spawnRicochet(hitPosition)
+				elif collider.is_in_group('destructible'):
+					collider.hp -= 2
+					if collider.hp < 1:
+						collider.destroy(Vector2.ZERO)
+					spawnRicochet(hitPosition)
 				else:
 					spawnRicochet(hitPosition)
 			revolverRay.position = position
@@ -405,6 +410,10 @@ func useItem():
 					if Global.playersPerks[playerId].has(Global.PerkEnum.VAMPIRE):
 						heal(Global.DAMAGE_WHIP)
 					collider.die()
+				if collider.is_in_group('destructible'):
+					collider.hp -= 3
+					if collider.hp < 1:
+						collider.destroy(Vector2.ZERO)
 			whipcrackAnim.position = hitPosition
 			get_tree().get_current_scene().add_child(whipcrackAnim)
 		if item != null:

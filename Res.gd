@@ -25,6 +25,7 @@ onready var Car = preload("res://objects/obstacle/Car.tscn")
 onready var Ghost = preload("res://objects/obstacle/Ghost.tscn")
 onready var DeadGhost = preload("res://objects/obstacle/DeadGhost.tscn")
 onready var FeatherPar = preload("res://objects/anim/FeatherPar.tscn")
+onready var CrateParticle = preload("res://objects/obstacle/CrateParticle.tscn")
 
 onready var AudioOption = preload("res://sounds/system/option.ogg")
 onready var AudioRoundGo = preload("res://sounds/system/round_go.ogg")

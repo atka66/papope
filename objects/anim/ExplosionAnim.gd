@@ -25,6 +25,10 @@ func _ready():
 				if !player.isTeammate(originPlayerId):
 					Global.addKill(originPlayerId)
 	Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, fullDmg)
+	for destructible in get_tree().get_nodes_in_group('destructible'):
+		var dist = position.distance_to(destructible.position)
+		if dist < 150:
+			destructible.destroy(position.direction_to(destructible.position) * 100)
 	$Audio.stream = Res.AudioExplode[randi() % len(Res.AudioExplode)]
 	$Audio.play()
 

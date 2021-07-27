@@ -26,10 +26,10 @@
 # -51  : [BgTiles1]
 # -50  : [BgTiles2]
 # -49  : [BackgroundDim]
-# -2   : {PlayerSpawner}, {PwrupSpawner}, {Block}, {WaterTrigger}, {SpaceTrigger}, {Lava}, {TrafficLane}
+# -2   : {CrateParticle}, {PlayerSpawner}, {PwrupSpawner}, {Block}, {WaterTrigger}, {SpaceTrigger}, {Lava}, {TrafficLane}
 # -1   : {Dynamite}, {Trap}, {RevolverRay}, {PlayerSlot}, [FeatherPar]
 # 0    : {Player}
-# 1    : {Tree}, {Mast}, {Cactus}
+# 1    : {Tree}, {Mast}, {Cactus}, {Crate}
 # 2    : {Car}
 # 3    : {Pwrup}, [WhiplashAnim]
 # 4    : {Ghost}, {DeadGhost}
