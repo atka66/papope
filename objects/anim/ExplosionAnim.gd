@@ -33,6 +33,10 @@ func _ready():
 		var dist = position.distance_to(particle.position)
 		if dist < 150:
 			particle.impulse(position.direction_to(particle.position) * 150)
+	for cactus in get_tree().get_nodes_in_group('cacti'):
+		var dist = position.distance_to(cactus.position)
+		if dist < 150:
+			cactus.get_node('Anim').play('hit')
 	$Audio.stream = Res.AudioExplode[randi() % len(Res.AudioExplode)]
 	$Audio.play()
 

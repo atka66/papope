@@ -414,6 +414,8 @@ func useItem():
 					collider.hp -= 3
 					if collider.hp < 1:
 						collider.destroy(Vector2.ZERO)
+				if collider.is_in_group('cacti'):
+					collider.get_node('Anim').play('hit')
 			whipcrackAnim.position = hitPosition
 			get_tree().get_current_scene().add_child(whipcrackAnim)
 		if item != null:

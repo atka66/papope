@@ -840,9 +840,8 @@ position = Vector2( 176, 48 )
 position = Vector2( 384, 112 )
 
 [node name="BlockParticle" parent="." instance=ExtResource( 11 )]
-position = Vector2( 112, 0 )
-scale = Vector2( 1, 24 )
+scale = Vector2( 8, 24 )
 
 [node name="BlockParticle2" parent="." instance=ExtResource( 11 )]
 position = Vector2( 544, 0 )
-scale = Vector2( 1, 24 )
+scale = Vector2( 8, 24 )
