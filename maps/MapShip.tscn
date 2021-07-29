@@ -831,12 +831,12 @@ sprite = ExtResource( 14 )
 particleSprite = ExtResource( 15 )
 
 [node name="Destructible2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 416, 240 )
+position = Vector2( 352, 96 )
 sprite = ExtResource( 14 )
 particleSprite = ExtResource( 15 )
 
 [node name="Destructible3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 448, 240 )
+position = Vector2( 464, 240 )
 sprite = ExtResource( 14 )
 particleSprite = ExtResource( 15 )
 
@@ -856,7 +856,7 @@ sprite = ExtResource( 14 )
 particleSprite = ExtResource( 15 )
 
 [node name="Destructible7" parent="." instance=ExtResource( 3 )]
-position = Vector2( 384, 112 )
+position = Vector2( 384, 96 )
 sprite = ExtResource( 14 )
 particleSprite = ExtResource( 15 )
 
