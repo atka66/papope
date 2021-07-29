@@ -11,7 +11,7 @@ extents = Vector2( 2, 2 )
 z_index = -2
 z_as_relative = false
 collision_layer = 2147516416
-collision_mask = 65584
+collision_mask = 65588
 gravity_scale = 0.0
 linear_damp = 5.0
 angular_damp = 30.0
@@ -19,6 +19,7 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 hframes = 3
+frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

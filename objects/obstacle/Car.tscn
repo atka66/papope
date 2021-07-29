@@ -22,4 +22,5 @@ vframes = 6
 shape = SubResource( 1 )
 
 [node name="AudioCollision" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="body_entered" from="." to="." method="_on_Car_body_entered"]

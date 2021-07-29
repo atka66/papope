@@ -24,11 +24,11 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.062, 1 ) ]
 }
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0, 0.5, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
 "loop": true,
@@ -36,8 +36,7 @@ animations = [ {
 "speed": 15.0
 } ]
 
-[sub_resource type="Animation" id=3]
-resource_name = "pulse"
+[sub_resource type="Animation" id=4]
 length = 0.5
 loop = true
 step = 0.25
@@ -54,7 +53,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.2, 1 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 32, 192 )
 
 [node name="Spaceray" type="Node2D"]
@@ -95,7 +94,7 @@ initial_velocity_random = 1.0
 damping = 100.0
 scale_amount = 2.0
 scale_amount_random = 1.0
-color_ramp = SubResource( 5 )
+color_ramp = SubResource( 2 )
 
 [node name="ParticlesTop" type="CPUParticles2D" parent="."]
 position = Vector2( 0, -192 )
@@ -111,20 +110,21 @@ initial_velocity_random = 1.0
 damping = 100.0
 scale_amount = 2.0
 scale_amount_random = 1.0
-color_ramp = SubResource( 5 )
+color_ramp = SubResource( 2 )
 
 [node name="Phase2" type="Area2D" parent="."]
 collision_layer = 128
 collision_mask = 13
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Phase2"]
-frames = SubResource( 2 )
+frames = SubResource( 3 )
 playing = true
 
 [node name="Phase2Anim" type="AnimationPlayer" parent="Phase2/AnimatedSprite"]
 autoplay = "pulse"
-anims/pulse = SubResource( 3 )
+anims/pulse = SubResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Phase2"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
+
 [connection signal="body_entered" from="Phase2" to="." method="_on_Phase2_body_entered"]

@@ -16,7 +16,7 @@ func _ready():
 func destroy(impulse):
 	for i in range(15):
 		var particle = Res.DestructibleParticle.instance()
-		particle.get_node('Sprite').texture = particleSprite
+		particle.sprite = particleSprite
 		particle.position = position + Vector2((randi() % 32) - 16, (randi() % 32) - 16)
 		particle.impulse(impulse)
 		get_parent().add_child(particle)

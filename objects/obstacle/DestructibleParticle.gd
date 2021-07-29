@@ -1,8 +1,11 @@
+tool
 extends RigidBody2D
 
+export(Texture) var sprite
 var torque = 0
 
 func _ready():
+	$Sprite.texture = sprite
 	$Sprite.frame = randi() % $Sprite.hframes
 
 func impulse(direction):
