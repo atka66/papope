@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+var torque = 0
+
 func _ready():
 	$Sprite.frame = randi() % $Sprite.hframes
 
@@ -9,4 +11,9 @@ func impulse(direction):
 		(direction.y + (randi() % 100) - 50) * (randi() % 10)
 	)
 	apply_central_impulse(actualImpulse)
-	add_torque((randi() % 300) - 150)
+	torque = randf()
+
+func _process(delta):
+	if torque > 0:
+		$Sprite.rotate(torque)
+		torque -= 0.01
