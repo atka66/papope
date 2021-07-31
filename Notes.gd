@@ -1,4 +1,6 @@
 ### TODOs
+# * bug: particles collide with dynamite
+# * bug: timebomb anomaly
 # * renew lobby bg images
 # * new map: conveyor belt
 # * car passing by and occasional horn sound in traffic
