@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2, 2 )
 
-[node name="CrateParticle" type="RigidBody2D" groups=[
+[node name="DestructibleParticle" type="RigidBody2D" groups=[
 "destructionparticle",
 ]]
 z_index = -2
@@ -19,7 +19,7 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 hframes = 3
-frame = 2
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

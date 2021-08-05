@@ -26,13 +26,13 @@ func _ready():
 					Global.addKill(originPlayerId)
 	Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, fullDmg)
 	for destructible in get_tree().get_nodes_in_group('destructible'):
-		var dist = position.distance_to(destructible.position)
+		var dist = position.distance_to(destructible.global_position)
 		if dist < 150:
-			destructible.destroy(position.direction_to(destructible.position) * 30)
+			destructible.destroy(position.direction_to(destructible.global_position) * 30)
 	for particle in get_tree().get_nodes_in_group('destructionparticle'):
-		var dist = position.distance_to(particle.position)
+		var dist = position.distance_to(particle.global_position)
 		if dist < 150:
-			particle.impulse(position.direction_to(particle.position) * 150)
+			particle.impulse(position.direction_to(particle.global_position) * 150)
 	for cactus in get_tree().get_nodes_in_group('cacti'):
 		var dist = position.distance_to(cactus.position)
 		if dist < 150:

@@ -238,7 +238,8 @@ func registerAchievement(playerId, achievement):
 		playersAchievements[playerId].append(achievement)
 
 func incrementStat(playerId, stat, i):
-	playersStats[playerId][stat] += i
+	if playersStats:
+		playersStats[playerId][stat] += i
 
 func extendVectorTo(vector, length):
 	if vector.length() == 0:

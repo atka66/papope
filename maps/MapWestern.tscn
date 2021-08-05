@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://sprites/bg/desert.png" type="Texture" id=1]
 [ext_resource path="res://sprites/tileset/ts_western.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://sprites/obstacle/tree.png" type="Texture" id=10]
 [ext_resource path="res://sprites/obstacle/tree_particle.png" type="Texture" id=11]
 [ext_resource path="res://sprites/obstacle/rock_particle.png" type="Texture" id=12]
+[ext_resource path="res://objects/obstacle/Railway.tscn" type="PackedScene" id=13]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -140,7 +141,7 @@ z_as_relative = false
 tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( -2, 5, 0, 0, 5, 0, 65538, 5, 0, 131076, 5, 0, 131080, 2, 0, 131088, 3, 0, 196609, 3, 0, 196614, 5, 0, 196636, 2, 0, 196647, 3, 0, 262152, 5, 0, 327690, 5, 0, 393228, 5, 0, 393230, 3, 0, 393245, 4, 0, 393249, 2, 0, 458766, 5, 0, 458769, 3, 0, 458775, 2, 0, 524298, 2, 0, 524304, 5, 0, 524308, 3, 0, 589842, 5, 0, 655380, 5, 0, 720905, 3, 0, 720918, 5, 0, 720931, 3, 0, 786436, 3, 0, 786456, 5, 0, 786461, 3, 0, 851978, 2, 0, 851985, 2, 0, 851994, 5, 0, 851995, 3, 0, 917532, 5, 0, 983061, 3, 0, 983065, 2, 0, 983070, 5, 0, 1048608, 5, 0, 1048611, 2, 0, 1114113, 3, 0, 1114127, 4, 0, 1114146, 5, 0, 1179679, 3, 0, 1179684, 5, 0, 1179688, 3, 0, 1245208, 2, 0, 1245222, 5, 0, 1310736, 3, 0, 1310760, 5, 0, 1376262, 3, 0, 1376290, 3, 0, 1376298, 5, 0, 1441794, 2, 0, 1441817, 3, 0, 1441823, 2, 0, 1441836, 5, 0 )
+tile_data = PoolIntArray( 131080, 2, 0, 131088, 3, 0, 196609, 3, 0, 196636, 2, 0, 196647, 3, 0, 393230, 3, 0, 393245, 4, 0, 393249, 2, 0, 458769, 3, 0, 458775, 2, 0, 524298, 2, 0, 524308, 3, 0, 720905, 3, 0, 720931, 3, 0, 786436, 3, 0, 786461, 3, 0, 851978, 2, 0, 851985, 2, 0, 851995, 3, 0, 983061, 3, 0, 983065, 2, 0, 1048611, 2, 0, 1114113, 3, 0, 1114127, 4, 0, 1179679, 3, 0, 1179688, 3, 0, 1245208, 2, 0, 1310736, 3, 0, 1376262, 3, 0, 1376290, 3, 0, 1441794, 2, 0, 1441817, 3, 0, 1441823, 2, 0 )
 
 [node name="PlayerSpawner0" type="Position2D" parent="."]
 position = Vector2( 96, 192 )
@@ -337,3 +338,75 @@ sprite = ExtResource( 12 )
 [node name="Rock22" parent="." instance=ExtResource( 7 )]
 position = Vector2( 624, 128 )
 sprite = ExtResource( 12 )
+
+[node name="Railway1" parent="." instance=ExtResource( 13 )]
+position = Vector2( -32, 0 )
+
+[node name="Railway2" parent="." instance=ExtResource( 13 )]
+position = Vector2( 0, 16 )
+
+[node name="Railway3" parent="." instance=ExtResource( 13 )]
+position = Vector2( 32, 32 )
+
+[node name="Railway4" parent="." instance=ExtResource( 13 )]
+position = Vector2( 64, 48 )
+
+[node name="Railway5" parent="." instance=ExtResource( 13 )]
+position = Vector2( 96, 64 )
+
+[node name="Railway6" parent="." instance=ExtResource( 13 )]
+position = Vector2( 128, 80 )
+
+[node name="Railway7" parent="." instance=ExtResource( 13 )]
+position = Vector2( 160, 96 )
+
+[node name="Railway8" parent="." instance=ExtResource( 13 )]
+position = Vector2( 192, 112 )
+
+[node name="Railway9" parent="." instance=ExtResource( 13 )]
+position = Vector2( 224, 128 )
+
+[node name="Railway10" parent="." instance=ExtResource( 13 )]
+position = Vector2( 256, 144 )
+
+[node name="Railway11" parent="." instance=ExtResource( 13 )]
+position = Vector2( 288, 160 )
+
+[node name="Railway12" parent="." instance=ExtResource( 13 )]
+position = Vector2( 320, 176 )
+
+[node name="Railway13" parent="." instance=ExtResource( 13 )]
+position = Vector2( 352, 192 )
+
+[node name="Railway14" parent="." instance=ExtResource( 13 )]
+position = Vector2( 384, 208 )
+
+[node name="Railway15" parent="." instance=ExtResource( 13 )]
+position = Vector2( 416, 224 )
+
+[node name="Railway16" parent="." instance=ExtResource( 13 )]
+position = Vector2( 448, 240 )
+
+[node name="Railway17" parent="." instance=ExtResource( 13 )]
+position = Vector2( 480, 256 )
+
+[node name="Railway18" parent="." instance=ExtResource( 13 )]
+position = Vector2( 512, 272 )
+
+[node name="Railway19" parent="." instance=ExtResource( 13 )]
+position = Vector2( 544, 288 )
+
+[node name="Railway20" parent="." instance=ExtResource( 13 )]
+position = Vector2( 576, 304 )
+
+[node name="Railway21" parent="." instance=ExtResource( 13 )]
+position = Vector2( 608, 320 )
+
+[node name="Railway22" parent="." instance=ExtResource( 13 )]
+position = Vector2( 640, 336 )
+
+[node name="Railway23" parent="." instance=ExtResource( 13 )]
+position = Vector2( 672, 352 )
+
+[node name="Railway24" parent="." instance=ExtResource( 13 )]
+position = Vector2( 704, 368 )
