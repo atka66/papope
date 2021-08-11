@@ -2,11 +2,12 @@ extends RigidBody2D
 
 export var originPlayerId = 0
 var wrapPosition = null
+export(int) var ttl = 1
 
 func _ready():
 	$AudioThrow.play()
 	$Sprite.rotation_degrees = randi() % 360
-	yield(get_tree().create_timer(1.0), "timeout")
+	yield(get_tree().create_timer(ttl), "timeout")
 	explode()
 
 func _process(delta):
