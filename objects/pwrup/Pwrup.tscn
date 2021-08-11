@@ -33,7 +33,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 8.0
+radius = 4.0
 
 [node name="Pwrup" type="Area2D" groups=[
 "pwrups",
@@ -60,5 +60,6 @@ offset = Vector2( 0, -8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
+
 [connection signal="body_entered" from="." to="." method="_on_Pwrup_body_entered"]
 [connection signal="animation_finished" from="SpawnAnim" to="." method="_on_SpawnAnim_animation_finished"]

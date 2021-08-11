@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://sprites/tileset/ts_pacman.png" type="Texture" id=1]
 [ext_resource path="res://objects/obstacle/BlockAll.tscn" type="PackedScene" id=2]
@@ -9,6 +9,18 @@
 [ext_resource path="res://objects/system/PlayzoneShader.tscn" type="PackedScene" id=7]
 [ext_resource path="res://objects/system/GhostPathNode.tscn" type="PackedScene" id=8]
 [ext_resource path="res://shaders/crtshader.shader" type="Shader" id=9]
+[ext_resource path="res://objects/obstacle/Destructible.tscn" type="PackedScene" id=10]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_1.png" type="Texture" id=11]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_2.png" type="Texture" id=12]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_particle.png" type="Texture" id=14]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_3.png" type="Texture" id=15]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_4.png" type="Texture" id=16]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_5.png" type="Texture" id=17]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_7.png" type="Texture" id=18]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_6.png" type="Texture" id=19]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_8.png" type="Texture" id=20]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_9.png" type="Texture" id=21]
+[ext_resource path="res://sprites/obstacle/pacmanwall/pacmanwall_10.png" type="Texture" id=22]
 
 [sub_resource type="TileSet" id=1]
 0/name = "ts_pacman.png 0"
@@ -235,7 +247,7 @@ z_as_relative = false
 tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
-tile_data = PoolIntArray( 1, 7, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 12, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 12, 0, 14, 1, 0, 15, 1, 0, 16, 1, 0, 17, 1, 0, 18, 1, 0, 19, 8, 0, 65537, 0, 0, 65543, 0, 0, 65549, 0, 0, 65555, 0, 0, 131073, 0, 0, 131075, 7, 0, 131076, 1, 0, 131077, 5, 0, 131079, 2, 0, 131081, 7, 0, 131082, 1, 0, 131083, 8, 0, 131085, 2, 0, 131087, 3, 0, 131088, 1, 0, 131089, 8, 0, 131091, 0, 0, 196609, 0, 0, 196611, 0, 0, 196617, 0, 0, 196619, 0, 0, 196625, 0, 0, 196627, 0, 0, 327679, 1, 0, 262144, 1, 0, 262145, 9, 0, 262147, 2, 0, 262149, 7, 0, 262150, 1, 0, 262151, 8, 0, 262153, 2, 0, 262155, 2, 0, 262157, 7, 0, 262158, 1, 0, 262159, 8, 0, 262161, 2, 0, 262163, 6, 0, 262164, 1, 0, 262165, 1, 0, 262166, 1, 0, 327685, 0, 0, 327687, 2, 0, 327693, 2, 0, 327695, 0, 0, 393221, 0, 0, 393223, 4, 0, 393229, 4, 0, 393231, 0, 0, 524287, 1, 0, 458752, 1, 0, 458753, 8, 0, 458755, 4, 0, 458757, 6, 0, 458758, 1, 0, 458759, 9, 0, 458761, 4, 0, 458763, 4, 0, 458765, 6, 0, 458766, 1, 0, 458767, 9, 0, 458769, 4, 0, 458771, 7, 0, 458772, 1, 0, 458773, 1, 0, 458774, 1, 0, 524289, 0, 0, 524291, 0, 0, 524297, 0, 0, 524299, 0, 0, 524305, 0, 0, 524307, 0, 0, 589825, 0, 0, 589827, 6, 0, 589828, 1, 0, 589829, 5, 0, 589831, 4, 0, 589833, 6, 0, 589834, 1, 0, 589835, 9, 0, 589837, 4, 0, 589839, 3, 0, 589840, 1, 0, 589841, 9, 0, 589843, 0, 0, 655361, 0, 0, 655367, 0, 0, 655373, 0, 0, 655379, 0, 0, 720897, 6, 0, 720898, 1, 0, 720899, 1, 0, 720900, 1, 0, 720901, 1, 0, 720902, 1, 0, 720903, 10, 0, 720904, 1, 0, 720905, 1, 0, 720906, 1, 0, 720907, 1, 0, 720908, 1, 0, 720909, 10, 0, 720910, 1, 0, 720911, 1, 0, 720912, 1, 0, 720913, 1, 0, 720914, 1, 0, 720915, 9, 0 )
+tile_data = PoolIntArray( 1, 7, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 12, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 12, 0, 14, 1, 0, 15, 1, 0, 16, 1, 0, 17, 1, 0, 18, 1, 0, 19, 8, 0, 65537, 0, 0, 65555, 0, 0, 131073, 0, 0, 131091, 0, 0, 196609, 0, 0, 196627, 0, 0, 327679, 1, 0, 262144, 1, 0, 262145, 9, 0, 262149, 7, 0, 262150, 1, 0, 262151, 8, 0, 262157, 7, 0, 262158, 1, 0, 262159, 8, 0, 262163, 6, 0, 262164, 1, 0, 262165, 1, 0, 262166, 1, 0, 327685, 0, 0, 327687, 2, 0, 327693, 2, 0, 327695, 0, 0, 393221, 0, 0, 393223, 4, 0, 393229, 4, 0, 393231, 0, 0, 524287, 1, 0, 458752, 1, 0, 458753, 8, 0, 458757, 6, 0, 458758, 1, 0, 458759, 9, 0, 458765, 6, 0, 458766, 1, 0, 458767, 9, 0, 458771, 7, 0, 458772, 1, 0, 458773, 1, 0, 458774, 1, 0, 524289, 0, 0, 524307, 0, 0, 589825, 0, 0, 589843, 0, 0, 655361, 0, 0, 655379, 0, 0, 720897, 6, 0, 720898, 1, 0, 720899, 1, 0, 720900, 1, 0, 720901, 1, 0, 720902, 1, 0, 720903, 10, 0, 720904, 1, 0, 720905, 1, 0, 720906, 1, 0, 720907, 1, 0, 720908, 1, 0, 720909, 10, 0, 720910, 1, 0, 720911, 1, 0, 720912, 1, 0, 720913, 1, 0, 720914, 1, 0, 720915, 9, 0 )
 
 [node name="PlayerSpawner0" type="Position2D" parent="."]
 position = Vector2( 80, 48 )
@@ -288,45 +300,9 @@ scale = Vector2( 37, 1 )
 position = Vector2( 40, 24 )
 scale = Vector2( 1, 7 )
 
-[node name="BlockAll2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 232, 24 )
-scale = Vector2( 1, 4 )
-
-[node name="BlockAll3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 424, 24 )
-scale = Vector2( 1, 4 )
-
 [node name="BlockAll4" parent="." instance=ExtResource( 2 )]
 position = Vector2( 616, 24 )
 scale = Vector2( 1, 7 )
-
-[node name="BlockAll5" parent="." instance=ExtResource( 2 )]
-position = Vector2( 104, 72 )
-scale = Vector2( 5, 1 )
-
-[node name="BlockAll6" parent="." instance=ExtResource( 2 )]
-position = Vector2( 296, 72 )
-scale = Vector2( 5, 1 )
-
-[node name="BlockAll7" parent="." instance=ExtResource( 2 )]
-position = Vector2( 488, 72 )
-scale = Vector2( 5, 1 )
-
-[node name="BlockAll8" parent="." instance=ExtResource( 2 )]
-position = Vector2( 104, 88 )
-scale = Vector2( 1, 4 )
-
-[node name="BlockAll9" parent="." instance=ExtResource( 2 )]
-position = Vector2( 296, 88 )
-scale = Vector2( 1, 4 )
-
-[node name="BlockAll10" parent="." instance=ExtResource( 2 )]
-position = Vector2( 360, 88 )
-scale = Vector2( 1, 4 )
-
-[node name="BlockAll11" parent="." instance=ExtResource( 2 )]
-position = Vector2( 552, 88 )
-scale = Vector2( 1, 4 )
 
 [node name="BlockAll12" parent="." instance=ExtResource( 2 )]
 position = Vector2( -72, 136 )
@@ -348,18 +324,6 @@ scale = Vector2( 8, 1 )
 position = Vector2( -72, 232 )
 scale = Vector2( 8, 1 )
 
-[node name="BlockAll19" parent="." instance=ExtResource( 2 )]
-position = Vector2( 104, 232 )
-scale = Vector2( 1, 4 )
-
-[node name="BlockAll21" parent="." instance=ExtResource( 2 )]
-position = Vector2( 296, 232 )
-scale = Vector2( 1, 4 )
-
-[node name="BlockAll22" parent="." instance=ExtResource( 2 )]
-position = Vector2( 360, 232 )
-scale = Vector2( 1, 4 )
-
 [node name="BlockAll24" parent="." instance=ExtResource( 2 )]
 position = Vector2( 616, 232 )
 scale = Vector2( 8, 1 )
@@ -367,30 +331,6 @@ scale = Vector2( 8, 1 )
 [node name="BlockAll25" parent="." instance=ExtResource( 2 )]
 position = Vector2( 40, 248 )
 scale = Vector2( 1, 7 )
-
-[node name="BlockAll26" parent="." instance=ExtResource( 2 )]
-position = Vector2( 104, 296 )
-scale = Vector2( 5, 1 )
-
-[node name="BlockAll27" parent="." instance=ExtResource( 2 )]
-position = Vector2( 232, 296 )
-scale = Vector2( 1, 4 )
-
-[node name="BlockAll28" parent="." instance=ExtResource( 2 )]
-position = Vector2( 296, 296 )
-scale = Vector2( 5, 1 )
-
-[node name="BlockAll29" parent="." instance=ExtResource( 2 )]
-position = Vector2( 424, 296 )
-scale = Vector2( 1, 4 )
-
-[node name="BlockAll30" parent="." instance=ExtResource( 2 )]
-position = Vector2( 488, 296 )
-scale = Vector2( 5, 1 )
-
-[node name="BlockAll31" parent="." instance=ExtResource( 2 )]
-position = Vector2( 552, 232 )
-scale = Vector2( 1, 4 )
 
 [node name="BlockAll32" parent="." instance=ExtResource( 2 )]
 position = Vector2( 616, 248 )
@@ -733,3 +673,627 @@ neighbors = [ 30, 32 ]
 [node name="GhostPathNode32" parent="." instance=ExtResource( 8 )]
 position = Vector2( 464, 112 )
 neighbors = [ 20, 25, 31 ]
+
+[node name="Wall1" parent="." instance=ExtResource( 10 )]
+position = Vector2( 112, 112 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 112, 128 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall3" parent="." instance=ExtResource( 10 )]
+position = Vector2( 112, 144 )
+sprite = ExtResource( 12 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall4" parent="." instance=ExtResource( 10 )]
+position = Vector2( 112, 96 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall5" parent="." instance=ExtResource( 10 )]
+position = Vector2( 112, 80 )
+sprite = ExtResource( 15 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall6" parent="." instance=ExtResource( 10 )]
+position = Vector2( 128, 80 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall7" parent="." instance=ExtResource( 10 )]
+position = Vector2( 144, 80 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall8" parent="." instance=ExtResource( 10 )]
+position = Vector2( 160, 80 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall9" parent="." instance=ExtResource( 10 )]
+position = Vector2( 176, 80 )
+sprite = ExtResource( 17 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall10" parent="." instance=ExtResource( 10 )]
+position = Vector2( 560, 112 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall11" parent="." instance=ExtResource( 10 )]
+position = Vector2( 560, 128 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall12" parent="." instance=ExtResource( 10 )]
+position = Vector2( 560, 144 )
+sprite = ExtResource( 12 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall13" parent="." instance=ExtResource( 10 )]
+position = Vector2( 560, 96 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall14" parent="." instance=ExtResource( 10 )]
+position = Vector2( 496, 80 )
+sprite = ExtResource( 18 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall15" parent="." instance=ExtResource( 10 )]
+position = Vector2( 512, 80 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall16" parent="." instance=ExtResource( 10 )]
+position = Vector2( 528, 80 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall17" parent="." instance=ExtResource( 10 )]
+position = Vector2( 544, 80 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall18" parent="." instance=ExtResource( 10 )]
+position = Vector2( 560, 80 )
+sprite = ExtResource( 19 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall19" parent="." instance=ExtResource( 10 )]
+position = Vector2( 112, 272 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall20" parent="." instance=ExtResource( 10 )]
+position = Vector2( 112, 288 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall21" parent="." instance=ExtResource( 10 )]
+position = Vector2( 112, 304 )
+sprite = ExtResource( 21 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall22" parent="." instance=ExtResource( 10 )]
+position = Vector2( 112, 256 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall23" parent="." instance=ExtResource( 10 )]
+position = Vector2( 112, 240 )
+sprite = ExtResource( 20 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall24" parent="." instance=ExtResource( 10 )]
+position = Vector2( 128, 304 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall25" parent="." instance=ExtResource( 10 )]
+position = Vector2( 144, 304 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall26" parent="." instance=ExtResource( 10 )]
+position = Vector2( 160, 304 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall27" parent="." instance=ExtResource( 10 )]
+position = Vector2( 176, 304 )
+sprite = ExtResource( 17 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall28" parent="." instance=ExtResource( 10 )]
+position = Vector2( 560, 272 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall29" parent="." instance=ExtResource( 10 )]
+position = Vector2( 560, 288 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall30" parent="." instance=ExtResource( 10 )]
+position = Vector2( 496, 304 )
+sprite = ExtResource( 18 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall31" parent="." instance=ExtResource( 10 )]
+position = Vector2( 560, 256 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall32" parent="." instance=ExtResource( 10 )]
+position = Vector2( 560, 240 )
+sprite = ExtResource( 20 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall33" parent="." instance=ExtResource( 10 )]
+position = Vector2( 512, 304 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall34" parent="." instance=ExtResource( 10 )]
+position = Vector2( 528, 304 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall35" parent="." instance=ExtResource( 10 )]
+position = Vector2( 544, 304 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall36" parent="." instance=ExtResource( 10 )]
+position = Vector2( 560, 304 )
+sprite = ExtResource( 22 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall37" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304, 112 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall38" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304, 128 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall39" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304, 144 )
+sprite = ExtResource( 12 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall40" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304, 96 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall41" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304, 80 )
+sprite = ExtResource( 15 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall42" parent="." instance=ExtResource( 10 )]
+position = Vector2( 320, 80 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall43" parent="." instance=ExtResource( 10 )]
+position = Vector2( 336, 80 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall44" parent="." instance=ExtResource( 10 )]
+position = Vector2( 352, 80 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall45" parent="." instance=ExtResource( 10 )]
+position = Vector2( 368, 80 )
+sprite = ExtResource( 19 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall46" parent="." instance=ExtResource( 10 )]
+position = Vector2( 368, 112 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall47" parent="." instance=ExtResource( 10 )]
+position = Vector2( 368, 128 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall48" parent="." instance=ExtResource( 10 )]
+position = Vector2( 368, 144 )
+sprite = ExtResource( 12 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall49" parent="." instance=ExtResource( 10 )]
+position = Vector2( 368, 96 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall50" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304, 272 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall51" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304, 288 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall52" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304, 304 )
+sprite = ExtResource( 21 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall53" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304, 256 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall54" parent="." instance=ExtResource( 10 )]
+position = Vector2( 304, 240 )
+sprite = ExtResource( 20 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall55" parent="." instance=ExtResource( 10 )]
+position = Vector2( 320, 304 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall56" parent="." instance=ExtResource( 10 )]
+position = Vector2( 336, 304 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall57" parent="." instance=ExtResource( 10 )]
+position = Vector2( 352, 304 )
+sprite = ExtResource( 16 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall58" parent="." instance=ExtResource( 10 )]
+position = Vector2( 368, 240 )
+sprite = ExtResource( 20 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall59" parent="." instance=ExtResource( 10 )]
+position = Vector2( 368, 272 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall60" parent="." instance=ExtResource( 10 )]
+position = Vector2( 368, 288 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall61" parent="." instance=ExtResource( 10 )]
+position = Vector2( 368, 304 )
+sprite = ExtResource( 22 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall62" parent="." instance=ExtResource( 10 )]
+position = Vector2( 368, 256 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall63" parent="." instance=ExtResource( 10 )]
+position = Vector2( 240, 48 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall64" parent="." instance=ExtResource( 10 )]
+position = Vector2( 240, 64 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall65" parent="." instance=ExtResource( 10 )]
+position = Vector2( 240, 80 )
+sprite = ExtResource( 12 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall66" parent="." instance=ExtResource( 10 )]
+position = Vector2( 240, 32 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall67" parent="." instance=ExtResource( 10 )]
+position = Vector2( 432, 48 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall68" parent="." instance=ExtResource( 10 )]
+position = Vector2( 432, 64 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall69" parent="." instance=ExtResource( 10 )]
+position = Vector2( 432, 80 )
+sprite = ExtResource( 12 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall70" parent="." instance=ExtResource( 10 )]
+position = Vector2( 432, 32 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall71" parent="." instance=ExtResource( 10 )]
+position = Vector2( 240, 320 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall72" parent="." instance=ExtResource( 10 )]
+position = Vector2( 240, 336 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall73" parent="." instance=ExtResource( 10 )]
+position = Vector2( 240, 352 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall74" parent="." instance=ExtResource( 10 )]
+position = Vector2( 240, 304 )
+sprite = ExtResource( 20 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall75" parent="." instance=ExtResource( 10 )]
+position = Vector2( 432, 320 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall76" parent="." instance=ExtResource( 10 )]
+position = Vector2( 432, 336 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall77" parent="." instance=ExtResource( 10 )]
+position = Vector2( 432, 352 )
+sprite = ExtResource( 11 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3
+
+[node name="Wall78" parent="." instance=ExtResource( 10 )]
+position = Vector2( 432, 304 )
+sprite = ExtResource( 20 )
+particleSprite = ExtResource( 14 )
+numberOfParticles = 5
+collisionSize = 8
+hp = 3

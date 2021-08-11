@@ -2,7 +2,7 @@
 
 [ext_resource path="res://objects/obstacle/DestructibleParticle.gd" type="Script" id=2]
 
-[sub_resource type="PhysicsMaterial" id=1]
+[sub_resource type="PhysicsMaterial" id=3]
 friction = 0.0
 bounce = 1.0
 
@@ -16,7 +16,7 @@ z_index = -2
 z_as_relative = false
 collision_layer = 2147516416
 collision_mask = 65588
-physics_material_override = SubResource( 1 )
+physics_material_override = SubResource( 3 )
 gravity_scale = 0.0
 linear_damp = 5.0
 angular_damp = 30.0

@@ -1,11 +1,11 @@
 ### TODOs
-# * normal mapping for textures
 # * bug: particles collide with dynamite
 # * bug: timebomb anomaly
 # * renew lobby bg images
 # * new map: conveyor belt
 # * car passing by and occasional horn sound in traffic
 # * more variety for cars
+# * hell map lava closing in
 # * map interactibility:
 #     * crates and barrels in ship
 #     * tumbleweed in western
