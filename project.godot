@@ -161,6 +161,7 @@ pl_game_dash={
 [layer_names]
 
 2d_physics/layer_1="players"
+2d_render/layer_2="lightaffected"
 2d_physics/layer_2="pwrups"
 2d_physics/layer_3="obstacles"
 2d_physics/layer_4="deadplayers"

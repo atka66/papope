@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://objects/system/MapController.gd" type="Script" id=1]
+[ext_resource path="res://sprites/lightwall.png" type="Texture" id=2]
 
 [node name="MapController" type="Node2D" groups=[
 "controllers",
@@ -8,6 +9,14 @@
 z_index = -103
 z_as_relative = false
 script = ExtResource( 1 )
+
+[node name="Light" type="Light2D" parent="."]
+position = Vector2( -1500, -1500 )
+texture = ExtResource( 2 )
+offset = Vector2( 1840, 1692 )
+texture_scale = 1.5
+range_height = 10.0
+range_item_cull_mask = 2
 
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0
