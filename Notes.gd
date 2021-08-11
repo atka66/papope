@@ -5,6 +5,7 @@
 # * car passing by and occasional horn sound in traffic
 # * more variety for cars
 # * hell map lava closing in
+# * breaking object sounds
 # * map interactibility:
 #     * crates and barrels in ship
 #     * tumbleweed in western
