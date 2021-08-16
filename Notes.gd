@@ -30,7 +30,7 @@
 # -50  : [BgTiles2]
 # -49  : [BackgroundDim]
 # -2   : {DestructibleParticle}, {PlayerSpawner}, {PwrupSpawner}, {Block}, {WaterTrigger}, {SpaceTrigger}, {Lava}, {TrafficLane}
-# -1   : {Dynamite}, {Trap}, {RevolverRay}, {PlayerSlot}, [FeatherPar]
+# -1   : {Dynamite}, {Trap}, {RevolverRay}, {PlayerSlot}, [FeatherPar], [DashPar]
 # 0    : {Player}
 # 1    : {Tree}, {Mast}, {Cactus}, {Destructible}
 # 2    : {Car}

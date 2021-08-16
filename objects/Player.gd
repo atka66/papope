@@ -145,14 +145,7 @@ func _input(event):
 			if alive && !Global.playersFrozen && !fallWater:
 				if !trapped && linear_velocity.length() < 1000:
 					if event.is_action_pressed('pl_game_dash'):
-						$AudioDash.stream = Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)]
-						$AudioDash.play()
-						if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
-							emitFeathers(10)
-						if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS) && !inSpace:
-							apply_central_impulse(Vector2(lhAxis, lvAxis).normalized() * speed * dashMul)
-						else:
-							apply_central_impulse(linear_velocity.normalized() * speed * dashMul)
+						dash(lhAxis, lvAxis)
 				if event.is_action_pressed('pl_game_use'):
 					useItem()
 
@@ -507,3 +500,19 @@ func spawnRicochet(hitPosition):
 	var ricochet = Res.RevolverRicochet.instance()
 	ricochet.position = hitPosition
 	get_parent().add_child(ricochet)
+
+func dash(lhAxis, lvAxis):
+	$AudioDash.stream = Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)]
+	$AudioDash.play()
+	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+		emitFeathers(10)
+	var actualImpulse = Vector2.ZERO
+	if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS) && !inSpace:
+		actualImpulse = Vector2(lhAxis, lvAxis).normalized() * speed * dashMul
+	else:
+		actualImpulse = linear_velocity.normalized() * speed * dashMul
+	var dashPar = Res.DashPar.instance()
+	dashPar.direction = -actualImpulse
+	dashPar.emitting = true
+	add_child(dashPar)
+	apply_central_impulse(actualImpulse)
