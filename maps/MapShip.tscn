@@ -860,9 +860,19 @@ position = Vector2( 384, 96 )
 sprite = ExtResource( 14 )
 particleSprite = ExtResource( 15 )
 
-[node name="BlockParticle" parent="." instance=ExtResource( 11 )]
+[node name="BlockParticle1" parent="." instance=ExtResource( 11 )]
 scale = Vector2( 8, 24 )
 
 [node name="BlockParticle2" parent="." instance=ExtResource( 11 )]
 position = Vector2( 544, 0 )
 scale = Vector2( 8, 24 )
+
+[node name="BlockParticle3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 96, 320 )
+rotation = -0.436332
+scale = Vector2( 2, 8 )
+
+[node name="BlockParticle4" parent="." instance=ExtResource( 11 )]
+position = Vector2( 544, 312 )
+rotation = 0.436332
+scale = Vector2( 2, 8 )

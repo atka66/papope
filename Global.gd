@@ -108,7 +108,7 @@ const TEAM_COLOR_STRINGS = {
 
 var options = {
 	'mode': ['normal', 'one-hit', 'cards'],
-	'map': ['random', 'hell', 'western', 'ship', 'space', 'traffic', 'pacman'],
+	'map': ['random', 'hell', 'western', 'ship', 'space', 'traffic', 'pacman', 'conveyor'],
 	'rounds': [1, 3, 5, 9]
 }
 var optionsSelected = {
@@ -156,6 +156,7 @@ func goToMap():
 		if selectedMap == 'space': get_tree().change_scene("res://maps/MapSpace.tscn")
 		if selectedMap == 'traffic': get_tree().change_scene("res://maps/MapTraffic.tscn")
 		if selectedMap == 'pacman': get_tree().change_scene("res://maps/MapPacman.tscn")
+		if selectedMap == 'conveyor': get_tree().change_scene("res://maps/MapConveyor.tscn")
 	else:
 		get_tree().change_scene("res://maps/PostGame.tscn")
 
