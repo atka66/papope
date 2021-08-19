@@ -76,6 +76,16 @@ func _ready():
 	
 	if Global.playersPerks[playerId].has(Global.PerkEnum.REGENERATION):
 		var loop = _regenLoop()
+		
+	#var dashLoop = _dashLoop()
+	
+func _dashLoop(): # TODO ONLY DEBUG PURPOSES
+	var x = ((randi() % 3) - 1)
+	var y = ((randi() % 3) - 1)
+	apply_central_impulse(Vector2(x, y))
+	dash(x, y)
+	yield(get_tree().create_timer(0.5), "timeout")
+	var rerun = _dashLoop()
 
 func _regenLoop():
 	heal(Global.HEAL_REGENERATION)
@@ -511,8 +521,9 @@ func dash(lhAxis, lvAxis):
 		actualImpulse = Vector2(lhAxis, lvAxis).normalized() * speed * dashMul
 	else:
 		actualImpulse = linear_velocity.normalized() * speed * dashMul
+	apply_central_impulse(actualImpulse)
+
 	var dashPar = Res.DashPar.instance()
 	dashPar.direction = -actualImpulse
 	dashPar.emitting = true
 	add_child(dashPar)
-	apply_central_impulse(actualImpulse)

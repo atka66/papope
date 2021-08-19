@@ -8,6 +8,8 @@ export(int) var collisionSize = 16
 export(int) var spriteOffset
 export(int) var hp = 6
 
+var conveyed = false
+
 func _ready():
 	$Sprite.texture = sprite
 	$Sprite.offset.y = spriteOffset
@@ -22,3 +24,7 @@ func destroy(impulse):
 		particle.impulse(impulse)
 		get_parent().add_child(particle)
 	queue_free()
+
+func _physics_process(delta):
+	if conveyed:
+		position.x -= Global.CONVEYOR_VEL_PIXEL

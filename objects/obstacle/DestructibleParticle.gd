@@ -4,6 +4,8 @@ extends RigidBody2D
 export(Texture) var sprite
 var torque = 0
 
+var conveyed = false
+
 func _ready():
 	$Sprite.texture = sprite
 	$Sprite.frame = randi() % $Sprite.hframes
@@ -20,3 +22,7 @@ func _process(delta):
 	if torque > 0:
 		$Sprite.rotate(torque)
 		torque -= 0.01
+
+func _physics_process(delta):
+	if conveyed:
+		position.x -= Global.CONVEYOR_VEL_PIXEL

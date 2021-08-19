@@ -246,6 +246,8 @@ outline = true
 
 [node name="SmokeParticles" type="CPUParticles2D" parent="."]
 position = Vector2( 0, 12 )
+z_index = -1
+z_as_relative = false
 amount = 10
 lifetime = 0.3
 lifetime_randomness = 0.5

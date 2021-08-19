@@ -5,8 +5,8 @@
 [ext_resource path="res://sprites/pwrup/spawner.png" type="Texture" id=3]
 [ext_resource path="res://objects/anim/ConveyorBelt.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/obstacle/WaterTrigger.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/Player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://maps/MovingPlatform.gd" type="Script" id=7]
+[ext_resource path="res://objects/obstacle/Block.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/system/ObstacleSpawner.tscn" type="PackedScene" id=11]
 
 [node name="Conveyor" type="Node2D"]
 z_index = -50
@@ -27,23 +27,112 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PwrupSpawner0" type="Sprite" parent="." groups=[
-"spawners",
-]]
-position = Vector2( 336, 192 )
-z_index = -2
-z_as_relative = false
-texture = ExtResource( 3 )
-
 [node name="ConveyorBelt" parent="." instance=ExtResource( 4 )]
 position = Vector2( 128, 0 )
 
 [node name="WaterTrigger1" parent="." instance=ExtResource( 5 )]
-position = Vector2( 0, -64 )
-scale = Vector2( 7, 32 )
+position = Vector2( 40, -64 )
+scale = Vector2( 4, 32 )
 
-[node name="Player" parent="." instance=ExtResource( 6 )]
-position = Vector2( 224, 192 )
+[node name="FireParticles" type="CPUParticles2D" parent="."]
+position = Vector2( 48, 384 )
+lifetime = 4.0
+preprocess = 5.0
+lifetime_randomness = 1.0
+emission_shape = 2
+emission_rect_extents = Vector2( 64, 128 )
+direction = Vector2( 0, -1 )
+spread = 25.0
+initial_velocity = 100.0
+angle = 360.0
+angle_random = 1.0
+scale_amount = 5.0
+scale_amount_random = 1.0
+color = Color( 0.854902, 0.341176, 0, 1 )
 
-[node name="MovingPlatform" type="Node2D" parent="."]
-script = ExtResource( 7 )
+[node name="PlayerSpawner0" type="Position2D" parent="."]
+position = Vector2( 640, 32 )
+z_index = -2
+z_as_relative = false
+
+[node name="PlayerSpawner1" type="Position2D" parent="."]
+position = Vector2( 632, 320 )
+z_index = -2
+z_as_relative = false
+
+[node name="PlayerSpawner2" type="Position2D" parent="."]
+position = Vector2( 624, 128 )
+z_index = -2
+z_as_relative = false
+
+[node name="PlayerSpawner3" type="Position2D" parent="."]
+position = Vector2( 616, 224 )
+z_index = -2
+z_as_relative = false
+
+[node name="PwrupSpawner1" type="Sprite" parent="." groups=[
+"spawners",
+]]
+position = Vector2( 736, 64 )
+z_index = -2
+z_as_relative = false
+texture = ExtResource( 3 )
+
+[node name="PwrupSpawner2" type="Sprite" parent="." groups=[
+"spawners",
+]]
+position = Vector2( 736, 128 )
+z_index = -2
+z_as_relative = false
+texture = ExtResource( 3 )
+
+[node name="PwrupSpawner3" type="Sprite" parent="." groups=[
+"spawners",
+]]
+position = Vector2( 736, 192 )
+z_index = -2
+z_as_relative = false
+texture = ExtResource( 3 )
+
+[node name="PwrupSpawner4" type="Sprite" parent="." groups=[
+"spawners",
+]]
+position = Vector2( 736, 256 )
+z_index = -2
+z_as_relative = false
+texture = ExtResource( 3 )
+
+[node name="PwrupSpawner5" type="Sprite" parent="." groups=[
+"spawners",
+]]
+position = Vector2( 736, 320 )
+z_index = -2
+z_as_relative = false
+texture = ExtResource( 3 )
+
+[node name="Block1" parent="." instance=ExtResource( 9 )]
+position = Vector2( 104, -48 )
+scale = Vector2( 52, 2 )
+
+[node name="Block2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 104, 368 )
+scale = Vector2( 52, 2 )
+
+[node name="Block3" parent="." instance=ExtResource( 9 )]
+position = Vector2( 680, -16 )
+scale = Vector2( 2, 24 )
+
+[node name="ObstacleSpawner" parent="." instance=ExtResource( 11 )]
+position = Vector2( 768, 32 )
+
+[node name="ObstacleSpawner2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 768, 96 )
+
+[node name="ObstacleSpawner3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 768, 160 )
+
+[node name="ObstacleSpawner4" parent="." instance=ExtResource( 11 )]
+position = Vector2( 768, 224 )
+
+[node name="ObstacleSpawner5" parent="." instance=ExtResource( 11 )]
+position = Vector2( 768, 288 )

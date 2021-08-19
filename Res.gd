@@ -26,7 +26,11 @@ onready var Ghost = preload("res://objects/obstacle/Ghost.tscn")
 onready var DeadGhost = preload("res://objects/obstacle/DeadGhost.tscn")
 onready var FeatherPar = preload("res://objects/anim/FeatherPar.tscn")
 onready var DashPar = preload("res://objects/anim/DashPar.tscn")
+onready var Destructible = preload("res://objects/obstacle/Destructible.tscn")
 onready var DestructibleParticle = preload("res://objects/obstacle/DestructibleParticle.tscn")
+
+onready var SpriteDestructibleCrate = preload("res://sprites/obstacle/crate.png")
+onready var SpriteDestructibleParticleCrate = preload("res://sprites/obstacle/crate_particle.png")
 
 onready var AudioOption = preload("res://sounds/system/option.ogg")
 onready var AudioRoundGo = preload("res://sounds/system/round_go.ogg")

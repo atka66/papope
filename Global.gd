@@ -106,6 +106,9 @@ const TEAM_COLOR_STRINGS = {
 	3: "YELLOW"
 }
 
+const CONVEYOR_VEL_PIXEL = 0.68
+const CONVEYOR_VEL_PHYSICS = Vector2(-244.0, 0)
+
 var options = {
 	'mode': ['normal', 'one-hit', 'cards'],
 	'map': ['random', 'hell', 'western', 'ship', 'space', 'traffic', 'pacman', 'conveyor'],

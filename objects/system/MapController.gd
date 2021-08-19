@@ -94,7 +94,3 @@ func _process(delta):
 		screenShakePwr -= 1
 	else:
 		$Camera.position = Vector2.ZERO
-
-	if Global.selectedMap == 'conveyor':
-		for node in get_parent().get_children():
-			

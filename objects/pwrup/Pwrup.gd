@@ -2,12 +2,18 @@ extends Area2D
 
 export(String) var pwrupName = 'revolver'
 
+var conveyed = false
+
 func _ready():
-	$PwrupSprite.frames = Res.PwrupSprites[pwrupName]
-	$SpawnAnim.play()
+	$Container/PwrupSprite.frames = Res.PwrupSprites[pwrupName]
+	$Container/SpawnAnim.play()
+
+func _process(delta):
+	if conveyed:
+		position.x -= Global.CONVEYOR_VEL_PIXEL
 
 func _on_SpawnAnim_animation_finished():
-	$SpawnAnim.hide()
+	$Container/SpawnAnim.hide()
 
 func remove():
 	var despawnAnim = Res.DespawnAnim.instance()
