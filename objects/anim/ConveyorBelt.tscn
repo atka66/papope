@@ -214,7 +214,7 @@ tracks/16/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 512, 192 )
+extents = Vector2( 512, 256 )
 
 [node name="ConveyorBelt" type="Area2D"]
 collision_layer = 131072

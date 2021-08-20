@@ -27,6 +27,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect" type="ColorRect" parent="BgNode"]
+margin_right = 680.0
+margin_bottom = 240.0
+color = Color( 0, 0, 0, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ConveyorBelt" parent="." instance=ExtResource( 4 )]
 position = Vector2( 128, 0 )
 
