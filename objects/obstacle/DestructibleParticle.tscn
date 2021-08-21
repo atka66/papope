@@ -7,7 +7,7 @@
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "conveyorfall"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:position")
@@ -54,7 +54,7 @@ script = ExtResource( 2 )
 sprite = ExtResource( 1 )
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-anims/conveyorfall = SubResource( 4 )
+anims/conveyorfall = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

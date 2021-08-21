@@ -127,20 +127,8 @@ position = Vector2( 104, 368 )
 scale = Vector2( 52, 2 )
 
 [node name="Block3" parent="." instance=ExtResource( 9 )]
-position = Vector2( 680, -16 )
+position = Vector2( 768, -16 )
 scale = Vector2( 2, 24 )
 
 [node name="ObstacleSpawner" parent="." instance=ExtResource( 11 )]
-position = Vector2( 768, 32 )
-
-[node name="ObstacleSpawner2" parent="." instance=ExtResource( 11 )]
-position = Vector2( 768, 96 )
-
-[node name="ObstacleSpawner3" parent="." instance=ExtResource( 11 )]
-position = Vector2( 768, 160 )
-
-[node name="ObstacleSpawner4" parent="." instance=ExtResource( 11 )]
-position = Vector2( 768, 224 )
-
-[node name="ObstacleSpawner5" parent="." instance=ExtResource( 11 )]
-position = Vector2( 768, 288 )
+position = Vector2( 736, 32 )

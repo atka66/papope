@@ -25,7 +25,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, -2 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "conveyorfall"
 step = 0.05
 tracks/0/type = "value"
@@ -64,10 +64,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.4, 1 ),
 "transitions": PoolRealArray( 0.5, 1, 1 ),
 "update": 0,
-"values": [ 720.0, 0.0, 180.0 ]
+"values": [ 360.0, 0.0, 180.0 ]
 }
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
 "loop": true,
@@ -75,7 +75,7 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=4]
 radius = 4.0
 
 [node name="Pwrup" type="Area2D" groups=[
@@ -90,24 +90,24 @@ script = ExtResource( 1 )
 root_node = NodePath("../Container")
 autoplay = "bob"
 anims/bob = SubResource( 1 )
-anims/conveyorfall = SubResource( 4 )
+anims/conveyorfall = SubResource( 2 )
 
 [node name="Container" type="Node2D" parent="."]
-position = Vector2( 0, -8 )
 rotation = 12.5664
 
 [node name="SpawnAnim" type="AnimatedSprite" parent="Container"]
 z_index = 5
 z_as_relative = false
-frames = SubResource( 2 )
+frames = SubResource( 3 )
 
 [node name="PwrupSprite" type="AnimatedSprite" parent="Container"]
-rotation = 12.5664
+rotation = 6.28319
 frames = ExtResource( 6 )
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [connection signal="body_entered" from="." to="." method="_on_Pwrup_body_entered"]
 [connection signal="animation_finished" from="Container/SpawnAnim" to="." method="_on_SpawnAnim_animation_finished"]
