@@ -2,7 +2,7 @@ extends Area2D
 
 func _on_ConveyorBelt_body_entered(body):
 	if body is RigidBody2D:
-		body.add_central_force(Global.CONVEYOR_VEL_PHYSICS)
+		body.add_central_force(Global.CONVEYOR_VEL_RIGID)
 	if body.is_in_group('destructible'):
 		body.conveyed = true
 

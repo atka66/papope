@@ -12,7 +12,7 @@ func _ready():
 
 func _process(delta):
 	if conveyed:
-		position.x -= Global.CONVEYOR_VEL_PIXEL
+		position.x -= Global.CONVEYOR_VEL_AREA
 
 func _on_Trap_body_entered(body):
 	if armed:

@@ -27,4 +27,4 @@ func destroy(impulse):
 
 func _physics_process(delta):
 	if conveyed:
-		position.x -= Global.CONVEYOR_VEL_PIXEL
+		position.x -= Global.CONVEYOR_VEL_AREA
