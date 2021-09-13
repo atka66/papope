@@ -3,7 +3,7 @@
 [ext_resource path="res://objects/pwrup/Trap.gd" type="Script" id=1]
 [ext_resource path="res://sprites/pwrup/trap.png" type="Texture" id=2]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "conveyorfall"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:position")
@@ -43,8 +43,20 @@ tracks/2/keys = {
 "update": 0,
 "values": [ 0.0, -180.0 ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=2]
 radius = 6.0
 
 [node name="Trap" type="Area2D" groups=[
@@ -55,14 +67,14 @@ z_as_relative = false
 script = ExtResource( 1 )
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-anims/conveyorfall = SubResource( 2 )
+anims/conveyorfall = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
 
