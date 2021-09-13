@@ -94,3 +94,12 @@ func _process(delta):
 		screenShakePwr -= 1
 	else:
 		$Camera.position = Vector2.ZERO
+
+func playDestructibleDestroy():
+	if !$AudioDestructibleDestroy.playing:
+		$AudioDestructibleDestroy.stream = Res.AudioDestructibleDestroy[randi() % len(Res.AudioDestructibleDestroy)]
+		$AudioDestructibleDestroy.play()
+
+func playFallenPwrups():
+	if !$AudioFallenPwrups.playing:
+		$AudioFallenPwrups.play()

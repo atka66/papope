@@ -16,13 +16,17 @@ func _ready():
 	if (has_node('CollisionShape2D')):
 		$CollisionShape2D.shape.set_extents(Vector2(collisionSize, collisionSize))
 
-func destroy(impulse):
+func destroyWithParticles(impulse):
 	for i in range(numberOfParticles):
 		var particle = Res.DestructibleParticle.instance()
 		particle.sprite = particleSprite
 		particle.position = position + Vector2((randi() % 32) - 16, (randi() % 32) - 16)
 		particle.impulse(impulse)
 		get_parent().add_child(particle)
+	destroy()
+	
+func destroy():
+	get_tree().get_nodes_in_group('controllers')[0].playDestructibleDestroy()
 	queue_free()
 
 func _physics_process(delta):

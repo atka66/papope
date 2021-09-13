@@ -26,3 +26,7 @@ func _on_Pwrup_body_entered(body):
 		if body.alive && !Global.playersFrozen:
 			body.pickup(pwrupName)
 			remove()
+
+func fell():
+	get_tree().get_nodes_in_group('controllers')[0].playFallenPwrups()
+	queue_free()

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://objects/system/MapController.gd" type="Script" id=1]
+[ext_resource path="res://sounds/player/fellwater.ogg" type="AudioStream" id=2]
 
 [node name="MapController" type="Node2D" groups=[
 "controllers",
@@ -12,3 +13,8 @@ script = ExtResource( 1 )
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
+
+[node name="AudioDestructibleDestroy" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AudioFallenPwrups" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )

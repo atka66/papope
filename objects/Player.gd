@@ -352,7 +352,7 @@ func useItem():
 				elif collider.is_in_group('destructible'):
 					collider.hp -= 2
 					if collider.hp < 1:
-						collider.destroy(Vector2.ZERO)
+						collider.destroyWithParticles(Vector2.ZERO)
 					spawnRicochet(hitPosition)
 				else:
 					spawnRicochet(hitPosition)
@@ -416,7 +416,7 @@ func useItem():
 				if collider.is_in_group('destructible'):
 					collider.hp -= 3
 					if collider.hp < 1:
-						collider.destroy(Vector2.ZERO)
+						collider.destroyWithParticles(Vector2.ZERO)
 				if collider.is_in_group('cacti'):
 					collider.get_node('Anim').play('hit')
 			whipcrackAnim.position = hitPosition

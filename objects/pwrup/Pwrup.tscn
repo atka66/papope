@@ -51,7 +51,7 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "fell"
 } ]
 }
 tracks/2/type = "value"
@@ -128,6 +128,7 @@ frames = SubResource( 3 )
 [node name="PwrupSprite" type="AnimatedSprite" parent="Container"]
 rotation = 6.28319
 frames = ExtResource( 6 )
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -92,6 +92,11 @@ onready var AudioChickenHurt = [
 	preload("res://sounds/chicken/hurt_2.ogg"),
 	preload("res://sounds/chicken/hurt_3.ogg")
 ]
+onready var AudioDestructibleDestroy = [
+	preload("res://sounds/destructible/destroy_1.wav"),
+	preload("res://sounds/destructible/destroy_2.wav"),
+	preload("res://sounds/destructible/destroy_3.wav")
+]
 
 onready var PwrupSprites = {
 	'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),

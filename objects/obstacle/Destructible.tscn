@@ -41,12 +41,12 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "destroy"
 } ]
 }
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 16, 16 )
+extents = Vector2( 8, 8 )
 
 [node name="Destructible" type="KinematicBody2D" groups=[
 "blockcollidors",

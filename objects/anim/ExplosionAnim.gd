@@ -28,7 +28,7 @@ func _ready():
 	for destructible in get_tree().get_nodes_in_group('destructible'):
 		var dist = position.distance_to(destructible.global_position)
 		if dist < 150:
-			destructible.destroy(position.direction_to(destructible.global_position) * 30)
+			destructible.destroyWithParticles(position.direction_to(destructible.global_position) * 30)
 	for particle in get_tree().get_nodes_in_group('destructionparticle'):
 		var dist = position.distance_to(particle.global_position)
 		if dist < 150:
