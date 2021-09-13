@@ -9,7 +9,7 @@
 [ext_resource path="res://objects/obstacle/Block.tscn" type="PackedScene" id=7]
 [ext_resource path="res://sprites/bg/ship_3.png" type="Texture" id=8]
 [ext_resource path="res://sprites/bg/ship_2.png" type="Texture" id=9]
-[ext_resource path="res://objects/obstacle/WaterTrigger.tscn" type="PackedScene" id=10]
+[ext_resource path="res://objects/obstacle/FallTrigger.tscn" type="PackedScene" id=10]
 [ext_resource path="res://objects/obstacle/BlockParticle.tscn" type="PackedScene" id=11]
 [ext_resource path="res://objects/system/PlayzoneShader.tscn" type="PackedScene" id=12]
 [ext_resource path="res://shaders/rockingshader.shader" type="Shader" id=13]
@@ -805,23 +805,27 @@ scale = Vector2( 42, 4 )
 position = Vector2( 160, 448 )
 scale = Vector2( 22, 4 )
 
-[node name="WaterTrigger1" parent="." instance=ExtResource( 10 )]
+[node name="FallTrigger1" parent="." instance=ExtResource( 10 )]
 position = Vector2( -16, -64 )
 scale = Vector2( 8, 32 )
+deathType = 4
 
-[node name="WaterTrigger2" parent="." instance=ExtResource( 10 )]
+[node name="FallTrigger2" parent="." instance=ExtResource( 10 )]
 position = Vector2( 96, 320 )
 rotation = -0.436332
 scale = Vector2( 1, 10 )
+deathType = 4
 
-[node name="WaterTrigger3" parent="." instance=ExtResource( 10 )]
+[node name="FallTrigger3" parent="." instance=ExtResource( 10 )]
 position = Vector2( 560, -64 )
 scale = Vector2( 8, 32 )
+deathType = 4
 
-[node name="WaterTrigger4" parent="." instance=ExtResource( 10 )]
+[node name="FallTrigger4" parent="." instance=ExtResource( 10 )]
 position = Vector2( 560, 320 )
 rotation = 0.436332
 scale = Vector2( 1, 10 )
+deathType = 4
 
 [node name="Destructible1" parent="." instance=ExtResource( 3 )]
 position = Vector2( 144, 240 )

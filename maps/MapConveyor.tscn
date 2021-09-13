@@ -4,7 +4,7 @@
 [ext_resource path="res://maps/ConveyorBg.gd" type="Script" id=2]
 [ext_resource path="res://sprites/pwrup/spawner.png" type="Texture" id=3]
 [ext_resource path="res://objects/anim/ConveyorBelt.tscn" type="PackedScene" id=4]
-[ext_resource path="res://objects/obstacle/WaterTrigger.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/obstacle/FallTrigger.tscn" type="PackedScene" id=5]
 [ext_resource path="res://objects/obstacle/Block.tscn" type="PackedScene" id=9]
 [ext_resource path="res://objects/system/ObstacleSpawner.tscn" type="PackedScene" id=11]
 
@@ -38,7 +38,7 @@ __meta__ = {
 [node name="ConveyorBelt" parent="." instance=ExtResource( 4 )]
 position = Vector2( 128, 0 )
 
-[node name="WaterTrigger1" parent="." instance=ExtResource( 5 )]
+[node name="FallTrigger" parent="." instance=ExtResource( 5 )]
 position = Vector2( 40, -64 )
 scale = Vector2( 4, 32 )
 
