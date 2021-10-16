@@ -9,6 +9,7 @@
 # * breaking object sounds
 # * map interactibility:
 #     * tumbleweed in western
+#     * destructible tiles in space
 # * perks
 #     * [DISCARDED] no hands - simply not fun, kills other perks
 #     * [DISCARDED] ethereal - pass through players
