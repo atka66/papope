@@ -11,8 +11,12 @@ func spawnCrate():
 	var crate = Res.Destructible.instance()
 	crate.position = position
 	crate.position.y += randi() % height
-	crate.sprite = Res.SpriteDestructibleCrate
-	crate.particleSprite = Res.SpriteDestructibleParticleCrate
+	if randi() % 2 == 0:
+		crate.sprite = Res.SpriteDestructibleCrate
+		crate.particleSprite = Res.SpriteDestructibleParticleCrate
+	else:
+		crate.sprite = Res.SpriteDestructibleBarrel
+		crate.particleSprite = Res.SpriteDestructibleParticleBarrel
 	get_parent().add_child(crate)
 	var rerun = spawnCrate()
 

@@ -8,7 +8,6 @@
 # * hell map lava closing in
 # * breaking object sounds
 # * map interactibility:
-#     * crates and barrels in ship
 #     * tumbleweed in western
 # * perks
 #     * [DISCARDED] no hands - simply not fun, kills other perks

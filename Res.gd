@@ -31,6 +31,8 @@ onready var DestructibleParticle = preload("res://objects/obstacle/DestructibleP
 
 onready var SpriteDestructibleCrate = preload("res://sprites/obstacle/crate.png")
 onready var SpriteDestructibleParticleCrate = preload("res://sprites/obstacle/crate_particle.png")
+onready var SpriteDestructibleBarrel = preload("res://sprites/obstacle/barrel.png")
+onready var SpriteDestructibleParticleBarrel = preload("res://sprites/obstacle/barrel_particle.png")
 
 onready var AudioOption = preload("res://sounds/system/option.ogg")
 onready var AudioRoundGo = preload("res://sounds/system/round_go.ogg")
