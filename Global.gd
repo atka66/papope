@@ -62,21 +62,20 @@ const ACHIEVEMENTS = {
 enum PerkEnum {
 	AKIMBO, ARMORED, FAST, SPIKY, CUDDLES, REVERSE,
 	BACKFIRE, SLOW, NO_LEGS, TIME_BOMB,
-	NOTHING, RESET, RIGHT, LONG_ARMS, CHICKEN,
+	RESET, RIGHT, LONG_ARMS, CHICKEN,
 	HEALTHY, UNHEALTHY, REGENERATION, VAMPIRE
 }
 const PERKS = {
-	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 0],
-	PerkEnum.ARMORED: ['armored', 'incoming damage halved', 1], 
-	PerkEnum.FAST: ['fast', 'doubled movement speed', 2],
-	PerkEnum.SPIKY: ['spiky', 'touching players hurts them', 3],
-	PerkEnum.CUDDLES: ['cuddles', 'touching players heals self', 4],
-	PerkEnum.REVERSE: ['reverse', 'inverted movement', 5],
-	PerkEnum.BACKFIRE: ['backfire', 'inverted aim', 6],
-	PerkEnum.SLOW: ['slow', 'halved movement speed', 7],
-	PerkEnum.NO_LEGS: ['no legs', 'can only dash', 8],
-	PerkEnum.TIME_BOMB: ['time bomb', 'explodes after 1 minute', 9],
-	PerkEnum.NOTHING: ['nothing', 'nothing happens', 10],
+	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 1],
+	PerkEnum.ARMORED: ['armored', 'incoming damage halved', 2], 
+	PerkEnum.FAST: ['fast', 'doubled movement speed', 3],
+	PerkEnum.SPIKY: ['spiky', 'touching players hurts them', 4],
+	PerkEnum.CUDDLES: ['cuddles', 'touching players heals self', 5],
+	PerkEnum.REVERSE: ['reverse', 'inverted movement', 6],
+	PerkEnum.BACKFIRE: ['backfire', 'inverted aim', 7],
+	PerkEnum.SLOW: ['slow', 'halved movement speed', 8],
+	PerkEnum.NO_LEGS: ['no legs', 'can only dash', 9],
+	PerkEnum.TIME_BOMB: ['time bomb', 'explodes after 1 minute', 10],
 	PerkEnum.RESET: ['reset', 'previous cards removed', 11],
 	PerkEnum.RIGHT: ['right', 'because i cannot look left', 12],
 	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 13],
@@ -96,7 +95,7 @@ const DAMAGE_TRAP = 35
 const DAMAGE_CACTUS = 10
 const DAMAGE_SPIKY = 5
 const HEAL_CUDDLES = 5
-const HEAL_REGENERATION = 5
+const HEAL_REGENERATION = 2
 
 const SKIN_COUNT = 6
 const TEAM_COLOR_STRINGS = {

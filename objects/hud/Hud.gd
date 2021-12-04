@@ -24,7 +24,7 @@ func _ready():
 	var perks = Global.playersPerks[player.playerId]
 	for i in range(len(perks)):
 		var perk = Res.Perk.instance()
-		perk.hframes = len(Global.PerkEnum)
+		perk.hframes = len(Global.PerkEnum) + 1
 		perk.frame = Global.PERKS[perks[i]][2]
 		var x = 1 + (i * 17)
 		if len(perks) > 6:

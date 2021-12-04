@@ -6,7 +6,7 @@ var revealed = false
 func _ready():
 	var perkData = Global.PERKS[perk]
 	$Shine.hide()
-	$CardSprite/PerkSprite.hframes = len(Global.PerkEnum)
+	$CardSprite/PerkSprite.hframes = len(Global.PerkEnum) + 1
 	$CardSprite/PerkSprite.frame = perkData[2]
 	$CardSprite/PerkSprite.hide()
 	$PerkName.set_text(perkData[0])
