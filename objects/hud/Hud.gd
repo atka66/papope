@@ -56,8 +56,10 @@ func handleShake():
 		$Container/AmmoContainer/HudAmmo.position = Vector2.ZERO
 
 func handleHpBar():
-	$Container/HpBar.scale = Vector2(float(player.hp) / maxHp, 1)
-	$Container/HpBarDelay.scale = Vector2(float(delayedHp) / maxHp, 1)
+	$Container/HpBar.scale = Vector2(min(float(player.hp) / maxHp, 1.0), 1)
+	$Container/HpBarDelay.scale = Vector2(min(float(delayedHp) / maxHp, 1.0), 1)
+	$Container/HpBar2.scale = Vector2(max(float(player.hp - maxHp) / maxHp, 0.0), 1)
+	$Container/HpBarDelay2.scale = Vector2(max(float(delayedHp - maxHp) / maxHp, 0.0), 1)
 	if delayedHp > player.hp:
 		delayedHp -= 1
 

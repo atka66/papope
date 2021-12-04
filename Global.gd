@@ -130,7 +130,7 @@ var playersPoints = [0, 0, 0, 0]
 var playersSkin = [0, 1, 2, 3]
 var playersTeam = [0, 1, 2, 3]
 var playersKills = [0, 0, 0, 0]
-var playersMaxHp = [1, 1, 1, 1]
+var playersMaxHp = [100, 100, 100, 100]
 
 var playersCrowned = [false, false, false, false]
 var playersFrozen = false
@@ -139,7 +139,7 @@ var playersAchievements = [[], [], [], []]
 enum StatEnum {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT, PELLETS, GHOST_KILL}
 var playersStats = []
 var playersPerks = [[], [], [], []]
-#var playersPerks = [[PerkEnum.AKIMBO, PerkEnum.FAST], [], [], []]
+#var playersPerks = [[PerkEnum.HEALTHY], [PerkEnum.UNHEALTHY], [], []]
 
 var selectedMap = 'none'
 

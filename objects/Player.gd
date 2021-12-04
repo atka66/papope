@@ -76,6 +76,11 @@ func _ready():
 	
 	if Global.playersPerks[playerId].has(Global.PerkEnum.REGENERATION):
 		var loop = _regenLoop()
+	
+	if Global.playersPerks[playerId].has(Global.PerkEnum.HEALTHY):
+		hp *= 2
+	if Global.playersPerks[playerId].has(Global.PerkEnum.UNHEALTHY):
+		hp /= 2
 		
 	#var dashLoop = _dashLoop()
 	

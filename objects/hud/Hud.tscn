@@ -57,7 +57,16 @@ polygon = PoolVector2Array( 0, 0, 94, 0, 94, 7, 0, 7 )
 position = Vector2( 17, 32 )
 polygon = PoolVector2Array( 0, 0, 94, 0, 94, 7, 0, 7 )
 
+[node name="HpBarDelay2" type="Polygon2D" parent="Container"]
+position = Vector2( 17, 36 )
+polygon = PoolVector2Array( 0, 0, 94, 0, 94, 3, 0, 3 )
+
+[node name="HpBar2" type="Polygon2D" parent="Container"]
+position = Vector2( 17, 36 )
+polygon = PoolVector2Array( 0, 0, 94, 0, 94, 3, 0, 3 )
+
 [node name="HpBarFlicker" type="Polygon2D" parent="Container"]
+modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 17, 32 )
 polygon = PoolVector2Array( 0, 0, 94, 0, 94, 7, 0, 7 )
 
