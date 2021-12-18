@@ -285,7 +285,7 @@ anims/disappear = SubResource( 3 )
 
 [node name="Dim" type="Polygon2D" parent="."]
 color = Color( 0, 0, 0, 0.752941 )
-polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
+polygon = PoolVector2Array( -200, -200, 880, -200, 880, 584, -200, 584 )
 
 [node name="PlayerPerks0" parent="." instance=ExtResource( 3 )]
 
@@ -336,4 +336,5 @@ hframes = 2
 [node name="AudioAppear" type="AudioStreamPlayer2D" parent="."]
 position = Vector2( 340, 384 )
 stream = ExtResource( 2 )
+
 [connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]

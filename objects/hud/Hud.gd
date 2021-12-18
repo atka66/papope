@@ -24,7 +24,7 @@ func _ready():
 	var perks = Global.playersPerks[player.playerId]
 	for i in range(len(perks)):
 		var perk = Res.Perk.instance()
-		perk.hframes = len(Global.PerkEnum)
+		perk.hframes = len(Global.PerkEnum) + 1
 		perk.frame = Global.PERKS[perks[i]][2]
 		var x = 1 + (i * 17)
 		if len(perks) > 6:
@@ -56,8 +56,10 @@ func handleShake():
 		$Container/AmmoContainer/HudAmmo.position = Vector2.ZERO
 
 func handleHpBar():
-	$Container/HpBar.scale = Vector2(float(player.hp) / maxHp, 1)
-	$Container/HpBarDelay.scale = Vector2(float(delayedHp) / maxHp, 1)
+	$Container/HpBar.scale = Vector2(min(float(player.hp) / maxHp, 1.0), 1)
+	$Container/HpBarDelay.scale = Vector2(min(float(delayedHp) / maxHp, 1.0), 1)
+	$Container/HpBar2.scale = Vector2(max(float(player.hp - maxHp) / maxHp, 0.0), 1)
+	$Container/HpBarDelay2.scale = Vector2(max(float(delayedHp - maxHp) / maxHp, 0.0), 1)
 	if delayedHp > player.hp:
 		delayedHp -= 1
 

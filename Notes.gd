@@ -26,4 +26,4 @@
 # 90   : {Hud}
 # 91   : {HudRevolver}, {HudAmmo}
 # 100  : {Dim}, {PerkOverlay}
-# 101  : {CustomLabel}, [LeftArrow], [RightArrow]
+# 101  : {CustomLabel}, [SpawnSelectedFlashing], [LeftArrow], [RightArrow]
