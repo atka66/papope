@@ -1,22 +1,3 @@
-### TODOs
-# * organize collision layers
-# * bug: timebomb anomaly
-# * renew lobby bg images
-# * new map: conveyor belt
-# * car passing by and occasional horn sound in traffic
-# * more variety for cars
-# * hell map lava closing in
-# * breaking object sounds
-# * map interactibility:
-#     * tumbleweed in western
-#     * destructible tiles in space
-# * perks
-#     * [DISCARDED] no hands - simply not fun, kills other perks
-#     * [DISCARDED] ethereal - pass through players
-#     * [DISCARDED] tiny     - size halved   (might be a bugfest)
-#     * [DISCARDED] large    - size doubled  (too tight in pacman man)
-#     * [DISCARDED] slippery - no friction (speed limit is needed)
-
 ### Layers
 #
 # {Scenes}
