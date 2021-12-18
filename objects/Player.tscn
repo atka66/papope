@@ -1,10 +1,11 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://sprites/player/faces.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/circle.png" type="Texture" id=2]
 [ext_resource path="res://objects/Player.gd" type="Script" id=3]
 [ext_resource path="res://sounds/collision/block.ogg" type="AudioStream" id=4]
 [ext_resource path="res://sprites/player/lock.png" type="Texture" id=5]
+[ext_resource path="res://sounds/player/hurt_ow.ogg" type="AudioStream" id=6]
 [ext_resource path="res://sprites/player/crosshair.png" type="Texture" id=9]
 [ext_resource path="res://sprites/player/whiplash_5.png" type="Texture" id=10]
 [ext_resource path="res://sprites/player/whiplash_2.png" type="Texture" id=11]
@@ -279,6 +280,9 @@ stream = ExtResource( 24 )
 
 [node name="AudioHurtWhip" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 25 )
+
+[node name="AudioHurtWhipOw" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
 
 [node name="AudioInLava" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 26 )

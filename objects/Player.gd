@@ -70,6 +70,7 @@ func _ready():
 		emitFeathers(10)
 		$AudioSlipInWater.stream = Res.AudioChickenHurt[randi() % len(Res.AudioChickenHurt)]
 		$AudioHurtDynamite.stream = Res.AudioChickenHurt[randi() % len(Res.AudioChickenHurt)]
+		$AudioHurtWhipOw.stream = Res.AudioChickenHurt[randi() % len(Res.AudioChickenHurt)]
 		var chickenIdleSound = chickenIdleSound()
 	else:
 		$BodyParts/Face.frame = Global.playersSkin[playerId]
@@ -400,6 +401,7 @@ func useItem():
 				var collider = $HitScan.get_collider()
 				if collider.is_in_group('players'):
 					collider.get_node('AudioHurtWhip').play()
+					collider.get_node('AudioHurtWhipOw').play()
 					if collider.wouldRighteouslyBeHitBy(playerId):
 						Global.incrementStat(playerId, Global.StatEnum.WHP_HIT, 1)
 					hitPosition = $HitScan.get_collision_point()
