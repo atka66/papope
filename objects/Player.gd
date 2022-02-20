@@ -328,6 +328,7 @@ func trap():
 func useItem():
 		if item == 'revolver':
 			Global.incrementStat(playerId, Global.StatEnum.REV_USE, 1)
+			apply_central_impulse(-$HitScan.cast_to.normalized() * 100)
 			var revolverRay = Res.RevolverRay.instance()
 			var hitPosition = global_position + $HitScan.cast_to
 			if $HitScan.is_colliding():
