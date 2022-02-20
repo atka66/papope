@@ -217,7 +217,6 @@ func _ready():
 	for i in range(playersConnected.size()):
 		if playersConnected[i] && !connectedControllers.has(i):
 			disconnectPlayer(i)
-			pass
 		if !playersConnected[i] && connectedControllers.has(i):
 			connectPlayer(i)
 	

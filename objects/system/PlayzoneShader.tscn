@@ -1,20 +1,13 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://objects/system/PlayzoneShader.gd" type="Script" id=1]
-[ext_resource path="res://shaders/crtshader.shader" type="Shader" id=2]
+[ext_resource path="res://shaders/heatshader.shader" type="Shader" id=2]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
-shader_param/screen_width = 680.0
-shader_param/screen_height = 384.0
-shader_param/BarrelPower = 1.05
-shader_param/color_bleeding = 1.1
-shader_param/bleeding_range_x = 1.0
-shader_param/bleeding_range_y = 1.0
-shader_param/lines_distance = 4.0
-shader_param/scan_size = 2.0
-shader_param/scanline_alpha = 0.8
-shader_param/lines_velocity = 30.0
+shader_param/strength = 0.0007
+shader_param/frequency = 100.0
+shader_param/speed = 7.0
 
 [node name="PlayzoneShader" type="Node2D"]
 z_index = 80
