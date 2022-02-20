@@ -15,9 +15,7 @@ func _ready():
 	
 	yield(get_tree().create_timer(2.0), "timeout")
 	$AudioCash.play()
-	yield(get_tree().create_timer(4.0), "timeout")
-	$AudioWinner.play()
-	yield(get_tree().create_timer(2.0), "timeout")
+	yield(get_tree().create_timer(6.0), "timeout")
 	canProceed = true
 	$LobbyHint.show()
 

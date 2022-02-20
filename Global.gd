@@ -217,6 +217,7 @@ func _ready():
 	for i in range(playersConnected.size()):
 		if playersConnected[i] && !connectedControllers.has(i):
 			disconnectPlayer(i)
+			pass
 		if !playersConnected[i] && connectedControllers.has(i):
 			connectPlayer(i)
 	
@@ -268,4 +269,5 @@ func getRandomDeathString(deathType):
 	][randi() % 2]
 
 func shakeScreen(shakePwr):
-	get_tree().get_nodes_in_group('controllers')[0].screenShakePwr = shakePwr
+	if shakePwr > 0:
+		get_tree().get_nodes_in_group('controllers')[0].screenShakePwr = shakePwr

@@ -44,6 +44,7 @@ func _ready():
 	if winner:
 		$Face.material = null
 	else:
+		yield(get_tree().create_timer(0.15 * playerId), "timeout")
 		modulate = Color(0.7, 0.7, 0.7)
 		var winnerLabel = Res.CustomLabel.instance()
 		winnerLabel.fontSize = 3
@@ -55,6 +56,11 @@ func _ready():
 		winnerLabel.text = 'dead'
 		winnerLabel.animate = false
 		add_child(winnerLabel)
+		var explosionAnim = Res.ExplosionAnim.instance()
+		explosionAnim.position = $Face.global_position
+		explosionAnim.harmful = false
+		explosionAnim.shakePwr = 0
+		get_tree().get_current_scene().add_child(explosionAnim)
 		$Anim.play("shake")
 
 func showAchievements():
@@ -95,7 +101,13 @@ func distributeAchievements():
 			achievement = Global.AchiEnum.UNDERDOG
 		Global.registerAchievement(playerId, achievement)
 	# check stat achievements
-	var playerStats = Global.playersStats[playerId]
+	var playerStats = {
+				Global.StatEnum.REV_USE: 0, Global.StatEnum.REV_HIT: 0,
+				Global.StatEnum.DYN_USE: 0, Global.StatEnum.DYN_DMG: 0,
+				Global.StatEnum.WHP_USE: 0, Global.StatEnum.WHP_HIT: 0,
+				Global.StatEnum.TRP_USE: 0, Global.StatEnum.TRP_HIT: 0,
+				Global.StatEnum.PELLETS: 0, Global.StatEnum.GHOST_KILL: 0
+			}
 	var dyn_use = playerStats[Global.StatEnum.DYN_USE]
 	var dyn_dmg = playerStats[Global.StatEnum.DYN_DMG]
 	var rev_use = playerStats[Global.StatEnum.REV_USE]
