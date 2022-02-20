@@ -2,6 +2,9 @@ extends Node2D
 
 var screenShakePwr = 0
 
+var cameraShakeOffset = Vector2.ZERO
+var cameraPlayersOffset = Vector2.ZERO
+
 func _ready():
 	Global.playersFrozen = true
 	#scene _ready methods are unable to get parents or current scene
@@ -89,11 +92,32 @@ func initGhostSpawn():
 	get_parent().add_child(ghost)
 
 func _process(delta):
+	calculatePlayersOffset()
+	calculateShakeOffset()
+	$Camera.position = cameraPlayersOffset + cameraShakeOffset
+
+func calculatePlayersOffset():
+	var center = Vector2(340, 192)
+	var playerDiff = Vector2.ZERO
+	var rawPlayers = get_tree().get_nodes_in_group('players')
+	var players = []
+	for player in rawPlayers:
+		if player.alive:
+			players.append(player)
+	if !players.empty():
+		for player in players:
+			var playerPos = player.position - center
+			playerDiff += playerPos.normalized() * pow(playerPos.length(), 0.7)
+		playerDiff /= len(players)
+	var offsetStep = (playerDiff - cameraPlayersOffset) / 4
+	cameraPlayersOffset = cameraPlayersOffset + offsetStep
+
+func calculateShakeOffset():
 	if screenShakePwr > 0:
-		$Camera.position = Vector2((randi() % (screenShakePwr * 2)) - screenShakePwr, (randi() % (screenShakePwr * 2)) - screenShakePwr)
+		cameraShakeOffset = Vector2((randi() % (screenShakePwr * 2)) - screenShakePwr, (randi() % (screenShakePwr * 2)) - screenShakePwr)
 		screenShakePwr -= 1
 	else:
-		$Camera.position = Vector2.ZERO
+		cameraShakeOffset = Vector2.ZERO
 
 func playDestructibleDestroy():
 	if !$AudioDestructibleDestroy.playing:
