@@ -6,3 +6,4 @@ papope.pck
 # Mono-specific ignores
 .mono/
 data_*/
+*.mmpz.bak
