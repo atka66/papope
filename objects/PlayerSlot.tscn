@@ -8,7 +8,6 @@
 [ext_resource path="res://sprites/label/o.tres" type="SpriteFrames" id=6]
 [ext_resource path="res://sounds/system/option.ogg" type="AudioStream" id=7]
 
-
 [node name="PlayerSlot" type="Node2D"]
 z_index = -1
 z_as_relative = false
