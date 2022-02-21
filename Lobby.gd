@@ -21,8 +21,8 @@ func createHintLabel():
 
 func handleLabels():
 	var hasConnected = Global.playersJoined.has(true)
-	$PapopeLabel.visible = !hasConnected
-	$SubtitleLabel.visible = !hasConnected
+	$TitleHolder/PapopeLabel.visible = !hasConnected
+	$TitleHolder/SubtitleLabel.visible = !hasConnected
 
 	$MenuHintLabel.visible = hasConnected
 	$MenuMovementHintLabel.visible = hasConnected
@@ -38,15 +38,15 @@ func handleLabels():
 	$MapOption.visible = hasConnected
 	$RoundsOption.visible = hasConnected
 
-	$WaitingLabel.hide()
-	$TeamLimitLabel.hide()
-	$StartLabel.hide()
+	$InitHolder/WaitingLabel.hide()
+	$InitHolder/TeamLimitLabel.hide()
+	$InitHolder/StartLabel.hide()
 	if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
-		$WaitingLabel.show()
+		$InitHolder/WaitingLabel.show()
 	elif Global.getNumberOfTeams() < 2:
-		$TeamLimitLabel.show()
+		$InitHolder/TeamLimitLabel.show()
 	elif !countingDown:
-		$StartLabel.show()
+		$InitHolder/StartLabel.show()
 
 func randomizeBackground():
 	$MovingBackground.frame = ($MovingBackground.frame + (randi() % ($MovingBackground.vframes - 1)) + 1) % $MovingBackground.vframes

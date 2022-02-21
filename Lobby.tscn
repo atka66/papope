@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://objects/PlayerSlot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/lobby/bg.png" type="Texture" id=2]
@@ -40,6 +40,64 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( -100, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "wobble"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -2.0, 2.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "wobble"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( -0.1, 0.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1.2, 1.2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1, 2.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 2.0, -2.0 ]
 }
 
 [node name="Lobby" type="Node2D"]
@@ -94,15 +152,23 @@ text = "made with godot"
 alignment = 1
 outline = true
 
-[node name="PapopeLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 172, 128 )
+[node name="TitleHolder" type="Node2D" parent="."]
+position = Vector2( 172, 150 )
+rotation = -0.0252103
+
+[node name="Anim" type="AnimationPlayer" parent="TitleHolder"]
+autoplay = "wobble"
+anims/wobble = SubResource( 2 )
+
+[node name="PapopeLabel" parent="TitleHolder" instance=ExtResource( 4 )]
+position = Vector2( 0, -22 )
 text = "papope"
 fontSize = 6
 alignment = 1
 outline = true
 
-[node name="SubtitleLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 172, 172 )
+[node name="SubtitleLabel" parent="TitleHolder" instance=ExtResource( 4 )]
+position = Vector2( 0, 22 )
 text = "twin stick arena"
 fontSize = 3
 alignment = 1
@@ -177,22 +243,27 @@ fontSize = 2
 outline = true
 frames = [ ExtResource( 8 ) ]
 
-[node name="WaitingLabel" parent="." instance=ExtResource( 4 )]
+[node name="InitHolder" type="Node2D" parent="."]
 position = Vector2( 340, 336 )
+rotation = 0.0252103
+
+[node name="Anim" type="AnimationPlayer" parent="InitHolder"]
+autoplay = "wobble"
+anims/wobble = SubResource( 3 )
+
+[node name="WaitingLabel" parent="InitHolder" instance=ExtResource( 4 )]
 text = "waiting for more players..."
 fontSize = 2
 alignment = 1
 outline = true
 
-[node name="TeamLimitLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 340, 336 )
+[node name="TeamLimitLabel" parent="InitHolder" instance=ExtResource( 4 )]
 text = "must have at least 2 teams!"
 fontSize = 2
 alignment = 1
 outline = true
 
-[node name="StartLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 340, 336 )
+[node name="StartLabel" parent="InitHolder" instance=ExtResource( 4 )]
 text = "start"
 fontSize = 2
 alignment = 1
