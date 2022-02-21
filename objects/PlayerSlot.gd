@@ -45,10 +45,14 @@ func _input(event):
 				$AudioOption.play()
 				var optionCount = len(Global.options[Global.currentOption])
 				Global.optionsSelected[Global.currentOption] = (Global.optionsSelected[Global.currentOption] + (optionCount - 1)) % optionCount
+				if Global.currentOption == 'map':
+					Lobby.restartMovingBackground(null)
 			if Input.is_action_just_pressed("pl_nav_right"):
 				$AudioOption.play()
 				var optionCount = len(Global.options[Global.currentOption])
 				Global.optionsSelected[Global.currentOption] = (Global.optionsSelected[Global.currentOption] + 1) % optionCount
+				if Global.currentOption == 'map':
+					Lobby.restartMovingBackground(null)
 	Lobby.handleLabels()
 
 func handleSpawnSprite():

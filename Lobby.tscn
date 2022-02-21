@@ -118,7 +118,6 @@ color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
 
 [node name="BackgroundDimAnim" type="AnimationPlayer" parent="."]
-autoplay = "loop"
 anims/loop = SubResource( 1 )
 
 [node name="PlayerSlot0" parent="." instance=ExtResource( 1 )]
@@ -286,4 +285,4 @@ option = "rounds"
 stream = ExtResource( 9 )
 autoplay = true
 
-[connection signal="animation_finished" from="BackgroundDimAnim" to="." method="_on_BackgroundDim_animation_finished"]
+[connection signal="animation_finished" from="BackgroundDimAnim" to="." method="restartMovingBackground"]

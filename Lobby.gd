@@ -21,8 +21,7 @@ func createHintLabel():
 
 func handleLabels():
 	var hasConnected = Global.playersJoined.has(true)
-	$TitleHolder/PapopeLabel.visible = !hasConnected
-	$TitleHolder/SubtitleLabel.visible = !hasConnected
+	$TitleHolder.visible = !hasConnected
 
 	$MenuHintLabel.visible = hasConnected
 	$MenuMovementHintLabel.visible = hasConnected
@@ -48,8 +47,21 @@ func handleLabels():
 	elif !countingDown:
 		$InitHolder/StartLabel.show()
 
-func randomizeBackground():
-	$MovingBackground.frame = ($MovingBackground.frame + (randi() % ($MovingBackground.vframes - 1)) + 1) % $MovingBackground.vframes
+func determineBackground():
+	var resultFrame = ($MovingBackground.frame + (randi() % ($MovingBackground.vframes - 1)) + 1) % $MovingBackground.vframes
+	if Global.playersJoined.has(true):
+		match Global.options['map'][Global.optionsSelected['map']]:
+			'western':
+				resultFrame = 0
+			'hell':
+				resultFrame = 1
+			'ship':
+				resultFrame = 2
+			'space':
+				resultFrame = 3
+			'traffic':
+				resultFrame = 4
+	$MovingBackground.frame = resultFrame
 
 func startCountdown():
 	countingDown = true
@@ -90,7 +102,7 @@ func initPlayers():
 func _ready():
 	initPlayers()
 	
-	randomizeBackground()
+	restartMovingBackground(null)
 	$VersionLabel.set_text('V' + Global.VERSION)
 	while true:
 		yield(createHintLabel(), "completed")
@@ -98,6 +110,7 @@ func _ready():
 func _process(delta):
 	handleLabels()
 
-func _on_BackgroundDim_animation_finished(anim_name):
-	randomizeBackground()
-	$BackgroundDimAnim.play()
+func restartMovingBackground(anim_name):
+	determineBackground()
+	$BackgroundDimAnim.seek(0)
+	$BackgroundDimAnim.play('loop')
