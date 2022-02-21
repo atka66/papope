@@ -269,4 +269,6 @@ func getRandomDeathString(deathType):
 
 func shakeScreen(shakePwr):
 	if shakePwr > 0:
-		get_tree().get_nodes_in_group('controllers')[0].screenShakePwr = shakePwr
+		var controllers = get_tree().get_nodes_in_group('controllers')
+		if !controllers.empty():
+			controllers[0].screenShakePwr = shakePwr
