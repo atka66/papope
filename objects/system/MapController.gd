@@ -129,3 +129,6 @@ func playDestructibleDestroy():
 func playFallenPwrups():
 	if !$AudioFallenPwrups.playing:
 		$AudioFallenPwrups.play()
+
+## TEST -- REMOVE
+#func _input(event): if Input.is_action_just_pressed("test"): get_tree().change_scene("res://maps/PostGame.tscn")
