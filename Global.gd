@@ -120,10 +120,10 @@ var optionsSelected = {
 }
 var currentOption = options.keys()[0]
 
-#var playersConnected = [false, false, false, false]
-var playersConnected = [true, true, true, true]
-#var playersJoined = [false, false, false, false]
-var playersJoined = [true, true, false, false]
+var playersConnected = [false, false, false, false]
+#var playersConnected = [true, true, true, true]
+var playersJoined = [false, false, false, false]
+#var playersJoined = [true, true, false, false]
 var playersPoints = [0, 0, 0, 0]
 #var playersPoints = [0, 3, 2, 3]
 var playersSkin = [0, 1, 2, 3]
@@ -216,8 +216,8 @@ func _ready():
 	var connectedControllers = Input.get_connected_joypads()
 	for i in range(playersConnected.size()):
 		if playersConnected[i] && !connectedControllers.has(i):
-			#disconnectPlayer(i)
-			pass
+			disconnectPlayer(i)
+			#pass
 		if !playersConnected[i] && connectedControllers.has(i):
 			connectPlayer(i)
 	
