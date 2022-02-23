@@ -118,4 +118,4 @@ func restartMovingBackground(anim_name):
 	$BackgroundDimAnim.play('loop')
 
 ## TEST -- REMOVE
-#func _input(event): if Input.is_action_just_pressed("test"): Global.goToMap()
+func _input(event): if Input.is_action_just_pressed("test"): Global.goToMap()
