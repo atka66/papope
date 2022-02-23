@@ -9,5 +9,7 @@ func play(stage):
 			audioStream = Res.AudioMusicPostGame
 		'hell':
 			audioStream = Res.AudioMusicHell
+		'space':
+			audioStream = Res.AudioMusicSpace
 	$Audio.stream = audioStream
 	$Audio.play()

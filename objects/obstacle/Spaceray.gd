@@ -9,7 +9,7 @@ func _ready():
 	var loop = _rayLoop()
 
 func _rayLoop():
-	yield(get_tree().create_timer(15.0), "timeout")
+	yield(get_tree().create_timer(18.0), "timeout")
 	$Phase1.show()
 	$Phase1/Phase1Anim.play()
 	$AudioStart.play()
