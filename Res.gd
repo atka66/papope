@@ -108,3 +108,10 @@ onready var PwrupSprites = {
 	'trap' : preload("res://sprites/pwrup/pwrup_trap.tres"),
 	'whip' : preload("res://sprites/pwrup/pwrup_whip.tres")
 }
+
+# Music
+
+onready var MusicNode = preload("res://objects/system/Music.tscn")
+onready var AudioMusicLobby = preload("res://musics/lobby.ogg")
+onready var AudioMusicPostGame = preload("res://musics/postgame.ogg")
+onready var AudioMusicHell = preload("res://musics/hell.ogg")

@@ -6,6 +6,8 @@ var cameraShakeOffset = Vector2.ZERO
 var cameraPlayersOffset = Vector2.ZERO
 
 func _ready():
+	get_node('/root/Music').play(Global.selectedMap)
+
 	Global.playersFrozen = true
 	#scene _ready methods are unable to get parents or current scene
 	add_child(Res.RoundStartBanner.instance())

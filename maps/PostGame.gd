@@ -3,6 +3,7 @@ extends Node2D
 var canProceed = false
 
 func _ready():
+	get_node('/root/Music').play('postgame')
 	$LobbyHint.hide()
 	var winnerTeam = Global.getWinnerTeamByScore()
 	for i in range(4):

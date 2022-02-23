@@ -100,8 +100,10 @@ func initPlayers():
 		)
 
 func _ready():
+	get_node('/root/Music').play('lobby')
+
 	initPlayers()
-	
+
 	restartMovingBackground(null)
 	$VersionLabel.set_text('V' + Global.VERSION)
 	while true:
@@ -114,3 +116,8 @@ func restartMovingBackground(anim_name):
 	determineBackground()
 	$BackgroundDimAnim.seek(0)
 	$BackgroundDimAnim.play('loop')
+
+## TEST -- REMOVE
+#func _input(event):
+#	if Input.is_action_just_pressed("test"):
+#		Global.goToMap()
