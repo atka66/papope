@@ -103,8 +103,6 @@ tracks/1/keys = {
 [node name="Lobby" type="Node2D"]
 script = ExtResource( 5 )
 
-[node name="Camera" parent="." instance=ExtResource( 9 )]
-
 [node name="MovingBackground" type="Sprite" parent="."]
 z_index = -52
 z_as_relative = false
@@ -117,132 +115,138 @@ modulate = Color( 0, 0, 0, 1 )
 z_index = -49
 z_as_relative = false
 color = Color( 0, 0, 0, 1 )
-polygon = PoolVector2Array( 0, 0, 680, 0, 680, 384, 0, 384 )
+polygon = PoolVector2Array( -200, -200, 880, -200, 880, 584, -200, 584 )
 
 [node name="BackgroundDimAnim" type="AnimationPlayer" parent="."]
 anims/loop = SubResource( 1 )
 
+[node name="Camera" parent="." instance=ExtResource( 9 )]
+
 [node name="PlayerSlot0" parent="." instance=ExtResource( 1 )]
-position = Vector2( 128, 256 )
+position = Vector2( 128, 240 )
 
 [node name="PlayerSlot1" parent="." instance=ExtResource( 1 )]
-position = Vector2( 256, 256 )
+position = Vector2( 256, 240 )
 playerId = 1
 
 [node name="PlayerSlot2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 384, 256 )
+position = Vector2( 384, 240 )
 playerId = 2
 
 [node name="PlayerSlot3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 512, 256 )
+position = Vector2( 512, 240 )
 playerId = 3
 
-[node name="VersionLabel" parent="." instance=ExtResource( 4 )]
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="VersionLabel" parent="Canvas" instance=ExtResource( 4 )]
 position = Vector2( 4, 376 )
 outline = true
 
-[node name="UrlLabel" parent="." instance=ExtResource( 4 )]
+[node name="UrlLabel" parent="Canvas" instance=ExtResource( 4 )]
 position = Vector2( 678, 376 )
 text = "atka66.itch.io/papope"
 alignment = 2
 outline = true
 
-[node name="GodotLabel" parent="." instance=ExtResource( 4 )]
+[node name="GodotLabel" parent="Canvas" instance=ExtResource( 4 )]
 position = Vector2( 340, 376 )
 text = "made with godot"
 alignment = 1
 outline = true
 
-[node name="TitleHolder" type="Node2D" parent="."]
-position = Vector2( 172, 150 )
-rotation = -0.0252103
+[node name="Hints" type="Node2D" parent="Canvas"]
 
-[node name="Anim" type="AnimationPlayer" parent="TitleHolder"]
-autoplay = "wobble"
-anims/wobble = SubResource( 2 )
-
-[node name="PapopeLabel" parent="TitleHolder" instance=ExtResource( 4 )]
-position = Vector2( 0, -22 )
-text = "papope"
-fontSize = 6
-alignment = 1
-outline = true
-
-[node name="SubtitleLabel" parent="TitleHolder" instance=ExtResource( 4 )]
-position = Vector2( 0, 22 )
-text = "twin stick arena"
-fontSize = 3
-alignment = 1
-outline = true
-color = Color( 0.498039, 0.498039, 0.498039, 1 )
-
-[node name="MenuHintLabel" parent="." instance=ExtResource( 4 )]
+[node name="MenuHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
 position = Vector2( 5, 5 )
 text = "menu:"
 fontSize = 2
 outline = true
 
-[node name="MenuMovementHintLabel" parent="." instance=ExtResource( 4 )]
+[node name="MenuMovementHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
 position = Vector2( 45, 25 )
 text = "movement"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 6 ) ]
 
-[node name="MenuChangeSkinHintLabel" parent="." instance=ExtResource( 4 )]
+[node name="MenuChangeSkinHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
 position = Vector2( 45, 45 )
 text = "change skin"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 14 ) ]
 
-[node name="MenuChangeTeamHintLabel" parent="." instance=ExtResource( 4 )]
+[node name="IngameHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+position = Vector2( 500, 5 )
+text = "in-game:"
+fontSize = 2
+outline = true
+
+[node name="IngameMovementHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+position = Vector2( 535, 25 )
+text = "movement"
+fontSize = 2
+outline = true
+frames = [ ExtResource( 6 ) ]
+
+[node name="IngameAimHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+position = Vector2( 535, 45 )
+text = "aim"
+fontSize = 2
+outline = true
+frames = [ ExtResource( 12 ) ]
+
+[node name="IngameDashHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+position = Vector2( 535, 65 )
+text = "dash"
+fontSize = 2
+outline = true
+frames = [ ExtResource( 7 ) ]
+
+[node name="IngameUseHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+position = Vector2( 535, 85 )
+text = "shoot/use"
+fontSize = 2
+outline = true
+frames = [ ExtResource( 8 ) ]
+
+[node name="MenuChangeTeamHintLabel" parent="Canvas" instance=ExtResource( 4 )]
 position = Vector2( 45, 65 )
 text = "change team"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 8 ), ExtResource( 7 ) ]
 
-[node name="MenuNagivationHintLabel" parent="." instance=ExtResource( 4 )]
+[node name="MenuNagivationHintLabel" parent="Canvas" instance=ExtResource( 4 )]
 position = Vector2( 45, 85 )
 text = "navigation"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 11 ) ]
 
-[node name="IngameHintLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 250, 5 )
-text = "in-game:"
-fontSize = 2
+[node name="TitleHolder" type="Node2D" parent="Canvas"]
+position = Vector2( 340, 48 )
+rotation = -0.0252103
+
+[node name="Anim" type="AnimationPlayer" parent="Canvas/TitleHolder"]
+autoplay = "wobble"
+anims/wobble = SubResource( 2 )
+
+[node name="PapopeLabel" parent="Canvas/TitleHolder" instance=ExtResource( 4 )]
+position = Vector2( 0, -22 )
+text = "papope"
+fontSize = 6
+alignment = 1
 outline = true
 
-[node name="IngameMovementHintLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 290, 25 )
-text = "movement"
-fontSize = 2
+[node name="SubtitleLabel" parent="Canvas/TitleHolder" instance=ExtResource( 4 )]
+position = Vector2( 0, 22 )
+text = "twin stick arena"
+fontSize = 3
+alignment = 1
 outline = true
-frames = [ ExtResource( 6 ) ]
-
-[node name="IngameAimHintLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 290, 45 )
-text = "aim"
-fontSize = 2
-outline = true
-frames = [ ExtResource( 12 ) ]
-
-[node name="IngameDashHintLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 290, 65 )
-text = "dash"
-fontSize = 2
-outline = true
-frames = [ ExtResource( 7 ) ]
-
-[node name="IngameUseHintLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 290, 85 )
-text = "shoot/use"
-fontSize = 2
-outline = true
-frames = [ ExtResource( 8 ) ]
+color = Color( 0.498039, 0.498039, 0.498039, 1 )
 
 [node name="InitHolder" type="Node2D" parent="."]
 position = Vector2( 340, 336 )
@@ -271,16 +275,18 @@ alignment = 1
 outline = true
 frames = [ ExtResource( 3 ) ]
 
-[node name="ModeOption" parent="." instance=ExtResource( 13 )]
-position = Vector2( 186, 127 )
+[node name="Options" type="Node2D" parent="."]
+position = Vector2( 172, 144 )
+
+[node name="ModeOption" parent="Options" instance=ExtResource( 13 )]
 option = "mode"
 
-[node name="MapOption" parent="." instance=ExtResource( 13 )]
-position = Vector2( 186, 152 )
+[node name="MapOption" parent="Options" instance=ExtResource( 13 )]
+position = Vector2( 0, 25 )
 option = "map"
 
-[node name="RoundsOption" parent="." instance=ExtResource( 13 )]
-position = Vector2( 186, 177 )
+[node name="RoundsOption" parent="Options" instance=ExtResource( 13 )]
+position = Vector2( 0, 50 )
 option = "rounds"
 
 [connection signal="animation_finished" from="BackgroundDimAnim" to="." method="restartMovingBackground"]

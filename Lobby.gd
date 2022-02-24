@@ -10,7 +10,7 @@ func createHintLabel():
 		var hintLabel = Res.CustomLabel.instance()
 		hintLabel.editor_description = "random_hint"
 		hintLabel.position.x = 510
-		hintLabel.position.y = 128 + (i * 16)
+		hintLabel.position.y = 144 + (i * 16)
 		hintLabel.text = randomHint[i]
 		hintLabel.fontSize = 2
 		hintLabel.outline = true
@@ -21,21 +21,11 @@ func createHintLabel():
 
 func handleLabels():
 	var hasConnected = Global.playersJoined.has(true)
-	$TitleHolder.visible = !hasConnected
 
-	$MenuHintLabel.visible = hasConnected
-	$MenuMovementHintLabel.visible = hasConnected
-	$MenuChangeSkinHintLabel.visible = hasConnected
-	$MenuChangeTeamHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
-	$MenuNagivationHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
-	$IngameHintLabel.visible = hasConnected
-	$IngameMovementHintLabel.visible = hasConnected
-	$IngameAimHintLabel.visible = hasConnected
-	$IngameDashHintLabel.visible = hasConnected
-	$IngameUseHintLabel.visible = hasConnected
-	$ModeOption.visible = hasConnected
-	$MapOption.visible = hasConnected
-	$RoundsOption.visible = hasConnected
+	$Canvas/Hints.visible = hasConnected
+	$Canvas/MenuChangeTeamHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
+	$Canvas/MenuNagivationHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
+	$Options.visible = hasConnected
 
 	$InitHolder/WaitingLabel.hide()
 	$InitHolder/TeamLimitLabel.hide()
@@ -105,7 +95,7 @@ func _ready():
 	initPlayers()
 
 	restartMovingBackground(null)
-	$VersionLabel.set_text('V' + Global.VERSION)
+	$Canvas/VersionLabel.set_text('V' + Global.VERSION)
 	while true:
 		yield(createHintLabel(), "completed")
 
