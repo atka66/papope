@@ -119,5 +119,22 @@ func restartMovingBackground(anim_name):
 
 # DEBUG
 func _input(event): 
-	if Global.DEBUG && Input.is_action_just_pressed("test"): 
-		Global.goToMap()
+	if Global.DEBUG: 
+		if Input.is_action_just_pressed("test1"): 
+			for i in range(4):
+				if !Global.playersConnected[i]:
+					Global.playersConnected[i] = true
+					if !Global.playersJoined[i]:
+						Global.playersJoined[i] = true
+						Global.joinPlayer(i, false)
+					break
+		if Input.is_action_just_pressed("test2"): 
+			for i in range(4):
+				if Global.playersConnected[i]:
+					Global.playersConnected[i] = false
+					if Global.playersJoined[i]:
+						Global.playersJoined[i] = false
+						Global.leavePlayer(i)
+					break
+		if Input.is_action_just_pressed("test3"):
+			Global.goToMap()

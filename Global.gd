@@ -3,10 +3,7 @@ extends Node2D
 signal player_remove(id)
 
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
-const DEBUG = false
-
-const DEBUG_PLAYERS_CONNECTED = [true, true, true, true]
-const DEBUG_PLAYERS_JOINED = [true, true, false, false]
+const DEBUG = true
 
 const VERSION = '1.3.3 beta'
 const TEAM_COLORS = {
@@ -215,10 +212,6 @@ func getNumberOfTeams():
 	return distinctTeams.size()
 
 func _ready():
-	if DEBUG:
-		playersConnected = DEBUG_PLAYERS_CONNECTED
-		playersJoined = DEBUG_PLAYERS_JOINED
-	
 	Input.connect("joy_connection_changed", self, "_joy_connection_changed")
 	
 	var connectedControllers = Input.get_connected_joypads()
@@ -278,6 +271,4 @@ func getRandomDeathString(deathType):
 
 func shakeScreen(shakePwr):
 	if shakePwr > 0:
-		var controllers = get_tree().get_nodes_in_group('controllers')
-		if !controllers.empty():
-			controllers[0].screenShakePwr = shakePwr
+		get_tree().get_nodes_in_group('camera')[0].shakePwr = shakePwr
