@@ -25,7 +25,7 @@ func die():
 	var deadGhost = Res.DeadGhost.instance()
 	deadGhost.position = global_position
 	get_parent().add_child(deadGhost)
-	var spawn = get_parent().get_node('MapController').initGhostSpawn()
+	var spawn = get_tree().get_nodes_in_group('controllers')[0].initGhostSpawn()
 	queue_free()
 
 func _process(delta):
