@@ -125,10 +125,10 @@ z_index = -55
 z_as_relative = false
 
 [node name="TextureRect" type="TextureRect" parent="BgNode"]
-margin_left = -32.0
-margin_top = -32.0
-margin_right = 712.0
-margin_bottom = 416.0
+margin_left = -128.0
+margin_top = -128.0
+margin_right = 832.0
+margin_bottom = 522.0
 texture = ExtResource( 1 )
 stretch_mode = 2
 __meta__ = {
@@ -141,7 +141,7 @@ z_as_relative = false
 tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 131080, 2, 0, 131088, 3, 0, 196609, 3, 0, 196636, 2, 0, 196647, 3, 0, 393230, 3, 0, 393245, 4, 0, 393249, 2, 0, 458769, 3, 0, 458775, 2, 0, 524298, 2, 0, 524308, 3, 0, 720905, 3, 0, 720931, 3, 0, 786436, 3, 0, 786461, 3, 0, 851978, 2, 0, 851985, 2, 0, 851995, 3, 0, 983061, 3, 0, 983065, 2, 0, 1048611, 2, 0, 1114113, 3, 0, 1114127, 4, 0, 1179679, 3, 0, 1179688, 3, 0, 1245208, 2, 0, 1310736, 3, 0, 1376262, 3, 0, 1376290, 3, 0, 1441794, 2, 0, 1441817, 3, 0, 1441823, 2, 0 )
+tile_data = PoolIntArray( -327669, 2, 0, -327658, 3, 0, -196606, 2, 0, -196598, 3, 0, -196579, 2, 0, -196570, 2, 0, -65538, 3, 0, -131060, 4, 0, -131057, 3, 0, -131029, 2, 0, -65512, 2, 0, 5, 2, 0, 38, 3, 0, 131067, 3, 0, 131080, 2, 0, 131088, 3, 0, 196609, 3, 0, 196636, 2, 0, 196647, 3, 0, 196654, 3, 0, 327679, 2, 0, 393230, 3, 0, 393245, 4, 0, 393249, 2, 0, 393259, 2, 0, 524285, 3, 0, 458769, 3, 0, 458775, 2, 0, 458799, 2, 0, 589818, 2, 0, 524298, 2, 0, 524308, 3, 0, 720905, 3, 0, 720931, 3, 0, 851965, 2, 0, 786436, 3, 0, 786461, 3, 0, 786475, 2, 0, 851978, 2, 0, 851985, 2, 0, 851995, 3, 0, 852013, 3, 0, 983061, 3, 0, 983065, 2, 0, 1048611, 2, 0, 1114113, 3, 0, 1114127, 4, 0, 1245182, 3, 0, 1179679, 3, 0, 1179688, 3, 0, 1179694, 3, 0, 1245208, 2, 0, 1376251, 3, 0, 1310736, 3, 0, 1310765, 2, 0, 1376262, 3, 0, 1376290, 3, 0, 1441794, 2, 0, 1441817, 3, 0, 1441823, 2, 0, 1572873, 2, 0, 1572885, 3, 0, 1572901, 3, 0, 1703928, 2, 0, 1638403, 3, 0, 1638443, 3, 0, 1703944, 4, 0, 1703950, 3, 0, 1769498, 2, 0, 1835013, 3, 0, 1835050, 3, 0, 1900588, 2, 0, 1966103, 3, 0 )
 
 [node name="PlayerSpawner0" type="Position2D" parent="."]
 position = Vector2( 96, 192 )
@@ -251,6 +251,20 @@ particleSprite = ExtResource( 11 )
 collisionSize = 8
 spriteOffset = -12
 
+[node name="Tree7" parent="." instance=ExtResource( 9 )]
+position = Vector2( 552, -40 )
+sprite = ExtResource( 10 )
+particleSprite = ExtResource( 11 )
+collisionSize = 8
+spriteOffset = -12
+
+[node name="Tree8" parent="." instance=ExtResource( 9 )]
+position = Vector2( -16, 416 )
+sprite = ExtResource( 10 )
+particleSprite = ExtResource( 11 )
+collisionSize = 8
+spriteOffset = -12
+
 [node name="Rock1" parent="." instance=ExtResource( 7 )]
 position = Vector2( 192, 80 )
 sprite = ExtResource( 12 )
@@ -339,6 +353,30 @@ sprite = ExtResource( 12 )
 position = Vector2( 624, 128 )
 sprite = ExtResource( 12 )
 
+[node name="Rock23" parent="." instance=ExtResource( 7 )]
+position = Vector2( -56, 64 )
+sprite = ExtResource( 12 )
+
+[node name="Rock24" parent="." instance=ExtResource( 7 )]
+position = Vector2( 736, 296 )
+sprite = ExtResource( 12 )
+
+[node name="Rock25" parent="." instance=ExtResource( 7 )]
+position = Vector2( 696, 24 )
+sprite = ExtResource( 12 )
+
+[node name="Rock26" parent="." instance=ExtResource( 7 )]
+position = Vector2( 296, -16 )
+sprite = ExtResource( 12 )
+
+[node name="Rock27" parent="." instance=ExtResource( 7 )]
+position = Vector2( 264, 408 )
+sprite = ExtResource( 12 )
+
+[node name="Rock28" parent="." instance=ExtResource( 7 )]
+position = Vector2( 544, 432 )
+sprite = ExtResource( 12 )
+
 [node name="Railway1" parent="." instance=ExtResource( 13 )]
 position = Vector2( -32, 0 )
 
@@ -410,3 +448,15 @@ position = Vector2( 672, 352 )
 
 [node name="Railway24" parent="." instance=ExtResource( 13 )]
 position = Vector2( 704, 368 )
+
+[node name="Railway25" parent="." instance=ExtResource( 13 )]
+position = Vector2( 736, 384 )
+
+[node name="Railway26" parent="." instance=ExtResource( 13 )]
+position = Vector2( 768, 400 )
+
+[node name="Railway27" parent="." instance=ExtResource( 13 )]
+position = Vector2( -64, -16 )
+
+[node name="Railway28" parent="." instance=ExtResource( 13 )]
+position = Vector2( -96, -32 )
