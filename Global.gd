@@ -3,7 +3,7 @@ extends Node2D
 signal player_remove(id)
 
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
-const DEBUG = true
+const DEBUG = false
 
 const VERSION = '1.3.3 beta'
 const TEAM_COLORS = {

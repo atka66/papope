@@ -38,12 +38,12 @@ func handleLabels():
 		$InitHolder/StartLabel.show()
 
 func determineBackground():
-	var resultFrame = ($MovingBackground.frame + (randi() % ($MovingBackground.vframes - 1)) + 1) % $MovingBackground.vframes
+	var resultFrame = ($MovingBackground.frame + (randi() % ($MovingBackground.frames.get_frame_count('default') - 1)) + 1) % $MovingBackground.frames.get_frame_count('default')
 	if Global.playersJoined.has(true):
 		match Global.options['map'][Global.optionsSelected['map']]:
-			'western':
-				resultFrame = 0
 			'hell':
+				resultFrame = 0
+			'western':
 				resultFrame = 1
 			'ship':
 				resultFrame = 2
@@ -51,6 +51,10 @@ func determineBackground():
 				resultFrame = 3
 			'traffic':
 				resultFrame = 4
+			'pacman':
+				resultFrame = 5
+			'conveyor':
+				resultFrame = 6
 	$MovingBackground.frame = resultFrame
 
 func startCountdown():
