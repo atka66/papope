@@ -41,18 +41,6 @@ func _ready():
 	$OutsideLabel.hide()
 	$SmokeParticles.emitting = false
 	inLobby = get_tree().get_current_scene().get_name() == 'Lobby'
-	if !inLobby:
-		var hud = Res.Hud.instance()
-		var position = Vector2.ZERO
-		if playerId == 0: position = Vector2(-120, 4)
-		if playerId == 1: position = Vector2(688, 4)
-		if playerId == 2: position = Vector2(-120, 324)
-		if playerId == 3: position = Vector2(688, 324)
-		hud.name = 'Hud' + str(playerId)
-		hud.position = position
-		hud.player = self
-		hud.fromRight = (playerId % 2 == 1)
-		get_parent().add_child(hud)
 	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 	$BodyParts/Body.modulate = color
 	$Crosshair.modulate = color

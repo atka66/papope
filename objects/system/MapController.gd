@@ -10,8 +10,8 @@ func _ready():
 
 	Global.playersFrozen = true
 	#scene _ready methods are unable to get parents or current scene
-	add_child(Res.RoundStartBanner.instance())
-	add_child(Res.Dim.instance())
+	$HudCanvas.add_child(Res.RoundStartBanner.instance())
+	$HudCanvas.add_child(Res.Dim.instance())
 
 	yield(get_tree().create_timer(1.5), "timeout")
 	
@@ -26,10 +26,7 @@ func _ready():
 	yield(get_tree().create_timer(1), "timeout")
 	for i in range(4):
 		if Global.playersJoined[i]:
-			var player = Res.Player.instance()
-			player.position = get_parent().get_node("PlayerSpawner" + str(i)).position
-			player.playerId = i
-			get_parent().add_child(player)
+			spawnPlayer(i)
 			yield(get_tree().create_timer(0.25), "timeout")
 
 func _pwrupSpawnLoop():
@@ -45,6 +42,26 @@ func _pwrupSpawnLoop():
 	get_parent().add_child(pwrup)
 	var rerun = _pwrupSpawnLoop()
 
+func spawnPlayer(playerId):
+	var player = Res.Player.instance()
+	player.position = get_parent().get_node("PlayerSpawner" + str(playerId)).position
+	player.playerId = playerId
+	get_parent().add_child(player)
+	spawnPlayerHud(player)
+
+func spawnPlayerHud(player):
+	var hud = Res.Hud.instance()
+	var position = Vector2.ZERO
+	if player.playerId == 0: position = Vector2(-120, 4)
+	if player.playerId == 1: position = Vector2(688, 4)
+	if player.playerId == 2: position = Vector2(-120, 324)
+	if player.playerId == 3: position = Vector2(688, 324)
+	hud.name = 'Hud' + str(player.playerId)
+	hud.position = position
+	hud.player = player
+	hud.fromRight = (player.playerId % 2 == 1)
+	$HudCanvas.add_child(hud)
+
 func getRandomSpawner():
 	var spawners = []
 	for child in get_parent().get_children():
@@ -55,7 +72,7 @@ func getRandomSpawner():
 func initCountdown():
 	var countdown = Res.Countdown.instance()
 	countdown.position = Vector2(340, 64)
-	get_parent().add_child(countdown)
+	$HudCanvas.add_child(countdown)
 
 func endRound(aliveTeamId):
 	# check daredevil achievement
@@ -71,7 +88,7 @@ func endRound(aliveTeamId):
 	
 	var endBanner = Res.RoundEndBanner.instance()
 	endBanner.aliveTeamId = aliveTeamId
-	get_parent().add_child(endBanner)
+	$HudCanvas.add_child(endBanner)
 
 func showCount(pos, cnt):
 	var label = Res.CustomLabel.instance()

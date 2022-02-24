@@ -118,4 +118,5 @@ anims/wins = SubResource( 2 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 autoplay = true
+
 [connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]
