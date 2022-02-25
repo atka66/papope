@@ -1,7 +1,7 @@
 extends Node
 
 func play(stage):
-	var audioStream = null
+	var audioStream = Res.AudioMusicDefault
 	match stage:
 		'lobby':
 			audioStream = Res.AudioMusicLobby
