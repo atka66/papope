@@ -28,13 +28,15 @@ script = ExtResource( 2 )
 texture = ExtResource( 1 )
 
 [node name="Particles2D" type="CPUParticles2D" parent="Sprite"]
-position = Vector2( 8, 0 )
+position = Vector2( 10, 0 )
 amount = 4
-lifetime = 0.1
+lifetime = 0.2
 lifetime_randomness = 1.0
+local_coords = false
 spread = 180.0
 gravity = Vector2( 0, 0 )
-initial_velocity = 70.0
+initial_velocity = 100.0
+scale_amount = 2.0
 color = Color( 1, 1, 0, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
