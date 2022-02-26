@@ -8,14 +8,14 @@ func _ready():
 	$HudCanvas.add_child(Res.RoundStartBanner.instance())
 	$HudCanvas.add_child(Res.Dim.instance())
 
-	yield(get_tree().create_timer(1.5), "timeout")
-	
 	# cards mode card dealing
 	if Global.options['mode'][Global.optionsSelected['mode']] == 'cards':
 		var perkOverlay = Res.PerkOverlay.instance()
 		add_child(perkOverlay)
 		yield(perkOverlay, "finished")
-	
+	else:
+		yield(get_tree().create_timer(1.5), "timeout")
+
 	var a = _pwrupSpawnLoop()
 	var b = initCountdown()
 	yield(get_tree().create_timer(1), "timeout")
@@ -114,5 +114,8 @@ func playFallenPwrups():
 	if !$AudioFallenPwrups.playing:
 		$AudioFallenPwrups.play()
 
-## TEST -- REMOVE
-#func _input(event): if Input.is_action_just_pressed("test"): get_tree().change_scene("res://maps/PostGame.tscn")
+# DEBUG
+func _input(event): 
+	if Global.DEBUG:
+		if Input.is_action_just_pressed("test1"): 
+			get_tree().change_scene("res://maps/PostGame.tscn")

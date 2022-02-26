@@ -47,4 +47,5 @@ animate = false
 [node name="Anim" type="AnimationPlayer" parent="."]
 autoplay = "float_in"
 anims/float_in = SubResource( 1 )
+
 [connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]

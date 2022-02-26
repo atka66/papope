@@ -9,19 +9,19 @@
 [ext_resource path="res://objects/obstacle/Spaceray.tscn" type="PackedScene" id=10]
 [ext_resource path="res://maps/Background.gd" type="Script" id=11]
 
-[sub_resource type="OpenSimplexNoise" id=1]
-seed = 1456843309
+[sub_resource type="OpenSimplexNoise" id=9]
+seed = -1566785718
 persistence = 0.6
 
-[sub_resource type="NoiseTexture" id=2]
+[sub_resource type="NoiseTexture" id=10]
 seamless = true
-noise = SubResource( 1 )
+noise = SubResource( 9 )
 
 [sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 1 )
-shader_param/r = 0.113646
-shader_param/b = 0.886354
-shader_param/noise = SubResource( 2 )
+shader_param/r = 0.0636882
+shader_param/b = 0.936312
+shader_param/noise = SubResource( 10 )
 
 [sub_resource type="Curve" id=4]
 min_value = -360.0

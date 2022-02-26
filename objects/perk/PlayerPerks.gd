@@ -51,43 +51,44 @@ func dealt():
 	$RevealLabel.show()
 
 func _input(event):
-	var cardNode = get_node("PerkCard")
-	if event.device == playerId && cardNode && !donePerking:
-		if event.is_action_pressed("ui_accept"):
-			if !cardNode.revealed:
-				$RevealLabel.hide()
-				cardNode.reveal()
-				if cardNode.perk == Global.PerkEnum.RESET:
-					var perkCount = Global.playersPerks[playerId].size()
-					Global.playersPerks[playerId] = []
-					for i in range(perkCount):
-						spawnPerkSlot(i, false)
-					finishAnimation()
-				elif Global.playersPerks[playerId].size() < 3:
-					Global.playersPerks[playerId].append(cardNode.perk)
-					spawnPerkSlot(Global.playersPerks[playerId].size() - 1, false)
-					finishAnimation()
-				else:
-					$SwapLabel.show()
-					$SwappedPerkLabel.show()
-					$SwappedPerkDescriptionLabel.show()
-					$SwapSelectedFlashing.show()
+	if event.device == playerId:
+		var cardNode = get_node("PerkCard")
+		if cardNode && !donePerking:
+			if event.is_action_pressed("ui_accept"):
+				if !cardNode.revealed:
+					$RevealLabel.hide()
+					cardNode.reveal()
+					if cardNode.perk == Global.PerkEnum.RESET:
+						var perkCount = Global.playersPerks[playerId].size()
+						Global.playersPerks[playerId] = []
+						for i in range(perkCount):
+							spawnPerkSlot(i, false)
+						finishAnimation()
+					elif Global.playersPerks[playerId].size() < 3:
+						Global.playersPerks[playerId].append(cardNode.perk)
+						spawnPerkSlot(Global.playersPerks[playerId].size() - 1, false)
+						finishAnimation()
+					else:
+						$SwapLabel.show()
+						$SwappedPerkLabel.show()
+						$SwappedPerkDescriptionLabel.show()
+						$SwapSelectedFlashing.show()
+						updateSwapSelected()
+			if cardNode.revealed && Global.playersPerks[playerId].size() == 3:
+				if event.is_action_pressed("pl_nav_right"):
+					swapSelected = (swapSelected + 1) % 3
 					updateSwapSelected()
-		if cardNode.revealed && Global.playersPerks[playerId].size() == 3:
-			if event.is_action_pressed("pl_nav_right"):
-				swapSelected = (swapSelected + 1) % 3
-				updateSwapSelected()
-			if event.is_action_pressed("pl_nav_left"):
-				swapSelected = (swapSelected + 5) % 3
-				updateSwapSelected()
-			if event.is_action_pressed("pl_skin_next"):
-				Global.playersPerks[playerId][swapSelected] = cardNode.perk
-				$SwapLabel.hide()
-				$SwappedPerkLabel.hide()
-				$SwappedPerkDescriptionLabel.hide()
-				$SwapSelectedFlashing.hide()
-				spawnPerkSlot(swapSelected, false)
-				finishAnimation()
+				if event.is_action_pressed("pl_nav_left"):
+					swapSelected = (swapSelected + 5) % 3
+					updateSwapSelected()
+				if event.is_action_pressed("pl_skin_next"):
+					Global.playersPerks[playerId][swapSelected] = cardNode.perk
+					$SwapLabel.hide()
+					$SwappedPerkLabel.hide()
+					$SwappedPerkDescriptionLabel.hide()
+					$SwapSelectedFlashing.hide()
+					spawnPerkSlot(swapSelected, false)
+					finishAnimation()
 
 func updateSwapSelected():
 	$SwapSelectedFlashing.position = Vector2(45 + (swapSelected * 40), 64)

@@ -6,6 +6,9 @@ func _ready():
 	for i in range(4):
 		if !Global.playersJoined[i]:
 			get_node('Card' + str(i)).hide()
+	
+	yield(get_tree().create_timer(1.5), "timeout")
+	$Anim.play("appear")
 
 func _process(delta):
 	if $PlayerPerks0.isFinished && $PlayerPerks1.isFinished && $PlayerPerks2.isFinished && $PlayerPerks3.isFinished && !$Anim.is_playing():
