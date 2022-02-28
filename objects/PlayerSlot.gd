@@ -17,7 +17,7 @@ func warningGrowl(message):
 	Lobby.add_child(label)
 
 func _input(event):
-	if Global.playersConnected[playerId] && event.device == playerId && !inputCd:
+	if Global.playersConnected[playerId] && event.device == playerId && !inputCd && Lobby.menuState == 1:
 		inputCd = true
 		if Input.is_action_just_pressed("ui_accept") and !Lobby.countingDown:
 			if !Global.playersJoined[playerId]:
@@ -53,7 +53,6 @@ func _input(event):
 				Global.optionsSelected[Global.currentOption] = (Global.optionsSelected[Global.currentOption] + 1) % optionCount
 				if Global.currentOption == 'map':
 					Lobby.restartMovingBackground(null)
-	Lobby.handleLabels()
 
 func handleSpawnSprite():
 	if Global.playersConnected[playerId] and !Global.playersJoined[playerId] and !Lobby.countingDown:

@@ -233,9 +233,7 @@ func _joy_connection_changed(id, connected):
 
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):
-		if (get_tree().get_current_scene().get_name() == 'Lobby'):
-			get_tree().quit()
-		else:
+		if get_tree().get_current_scene().get_name() != 'Lobby':
 			get_tree().change_scene("res://Lobby.tscn")
 
 func registerAchievement(playerId, achievement):
