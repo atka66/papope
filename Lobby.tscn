@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://objects/PlayerSlot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/lobby/bg_hell.png" type="Texture" id=2]
@@ -109,6 +109,66 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 2.0, -2.0 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "wobble_local"
+length = 3.0
+loop = true
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("LocalHolder:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1, 2.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 2.4, 2.4 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("LocalHolder:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -2.0, 2.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "wobble_online"
+length = 3.0
+loop = true
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("OnlineHolder:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1, 2.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 2.4, 2.4 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("OnlineHolder:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -2.0, 2.0 ]
 }
 
 [node name="Lobby" type="Node2D"]
@@ -240,7 +300,7 @@ frames = [ ExtResource( 11 ) ]
 
 [node name="TitleHolder" type="Node2D" parent="Canvas"]
 position = Vector2( 340, 48 )
-rotation = -0.0252103
+rotation = -0.0168069
 
 [node name="Anim" type="AnimationPlayer" parent="Canvas/TitleHolder"]
 autoplay = "wobble"
@@ -263,7 +323,8 @@ color = Color( 0.498039, 0.498039, 0.498039, 1 )
 
 [node name="InitHolder" type="Node2D" parent="."]
 position = Vector2( 340, 336 )
-rotation = 0.0252103
+rotation = -0.0168069
+scale = Vector2( 0.997685, 0.997685 )
 
 [node name="Anim" type="AnimationPlayer" parent="InitHolder"]
 autoplay = "wobble"
@@ -301,5 +362,45 @@ option = "map"
 [node name="RoundsOption" parent="Options" instance=ExtResource( 13 )]
 position = Vector2( 0, 50 )
 option = "rounds"
+
+[node name="GameTypeHolder" type="Node2D" parent="."]
+position = Vector2( 340, 192 )
+
+[node name="LocalHolder" type="Node2D" parent="GameTypeHolder"]
+rotation = -0.0349066
+scale = Vector2( 2.2963, 2.2963 )
+
+[node name="LocalLabel" parent="GameTypeHolder/LocalHolder" instance=ExtResource( 4 )]
+position = Vector2( 0, -5 )
+text = "Local"
+fontSize = 2
+alignment = 1
+outline = true
+
+[node name="OnlineHolder" type="Node2D" parent="GameTypeHolder"]
+position = Vector2( 0, 64 )
+
+[node name="OnlineLabel" parent="GameTypeHolder/OnlineHolder" instance=ExtResource( 4 )]
+position = Vector2( 0, -5 )
+text = "Online"
+fontSize = 2
+alignment = 1
+outline = true
+
+[node name="Anim" type="AnimationPlayer" parent="GameTypeHolder"]
+autoplay = "wobble_local"
+anims/wobble_local = SubResource( 5 )
+anims/wobble_online = SubResource( 6 )
+
+[node name="ComingSoonLabel" parent="GameTypeHolder" instance=ExtResource( 4 )]
+position = Vector2( 0, 80 )
+text = "coming soon"
+fontSize = 2
+alignment = 1
+outline = true
+color = Color( 0.501961, 0.501961, 0.501961, 1 )
+
+[node name="HintHolder" type="Node2D" parent="."]
+position = Vector2( 510, 144 )
 
 [connection signal="animation_finished" from="BackgroundDimAnim" to="." method="restartMovingBackground"]
