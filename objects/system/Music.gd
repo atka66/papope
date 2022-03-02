@@ -11,6 +11,8 @@ func play(stage):
 			audioStream = Res.AudioMusicHell
 		'space':
 			audioStream = Res.AudioMusicSpace
+		'conveyor':
+			audioStream = Res.AudioMusicConveyor
 	if $Audio.stream != audioStream:
 		$Audio.stream = audioStream
 		$Audio.play()
