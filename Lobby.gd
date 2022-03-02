@@ -2,15 +2,6 @@ extends Node2D
 
 const hintTimer = 6.0
 
-# menustate helper:
-#  0 - local/multi
-#  1 - local - lobby
-#  2 - multi - host/join
-#  3 - multi - lobby
-var menuState = 0
-
-var isLocal = true
-
 var countingDown = false
 
 func createHintLabel():
@@ -85,49 +76,37 @@ func initPlayers():
 		)
 
 func _ready():
-	get_node('/root/Music').play('lobby')
+	get_node('/root/Music').play('menu')
 
 	initPlayers()
 
 	restartMovingBackground(null)
-	$Canvas/VersionLabel.set_text('V' + Global.VERSION)
+	
 	while true:
 		yield(createHintLabel(), "completed")
 
 func _process(delta):
-	if menuState == 0:
-		for i in range(4):
-			get_node("PlayerSlot" + str(i)).hide()
-		$Canvas/Hints.hide()
-		$Canvas/MenuChangeTeamHintLabel.hide()
-		$Canvas/MenuNagivationHintLabel.hide()
-		$Options.hide()
-		$InitHolder.hide()
-		$HintHolder.hide()
-		$GameTypeHolder.show()
-	if menuState == 1 || menuState == 3:
-		for i in range(4):
-			get_node("PlayerSlot" + str(i)).show()
+	for i in range(4):
+		get_node("PlayerSlot" + str(i)).show()
 
-		var hasConnected = Global.playersJoined.has(true)
+	var hasConnected = Global.playersJoined.has(true)
 
-		$Canvas/Hints.visible = hasConnected
-		$Canvas/MenuChangeTeamHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
-		$Canvas/MenuNagivationHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
-		$Options.visible = hasConnected
+	$Canvas2/Hints.visible = hasConnected
+	$Canvas2/MenuChangeTeamHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
+	$Canvas2/MenuNagivationHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
+	$Options.visible = hasConnected
 
-		$InitHolder.show()
-		$InitHolder/WaitingLabel.hide()
-		$InitHolder/TeamLimitLabel.hide()
-		$InitHolder/StartLabel.hide()
-		if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
-			$InitHolder/WaitingLabel.show()
-		elif Global.getNumberOfTeams() < 2:
-			$InitHolder/TeamLimitLabel.show()
-		elif !countingDown:
-			$InitHolder/StartLabel.show()
-		$HintHolder.show()
-		$GameTypeHolder.hide()
+	$InitHolder.show()
+	$InitHolder/WaitingLabel.hide()
+	$InitHolder/TeamLimitLabel.hide()
+	$InitHolder/StartLabel.hide()
+	if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
+		$InitHolder/WaitingLabel.show()
+	elif Global.getNumberOfTeams() < 2:
+		$InitHolder/TeamLimitLabel.show()
+	elif !countingDown:
+		$InitHolder/StartLabel.show()
+	$HintHolder.show()
 
 func restartMovingBackground(anim_name):
 	determineBackground()
@@ -136,49 +115,24 @@ func restartMovingBackground(anim_name):
 
 # DEBUG
 func _input(event): 
-	if menuState == 0:
-		if Input.is_action_just_pressed("quit"):
-			get_tree().quit()
-		if (Input.is_action_just_pressed("pl_nav_down") ||
-			Input.is_action_just_pressed("pl_nav_up")):
-			isLocal = !isLocal
-			if isLocal:
-				$GameTypeHolder/Anim.play("wobble_local")
-				$GameTypeHolder/OnlineHolder.scale = Vector2.ONE
-				$GameTypeHolder/OnlineHolder.rotation_degrees = 0
-			if !isLocal:
-				$GameTypeHolder/Anim.play("wobble_online")
-				$GameTypeHolder/LocalHolder.scale = Vector2.ONE
-				$GameTypeHolder/LocalHolder.rotation_degrees = 0
-		if Input.is_action_just_pressed("ui_accept"):
-			if isLocal:
-				menuState = 1
-			else:
-				#coming soon
-				#menuState = 2
-				pass
-	if menuState == 1:
-		if Input.is_action_just_pressed("quit"):
-			menuState = 0
-			stopCountdown()
+	if Input.is_action_just_pressed("quit"):
+		get_tree().change_scene("res://menu/Mainmenu.tscn")
+	if Global.DEBUG: 
+		if Input.is_action_just_pressed("test1"): 
 			for i in range(4):
-				Global.leavePlayer(i)
-		if Global.DEBUG: 
-			if Input.is_action_just_pressed("test1"): 
-				for i in range(4):
-					if !Global.playersConnected[i]:
-						Global.playersConnected[i] = true
+				if !Global.playersConnected[i]:
+					Global.playersConnected[i] = true
+					break
+				if !Global.playersJoined[i]:
+					Global.playersJoined[i] = true
+					Global.joinPlayer(i, false)
+					break
+		if Input.is_action_just_pressed("test2"): 
+			for i in range(4):
+				if Global.playersConnected[i]:
+					if Global.playersJoined[i]:
+						Global.playersJoined[i] = false
+						Global.leavePlayer(i)
 						break
-					if !Global.playersJoined[i]:
-						Global.playersJoined[i] = true
-						Global.joinPlayer(i, false)
-						break
-			if Input.is_action_just_pressed("test2"): 
-				for i in range(4):
-					if Global.playersConnected[i]:
-						if Global.playersJoined[i]:
-							Global.playersJoined[i] = false
-							Global.leavePlayer(i)
-							break
-			if Input.is_action_just_pressed("test3"):
-				Global.goToMap()
+		if Input.is_action_just_pressed("test3"):
+			Global.goToMap()

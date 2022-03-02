@@ -114,8 +114,9 @@ func playFallenPwrups():
 	if !$AudioFallenPwrups.playing:
 		$AudioFallenPwrups.play()
 
-# DEBUG
-func _input(event): 
+func _input(event):
+	if Input.is_action_just_pressed("quit"):
+		get_tree().change_scene("res://Lobby.tscn")
 	if Global.DEBUG:
 		if Input.is_action_just_pressed("test1"): 
 			get_tree().change_scene("res://maps/PostGame.tscn")

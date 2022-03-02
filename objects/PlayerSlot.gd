@@ -17,7 +17,7 @@ func warningGrowl(message):
 	Lobby.add_child(label)
 
 func _input(event):
-	if Global.playersConnected[playerId] && event.device == playerId && !inputCd && Lobby.menuState == 1:
+	if Global.playersConnected[playerId] && event.device == playerId && !inputCd:
 		inputCd = true
 		if Input.is_action_just_pressed("ui_accept") and !Lobby.countingDown:
 			if !Global.playersJoined[playerId]:

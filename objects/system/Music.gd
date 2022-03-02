@@ -3,7 +3,7 @@ extends Node
 func play(stage):
 	var audioStream = Res.AudioMusicDefault
 	match stage:
-		'lobby':
+		'menu':
 			audioStream = Res.AudioMusicLobby
 		'postgame':
 			audioStream = Res.AudioMusicPostGame
@@ -11,5 +11,6 @@ func play(stage):
 			audioStream = Res.AudioMusicHell
 		'space':
 			audioStream = Res.AudioMusicSpace
-	$Audio.stream = audioStream
-	$Audio.play()
+	if $Audio.stream != audioStream:
+		$Audio.stream = audioStream
+		$Audio.play()

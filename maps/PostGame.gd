@@ -21,5 +21,7 @@ func _ready():
 	$LobbyHint.show()
 
 func _input(event):
+	if Input.is_action_just_pressed("quit"):
+		get_tree().change_scene("res://Lobby.tscn")
 	if Input.is_action_just_pressed("ui_accept") && canProceed:
 		get_tree().change_scene("res://Lobby.tscn")

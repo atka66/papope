@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://objects/PlayerSlot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://sprites/lobby/bg_hell.png" type="Texture" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://sprites/lobby/bg_traffic.png" type="Texture" id=17]
 [ext_resource path="res://sprites/lobby/bg_pacman.png" type="Texture" id=18]
 [ext_resource path="res://sprites/lobby/bg_conveyor.png" type="Texture" id=19]
+[ext_resource path="res://objects/system/label/MenuLabels.tscn" type="PackedScene" id=20]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -55,34 +56,6 @@ tracks/1/keys = {
 "values": [ Vector2( -150, -150 ), Vector2( -300, -150 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-length = 3.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:rotation_degrees")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.5, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ -2.0, 2.0 ]
-}
-
 [sub_resource type="Animation" id=4]
 length = 3.0
 loop = true
@@ -109,66 +82,6 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 2.0, -2.0 ]
-}
-
-[sub_resource type="Animation" id=5]
-resource_name = "wobble_local"
-length = 3.0
-loop = true
-step = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("LocalHolder:scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 1, 2.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 2, 2 ), Vector2( 2.4, 2.4 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("LocalHolder:rotation_degrees")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ -2.0, 2.0 ]
-}
-
-[sub_resource type="Animation" id=6]
-resource_name = "wobble_online"
-length = 3.0
-loop = true
-step = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("OnlineHolder:scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 1, 2.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 2, 2 ), Vector2( 2.4, 2.4 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("OnlineHolder:rotation_degrees")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ -2.0, 2.0 ]
 }
 
 [node name="Lobby" type="Node2D"]
@@ -210,116 +123,79 @@ playerId = 2
 position = Vector2( 512, 240 )
 playerId = 3
 
-[node name="Canvas" type="CanvasLayer" parent="."]
+[node name="Canvas2" type="CanvasLayer" parent="."]
 
-[node name="VersionLabel" parent="Canvas" instance=ExtResource( 4 )]
-position = Vector2( 4, 376 )
-outline = true
+[node name="Hints" type="Node2D" parent="Canvas2"]
 
-[node name="UrlLabel" parent="Canvas" instance=ExtResource( 4 )]
-position = Vector2( 678, 376 )
-text = "atka66.itch.io/papope"
-alignment = 2
-outline = true
-
-[node name="GodotLabel" parent="Canvas" instance=ExtResource( 4 )]
-position = Vector2( 340, 376 )
-text = "made with godot"
-alignment = 1
-outline = true
-
-[node name="Hints" type="Node2D" parent="Canvas"]
-
-[node name="MenuHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+[node name="MenuHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
 position = Vector2( 5, 5 )
 text = "menu:"
 fontSize = 2
 outline = true
 
-[node name="MenuMovementHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+[node name="MenuMovementHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
 position = Vector2( 45, 25 )
 text = "movement"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 6 ) ]
 
-[node name="MenuChangeSkinHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+[node name="MenuChangeSkinHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
 position = Vector2( 45, 45 )
 text = "change skin"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 14 ) ]
 
-[node name="IngameHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+[node name="IngameHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
 position = Vector2( 500, 5 )
 text = "in-game:"
 fontSize = 2
 outline = true
 
-[node name="IngameMovementHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+[node name="IngameMovementHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
 position = Vector2( 535, 25 )
 text = "movement"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 6 ) ]
 
-[node name="IngameAimHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+[node name="IngameAimHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
 position = Vector2( 535, 45 )
 text = "aim"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 12 ) ]
 
-[node name="IngameDashHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+[node name="IngameDashHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
 position = Vector2( 535, 65 )
 text = "dash"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 7 ) ]
 
-[node name="IngameUseHintLabel" parent="Canvas/Hints" instance=ExtResource( 4 )]
+[node name="IngameUseHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
 position = Vector2( 535, 85 )
 text = "shoot/use"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 8 ) ]
 
-[node name="MenuChangeTeamHintLabel" parent="Canvas" instance=ExtResource( 4 )]
+[node name="MenuChangeTeamHintLabel" parent="Canvas2" instance=ExtResource( 4 )]
 position = Vector2( 45, 65 )
 text = "change team"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 8 ), ExtResource( 7 ) ]
 
-[node name="MenuNagivationHintLabel" parent="Canvas" instance=ExtResource( 4 )]
+[node name="MenuNagivationHintLabel" parent="Canvas2" instance=ExtResource( 4 )]
 position = Vector2( 45, 85 )
 text = "navigation"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 11 ) ]
 
-[node name="TitleHolder" type="Node2D" parent="Canvas"]
-position = Vector2( 340, 48 )
-rotation = -0.0168069
-
-[node name="Anim" type="AnimationPlayer" parent="Canvas/TitleHolder"]
-autoplay = "wobble"
-anims/wobble = SubResource( 3 )
-
-[node name="PapopeLabel" parent="Canvas/TitleHolder" instance=ExtResource( 4 )]
-position = Vector2( 0, -22 )
-text = "papope"
-fontSize = 6
-alignment = 1
-outline = true
-
-[node name="SubtitleLabel" parent="Canvas/TitleHolder" instance=ExtResource( 4 )]
-position = Vector2( 0, 22 )
-text = "twin stick arena"
-fontSize = 3
-alignment = 1
-outline = true
-color = Color( 0.498039, 0.498039, 0.498039, 1 )
+[node name="MenuLabels" parent="." instance=ExtResource( 20 )]
 
 [node name="InitHolder" type="Node2D" parent="."]
 position = Vector2( 340, 336 )
@@ -362,43 +238,6 @@ option = "map"
 [node name="RoundsOption" parent="Options" instance=ExtResource( 13 )]
 position = Vector2( 0, 50 )
 option = "rounds"
-
-[node name="GameTypeHolder" type="Node2D" parent="."]
-position = Vector2( 340, 192 )
-
-[node name="LocalHolder" type="Node2D" parent="GameTypeHolder"]
-rotation = -0.0349066
-scale = Vector2( 2.2963, 2.2963 )
-
-[node name="LocalLabel" parent="GameTypeHolder/LocalHolder" instance=ExtResource( 4 )]
-position = Vector2( 0, -5 )
-text = "Local"
-fontSize = 2
-alignment = 1
-outline = true
-
-[node name="OnlineHolder" type="Node2D" parent="GameTypeHolder"]
-position = Vector2( 0, 64 )
-
-[node name="OnlineLabel" parent="GameTypeHolder/OnlineHolder" instance=ExtResource( 4 )]
-position = Vector2( 0, -5 )
-text = "Online"
-fontSize = 2
-alignment = 1
-outline = true
-
-[node name="Anim" type="AnimationPlayer" parent="GameTypeHolder"]
-autoplay = "wobble_local"
-anims/wobble_local = SubResource( 5 )
-anims/wobble_online = SubResource( 6 )
-
-[node name="ComingSoonLabel" parent="GameTypeHolder" instance=ExtResource( 4 )]
-position = Vector2( 0, 80 )
-text = "coming soon"
-fontSize = 2
-alignment = 1
-outline = true
-color = Color( 0.501961, 0.501961, 0.501961, 1 )
 
 [node name="HintHolder" type="Node2D" parent="."]
 position = Vector2( 510, 144 )

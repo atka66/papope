@@ -231,11 +231,6 @@ func _joy_connection_changed(id, connected):
 		if !connected:
 			disconnectPlayer(id)
 
-func _input(event):
-	if Input.is_key_pressed(KEY_ESCAPE):
-		if get_tree().get_current_scene().get_name() != 'Lobby':
-			get_tree().change_scene("res://Lobby.tscn")
-
 func registerAchievement(playerId, achievement):
 	if !(achievement in playersAchievements[playerId]):
 		playersAchievements[playerId].append(achievement)
