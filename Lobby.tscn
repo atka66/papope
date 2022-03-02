@@ -56,7 +56,7 @@ tracks/1/keys = {
 "values": [ Vector2( -150, -150 ), Vector2( -300, -150 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 length = 3.0
 loop = true
 tracks/0/type = "value"
@@ -123,72 +123,72 @@ playerId = 2
 position = Vector2( 512, 240 )
 playerId = 3
 
-[node name="Canvas2" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Hints" type="Node2D" parent="Canvas2"]
+[node name="Hints" type="Node2D" parent="CanvasLayer"]
 
-[node name="MenuHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
+[node name="MenuHintLabel" parent="CanvasLayer/Hints" instance=ExtResource( 4 )]
 position = Vector2( 5, 5 )
 text = "menu:"
 fontSize = 2
 outline = true
 
-[node name="MenuMovementHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
+[node name="MenuMovementHintLabel" parent="CanvasLayer/Hints" instance=ExtResource( 4 )]
 position = Vector2( 45, 25 )
 text = "movement"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 6 ) ]
 
-[node name="MenuChangeSkinHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
+[node name="MenuChangeSkinHintLabel" parent="CanvasLayer/Hints" instance=ExtResource( 4 )]
 position = Vector2( 45, 45 )
 text = "change skin"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 14 ) ]
 
-[node name="IngameHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
+[node name="IngameHintLabel" parent="CanvasLayer/Hints" instance=ExtResource( 4 )]
 position = Vector2( 500, 5 )
 text = "in-game:"
 fontSize = 2
 outline = true
 
-[node name="IngameMovementHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
+[node name="IngameMovementHintLabel" parent="CanvasLayer/Hints" instance=ExtResource( 4 )]
 position = Vector2( 535, 25 )
 text = "movement"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 6 ) ]
 
-[node name="IngameAimHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
+[node name="IngameAimHintLabel" parent="CanvasLayer/Hints" instance=ExtResource( 4 )]
 position = Vector2( 535, 45 )
 text = "aim"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 12 ) ]
 
-[node name="IngameDashHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
+[node name="IngameDashHintLabel" parent="CanvasLayer/Hints" instance=ExtResource( 4 )]
 position = Vector2( 535, 65 )
 text = "dash"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 7 ) ]
 
-[node name="IngameUseHintLabel" parent="Canvas2/Hints" instance=ExtResource( 4 )]
+[node name="IngameUseHintLabel" parent="CanvasLayer/Hints" instance=ExtResource( 4 )]
 position = Vector2( 535, 85 )
 text = "shoot/use"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 8 ) ]
 
-[node name="MenuChangeTeamHintLabel" parent="Canvas2" instance=ExtResource( 4 )]
+[node name="MenuChangeTeamHintLabel" parent="CanvasLayer" instance=ExtResource( 4 )]
 position = Vector2( 45, 65 )
 text = "change team"
 fontSize = 2
 outline = true
 frames = [ ExtResource( 8 ), ExtResource( 7 ) ]
 
-[node name="MenuNagivationHintLabel" parent="Canvas2" instance=ExtResource( 4 )]
+[node name="MenuNagivationHintLabel" parent="CanvasLayer" instance=ExtResource( 4 )]
 position = Vector2( 45, 85 )
 text = "navigation"
 fontSize = 2
@@ -204,7 +204,7 @@ scale = Vector2( 0.997685, 0.997685 )
 
 [node name="Anim" type="AnimationPlayer" parent="InitHolder"]
 autoplay = "wobble"
-anims/wobble = SubResource( 4 )
+anims/wobble = SubResource( 3 )
 
 [node name="WaitingLabel" parent="InitHolder" instance=ExtResource( 4 )]
 text = "waiting for more players..."

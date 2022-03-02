@@ -91,9 +91,9 @@ func _process(delta):
 
 	var hasConnected = Global.playersJoined.has(true)
 
-	$Canvas2/Hints.visible = hasConnected
-	$Canvas2/MenuChangeTeamHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
-	$Canvas2/MenuNagivationHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
+	$CanvasLayer/Hints.visible = hasConnected
+	$CanvasLayer/MenuChangeTeamHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
+	$CanvasLayer/MenuNagivationHintLabel.visible = ProjectSettings.get("papope/allow_players_set_options") && hasConnected
 	$Options.visible = hasConnected
 
 	$InitHolder.show()
