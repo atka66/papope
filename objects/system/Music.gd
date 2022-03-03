@@ -1,5 +1,7 @@
 extends Node
 
+var muted = false
+
 func play(stage):
 	var audioStream = Res.AudioMusicDefault
 	match stage:
@@ -15,4 +17,12 @@ func play(stage):
 			audioStream = Res.AudioMusicConveyor
 	if $Audio.stream != audioStream:
 		$Audio.stream = audioStream
+		if !muted:
+			$Audio.play()
+
+func mute():
+	muted = !muted
+	if muted:
+		$Audio.stop()
+	else:
 		$Audio.play()

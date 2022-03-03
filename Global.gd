@@ -265,3 +265,7 @@ func getRandomDeathString(deathType):
 func shakeScreen(shakePwr):
 	if shakePwr > 0:
 		get_tree().get_nodes_in_group('camera')[0].shakePwr = shakePwr
+
+func _input(event):
+	if Input.is_action_just_pressed("mute"):
+		get_node('/root/Music').mute()
