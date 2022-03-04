@@ -11,6 +11,8 @@ func play(stage):
 			audioStream = Res.AudioMusicPostGame
 		'hell':
 			audioStream = Res.AudioMusicHell
+		'western':
+			audioStream = Res.AudioMusicWestern
 		'space':
 			audioStream = Res.AudioMusicSpace
 		'conveyor':
