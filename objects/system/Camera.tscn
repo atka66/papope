@@ -7,4 +7,11 @@
 ]]
 anchor_mode = 0
 current = true
+limit_left = -50
+limit_top = -50
+limit_right = 730
+limit_bottom = 434
+limit_smoothed = true
+smoothing_enabled = true
+smoothing_speed = 20.0
 script = ExtResource( 1 )

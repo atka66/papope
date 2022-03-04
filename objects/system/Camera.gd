@@ -1,7 +1,5 @@
 extends Camera2D
 
-const CAMERA_CLAMP = 100
-
 var shakePwr = 0
 
 var cameraShakeOffset = Vector2.ZERO
@@ -25,9 +23,8 @@ func calculatePlayersOffset():
 			var playerPos = player.global_position - center
 			playerDiff += playerPos.normalized() * pow(playerPos.length(), 0.7)
 		playerDiff /= len(players)
-	var offsetStep = (playerDiff - cameraPlayersOffset) / 4
+	var offsetStep = (playerDiff - cameraPlayersOffset)
 	cameraPlayersOffset = cameraPlayersOffset + offsetStep
-	cameraPlayersOffset = cameraPlayersOffset.clamped(CAMERA_CLAMP)
 
 func calculateShakeOffset():
 	if shakePwr > 0:
