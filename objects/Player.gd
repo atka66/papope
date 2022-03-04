@@ -28,7 +28,11 @@ var inputCd = false
 
 var wrapPosition = null
 
+var currentCam = null
+
 func _ready():
+	currentCam = get_tree().get_nodes_in_group('camera')[0]
+	
 	hp = Global.playersMaxHp[playerId]
 	Global.playersKills[playerId] = 0
 	$BodyParts/InvulAnim.play()
@@ -38,7 +42,7 @@ func _ready():
 	$Crosshair.hide()
 	$BodyParts/Lock.hide()
 	$WhiplashAnim.hide()
-	$OutsideLabel.hide()
+	$Canvas/OutsideLabel.hide()
 	$SmokeParticles.emitting = false
 	inLobby = get_tree().get_current_scene().get_name() == 'Lobby'
 	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
@@ -211,24 +215,24 @@ func _process(delta):
 				if isOutside():
 					if outsideCntdwn > 0:
 						updateOutsideLabel()
-						$OutsideLabel.show()
+						$Canvas/OutsideLabel.show()
 						outsideCntdwn -= 1
 				else:
-					$OutsideLabel.hide()
+					$Canvas/OutsideLabel.hide()
 					outsideCntdwn = 180
 		else:
-			$OutsideLabel.hide()
+			$Canvas/OutsideLabel.hide()
 
 func updateOutsideLabel():
-	$OutsideLabel.global_position = Vector2(
-		max(min(global_position.x, 648), 32),
-		max(min(global_position.y, 349), 29)
+	$Canvas/OutsideLabel.global_position = Vector2(
+		max(min(global_position.x - currentCam.global_position.x, 648), 32),
+		max(min(global_position.y - currentCam.global_position.y, 349), 29)
 	)
-	$OutsideLabel.set_text(str(ceil(float(outsideCntdwn) / 60)))
+	$Canvas/OutsideLabel.set_text(str(ceil(float(outsideCntdwn) / 60)))
 	if (outsideCntdwn / 10) % 2:
-		$OutsideLabel.set_color(Color.white)
+		$Canvas/OutsideLabel.set_color(Color.white)
 	else:
-		$OutsideLabel.set_color(color)
+		$Canvas/OutsideLabel.set_color(color)
 
 func _physics_process(delta):
 	#friction
@@ -458,7 +462,13 @@ func _on_WhiplashAnim_animation_finished():
 	$WhiplashAnim.hide()
 
 func isOutside():
-	return global_position.x < 0 || global_position.x > 680 || global_position.y < 0 || global_position.y > 384
+	var camPos = currentCam.global_position
+	return (
+		global_position.x < camPos.x 
+		|| global_position.x > camPos.x + 680 
+		|| global_position.y < camPos.y 
+		|| global_position.y > camPos.y + 384
+	)
 	
 func wasJustKilled(other):
 	return other.alive && other.hp <= 0

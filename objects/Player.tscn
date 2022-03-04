@@ -174,6 +174,13 @@ contacts_reported = 2
 contact_monitor = true
 script = ExtResource( 3 )
 
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="OutsideLabel" parent="Canvas" instance=ExtResource( 15 )]
+fontSize = 2
+alignment = 1
+outline = true
+
 [node name="BodyParts" type="Node2D" parent="."]
 
 [node name="Body" type="Sprite" parent="BodyParts"]
@@ -239,11 +246,6 @@ centered = false
 offset = Vector2( -16, -32 )
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="WhiplashAnim"]
-
-[node name="OutsideLabel" parent="." instance=ExtResource( 15 )]
-fontSize = 2
-alignment = 1
-outline = true
 
 [node name="SmokeParticles" type="CPUParticles2D" parent="."]
 position = Vector2( 0, 12 )
