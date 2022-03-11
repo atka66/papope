@@ -31,7 +31,7 @@ func determineBackground():
 				resultFrame = 2
 			'space':
 				resultFrame = 3
-			'traffic':
+			'highway':
 				resultFrame = 4
 			'pacman':
 				resultFrame = 5
