@@ -3,6 +3,7 @@ extends Node2D
 signal finished()
 
 func _ready():
+	modulate.a = 0
 	for i in range(4):
 		if !Global.playersJoined[i]:
 			get_node('Card' + str(i)).hide()

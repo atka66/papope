@@ -74,10 +74,12 @@ func _ready():
 		hp *= 2
 	if Global.playersPerks[playerId].has(Global.PerkEnum.UNHEALTHY):
 		hp /= 2
-		
+	
+	if Global.playersPerks[playerId].has(Global.PerkEnum.PREPARED):
+		pickup(Global.getRandomPwrupName())
 	#var dashLoop = _dashLoop()
 	
-func _dashLoop(): # TODO ONLY DEBUG PURPOSES
+func _dashLoop(): # ONLY DEBUG PURPOSES
 	var x = ((randi() % 3) - 1)
 	var y = ((randi() % 3) - 1)
 	apply_central_impulse(Vector2(x, y))

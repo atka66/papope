@@ -32,7 +32,7 @@ func _pwrupSpawnLoop():
 		spawnersPwrup.remove()
 	var pwrup = Res.Pwrup.instance()
 	pwrup.add_to_group(pwrupGroupName)
-	pwrup.pwrupName = Res.PwrupSprites.keys()[randi() % Res.PwrupSprites.size()]
+	pwrup.pwrupName = Global.getRandomPwrupName()
 	pwrup.position = spawner.position
 	get_parent().add_child(pwrup)
 	var rerun = _pwrupSpawnLoop()

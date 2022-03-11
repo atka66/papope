@@ -66,7 +66,7 @@ enum PerkEnum {
 	AKIMBO, ARMORED, FAST, SPIKY, CUDDLES, REVERSE,
 	BACKFIRE, SLOW, NO_LEGS, TIME_BOMB,
 	RESET, RIGHT, LONG_ARMS, CHICKEN,
-	HEALTHY, UNHEALTHY, REGENERATION, VAMPIRE
+	HEALTHY, UNHEALTHY, REGENERATION, VAMPIRE, PREPARED
 }
 const PERKS = {
 	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 1],
@@ -86,7 +86,8 @@ const PERKS = {
 	PerkEnum.HEALTHY: ['healthy', 'doubled max health', 15],
 	PerkEnum.UNHEALTHY: ['unhealthy', 'halved max health', 16],
 	PerkEnum.REGENERATION: ['regeneration', 'regenerates health', 17],
-	PerkEnum.VAMPIRE: ['vampire', 'dealing damage heals', 18]
+	PerkEnum.VAMPIRE: ['vampire', 'dealing damage heals', 18],
+	PerkEnum.PREPARED: ['prepared', 'starts with random powerup', 19]
 }
 
 const DAMAGE_LAVA = 1
@@ -261,6 +262,9 @@ func getRandomDeathString(deathType):
 		DEATH_STRINGS[DeathEnum.DEFAULT][randi() % len(DEATH_STRINGS[DeathEnum.DEFAULT])],
 		DEATH_STRINGS[deathType][randi() % len(DEATH_STRINGS[deathType])]
 	][randi() % 2]
+
+func getRandomPwrupName():
+	return Res.PwrupSprites.keys()[randi() % Res.PwrupSprites.size()]
 
 func shakeScreen(shakePwr):
 	if shakePwr > 0:
