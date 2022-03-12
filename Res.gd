@@ -100,6 +100,14 @@ onready var AudioDestructibleDestroy = [
 	preload("res://sounds/destructible/destroy_2.wav"),
 	preload("res://sounds/destructible/destroy_3.wav")
 ]
+onready var AudioCarHorn = [
+	preload("res://sounds/collision/car_horn_1.ogg"),
+	preload("res://sounds/collision/car_horn_2.ogg"),
+	preload("res://sounds/collision/car_horn_3.ogg"),
+	preload("res://sounds/collision/car_horn_4.ogg"),
+	preload("res://sounds/collision/car_horn_5.ogg"),
+	preload("res://sounds/collision/car_horn_6.ogg")
+]
 
 onready var PwrupSprites = {
 	'revolver' : preload("res://sprites/pwrup/pwrup_revolver.tres"),
