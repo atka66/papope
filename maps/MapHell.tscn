@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://sprites/bg/hell.png" type="Texture" id=1]
 [ext_resource path="res://sprites/tileset/ts_hell.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://objects/obstacle/Block.tscn" type="PackedScene" id=6]
 [ext_resource path="res://objects/system/PlayzoneShader.tscn" type="PackedScene" id=7]
 [ext_resource path="res://shaders/heatshader.shader" type="Shader" id=8]
+[ext_resource path="res://sounds/ambient/amb_ember.ogg" type="AudioStream" id=9]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -238,6 +239,10 @@ z_as_relative = false
 environment = SubResource( 1 )
 
 [node name="MapController" parent="." instance=ExtResource( 5 )]
+
+[node name="Ambient" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+autoplay = true
 
 [node name="PlayzoneShader" parent="." instance=ExtResource( 7 )]
 shader = ExtResource( 8 )

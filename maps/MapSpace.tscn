@@ -10,7 +10,7 @@
 [ext_resource path="res://maps/Background.gd" type="Script" id=11]
 
 [sub_resource type="OpenSimplexNoise" id=1]
-seed = -1133940707
+seed = 2064649528
 persistence = 0.6
 
 [sub_resource type="NoiseTexture" id=2]
@@ -19,8 +19,8 @@ noise = SubResource( 1 )
 
 [sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 1 )
-shader_param/r = 0.621225
-shader_param/b = 0.378775
+shader_param/r = 0.475127
+shader_param/b = 0.524873
 shader_param/noise = SubResource( 2 )
 
 [sub_resource type="Curve" id=4]

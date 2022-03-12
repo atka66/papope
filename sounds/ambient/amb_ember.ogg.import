@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/amb_ember.ogg-75c1a838717eb68f7d1144f01c228734.oggstr"
+
+[deps]
+
+source_file="res://sounds/ambient/amb_ember.ogg"
+dest_files=[ "res://.import/amb_ember.ogg-75c1a838717eb68f7d1144f01c228734.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
