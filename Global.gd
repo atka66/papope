@@ -144,6 +144,8 @@ var playersPerks = [[], [], [], []]
 
 var selectedMap = 'none'
 
+var movingBackground
+
 func goToMap():
 	if getWinnerTeamByScore() < 0:
 		var selectedMapIndex;
@@ -269,6 +271,10 @@ func getRandomPwrupName():
 func shakeScreen(shakePwr):
 	if shakePwr > 0:
 		get_tree().get_nodes_in_group('camera')[0].shakePwr = shakePwr
+
+func restartMovingBackground():
+	if movingBackground:
+		movingBackground.restartMovingBackground(null)
 
 func _input(event):
 	if Input.is_action_just_pressed("mute"):

@@ -19,26 +19,6 @@ func createHintLabel():
 		$HintHolder.add_child(hintLabel)
 	yield(get_tree().create_timer(hintTimer), "timeout")
 
-func determineBackground():
-	var resultFrame = ($MovingBackground.frame + (randi() % ($MovingBackground.frames.get_frame_count('default') - 1)) + 1) % $MovingBackground.frames.get_frame_count('default')
-	if Global.playersJoined.has(true):
-		match Global.options['map'][Global.optionsSelected['map']]:
-			'hell':
-				resultFrame = 0
-			'western':
-				resultFrame = 1
-			'ship':
-				resultFrame = 2
-			'space':
-				resultFrame = 3
-			'highway':
-				resultFrame = 4
-			'pacman':
-				resultFrame = 5
-			'conveyor':
-				resultFrame = 6
-	$MovingBackground.frame = resultFrame
-
 func startCountdown():
 	countingDown = true
 	var countdown = Res.Countdown.instance()
@@ -79,8 +59,6 @@ func _ready():
 	get_node('/root/Music').play('menu')
 
 	initPlayers()
-
-	restartMovingBackground(null)
 	
 	while true:
 		yield(createHintLabel(), "completed")
@@ -107,11 +85,6 @@ func _process(delta):
 	elif !countingDown:
 		$InitHolder/StartLabel.show()
 	$HintHolder.show()
-
-func restartMovingBackground(anim_name):
-	determineBackground()
-	$BackgroundDimAnim.seek(0)
-	$BackgroundDimAnim.play('loop')
 
 # DEBUG
 func _input(event): 
