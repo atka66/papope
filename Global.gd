@@ -5,7 +5,7 @@ signal player_remove(id)
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 const DEBUG = false
 
-const VERSION = '1.3.3 beta'
+const VERSION = '1.3.3'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
