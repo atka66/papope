@@ -89,7 +89,7 @@ func _process(delta):
 # DEBUG
 func _input(event): 
 	if Input.is_action_just_pressed("quit"):
-		get_tree().change_scene("res://menu/Mainmenu.tscn")
+		get_tree().change_scene(Res.MainmenuPath)
 	if Global.DEBUG: 
 		if Input.is_action_just_pressed("test1"): 
 			for i in range(4):

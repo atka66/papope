@@ -28,7 +28,7 @@ func _input(event):
 			$GameTypeHolder/LocalHolder.rotation_degrees = 0
 	if Input.is_action_just_pressed("ui_accept"):
 		if isLocal:
-			get_tree().change_scene("res://Lobby.tscn")
+			get_tree().change_scene(Res.LobbyPath)
 		else:
 			#coming soon
 			#menuState = 2

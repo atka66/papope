@@ -5,7 +5,7 @@ signal player_remove(id)
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 const DEBUG = false
 
-const VERSION = '1.3.3'
+const VERSION = '1.4.0 beta'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
@@ -156,15 +156,15 @@ func goToMap():
 
 		selectedMap = options['map'][selectedMapIndex];
 		
-		if selectedMap == 'hell': get_tree().change_scene("res://maps/MapHell.tscn")
-		if selectedMap == 'western': get_tree().change_scene("res://maps/MapWestern.tscn")
-		if selectedMap == 'ship': get_tree().change_scene("res://maps/MapShip.tscn")
-		if selectedMap == 'space': get_tree().change_scene("res://maps/MapSpace.tscn")
-		if selectedMap == 'highway': get_tree().change_scene("res://maps/MapTraffic.tscn")
-		if selectedMap == 'pacman': get_tree().change_scene("res://maps/MapPacman.tscn")
-		if selectedMap == 'conveyor': get_tree().change_scene("res://maps/MapConveyor.tscn")
+		if selectedMap == 'hell': get_tree().change_scene(Res.MapHellPath)
+		if selectedMap == 'western': get_tree().change_scene(Res.MapWesternPath)
+		if selectedMap == 'ship': get_tree().change_scene(Res.MapShipPath)
+		if selectedMap == 'space': get_tree().change_scene(Res.MapSpacePath)
+		if selectedMap == 'highway': get_tree().change_scene(Res.MapHighwayPath)
+		if selectedMap == 'pacman': get_tree().change_scene(Res.MapPacmanPath)
+		if selectedMap == 'conveyor': get_tree().change_scene(Res.MapConveyorPath)
 	else:
-		get_tree().change_scene("res://maps/PostGame.tscn")
+		get_tree().change_scene(Res.PostGamePath)
 
 func getWinnerTeam():
 	var aliveTeams = []
@@ -192,7 +192,7 @@ func disconnectPlayer(playerId):
 	playersConnected[playerId] = false
 	leavePlayer(playerId)
 	if get_tree().get_current_scene().get_name() != 'Lobby':
-		get_tree().change_scene("res://Lobby.tscn")
+		get_tree().change_scene(Res.LobbyPath)
 
 func joinPlayer(playerId, silent):
 	playersJoined[playerId] = true

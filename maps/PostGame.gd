@@ -22,6 +22,6 @@ func _ready():
 
 func _input(event):
 	if Input.is_action_just_pressed("quit"):
-		get_tree().change_scene("res://Lobby.tscn")
+		get_tree().change_scene(Res.LobbyPath)
 	if Input.is_action_just_pressed("ui_accept") && canProceed:
-		get_tree().change_scene("res://Lobby.tscn")
+		get_tree().change_scene(Res.LobbyPath)

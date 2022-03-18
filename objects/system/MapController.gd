@@ -116,7 +116,7 @@ func playFallenPwrups():
 
 func _input(event):
 	if Input.is_action_just_pressed("quit"):
-		get_tree().change_scene("res://Lobby.tscn")
+		get_tree().change_scene(Res.LobbyPath)
 	if Global.DEBUG:
 		if Input.is_action_just_pressed("test1"): 
-			get_tree().change_scene("res://maps/PostGame.tscn")
+			get_tree().change_scene(Res.PostGamePath)

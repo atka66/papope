@@ -99,12 +99,3 @@ animate = false
 autoplay = "wobble_local"
 anims/wobble_local = SubResource( 1 )
 anims/wobble_online = SubResource( 2 )
-
-[node name="ComingSoonLabel" parent="GameTypeHolder" instance=ExtResource( 2 )]
-position = Vector2( 0, 80 )
-text = "coming soon"
-fontSize = 2
-alignment = 1
-outline = true
-color = Color( 0.501961, 0.501961, 0.501961, 1 )
-animate = false

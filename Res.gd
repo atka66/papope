@@ -1,5 +1,16 @@
 extends Node2D
 
+const MainmenuPath = "res://menu/Mainmenu.tscn"
+const LobbyPath = "res://menu/Lobby.tscn"
+const PostGamePath = "res://maps/PostGame.tscn"
+const MapHellPath = "res://maps/MapHell.tscn"
+const MapWesternPath = "res://maps/MapWestern.tscn"
+const MapShipPath = "res://maps/MapShip.tscn"
+const MapSpacePath = "res://maps/MapSpace.tscn"
+const MapHighwayPath = "res://maps/MapTraffic.tscn"
+const MapPacmanPath = "res://maps/MapPacman.tscn"
+const MapConveyorPath = "res://maps/MapConveyor.tscn"
+
 onready var CustomLabel = preload("res://objects/system/label/CustomLabel.tscn")
 onready var FallingMessage = preload("res://objects/system/label/FallingMessage.tscn")
 onready var RoundStartBanner = preload("res://objects/system/label/RoundStartBanner.tscn")
