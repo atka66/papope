@@ -58,8 +58,11 @@ func initPlayers():
 func _ready():
 	if Global.onlinemode:
 		get_tree().refuse_new_network_connections = false
-		get_tree().connect("network_peer_connected", self, "netConnect")
-		get_tree().connect("network_peer_connected", self, "netDisconnect")
+		get_tree().connect("network_peer_connected", self, "net_connect")
+		get_tree().connect("network_peer_disconnected", self, "net_disconnect")
+		get_tree().connect("server_disconnected", self, "cli_disconnect")
+		if get_tree().is_network_server():
+			Global.playersNetInfo[0] = "server"
 	
 	get_node('/root/Music').play('menu')
 
@@ -68,25 +71,19 @@ func _ready():
 	while true:
 		yield(createHintLabel(), "completed")
 
-func netConnect(id):
-	var label = Res.CustomLabel.instance()
-	label.position = Vector2(340, 220)
-	label.text = "player connected"
-	label.fontSize = 2
-	label.outline = true
-	label.aliveTime = 2
-	label.alignment = Label.ALIGN_CENTER
-	add_child(label)
+func net_connect(id):
+	rpc_id(id, "registerPlayer", "client")
+	Global.growl("player joined")
 
-func netDisconnect(id):
-	var label = Res.CustomLabel.instance()
-	label.position = Vector2(340, 220)
-	label.text = "player disconnected"
-	label.fontSize = 2
-	label.outline = true
-	label.aliveTime = 2
-	label.alignment = Label.ALIGN_CENTER
-	add_child(label)
+func net_disconnect(id):
+	Global.growl("player left")
+	
+func cli_disconnect():
+	Global.growl("disconnected from server")
+	exitToMainmenu()
+
+remote func registerPlayer(name):
+	Global.playersNetInfo[get_tree().get_rpc_sender_id()] = name
 
 func _process(delta):
 	for i in range(4):
@@ -114,8 +111,7 @@ func _process(delta):
 # DEBUG
 func _input(event): 
 	if Input.is_action_just_pressed("quit"):
-		get_tree().network_peer = null
-		get_tree().change_scene(Res.MainmenuPath)
+		exitToMainmenu()
 	if Global.DEBUG: 
 		if Input.is_action_just_pressed("test1"): 
 			for i in range(4):
@@ -135,3 +131,7 @@ func _input(event):
 						break
 		if Input.is_action_just_pressed("test3"):
 			Global.goToMap()
+
+func exitToMainmenu():
+	get_tree().network_peer = null
+	get_tree().change_scene(Res.MainmenuPath)

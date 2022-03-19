@@ -146,6 +146,9 @@ var playersStats = []
 var playersPerks = [[], [], [], []]
 #var playersPerks = [[PerkEnum.HEALTHY], [PerkEnum.UNHEALTHY], [], []]
 
+# net info
+var playersNetInfo = {}
+
 var selectedMap = 'none'
 
 var movingBackground
@@ -287,11 +290,11 @@ func _input(event):
 
 func growl(text):
 	var label = Res.CustomLabel.instance()
-	label.position.x = 340
+	label.position.x = 16
 	label.position.y = 320
 	label.text = text
-	label.fontSize = 2
+	label.fontSize = 1
 	label.outline = true
 	label.aliveTime = 3
-	label.alignment = Label.ALIGN_CENTER
+	label.alignment = Label.ALIGN_LEFT
 	get_tree().get_root().add_child(label)
