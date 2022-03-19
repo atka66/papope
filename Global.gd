@@ -279,5 +279,6 @@ func restartMovingBackground():
 		movingBackground.restartMovingBackground(null)
 
 func _input(event):
-	if Input.is_action_just_pressed("mute"):
-		get_node('/root/Music').mute()
+	if get_tree().get_current_scene().get_name() != 'Mainmenu':
+		if Input.is_action_just_pressed("mute"):
+			get_node('/root/Music').mute()

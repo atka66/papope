@@ -10,6 +10,10 @@ func _input(event):
 		if Input.is_action_just_pressed("quit"):
 			$OnlineDialog.hide()
 			$GameTypeHolder.show()
+	elif $HostDialog.visible:
+		if Input.is_action_just_pressed("quit"):
+			$OnlineDialog.popup()
+			$HostDialog.hide()
 	elif $JoinDialog.visible:
 		if Input.is_action_just_pressed("quit"):
 			$OnlineDialog.popup()
@@ -21,7 +25,7 @@ func _input(event):
 			Input.is_action_just_pressed("pl_nav_up")):
 			Global.onlinemode = !Global.onlinemode
 			updateAnim()
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_released("ui_accept"):
 			if Global.onlinemode:
 				$OnlineDialog.popup()
 				$GameTypeHolder.hide()
@@ -39,7 +43,8 @@ func updateAnim():
 		$GameTypeHolder/OnlineHolder.rotation_degrees = 0
 
 func _on_HostButton_pressed():
-	pass
+	$HostDialog.popup()
+	$OnlineDialog.hide()
 
 func _on_JoinButton_pressed():
 	$JoinDialog.popup()
@@ -48,3 +53,10 @@ func _on_JoinButton_pressed():
 func _on_RefreshButton_pressed():
 	var item = Res.ServerListItem.instance()
 	$JoinDialog/Content/ServerList.add_child(item)
+
+func _on_IpEdit_text_entered(new_text):
+	get_tree().change_scene(Res.LobbyPath)
+
+
+func _on_ServernameEdit_text_entered(new_text):
+	get_tree().change_scene(Res.LobbyPath)

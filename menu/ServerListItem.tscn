@@ -1,13 +1,16 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://menu/ServerListItem.gd" type="Script" id=1]
 
 [node name="ServerListItem" type="HBoxContainer"]
 margin_right = 256.0
 margin_bottom = 11.0
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="."]
+[node name="JoinButton" type="Button" parent="."]
 margin_right = 32.0
 margin_bottom = 11.0
 text = "join"
@@ -22,6 +25,15 @@ text = "192.168.0.1"
 [node name="NameLabel" type="Label" parent="."]
 margin_left = 94.0
 margin_top = 3.0
-margin_right = 163.0
+margin_right = 136.0
 margin_bottom = 8.0
-text = "unnamed [1/4]"
+text = "unnamed"
+
+[node name="VersionLabel" type="Label" parent="."]
+margin_left = 140.0
+margin_top = 3.0
+margin_right = 174.0
+margin_bottom = 8.0
+text = "[v1.4.0]"
+
+[connection signal="pressed" from="JoinButton" to="." method="_on_JoinButton_pressed"]
