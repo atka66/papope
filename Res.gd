@@ -138,3 +138,7 @@ onready var AudioMusicHell = preload("res://music/hell.ogg")
 onready var AudioMusicWestern = preload("res://music/western.ogg")
 onready var AudioMusicSpace = preload("res://music/space.ogg")
 onready var AudioMusicConveyor = preload("res://music/conveyor.ogg")
+
+# Menu
+
+onready var ServerListItem = preload("res://menu/ServerListItem.tscn")

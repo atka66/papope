@@ -112,6 +112,8 @@ const TEAM_COLOR_STRINGS = {
 const CONVEYOR_VEL_AREA = 0.68
 const CONVEYOR_VEL_RIGID = Vector2(-200.0, 0)
 
+var onlinemode = false
+
 var options = {
 	'mode': ['normal', 'one-hit', 'cards'],
 	'map': ['random', 'hell', 'western', 'ship', 'space', 'highway', 'pacman', 'conveyor'],

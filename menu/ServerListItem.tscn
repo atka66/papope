@@ -1,0 +1,27 @@
+[gd_scene format=2]
+
+[node name="ServerListItem" type="HBoxContainer"]
+margin_right = 256.0
+margin_bottom = 11.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_right = 32.0
+margin_bottom = 11.0
+text = "join"
+
+[node name="IpLabel" type="Label" parent="."]
+margin_left = 36.0
+margin_top = 3.0
+margin_right = 90.0
+margin_bottom = 8.0
+text = "192.168.0.1"
+
+[node name="NameLabel" type="Label" parent="."]
+margin_left = 94.0
+margin_top = 3.0
+margin_right = 163.0
+margin_bottom = 8.0
+text = "unnamed [1/4]"
