@@ -2,6 +2,8 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_tree().connect("connected_to_server", self, "_connectOk")
+	get_tree().connect("connection_failed", self, "_connectFail")
 	get_node('/root/Music').play('menu')
 	updateAnim()
 
@@ -18,6 +20,9 @@ func _input(event):
 		if Input.is_action_just_pressed("quit"):
 			$OnlineDialog.popup()
 			$JoinDialog.hide()
+	elif $ConnectDialog.visible:
+		if Input.is_action_just_pressed("quit"):
+			failConnection()
 	else:
 		if Input.is_action_just_pressed("quit"):
 			get_tree().quit()
@@ -55,8 +60,30 @@ func _on_RefreshButton_pressed():
 	$JoinDialog/Content/ServerList.add_child(item)
 
 func _on_IpEdit_text_entered(new_text):
-	get_tree().change_scene(Res.LobbyPath)
-
+	$ConnectDialog.popup()
+	$JoinDialog.hide()
+	# joining to a given address
+	var peer = NetworkedMultiplayerENet.new()
+	if peer.create_client(new_text, Global.NET_PORT) > 0:
+		failConnection()
+	get_tree().network_peer = peer
 
 func _on_ServernameEdit_text_entered(new_text):
+	# hosting a game
+	var peer = NetworkedMultiplayerENet.new()
+	peer.create_server(Global.NET_PORT, 4)
+	get_tree().network_peer = peer
 	get_tree().change_scene(Res.LobbyPath)
+
+func _connectOk():
+	get_tree().change_scene(Res.LobbyPath)
+
+func _connectFail():
+	failConnection()
+
+func failConnection():
+	get_tree().network_peer = null
+	Global.growl('could not connect to server')
+	$AudioError.play()
+	$JoinDialog.popup()
+	$ConnectDialog.hide()

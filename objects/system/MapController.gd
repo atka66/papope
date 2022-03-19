@@ -1,6 +1,9 @@
 extends Node2D
 
 func _ready():
+	if Global.onlinemode:
+		get_tree().refuse_new_network_connections = true
+	
 	get_node('/root/Music').play(Global.selectedMap)
 
 	Global.playersFrozen = true

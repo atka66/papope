@@ -112,6 +112,8 @@ const TEAM_COLOR_STRINGS = {
 const CONVEYOR_VEL_AREA = 0.68
 const CONVEYOR_VEL_RIGID = Vector2(-200.0, 0)
 
+const NET_PORT = 26123
+
 var onlinemode = false
 
 var options = {
@@ -282,3 +284,14 @@ func _input(event):
 	if get_tree().get_current_scene().get_name() != 'Mainmenu':
 		if Input.is_action_just_pressed("mute"):
 			get_node('/root/Music').mute()
+
+func growl(text):
+	var label = Res.CustomLabel.instance()
+	label.position.x = 340
+	label.position.y = 320
+	label.text = text
+	label.fontSize = 2
+	label.outline = true
+	label.aliveTime = 3
+	label.alignment = Label.ALIGN_CENTER
+	get_tree().get_root().add_child(label)

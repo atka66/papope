@@ -56,12 +56,37 @@ func initPlayers():
 		)
 
 func _ready():
+	if Global.onlinemode:
+		get_tree().refuse_new_network_connections = false
+		get_tree().connect("network_peer_connected", self, "netConnect")
+		get_tree().connect("network_peer_connected", self, "netDisconnect")
+	
 	get_node('/root/Music').play('menu')
 
 	initPlayers()
 	
 	while true:
 		yield(createHintLabel(), "completed")
+
+func netConnect(id):
+	var label = Res.CustomLabel.instance()
+	label.position = Vector2(340, 220)
+	label.text = "player connected"
+	label.fontSize = 2
+	label.outline = true
+	label.aliveTime = 2
+	label.alignment = Label.ALIGN_CENTER
+	add_child(label)
+
+func netDisconnect(id):
+	var label = Res.CustomLabel.instance()
+	label.position = Vector2(340, 220)
+	label.text = "player disconnected"
+	label.fontSize = 2
+	label.outline = true
+	label.aliveTime = 2
+	label.alignment = Label.ALIGN_CENTER
+	add_child(label)
 
 func _process(delta):
 	for i in range(4):
@@ -89,6 +114,7 @@ func _process(delta):
 # DEBUG
 func _input(event): 
 	if Input.is_action_just_pressed("quit"):
+		get_tree().network_peer = null
 		get_tree().change_scene(Res.MainmenuPath)
 	if Global.DEBUG: 
 		if Input.is_action_just_pressed("test1"): 
