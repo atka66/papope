@@ -10,6 +10,7 @@ const MapSpacePath = "res://maps/MapSpace.tscn"
 const MapHighwayPath = "res://maps/MapTraffic.tscn"
 const MapPacmanPath = "res://maps/MapPacman.tscn"
 const MapConveyorPath = "res://maps/MapConveyor.tscn"
+const NetLobbyPath = "res://net/NetLobby.tscn"
 
 onready var CustomLabel = preload("res://objects/system/label/CustomLabel.tscn")
 onready var FallingMessage = preload("res://objects/system/label/FallingMessage.tscn")

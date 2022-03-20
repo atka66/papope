@@ -73,10 +73,10 @@ func _on_ServernameEdit_text_entered(new_text):
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(Global.NET_PORT, 4)
 	get_tree().network_peer = peer
-	get_tree().change_scene(Res.LobbyPath)
+	get_tree().change_scene(Res.NetLobbyPath)
 
 func _connectOk():
-	get_tree().change_scene(Res.LobbyPath)
+	get_tree().change_scene(Res.NetLobbyPath)
 
 func _connectFail():
 	failConnection()
