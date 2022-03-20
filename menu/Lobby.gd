@@ -56,34 +56,12 @@ func initPlayers():
 		)
 
 func _ready():
-	if Global.onlinemode:
-		get_tree().refuse_new_network_connections = false
-		get_tree().connect("network_peer_connected", self, "net_connect")
-		get_tree().connect("network_peer_disconnected", self, "net_disconnect")
-		get_tree().connect("server_disconnected", self, "cli_disconnect")
-		if get_tree().is_network_server():
-			Global.playersNetInfo[0] = "server"
-	
 	get_node('/root/Music').play('menu')
 
 	initPlayers()
 	
 	while true:
 		yield(createHintLabel(), "completed")
-
-func net_connect(id):
-	rpc_id(id, "registerPlayer", "client")
-	Global.growl("player joined")
-
-func net_disconnect(id):
-	Global.growl("player left")
-	
-func cli_disconnect():
-	Global.growl("disconnected from server")
-	exitToMainmenu()
-
-remote func registerPlayer(name):
-	Global.playersNetInfo[get_tree().get_rpc_sender_id()] = name
 
 func _process(delta):
 	for i in range(4):
@@ -108,7 +86,6 @@ func _process(delta):
 		$InitHolder/StartLabel.show()
 	$HintHolder.show()
 
-# DEBUG
 func _input(event): 
 	if Input.is_action_just_pressed("quit"):
 		exitToMainmenu()
