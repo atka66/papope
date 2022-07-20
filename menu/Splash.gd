@@ -2,7 +2,11 @@ extends Node2D
 
 func _ready():
 	get_node('/root/Music').play('splash')
-	$MenuTimer.start(2.2)
+	$Anim.play("splash")
 
-func _on_MenuTimer_timeout():
+func _input(event):
+	if Input.is_action_just_pressed("quit"):
+		get_tree().quit()
+
+func toLobby():
 	get_tree().change_scene("res://Lobby.tscn")

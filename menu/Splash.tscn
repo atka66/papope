@@ -1,11 +1,75 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://menu/Splash.gd" type="Script" id=1]
+[ext_resource path="res://objects/system/label/CustomLabel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://sprites/godot.png" type="Texture" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "splash"
+length = 2.3
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 2.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "toLobby"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("GodotHolder:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 1.1, 1.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("MadeByHolder:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.3, 1.5, 2.1, 2.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [node name="Splash" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="MenuTimer" type="Timer" parent="."]
-one_shot = true
+[node name="Anim" type="AnimationPlayer" parent="."]
+anims/splash = SubResource( 1 )
 
-[connection signal="timeout" from="MenuTimer" to="." method="_on_MenuTimer_timeout"]
+[node name="GodotHolder" type="Node2D" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+
+[node name="GodotLogo" type="Sprite" parent="GodotHolder"]
+position = Vector2( 340, 180 )
+texture = ExtResource( 3 )
+
+[node name="CustomLabel" parent="GodotHolder" instance=ExtResource( 2 )]
+position = Vector2( 345, 220 )
+text = "made with godot"
+fontSize = 2
+alignment = 1
+
+[node name="MadeByHolder" type="Node2D" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+
+[node name="CustomLabel" parent="MadeByHolder" instance=ExtResource( 2 )]
+position = Vector2( 345, 270 )
+text = "a game by atka"
+fontSize = 3
+alignment = 1
