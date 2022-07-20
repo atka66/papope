@@ -5,6 +5,8 @@ var muted = false
 func play(stage):
 	var audioStream = Res.AudioMusicDefault
 	match stage:
+		'splash':
+			audioStream = Res.AudioMusicSplash
 		'menu':
 			audioStream = Res.AudioMusicLobby
 		'postgame':

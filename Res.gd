@@ -121,6 +121,7 @@ onready var PwrupSprites = {
 
 onready var MusicNode = preload("res://objects/system/Music.tscn")
 onready var AudioMusicDefault = preload("res://music/default.ogg")
+onready var AudioMusicSplash = preload("res://music/splash.ogg")
 onready var AudioMusicLobby = preload("res://music/lobby.ogg")
 onready var AudioMusicPostGame = preload("res://music/postgame.ogg")
 onready var AudioMusicHell = preload("res://music/hell.ogg")
