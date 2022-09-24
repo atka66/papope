@@ -164,17 +164,13 @@ position = Vector2( 352, 320 )
 z_index = -2
 z_as_relative = false
 
-[node name="PwrupSpawner0" type="Sprite" parent="." groups=[
-"spawners",
-]]
+[node name="PwrupSpawner0" type="Sprite" parent="." groups=["spawners"]]
 position = Vector2( 64, 288 )
 z_index = -2
 z_as_relative = false
 texture = ExtResource( 4 )
 
-[node name="PwrupSpawner1" type="Sprite" parent="." groups=[
-"spawners",
-]]
+[node name="PwrupSpawner1" type="Sprite" parent="." groups=["spawners"]]
 position = Vector2( 608, 96 )
 z_index = -2
 z_as_relative = false
