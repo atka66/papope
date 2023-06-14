@@ -7,3 +7,5 @@ papope.pck
 .mono/
 data_*/
 *.mmpz.bak
+
+export/

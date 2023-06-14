@@ -81,12 +81,13 @@ script = ExtResource( 1 )
 anims/splash = SubResource( 1 )
 
 [node name="GodotHolder" type="Node2D" parent="."]
+modulate = Color( 1, 1, 1, 0 )
 
 [node name="GodotLogo" type="Sprite" parent="GodotHolder"]
-position = Vector2( 340, 170 )
+position = Vector2( 340, 100 )
 texture = ExtResource( 3 )
 
 [node name="CustomLabel" parent="GodotHolder" instance=ExtResource( 2 )]
-position = Vector2( 265, 230 )
+position = Vector2( 265, 300 )
 text = "made with godot"
 fontSize = 2
