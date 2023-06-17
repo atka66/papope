@@ -277,5 +277,7 @@ func restartMovingBackground():
 		movingBackground.restartMovingBackground(null)
 
 func _input(event):
+	if Input.is_action_just_pressed("fullscreen"):
+		OS.set_window_fullscreen(!OS.window_fullscreen)
 	if Input.is_action_just_pressed("mute"):
 		get_node('/root/Music').mute()

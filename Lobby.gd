@@ -89,8 +89,6 @@ func _process(delta):
 
 # DEBUG
 func _input(event): 
-	if Input.is_action_just_pressed("fullscreen"):
-		OS.set_window_fullscreen(!OS.window_fullscreen)
 	if Input.is_action_just_pressed("quit"):
 		# TODO rethink main menu
 		# get_tree().change_scene("res://menu/Mainmenu.tscn")
