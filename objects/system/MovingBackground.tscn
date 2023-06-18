@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=3 uid="uid://cop2o1vtkv1qt"]
+
+[ext_resource type="Script" path="res://objects/system/MovingBackground.gd" id="1_105ju"]
+[ext_resource type="Texture2D" uid="uid://haoeer3guucd" path="res://sprites/lobby/bg_conveyor.png" id="1_fx2n7"]
+[ext_resource type="Texture2D" uid="uid://bsmp3oggmsgx7" path="res://sprites/lobby/bg_hell.png" id="2_nntt6"]
+[ext_resource type="Texture2D" uid="uid://bvxd4o8wayq1v" path="res://sprites/lobby/bg_pacman.png" id="3_ehb48"]
+[ext_resource type="Texture2D" uid="uid://ysilat3cndgw" path="res://sprites/lobby/bg_ship.png" id="4_s8glx"]
+[ext_resource type="Texture2D" uid="uid://bk1g5i1nqoopc" path="res://sprites/lobby/bg_space.png" id="5_uy7iw"]
+[ext_resource type="Texture2D" uid="uid://coveew6isvbc1" path="res://sprites/lobby/bg_traffic.png" id="6_t1d8a"]
+[ext_resource type="Texture2D" uid="uid://bmaw5qft2uudp" path="res://sprites/lobby/bg_western.png" id="7_bd3fq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yekfl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_fx2n7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_nntt6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ehb48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_s8glx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_uy7iw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_t1d8a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bd3fq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_5mort"]
+resource_name = "loop"
+length = 5.0
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BackgroundDim:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 4.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Backgrounds:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-150, -150), Vector2(-300, -150)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_arf80"]
+_data = {
+"loop": SubResource("Animation_5mort")
+}
+
+[node name="MovingBackground" type="Node2D"]
+script = ExtResource("1_105ju")
+
+[node name="Backgrounds" type="AnimatedSprite2D" parent="."]
+position = Vector2(-195, -150)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_yekfl")
+centered = false
+
+[node name="BackgroundDim" type="Polygon2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-200, -200, 880, -200, 880, 584, -200, 584)
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_arf80")
+}
+
+[connection signal="animation_finished" from="Anim" to="." method="restartMovingBackground"]

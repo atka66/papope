@@ -25,6 +25,7 @@ buses/default_bus_layout="res://audio/audio_bus_layout.tres"
 
 Music="*res://global/Music.tscn"
 Res="*res://global/Res.gd"
+Global="*res://global/Global.gd"
 
 [display]
 
@@ -33,16 +34,20 @@ window/size/viewport_height=768
 window/stretch/mode="viewport"
 window/stretch/scale=2.0
 
+[papope]
+
+pwrup_respawn_time=6
+hint_timer=6
+allow_players_set_option=true
+disconnect_on_init=false
+ghost_respawn_time=5
+default_option_mode=0
+default_option_map=0
+default_option_rounds=1
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
-
-[shader_globals]
-
-HINT_TIMER={
-"type": "int",
-"value": 6
-}
