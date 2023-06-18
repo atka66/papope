@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dysrri43atfs4"]
+
+[ext_resource type="FontFile" uid="uid://bjnls8q105pb2" path="res://fonts/papope.ttf" id="1_x238t"]
+
+[resource]
+font = ExtResource("1_x238t")
+font_size = 10

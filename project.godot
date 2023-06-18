@@ -11,10 +11,31 @@ config_version=5
 [application]
 
 config/name="Papope"
+run/main_scene="res://scenes/Splash.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="res://audio/audio_bus_layout.tres"
+
+[autoload]
+
+Music="*res://global/Music.tscn"
+Res="*res://global/Res.gd"
+
+[display]
+
+window/size/viewport_width=1360
+window/size/viewport_height=768
+window/stretch/mode="viewport"
+window/stretch/scale=2.0
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

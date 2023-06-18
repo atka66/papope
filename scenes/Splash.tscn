@@ -1,0 +1,94 @@
+[gd_scene load_steps=6 format=3 uid="uid://nqnooauve2nh"]
+
+[ext_resource type="Texture2D" uid="uid://dwehclchfvnxe" path="res://sprites/godot.png" id="1_2fm32"]
+[ext_resource type="Script" path="res://scenes/Splash.gd" id="1_y2s2j"]
+[ext_resource type="LabelSettings" uid="uid://dysrri43atfs4" path="res://fonts/papope_label.tres" id="3_icrs6"]
+
+[sub_resource type="Animation" id="Animation_c1i5m"]
+resource_name = "splash"
+length = 2.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GodotHolder/Logo:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GodotHolder/Logo:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(100, -0.25, 0, 0.5, 0, 180, -1, 0, 0.25, 0),
+"times": PackedFloat32Array(0.3, 1.7)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GodotHolder:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.1, 2.2, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GodotHolder/Label:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GodotHolder/Label:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(300, -0.25, 0, 0.5, 0, 220, -1, 0, 0.25, 0),
+"times": PackedFloat32Array(0.3, 1.7)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uh4f6"]
+_data = {
+"splash": SubResource("Animation_c1i5m")
+}
+
+[node name="Splash" type="Node2D"]
+script = ExtResource("1_y2s2j")
+
+[node name="GodotHolder" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+
+[node name="Logo" type="Sprite2D" parent="GodotHolder"]
+position = Vector2(340, 100)
+texture = ExtResource("1_2fm32")
+
+[node name="Label" type="Label" parent="GodotHolder"]
+offset_left = 265.0
+offset_top = 300.0
+offset_right = 423.0
+offset_bottom = 323.0
+text = "made with godot"
+label_settings = ExtResource("3_icrs6")
+horizontal_alignment = 1
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uh4f6")
+}
