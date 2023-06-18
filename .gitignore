@@ -1,11 +1,2 @@
-# Godot-specific ignores
-.import/
-papope.exe
-papope.pck
-
-# Mono-specific ignores
-.mono/
-data_*/
-*.mmpz.bak
-
-export/
+# Godot 4+ specific ignores
+.godot/
