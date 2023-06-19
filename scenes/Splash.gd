@@ -5,5 +5,10 @@ func _ready():
 	get_node("/root/Music").play('splash')
 	$Anim.play("splash")
 
+func _input(event):
+	# todo maybe add some controller presses to skip to lobby
+	if event.is_action_pressed("escape"):
+		toLobby()
+
 func toLobby() -> void:
 	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
