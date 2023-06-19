@@ -97,6 +97,7 @@ texture = ExtResource("1_2fm32")
 [node name="Label" parent="GodotHolder" instance=ExtResource("3_isgji")]
 position = Vector2(0, 300)
 fontSize = 2
+alignment = 1
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
