@@ -17,10 +17,13 @@ enum ALIGNMENTS {LEFT, CENTER, RIGHT}
 		alignment = new_alignment
 		setAlignment(new_alignment)
 
+@export var aliveTime: int = 0
+
 func _ready():
 #	setText(text)
 	setFontSize(fontSize)
 	setAlignment(alignment)
+	setAliveTime(aliveTime)
 
 func setText(new_text):
 	pass
@@ -36,3 +39,11 @@ func setAlignment(new_alignment):
 			$PlaceholderSprite.offset.x = -18
 		ALIGNMENTS.RIGHT:
 			$PlaceholderSprite.offset.x = -36
+
+func setAliveTime(new_aliveTime):
+	if !Engine.is_editor_hint() && new_aliveTime > 0:
+		timeDisappear(new_aliveTime)
+
+func timeDisappear(time) -> void:
+	await get_tree().create_timer(time).timeout
+	queue_free()

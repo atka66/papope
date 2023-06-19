@@ -5,7 +5,7 @@
 
 [node name="CustomLabel" type="Node2D"]
 script = ExtResource("1_1kkh4")
-alignment = null
+aliveTime = null
 
 [node name="PlaceholderSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_5cwax")
