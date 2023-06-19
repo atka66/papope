@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgjwfivoc8wki"]
+[gd_scene load_steps=9 format=3 uid="uid://cgjwfivoc8wki"]
 
 [ext_resource type="Script" path="res://scenes/Lobby.gd" id="1_i8rer"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/system/MovingBackground.tscn" id="2_pbfn1"]
+[ext_resource type="Animation" uid="uid://bcroi11mupex8" path="res://resources/anims/wobble.res" id="4_3g4sh"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/CustomLabel.tscn" id="4_8wgdj"]
 
 [sub_resource type="Animation" id="Animation_6qw7i"]
@@ -25,38 +26,14 @@ _data = {
 "fade_in": SubResource("Animation_6qw7i")
 }
 
-[sub_resource type="Animation" id="Animation_vmetb"]
-resource_name = "wobble"
-length = 3.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.2, 1.2)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 4
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.5, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-0.0349066, 0.0349066]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7a0rr"]
+_data = {
+"wobble": ExtResource("4_3g4sh")
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_laskt"]
 _data = {
-"wobble": SubResource("Animation_vmetb")
+"wobble": ExtResource("4_3g4sh")
 }
 
 [node name="Lobby" type="Node2D"]
@@ -64,11 +41,34 @@ modulate = Color(0, 0, 0, 1)
 script = ExtResource("1_i8rer")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
+autoplay = "fade_in"
 libraries = {
 "": SubResource("AnimationLibrary_iknuv")
 }
 
 [node name="MovingBackground" parent="." instance=ExtResource("2_pbfn1")]
+
+[node name="InitHolder" type="Node2D" parent="."]
+position = Vector2(340, 336)
+rotation = 6.26638
+
+[node name="Anim" type="AnimationPlayer" parent="InitHolder"]
+autoplay = "wobble"
+libraries = {
+"": SubResource("AnimationLibrary_7a0rr")
+}
+
+[node name="WaitingLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
+fontSize = 2
+alignment = 1
+
+[node name="TeamLimitLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
+fontSize = 2
+alignment = 1
+
+[node name="StartLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
+fontSize = 2
+alignment = 1
 
 [node name="MenuCanvas" type="CanvasLayer" parent="."]
 
