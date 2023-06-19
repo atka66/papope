@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://nqnooauve2nh"]
+[gd_scene load_steps=6 format=3 uid="uid://nqnooauve2nh"]
 
 [ext_resource type="Texture2D" uid="uid://dwehclchfvnxe" path="res://sprites/godot.png" id="1_2fm32"]
 [ext_resource type="Script" path="res://scenes/Splash.gd" id="1_y2s2j"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/CustomLabel.tscn" id="3_isgji"]
 
 [sub_resource type="Animation" id="Animation_c1i5m"]
 resource_name = "splash"
@@ -40,6 +41,42 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GodotHolder/Label:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GodotHolder/Label:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(300, -0.25, 0, 0.5, 0, 220, -1, 0, 0.25, 0),
+"times": PackedFloat32Array(0.3, 1.7)
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(2.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"toLobby"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uh4f6"]
 _data = {
@@ -51,10 +88,15 @@ script = ExtResource("1_y2s2j")
 
 [node name="GodotHolder" type="Node2D" parent="."]
 modulate = Color(1, 1, 1, 0)
+position = Vector2(340, 0)
 
 [node name="Logo" type="Sprite2D" parent="GodotHolder"]
-position = Vector2(340, 100)
+position = Vector2(0, 100)
 texture = ExtResource("1_2fm32")
+
+[node name="Label" parent="GodotHolder" instance=ExtResource("3_isgji")]
+position = Vector2(0, 300)
+fontSize = 2
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {

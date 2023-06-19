@@ -1,18 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bli02m5v875nl"]
+[gd_scene load_steps=3 format=3 uid="uid://bli02m5v875nl"]
 
 [ext_resource type="Script" path="res://objects/system/CustomLabel.gd" id="1_1kkh4"]
+[ext_resource type="Texture2D" uid="uid://bcvmruf8ncm54" path="res://fonts/placeholder.png" id="2_5cwax"]
 
 [node name="CustomLabel" type="Node2D"]
 script = ExtResource("1_1kkh4")
 
-[node name="Label" type="Label" parent="."]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -64.0
-offset_right = 64.0
-offset_bottom = 26.0
-grow_horizontal = 2
-size_flags_horizontal = 4
-text = "sample-text"
-horizontal_alignment = 1
+[node name="PlaceholderSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_5cwax")
