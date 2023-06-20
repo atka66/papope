@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cgjwfivoc8wki"]
+[gd_scene load_steps=11 format=3 uid="uid://cgjwfivoc8wki"]
 
 [ext_resource type="Script" path="res://scenes/Lobby.gd" id="1_i8rer"]
-[ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/system/MovingBackground.tscn" id="2_pbfn1"]
+[ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_pbfn1"]
+[ext_resource type="PackedScene" uid="uid://co6dqvdhklpn5" path="res://objects/lobby/PlayerSlot.tscn" id="3_32tqe"]
 [ext_resource type="Animation" uid="uid://bcroi11mupex8" path="res://resources/anims/wobble.res" id="4_3g4sh"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/CustomLabel.tscn" id="4_8wgdj"]
-[ext_resource type="PackedScene" uid="uid://bwaujkg3fwp0t" path="res://objects/system/HintSpawner.tscn" id="5_uy1dg"]
+[ext_resource type="PackedScene" uid="uid://bwaujkg3fwp0t" path="res://objects/lobby/HintSpawner.tscn" id="5_uy1dg"]
 
 [sub_resource type="Animation" id="Animation_6qw7i"]
 resource_name = "fade_in"
@@ -49,6 +50,21 @@ libraries = {
 
 [node name="MovingBackground" parent="." instance=ExtResource("2_pbfn1")]
 
+[node name="PlayerSlot0" parent="." instance=ExtResource("3_32tqe")]
+position = Vector2(128, 240)
+
+[node name="PlayerSlot1" parent="." instance=ExtResource("3_32tqe")]
+position = Vector2(256, 240)
+playerId = 1
+
+[node name="PlayerSlot2" parent="." instance=ExtResource("3_32tqe")]
+position = Vector2(384, 240)
+playerId = 2
+
+[node name="PlayerSlot3" parent="." instance=ExtResource("3_32tqe")]
+position = Vector2(512, 240)
+playerId = 3
+
 [node name="InitHolder" type="Node2D" parent="."]
 position = Vector2(340, 336)
 rotation = 6.26638
@@ -62,17 +78,14 @@ libraries = {
 [node name="WaitingLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
 fontSize = 2
 alignment = 1
-aliveTime = 0
 
 [node name="TeamLimitLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
 fontSize = 2
 alignment = 1
-aliveTime = 0
 
 [node name="StartLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
 fontSize = 2
 alignment = 1
-aliveTime = 0
 
 [node name="HintSpawner" parent="." instance=ExtResource("5_uy1dg")]
 position = Vector2(510, 144)
@@ -81,17 +94,14 @@ position = Vector2(510, 144)
 
 [node name="VersionLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(4, 376)
-aliveTime = 0
 
 [node name="FullscreenLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(678, 376)
 alignment = 2
-aliveTime = 0
 
 [node name="GodotLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(340, 376)
 alignment = 1
-aliveTime = 0
 
 [node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
 position = Vector2(340, 48)
@@ -107,10 +117,8 @@ libraries = {
 position = Vector2(0, -22)
 fontSize = 6
 alignment = 1
-aliveTime = 0
 
 [node name="SubtitleLabel" parent="MenuCanvas/TitleHolder" instance=ExtResource("4_8wgdj")]
 position = Vector2(0, 22)
 fontSize = 3
 alignment = 1
-aliveTime = 0

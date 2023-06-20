@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://co6dqvdhklpn5"]
+
+[ext_resource type="Script" path="res://objects/lobby/PlayerSlot.gd" id="1_e7ob8"]
+[ext_resource type="Texture2D" uid="uid://bk1c4wur83ck7" path="res://sprites/lobby/player_slot.png" id="2_2xbj7"]
+[ext_resource type="Texture2D" uid="uid://b3kuhrsbono02" path="res://sprites/lobby/controller.png" id="3_2whjo"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/CustomLabel.tscn" id="4_vrrwg"]
+
+[node name="PlayerSlot" type="Node2D"]
+script = ExtResource("1_e7ob8")
+
+[node name="SlotSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_2xbj7")
+
+[node name="ControllerSprite" type="Sprite2D" parent="."]
+position = Vector2(0, 32)
+texture = ExtResource("3_2whjo")
+
+[node name="JoinLabel" parent="." instance=ExtResource("4_vrrwg")]
+position = Vector2(0, 54)
+fontSize = 2
+alignment = 1
+
+[node name="CancelLabel" parent="." instance=ExtResource("4_vrrwg")]
+position = Vector2(0, 54)
+fontSize = 2
+alignment = 1
+
+[node name="LeaveLabel" parent="." instance=ExtResource("4_vrrwg")]
+position = Vector2(0, 54)
+fontSize = 2
+alignment = 1
