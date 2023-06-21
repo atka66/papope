@@ -134,3 +134,35 @@ var selectedMap = 'none'
 
 func _ready():
 	randomize()
+	
+	Input.connect("joy_connection_changed", _joy_connection_changed)
+	var connectedControllers = Input.get_connected_joypads()
+	for i in range(playersConnected.size()):
+		if playersConnected[i] && !connectedControllers.has(i):
+			if !DEBUG:
+				disconnectPlayer(i)
+		if !playersConnected[i] && connectedControllers.has(i):
+			connectPlayer(i)
+
+func _joy_connection_changed(id: int, connected: bool) -> void:
+	if id < 4:
+		if connected:
+			connectPlayer(id)
+		else:
+			disconnectPlayer(id)
+
+func connectPlayer(id: int) -> void:
+	playersConnected[id] = true
+
+func disconnectPlayer(id: int) -> void:
+	playersConnected[id] = false
+	leavePlayer(id)
+	if get_tree().get_current_scene().get_name() != 'Lobby':
+		get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
+
+func joinPlayer(id: int, silent: bool) -> void:
+	playersJoined[id] = true
+
+func leavePlayer(id: int) -> void:
+	playersJoined[id] = false
+	emit_signal("player_remove", id)
