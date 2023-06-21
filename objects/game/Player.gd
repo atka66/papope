@@ -3,12 +3,12 @@ extends RigidBody2D
 @export var playerId: int = 0
 var silent: bool = false
 
-var alive = true
-var trapped = false
+var alive: bool = true
+var trapped: bool = false
 
 var thrust: Vector2 = Vector2.ZERO
 var speed: int = 20
-var frictionCustom = 0.1
+var frictionCustom: float = 0.1
 
 var color: Color = Global.TEAM_COLORS[0]
 

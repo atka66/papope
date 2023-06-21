@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cgjwfivoc8wki"]
+[gd_scene load_steps=12 format=3 uid="uid://cgjwfivoc8wki"]
 
 [ext_resource type="Script" path="res://scenes/Lobby.gd" id="1_i8rer"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_pbfn1"]
+[ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="3_5jgbx"]
 [ext_resource type="PackedScene" uid="uid://co6dqvdhklpn5" path="res://objects/lobby/PlayerSlot.tscn" id="3_32tqe"]
 [ext_resource type="Animation" uid="uid://bcroi11mupex8" path="res://resources/anims/wobble.res" id="4_3g4sh"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/CustomLabel.tscn" id="4_8wgdj"]
@@ -49,6 +50,8 @@ libraries = {
 }
 
 [node name="MovingBackground" parent="." instance=ExtResource("2_pbfn1")]
+
+[node name="Camera" parent="." instance=ExtResource("3_5jgbx")]
 
 [node name="PlayerSlot0" parent="." instance=ExtResource("3_32tqe")]
 position = Vector2(128, 240)
