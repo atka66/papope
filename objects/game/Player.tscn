@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://tlfkm8pk6hy7"]
+
+[ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
+[ext_resource type="Texture2D" uid="uid://bqi68a1oy3j8s" path="res://sprites/game/player/circle.png" id="2_qybm2"]
+[ext_resource type="Texture2D" uid="uid://d01tqakervrj4" path="res://sprites/game/player/faces.png" id="3_m7o6a"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_po7vx"]
+friction = 0.0
+bounce = 1.0
+
+[node name="Player" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_po7vx")
+gravity_scale = 0.0
+max_contacts_reported = 2
+contact_monitor = true
+script = ExtResource("1_srq66")
+
+[node name="BodyParts" type="Node2D" parent="."]
+
+[node name="Body" type="Sprite2D" parent="BodyParts"]
+texture = ExtResource("2_qybm2")
+
+[node name="Face" type="Sprite2D" parent="BodyParts"]
+texture = ExtResource("3_m7o6a")
+hframes = 7

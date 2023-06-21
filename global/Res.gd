@@ -1,6 +1,7 @@
 extends Node
 
 @onready var CustomLabelObject = preload("res://objects/system/CustomLabel.tscn")
+@onready var PlayerObject = preload("res://objects/game/Player.tscn")
 
 @onready var AudioMusicDefault = preload("res://audio/music/default.ogg")
 @onready var AudioMusicSplash = preload("res://audio/music/splash.ogg")

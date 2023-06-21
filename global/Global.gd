@@ -1,5 +1,7 @@
 extends Node
 
+signal player_remove(id)
+
 var MovingBackgroundNode: Node2D
 
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
@@ -162,6 +164,12 @@ func disconnectPlayer(id: int) -> void:
 
 func joinPlayer(id: int, silent: bool) -> void:
 	playersJoined[id] = true
+	var slot = get_node('/root/Lobby/PlayerSlot' + str(id))
+	var player = Res.PlayerObject.instantiate()
+	connect("player_remove", player._on_remove)
+	player.playerId = id
+	player.silent = silent
+	slot.add_child(player)
 
 func leavePlayer(id: int) -> void:
 	playersJoined[id] = false

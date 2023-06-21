@@ -1,11 +1,5 @@
 extends Node2D
 
-func joinPlayer(playerId: int, silent: bool) -> void:
-	Global.playersJoined[playerId] = true
-	var slot = get_node('PlayerSlot' + str(playerId))
-	var player = Res.CustomLabelObject.instance()
-	slot.add_child(player)
-
 func initPlayers() -> void:
 	Global.playersFrozen = false
 	Global.playersPoints = [0, 0, 0, 0]
@@ -17,7 +11,7 @@ func initPlayers() -> void:
 			Global.playersJoined[i] = false
 		else:
 			if Global.playersConnected[i] && Global.playersJoined[i]:
-				joinPlayer(i, true)
+				Global.joinPlayer(i, true)
 	
 	Global.playersStats = []
 	for i in range(4):
