@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://j5rsgflce7ak"]
+[gd_scene load_steps=11 format=3 uid="uid://j5rsgflce7ak"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_h08s3"]
 [ext_resource type="Shader" path="res://shaders/nebula.gdshader" id="2_xkg21"]
@@ -18,6 +18,17 @@ noise = SubResource("FastNoiseLite_u38ky")
 shader = ExtResource("2_xkg21")
 shader_parameter/noise = SubResource("NoiseTexture2D_s2y4v")
 
+[sub_resource type="Gradient" id="Gradient_xc2mu"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d1c4u"]
+gradient = SubResource("Gradient_xc2mu")
+width = 10
+
+[sub_resource type="Gradient" id="Gradient_45nc1"]
+offsets = PackedFloat32Array(0, 0.75, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
 [node name="MapSpace" type="Node2D"]
 
 [node name="MapController" parent="." instance=ExtResource("1_h08s3")]
@@ -32,6 +43,42 @@ material = SubResource("ShaderMaterial_j23ed")
 offset_right = 680.0
 offset_bottom = 384.0
 script = ExtResource("3_sm5x8")
+
+[node name="Stars" type="CPUParticles2D" parent="BgCanvas"]
+position = Vector2(340, 192)
+amount = 50
+lifetime = 8.0
+preprocess = 8.0
+lifetime_randomness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(340, 192)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 8.0
+initial_velocity_max = 10.0
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+angle_min = 1.0
+angle_max = 90.0
+scale_amount_max = 3.0
+
+[node name="Comets" type="CPUParticles2D" parent="BgCanvas"]
+position = Vector2(340, 192)
+amount = 1
+lifetime = 0.5
+local_coords = true
+texture = SubResource("GradientTexture1D_d1c4u")
+emission_shape = 3
+emission_rect_extents = Vector2(340, 192)
+direction = Vector2(1, 0.5)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 400.0
+angle_min = -26.0
+angle_max = -26.0
+scale_amount_max = 3.0
+color_ramp = SubResource("Gradient_45nc1")
 
 [node name="BgTiles" type="TileMap" parent="."]
 tile_set = ExtResource("4_4a4ks")
