@@ -41,21 +41,17 @@ texture = ExtResource("3_m7o6a")
 hframes = 7
 
 [node name="Crown" type="Sprite2D" parent="BodyParts"]
-visible = false
 position = Vector2(0, -18)
 texture = ExtResource("4_ep5y4")
 
 [node name="InvulAnim" parent="BodyParts" instance=ExtResource("5_vhbum")]
-visible = false
 
 [node name="Lock" type="Sprite2D" parent="BodyParts"]
-visible = false
 texture = ExtResource("5_83h66")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bxsms")
 
 [node name="Crosshair" type="Sprite2D" parent="."]
-visible = false
 texture = ExtResource("4_u1511")
 hframes = 3

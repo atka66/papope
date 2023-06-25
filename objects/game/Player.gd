@@ -17,6 +17,10 @@ func _ready():
 		$BodyParts/Crown.hide()
 	
 	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
+	
+	var material = ShaderMaterial.new()
+	material.shader = $BodyParts/Body.material.shader
+	$BodyParts/Body.material = material
 	$BodyParts/Body.material.set_shader_parameter("fill_color", color)
 	
 	if !silent:
