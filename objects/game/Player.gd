@@ -12,10 +12,17 @@ var frictionCustom: float = 0.1
 
 var color: Color = Global.TEAM_COLORS[0]
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
+	if !Global.playersCrowned[playerId]:
+		$BodyParts/Crown.hide()
+	
 	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 	$BodyParts/Body.modulate = color
+	
+	if !silent:
+		var spawnAnim = Res.SpawnAnimObject.instantiate()
+		spawnAnim.position = global_position
+		get_tree().get_root().add_child(spawnAnim)
 	
 	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
 		$BodyParts/Face.frame = 6

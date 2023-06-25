@@ -19,6 +19,7 @@ physics_material_override = SubResource("PhysicsMaterial_po7vx")
 gravity_scale = 0.0
 max_contacts_reported = 2
 contact_monitor = true
+lock_rotation = true
 script = ExtResource("1_srq66")
 
 [node name="BodyParts" type="Node2D" parent="."]
