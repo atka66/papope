@@ -1,9 +1,45 @@
-[gd_scene load_steps=2 format=3 uid="uid://j5rsgflce7ak"]
+[gd_scene load_steps=7 format=3 uid="uid://j5rsgflce7ak"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_h08s3"]
+[ext_resource type="Shader" path="res://shaders/nebula.gdshader" id="2_xkg21"]
+[ext_resource type="Script" path="res://scenes/maps/Background.gd" id="3_sm5x8"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u38ky"]
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s2y4v"]
+width = 170
+height = 96
+seamless = true
+noise = SubResource("FastNoiseLite_u38ky")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j23ed"]
+shader = ExtResource("2_xkg21")
+shader_parameter/noise = SubResource("NoiseTexture2D_s2y4v")
 
 [node name="MapSpace" type="Node2D"]
 
 [node name="MapController" parent="." instance=ExtResource("1_h08s3")]
 
 [node name="BgCanvas" type="CanvasLayer" parent="."]
+layer = -55
+
+[node name="Container" type="Node2D" parent="BgCanvas"]
+
+[node name="Background" type="ColorRect" parent="BgCanvas/Container"]
+material = SubResource("ShaderMaterial_j23ed")
+offset_right = 680.0
+offset_bottom = 384.0
+script = ExtResource("3_sm5x8")
+
+[node name="PlayerSpawner0" type="Marker2D" parent="."]
+position = Vector2(64, 64)
+
+[node name="PlayerSpawner1" type="Marker2D" parent="."]
+position = Vector2(608, 64)
+
+[node name="PlayerSpawner2" type="Marker2D" parent="."]
+position = Vector2(64, 320)
+
+[node name="PlayerSpawner3" type="Marker2D" parent="."]
+position = Vector2(608, 320)

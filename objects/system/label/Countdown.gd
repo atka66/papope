@@ -3,6 +3,7 @@ extends Node2D
 func showCount(cnt: String, size: int, audio: Resource) -> void:
 	var label = Res.CustomLabelObject.instantiate()
 	#label.text = cnt
+	label.fontSize = size
 	label.aliveTime = 1
 	add_child(label)
 

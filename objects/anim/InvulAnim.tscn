@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgodu2dbdau1j"]
+[gd_scene load_steps=5 format=3 uid="uid://bgodu2dbdau1j"]
 
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="1_u5lwp"]
-[ext_resource type="Texture2D" uid="uid://c5qu6242l5kt4" path="res://sprites/game/player/white.png" id="2_y7ccv"]
 [ext_resource type="Shader" path="res://shaders/shine.gdshader" id="3_3chrn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r0sdo"]
@@ -15,10 +14,16 @@ shader = ExtResource("3_3chrn")
 
 [node name="InvulAnim" type="Node2D"]
 
-[node name="Circle" type="Sprite2D" parent="."]
+[node name="Circle" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_r0sdo")
-texture = ExtResource("2_y7ccv")
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
 
-[node name="Shine" type="Sprite2D" parent="."]
+[node name="Shine" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_swnw5")
-texture = ExtResource("2_y7ccv")
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
