@@ -77,7 +77,7 @@ _data = {
 [node name="SpawnAnim" type="Node2D"]
 script = ExtResource("1_gmqjn")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="Anim" type="AnimationPlayer" parent="."]
 autoplay = "anim"
 libraries = {
 "": SubResource("AnimationLibrary_g36b2")

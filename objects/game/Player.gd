@@ -17,7 +17,7 @@ func _ready():
 		$BodyParts/Crown.hide()
 	
 	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
-	$BodyParts/Body.modulate = color
+	$BodyParts/Body.material.set_shader_parameter("fill_color", color)
 	
 	if !silent:
 		var spawnAnim = Res.SpawnAnimObject.instantiate()
