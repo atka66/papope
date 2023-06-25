@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var playerId: int = 0
+@onready var Lobby = get_node('/root/Lobby')
 
 func handleSpawnSprite():
 	if Global.playersConnected[playerId] and !Global.playersJoined[playerId]:
@@ -29,10 +30,20 @@ func _process(delta):
 
 func _input(event):
 	if Global.playersConnected[playerId] && event.device == playerId:
-		if event.is_action_pressed("accept"):
+		if event.is_action_pressed("accept") and !Lobby.countingDown:
 			if !Global.playersJoined[playerId]:
 				Global.joinPlayer(playerId, false)
+			else:
+				if Global.playersJoined.count(true) < 2:
+					# todo growl
+					pass
+				# todo elif numberofteams
+				else:
+					Lobby.startCountdown()
 		if event.is_action_pressed("cancel"):
 			if Global.playersJoined[playerId]:
-				Global.playersCrowned[playerId] = false
-				Global.leavePlayer(playerId)
+				if Lobby.countingDown:
+					Lobby.stopCountdown()
+				else:
+					Global.playersCrowned[playerId] = false
+					Global.leavePlayer(playerId)

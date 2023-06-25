@@ -1,8 +1,15 @@
 extends Node
 
-@onready var CustomLabelObject = preload("res://objects/system/CustomLabel.tscn")
+@onready var CustomLabelObject = preload("res://objects/system/label/CustomLabel.tscn")
 @onready var PlayerObject = preload("res://objects/game/Player.tscn")
 @onready var SpawnAnimObject = preload("res://objects/anim/SpawnAnim.tscn")
+@onready var CountdownObject = preload("res://objects/system/label/Countdown.tscn")
+
+@onready var AudioPlayerDash = [
+	preload("res://audio/sfx/player/dash_1.ogg"),
+	preload("res://audio/sfx/player/dash_2.ogg"),
+	preload("res://audio/sfx/player/dash_3.ogg")
+]
 
 @onready var AudioMusicDefault = preload("res://audio/music/default.ogg")
 @onready var AudioMusicSplash = preload("res://audio/music/splash.ogg")

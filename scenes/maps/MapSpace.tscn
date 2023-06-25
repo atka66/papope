@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://j5rsgflce7ak"]
+
+[ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_h08s3"]
+
+[node name="MapSpace" type="Node2D"]
+
+[node name="MapController" parent="." instance=ExtResource("1_h08s3")]
+
+[node name="BgCanvas" type="CanvasLayer" parent="."]

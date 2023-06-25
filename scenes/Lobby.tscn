@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="3_5jgbx"]
 [ext_resource type="PackedScene" uid="uid://co6dqvdhklpn5" path="res://objects/lobby/PlayerSlot.tscn" id="3_32tqe"]
 [ext_resource type="Animation" uid="uid://bcroi11mupex8" path="res://resources/anims/wobble.res" id="4_3g4sh"]
-[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/CustomLabel.tscn" id="4_8wgdj"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_8wgdj"]
 [ext_resource type="PackedScene" uid="uid://bwaujkg3fwp0t" path="res://objects/lobby/HintSpawner.tscn" id="5_uy1dg"]
 
 [sub_resource type="Animation" id="Animation_6qw7i"]

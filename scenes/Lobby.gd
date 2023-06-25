@@ -1,5 +1,11 @@
 extends Node2D
 
+var countingDown: bool = false
+
+func _ready():
+	get_node('/root/Music').play('menu')
+	initPlayers()
+
 func initPlayers() -> void:
 	Global.playersFrozen = false
 	Global.playersPoints = [0, 0, 0, 0]
@@ -25,6 +31,13 @@ func initPlayers() -> void:
 			}
 		)
 
-func _ready():
-	get_node('/root/Music').play('menu')
-	initPlayers()
+func startCountdown() -> void:
+	countingDown = true
+	var countdown = Res.CountdownObject.instantiate()
+	countdown.position = Vector2(340, 112)
+	add_child(countdown)
+
+func stopCountdown() -> void:
+	countingDown = false
+	for countdown in get_tree().get_nodes_in_group("countdown"):
+		countdown.queue_free()

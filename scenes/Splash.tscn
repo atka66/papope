@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dwehclchfvnxe" path="res://sprites/godot.png" id="1_2fm32"]
 [ext_resource type="Script" path="res://scenes/Splash.gd" id="1_y2s2j"]
-[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/CustomLabel.tscn" id="3_isgji"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_isgji"]
 
 [sub_resource type="Animation" id="Animation_c1i5m"]
 resource_name = "splash"

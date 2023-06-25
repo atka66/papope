@@ -174,3 +174,31 @@ func joinPlayer(id: int, silent: bool) -> void:
 func leavePlayer(id: int) -> void:
 	playersJoined[id] = false
 	emit_signal("player_remove", id)
+
+func goToMap() -> void:
+	if getWinnerTeamByScore() < 0:
+		var selectedMapIndex: int
+		if optionsSelected['map'] == 0:
+			selectedMapIndex = (randi() % (len(options['map']) - 1) + 1)
+		else:
+			selectedMapIndex = optionsSelected['map']
+
+		# TODO selectedMap = options['map'][selectedMapIndex]
+		selectedMap = 'space'
+		
+		if selectedMap == 'hell': get_tree().change_scene_to_file("res://maps/MapHell.tscn")
+		if selectedMap == 'western': get_tree().change_scene_to_file("res://maps/MapWestern.tscn")
+		if selectedMap == 'ship': get_tree().change_scene_to_file("res://maps/MapShip.tscn")
+		if selectedMap == 'space': get_tree().change_scene_to_file("res://scenes/maps/MapSpace.tscn")
+		if selectedMap == 'highway': get_tree().change_scene_to_file("res://maps/MapTraffic.tscn")
+		if selectedMap == 'pacman': get_tree().change_scene_to_file("res://maps/MapPacman.tscn")
+		if selectedMap == 'conveyor': get_tree().change_scene_to_file("res://maps/MapConveyor.tscn")
+	else:
+		#todo get_tree().change_scene_to_file("res://maps/PostGame.tscn")
+		pass
+
+func getWinnerTeamByScore() -> int:
+	for i in range(4):
+		if playersPoints[i] == options['rounds'][optionsSelected['rounds']]:
+			return playersTeam[i]
+	return -1

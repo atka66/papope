@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bli02m5v875nl"]
 
-[ext_resource type="Script" path="res://objects/system/CustomLabel.gd" id="1_1kkh4"]
+[ext_resource type="Script" path="res://objects/system/label/CustomLabel.gd" id="1_1kkh4"]
 [ext_resource type="Texture2D" uid="uid://bcvmruf8ncm54" path="res://fonts/placeholder.png" id="2_5cwax"]
 
 [node name="CustomLabel" type="Node2D"]

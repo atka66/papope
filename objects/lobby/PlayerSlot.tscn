@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://objects/lobby/PlayerSlot.gd" id="1_e7ob8"]
 [ext_resource type="Texture2D" uid="uid://bk1c4wur83ck7" path="res://sprites/lobby/player_slot.png" id="2_2xbj7"]
 [ext_resource type="Texture2D" uid="uid://b3kuhrsbono02" path="res://sprites/lobby/controller.png" id="3_2whjo"]
-[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/CustomLabel.tscn" id="4_vrrwg"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_vrrwg"]
 
 [node name="PlayerSlot" type="Node2D"]
 script = ExtResource("1_e7ob8")
