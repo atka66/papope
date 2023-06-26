@@ -3,6 +3,7 @@ extends Node
 signal player_remove(id)
 
 var MovingBackgroundNode: Node2D
+var CameraNode: Camera2D
 
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 const DEBUG = false
@@ -202,3 +203,7 @@ func getWinnerTeamByScore() -> int:
 		if playersPoints[i] == options['rounds'][optionsSelected['rounds']]:
 			return playersTeam[i]
 	return -1
+
+func shakeScreen(shakePwr):
+	if shakePwr > 0:
+		CameraNode.shakePwr = shakePwr

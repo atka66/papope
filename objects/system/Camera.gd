@@ -8,6 +8,7 @@ var cameraShakeOffset: Vector2 = Vector2.ZERO
 var cameraPlayersOffset: Vector2 = Vector2.ZERO
 
 func _ready():
+	Global.CameraNode = self
 	make_current()
 
 func _process(delta):

@@ -1,0 +1,232 @@
+[gd_scene load_steps=18 format=3 uid="uid://bgden6gwe6aig"]
+
+[ext_resource type="Script" path="res://objects/game/obstacle/SpaceRay.gd" id="1_6gkwr"]
+[ext_resource type="Texture2D" uid="uid://71h3l5q52df7" path="res://sprites/game/obstacle/spaceray.png" id="2_yl0nb"]
+[ext_resource type="AudioStream" uid="uid://xe2mrerbnwgd" path="res://audio/sfx/obstacle/start.ogg" id="3_tggbw"]
+[ext_resource type="AudioStream" uid="uid://c7blefqegaivx" path="res://audio/sfx/obstacle/ongoing.ogg" id="4_s1sd1"]
+[ext_resource type="AudioStream" uid="uid://dr3ve5nnnqaby" path="res://audio/sfx/obstacle/stop.ogg" id="5_4n5th"]
+
+[sub_resource type="Animation" id="Animation_8ylt1"]
+resource_name = "loop"
+length = 23.0
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Phase1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 18, 18.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Phase2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 18, 18.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Phase1:size")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(18, 18.8),
+"transitions": PackedFloat32Array(0.193187, 1),
+"update": 0,
+"values": [Vector2(32, 512), Vector2(2, 512)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Phase1:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(18, 18.8),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Vector2(-16, -256), Vector2(-1, -256)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Phase2/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 18.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AudioStart")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(18),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AudioOngoing")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(18.8, 23),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [],
+"method": &"stop"
+}]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AudioStop")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(23),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0lvuk"]
+_data = {
+"loop": SubResource("Animation_8ylt1")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvmgf"]
+atlas = ExtResource("2_yl0nb")
+region = Rect2(0, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnogb"]
+atlas = ExtResource("2_yl0nb")
+region = Rect2(32, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8vo0"]
+atlas = ExtResource("2_yl0nb")
+region = Rect2(64, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gsp1q"]
+atlas = ExtResource("2_yl0nb")
+region = Rect2(96, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fry4"]
+atlas = ExtResource("2_yl0nb")
+region = Rect2(128, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5opb"]
+atlas = ExtResource("2_yl0nb")
+region = Rect2(160, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmd3i"]
+atlas = ExtResource("2_yl0nb")
+region = Rect2(192, 0, 32, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wix0"]
+atlas = ExtResource("2_yl0nb")
+region = Rect2(224, 0, 32, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8xqsn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wvmgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fnogb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e8vo0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gsp1q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6fry4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5opb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hmd3i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5wix0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3b6n"]
+size = Vector2(64, 512)
+
+[node name="SpaceRay" type="Node2D"]
+script = ExtResource("1_6gkwr")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+autoplay = "loop"
+libraries = {
+"": SubResource("AnimationLibrary_0lvuk")
+}
+
+[node name="Phase1" type="ColorRect" parent="."]
+visible = false
+offset_left = 33.8285
+offset_top = -256.0
+offset_right = 33.8285
+offset_bottom = 256.0
+
+[node name="Phase2" type="Area2D" parent="."]
+visible = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Phase2"]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_8xqsn")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Phase2"]
+shape = SubResource("RectangleShape2D_d3b6n")
+disabled = true
+
+[node name="AudioStart" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_tggbw")
+bus = &"sfx"
+
+[node name="AudioOngoing" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_s1sd1")
+bus = &"sfx"
+
+[node name="AudioStop" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_4n5th")
+bus = &"sfx"
+
+[node name="AudioCollisionPlayer" type="AudioStreamPlayer2D" parent="."]

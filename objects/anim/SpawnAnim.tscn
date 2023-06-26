@@ -84,9 +84,10 @@ libraries = {
 }
 
 [node name="Sphere" type="Polygon2D" parent="."]
-scale = Vector2(2, 2)
+visible = false
+scale = Vector2(4, 4)
 polygon = PackedVector2Array(8, 0, 7.39104, 3.06147, 5.65685, 5.65685, 3.06147, 7.39104, -1.19209e-06, 8, -3.06147, 7.39104, -5.65686, 5.65685, -7.39104, 3.06147, -8, -2.86102e-06, -7.39104, -3.06147, -5.65685, -5.65686, -3.06146, -7.39104, 4.05312e-06, -8, 3.06147, -7.39103, 5.65686, -5.65685, 7.39104, -3.06146)
 
 [node name="Line" type="Polygon2D" parent="."]
-visible = false
+scale = Vector2(2, 0.1)
 polygon = PackedVector2Array(-48, -2, 48, -2, 48, 2, -48, 2)
