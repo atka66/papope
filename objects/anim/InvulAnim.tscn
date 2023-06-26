@@ -6,7 +6,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r0sdo"]
 shader = ExtResource("1_u5lwp")
 shader_parameter/width = 0.43
-shader_parameter/fill_color = Color(1, 1, 1, 0)
 shader_parameter/border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_swnw5"]

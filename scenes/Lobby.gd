@@ -36,6 +36,9 @@ func startCountdown() -> void:
 	var countdown = Res.CountdownObject.instantiate()
 	countdown.position = Vector2(340, 112)
 	add_child(countdown)
+	
+	#todo remove
+	Global.goToMap()
 
 func stopCountdown() -> void:
 	countingDown = false

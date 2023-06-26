@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
-[ext_resource type="Texture2D" uid="uid://d01tqakervrj4" path="res://sprites/game/player/faces.png" id="3_m7o6a"]
+[ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="3_gq6vx"]
 [ext_resource type="Texture2D" uid="uid://m1y325q5dmor" path="res://sprites/game/player/crown.png" id="4_ep5y4"]
 [ext_resource type="Texture2D" uid="uid://6p8lvg2msyhr" path="res://sprites/game/player/crosshair.png" id="4_u1511"]
 [ext_resource type="Texture2D" uid="uid://c3u5ie7th23lt" path="res://sprites/game/player/lock.png" id="5_83h66"]
@@ -12,10 +12,9 @@
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3jjru"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qd1a5"]
 shader = ExtResource("2_uodpr")
-shader_parameter/width = 0.46
-shader_parameter/fill_color = Color(1, 1, 1, 1)
+shader_parameter/width = 0.45
 shader_parameter/border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxsms"]
@@ -29,34 +28,34 @@ contact_monitor = true
 lock_rotation = true
 script = ExtResource("1_srq66")
 
-[node name="BodyParts" type="Node2D" parent="."]
+[node name="BodyParts" type="CanvasGroup" parent="."]
+material = SubResource("ShaderMaterial_qd1a5")
+fit_margin = 0.0
+clear_margin = 0.0
 
 [node name="Body" type="ColorRect" parent="BodyParts"]
-material = SubResource("ShaderMaterial_3jjru")
 offset_left = -16.0
 offset_top = -16.0
 offset_right = 16.0
 offset_bottom = 16.0
 
 [node name="Face" type="Sprite2D" parent="BodyParts"]
-texture = ExtResource("3_m7o6a")
+texture = ExtResource("3_gq6vx")
 hframes = 7
 
-[node name="InvulAnim" parent="BodyParts" instance=ExtResource("5_vhbum")]
+[node name="Lock" type="Sprite2D" parent="."]
+texture = ExtResource("5_83h66")
 
-[node name="Crown" type="Sprite2D" parent="BodyParts"]
-visible = false
+[node name="Crown" type="Sprite2D" parent="."]
 position = Vector2(0, -18)
 texture = ExtResource("4_ep5y4")
 
-[node name="Lock" type="Sprite2D" parent="BodyParts"]
+[node name="InvulAnim" parent="." instance=ExtResource("5_vhbum")]
 visible = false
-texture = ExtResource("5_83h66")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bxsms")
 
 [node name="Crosshair" type="Sprite2D" parent="."]
-visible = false
 texture = ExtResource("4_u1511")
 hframes = 3

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d01tqakervrj4"
-path="res://.godot/imported/faces.png-edc6dd498ff35da824e37be85cbab518.ctex"
+uid="uid://u1ukb7vraab2"
+path="res://.godot/imported/hud_revolver_drum.png-e0ef48eb2c581a04c9317201da3eca3b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/game/player/faces.png"
-dest_files=["res://.godot/imported/faces.png-edc6dd498ff35da824e37be85cbab518.ctex"]
+source_file="res://sprites/game/hud/hud_revolver_drum.png"
+dest_files=["res://.godot/imported/hud_revolver_drum.png-e0ef48eb2c581a04c9317201da3eca3b.ctex"]
 
 [params]
 

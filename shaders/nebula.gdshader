@@ -9,7 +9,7 @@ void fragment()
 	vec2 uv = round(UV * res) / res;
 	*/
 	vec2 uv = UV;
-	float val = texture(noise, vec2(uv.x + (TIME * -0.0025), uv.y)).r - 0.2;
+	float val = texture(noise, vec2(uv.x + (TIME * -0.005), uv.y)).r - 0.2;
 	
 	float color_res = 10.0;
 	float r = floor((0.2 * val) * color_res) / color_res;

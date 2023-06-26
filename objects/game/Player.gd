@@ -14,14 +14,10 @@ var color: Color = Global.TEAM_COLORS[0]
 
 func _ready():
 	if !Global.playersCrowned[playerId]:
-		$BodyParts/Crown.hide()
+		$Crown.hide()
 	
 	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
-	
-	var material = ShaderMaterial.new()
-	material.shader = $BodyParts/Body.material.shader
-	$BodyParts/Body.material = material
-	$BodyParts/Body.material.set_shader_parameter("fill_color", color)
+	$BodyParts/Body.color = color
 	
 	if !silent:
 		var spawnAnim = Res.SpawnAnimObject.instantiate()

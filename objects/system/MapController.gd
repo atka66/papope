@@ -7,6 +7,7 @@ func _ready():
 	
 	var mapLabel = Res.CustomLabelObject.instantiate()
 	mapLabel.fontSize = 6
+	mapLabel.aliveTime = 2
 	$HudCanvas.add_child(mapLabel)
 	
 	# todo cards
@@ -27,14 +28,14 @@ func spawnPlayer(playerId : int) -> void:
 	player.position = get_parent().get_node("PlayerSpawner" + str(playerId)).position
 	player.playerId = playerId
 	get_parent().add_child(player)
-	# TODO spawnPlayerHud(player)
+	spawnPlayerHud(player)
 
-func spawnPlayerHud(player : PackedScene) -> void:
+func spawnPlayerHud(player : RigidBody2D) -> void:
 	var hud = Res.HudObject.instantiate()
-	if player.playerId == 0: hud.position = Vector2(-120, 4)
-	if player.playerId == 1: hud.position = Vector2(688, 4)
-	if player.playerId == 2: hud.position = Vector2(-120, 324)
-	if player.playerId == 3: hud.position = Vector2(688, 324)
+	if player.playerId == 0: hud.position = Vector2(0, 4)
+	if player.playerId == 1: hud.position = Vector2(568, 4)
+	if player.playerId == 2: hud.position = Vector2(0, 324)
+	if player.playerId == 3: hud.position = Vector2(568, 324)
 	hud.name = 'Hud' + str(player.playerId)
 	hud.player = player
 	hud.fromRight = (player.playerId % 2 == 1)
