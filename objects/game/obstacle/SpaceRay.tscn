@@ -116,6 +116,30 @@ tracks/7/keys = {
 "method": &"play"
 }]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ParticlesBottom:emitting")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 18.8, 22.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("ParticlesTop:emitting")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 18.8, 22.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0lvuk"]
 _data = {
@@ -200,13 +224,12 @@ libraries = {
 
 [node name="Phase1" type="ColorRect" parent="."]
 visible = false
-offset_left = 33.8285
+offset_left = 8.94888
 offset_top = -256.0
-offset_right = 33.8285
+offset_right = 8.94888
 offset_bottom = 256.0
 
 [node name="Phase2" type="Area2D" parent="."]
-visible = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Phase2"]
 scale = Vector2(5, 5)
@@ -216,6 +239,38 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Phase2"]
 shape = SubResource("RectangleShape2D_d3b6n")
 disabled = true
+
+[node name="ParticlesBottom" type="CPUParticles2D" parent="."]
+position = Vector2(0, 256)
+amount = 100
+lifetime = 0.5
+lifetime_randomness = 1.0
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(16, 1)
+direction = Vector2(0, -1)
+spread = 30.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 600.0
+angular_velocity_min = -1000.0
+angular_velocity_max = 1000.0
+scale_amount_max = 6.0
+
+[node name="ParticlesTop" type="CPUParticles2D" parent="."]
+position = Vector2(0, -256)
+amount = 100
+lifetime = 0.5
+lifetime_randomness = 1.0
+local_coords = true
+emission_shape = 3
+emission_rect_extents = Vector2(16, 1)
+direction = Vector2(0, 1)
+spread = 30.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 600.0
+angular_velocity_min = -1000.0
+angular_velocity_max = 1000.0
+scale_amount_max = 6.0
 
 [node name="AudioStart" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_tggbw")
