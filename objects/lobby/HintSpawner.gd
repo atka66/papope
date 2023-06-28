@@ -17,7 +17,7 @@ const HINT_STRINGS: Array = [
 ]
 
 func createHintLabel() -> void:
-	var randomHint: Array = HINT_STRINGS[randi() % HINT_STRINGS.size()]
+	var randomHint: Array = HINT_STRINGS.pick_random()
 	
 	for i in randomHint.size():
 		var hintLabel = Res.CustomLabelObject.instantiate()

@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://j5rsgflce7ak"]
+[gd_scene load_steps=19 format=3 uid="uid://j5rsgflce7ak"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_h08s3"]
 [ext_resource type="Shader" path="res://shaders/nebula.gdshader" id="2_xkg21"]
 [ext_resource type="Script" path="res://scenes/maps/Background.gd" id="3_sm5x8"]
 [ext_resource type="TileSet" uid="uid://6i4o3v5nmj85" path="res://resources/tileset.tres" id="4_4a4ks"]
+[ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="5_rnulo"]
 [ext_resource type="PackedScene" uid="uid://bgden6gwe6aig" path="res://objects/game/obstacle/SpaceRay.tscn" id="5_xr6dn"]
 [ext_resource type="Script" path="res://scenes/maps/SpaceTrigger.gd" id="6_hxout"]
 
@@ -120,6 +121,22 @@ position = Vector2(64, 320)
 
 [node name="PlayerSpawner3" type="Marker2D" parent="."]
 position = Vector2(608, 320)
+
+[node name="PwrupSpawner0" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+position = Vector2(256, 96)
+texture = ExtResource("5_rnulo")
+
+[node name="PwrupSpawner1" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+position = Vector2(416, 96)
+texture = ExtResource("5_rnulo")
+
+[node name="PwrupSpawner2" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+position = Vector2(256, 288)
+texture = ExtResource("5_rnulo")
+
+[node name="PwrupSpawner3" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+position = Vector2(416, 288)
+texture = ExtResource("5_rnulo")
 
 [node name="SpaceRay" parent="." instance=ExtResource("5_xr6dn")]
 position = Vector2(336, 192)

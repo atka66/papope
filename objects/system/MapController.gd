@@ -1,7 +1,13 @@
 extends Node2D
 
+var spawners: Array[Node2D]
+
 func _ready():
 	get_node("/root/Music").play(Global.selectedMap)
+	
+	for child in get_parent().get_children():
+		if child.is_in_group("pwrupSpawners"):
+			spawners.append(child)
 
 	Global.playersFrozen = true
 	
@@ -13,15 +19,19 @@ func _ready():
 	# todo cards
 	await get_tree().create_timer(1.5).timeout
 	
-	# todo pwrup spawn
-	
-	
+	pwrupSpawnLoop()
 	initCountdown()
 	await get_tree().create_timer(1.0).timeout
 	for i in range(4):
 		if Global.playersJoined[i]:
 			spawnPlayer(i)
 			await get_tree().create_timer(0.25).timeout
+
+func pwrupSpawnLoop() -> void:
+	await get_tree().create_timer(ProjectSettings.get("papope/pwrup_respawn_time")).timeout
+	var spawner = spawners.pick_random()
+	print(spawner.name)
+	pwrupSpawnLoop()
 
 func spawnPlayer(playerId : int) -> void:
 	var player = Res.PlayerObject.instantiate()
