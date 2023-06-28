@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://j5rsgflce7ak"]
+[gd_scene load_steps=16 format=3 uid="uid://j5rsgflce7ak"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_h08s3"]
 [ext_resource type="Shader" path="res://shaders/nebula.gdshader" id="2_xkg21"]
@@ -29,6 +29,18 @@ width = 10
 [sub_resource type="Gradient" id="Gradient_45nc1"]
 offsets = PackedFloat32Array(0, 0.75, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mn14m"]
+size = Vector2(736, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bdvl0"]
+size = Vector2(736, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_utx57"]
+size = Vector2(64, 320)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b4d5a"]
+size = Vector2(64, 320)
 
 [node name="MapSpace" type="Node2D"]
 
@@ -107,3 +119,23 @@ position = Vector2(608, 320)
 
 [node name="SpaceRay" parent="." instance=ExtResource("5_xr6dn")]
 position = Vector2(336, 192)
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="Walls"]
+position = Vector2(336, 0)
+shape = SubResource("RectangleShape2D_mn14m")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(336, 384)
+shape = SubResource("RectangleShape2D_bdvl0")
+
+[node name="CollisionShape3" type="CollisionShape2D" parent="Walls"]
+position = Vector2(0, 192)
+shape = SubResource("RectangleShape2D_utx57")
+
+[node name="CollisionShape4" type="CollisionShape2D" parent="Walls"]
+position = Vector2(672, 192)
+shape = SubResource("RectangleShape2D_b4d5a")

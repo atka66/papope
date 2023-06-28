@@ -21,6 +21,7 @@ shader_parameter/border_color = Color(0, 0, 0, 1)
 radius = 16.0
 
 [node name="Player" type="RigidBody2D" groups=["players"]]
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_po7vx")
 gravity_scale = 0.0
 max_contacts_reported = 2

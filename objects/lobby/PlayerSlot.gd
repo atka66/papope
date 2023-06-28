@@ -34,7 +34,7 @@ func _input(event):
 			if !Global.playersJoined[playerId]:
 				Global.joinPlayer(playerId, false)
 			else:
-				if Global.playersJoined.count(true) < 2:
+				if Global.playersJoined.count(true) < 1: # TODO rewrite to 1
 					# todo growl
 					pass
 				# todo elif numberofteams

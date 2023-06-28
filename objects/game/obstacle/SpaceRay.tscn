@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://bgden6gwe6aig"]
+[gd_scene load_steps=19 format=3 uid="uid://bgden6gwe6aig"]
 
 [ext_resource type="Script" path="res://objects/game/obstacle/SpaceRay.gd" id="1_6gkwr"]
 [ext_resource type="Texture2D" uid="uid://71h3l5q52df7" path="res://sprites/game/obstacle/spaceray.png" id="2_yl0nb"]
 [ext_resource type="AudioStream" uid="uid://xe2mrerbnwgd" path="res://audio/sfx/obstacle/start.ogg" id="3_tggbw"]
+[ext_resource type="Texture2D" uid="uid://bpcdoonpygx7q" path="res://sprites/anim/shard.png" id="3_uabs2"]
 [ext_resource type="AudioStream" uid="uid://c7blefqegaivx" path="res://audio/sfx/obstacle/ongoing.ogg" id="4_s1sd1"]
 [ext_resource type="AudioStream" uid="uid://dr3ve5nnnqaby" path="res://audio/sfx/obstacle/stop.ogg" id="5_4n5th"]
 
@@ -243,34 +244,37 @@ disabled = true
 [node name="ParticlesBottom" type="CPUParticles2D" parent="."]
 position = Vector2(0, 256)
 amount = 100
-lifetime = 0.5
+lifetime = 0.3
 lifetime_randomness = 1.0
 local_coords = true
+texture = ExtResource("3_uabs2")
 emission_shape = 3
 emission_rect_extents = Vector2(16, 1)
+particle_flag_align_y = true
 direction = Vector2(0, -1)
 spread = 30.0
 gravity = Vector2(0, 0)
-initial_velocity_max = 600.0
-angular_velocity_min = -1000.0
-angular_velocity_max = 1000.0
-scale_amount_max = 6.0
+initial_velocity_min = 200.0
+initial_velocity_max = 1000.0
+scale_amount_max = 3.0
 
 [node name="ParticlesTop" type="CPUParticles2D" parent="."]
 position = Vector2(0, -256)
 amount = 100
-lifetime = 0.5
+lifetime = 0.3
 lifetime_randomness = 1.0
 local_coords = true
+texture = ExtResource("3_uabs2")
 emission_shape = 3
 emission_rect_extents = Vector2(16, 1)
+particle_flag_align_y = true
 direction = Vector2(0, 1)
 spread = 30.0
 gravity = Vector2(0, 0)
-initial_velocity_max = 600.0
-angular_velocity_min = -1000.0
+initial_velocity_min = 200.0
+initial_velocity_max = 1000.0
 angular_velocity_max = 1000.0
-scale_amount_max = 6.0
+scale_amount_max = 3.0
 
 [node name="AudioStart" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_tggbw")
