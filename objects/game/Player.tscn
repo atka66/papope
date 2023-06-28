@@ -60,3 +60,6 @@ shape = SubResource("CircleShape2D_bxsms")
 [node name="Crosshair" type="Sprite2D" parent="."]
 texture = ExtResource("4_u1511")
 hframes = 3
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

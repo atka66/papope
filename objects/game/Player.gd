@@ -5,6 +5,7 @@ var silent: bool = false
 
 var alive: bool = true
 var trapped: bool = false
+var inSpace: bool = false
 
 var thrust: Vector2 = Vector2.ZERO
 var speed: int = 20
@@ -46,9 +47,10 @@ func _process(delta):
 	pass
 
 func _physics_process(delta):
-	apply_central_impulse(-linear_velocity * frictionCustom)
-	if alive && !Global.playersFrozen && !trapped:
-		apply_central_impulse(thrust)
+	if !inSpace:
+		apply_central_impulse(-linear_velocity * frictionCustom)
+		if alive && !Global.playersFrozen && !trapped:
+			apply_central_impulse(thrust)
 
 func _on_remove(id):
 	if playerId == id:
