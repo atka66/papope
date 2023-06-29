@@ -2,12 +2,10 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	$Audio.stream = Res.AudioRevolverRicochet.pick_random()
+	$Audio.play()
+	await $Audio.finished
+	queue_free()
 
 ## helper function to generate circle with tool script
 func generate_circle_polygon(radius: float, num_sides: int, position: Vector2) -> PackedVector2Array:

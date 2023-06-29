@@ -8,6 +8,11 @@ extends Node
 
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
 
+@onready var AudioRevolverRicochet = [
+	preload("res://audio/sfx/pwrup/rev_ricochet_1.ogg"),
+	preload("res://audio/sfx/pwrup/rev_ricochet_2.ogg"),
+	preload("res://audio/sfx/pwrup/rev_ricochet_3.ogg")
+]
 @onready var AudioPlayerDash = [
 	preload("res://audio/sfx/player/dash_1.ogg"),
 	preload("res://audio/sfx/player/dash_2.ogg"),

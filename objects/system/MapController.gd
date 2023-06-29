@@ -56,6 +56,10 @@ func initCountdown() -> void:
 	countdown.position = Vector2(340, 64)
 	$HudCanvas.add_child(countdown)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _on_space_trigger_body_entered(body):
+	if body.is_in_group("players"):
+		body.inSpace = true
+
+func _on_space_trigger_body_exited(body):
+	if body.is_in_group("players"):
+		body.inSpace = false

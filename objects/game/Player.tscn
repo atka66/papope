@@ -61,5 +61,7 @@ shape = SubResource("CircleShape2D_bxsms")
 texture = ExtResource("4_u1511")
 hframes = 3
 
+[node name="AudioDash" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
