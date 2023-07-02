@@ -3,6 +3,7 @@ extends Node
 @onready var CustomLabelObject = preload("res://objects/system/label/CustomLabel.tscn")
 @onready var PlayerObject = preload("res://objects/game/Player.tscn")
 @onready var HudObject = preload("res://objects/game/hud/Hud.tscn")
+@onready var PwrupObject = preload("res://objects/game/pwrup/Pwrup.tscn")
 @onready var SpawnAnimObject = preload("res://objects/anim/SpawnAnim.tscn")
 @onready var CountdownObject = preload("res://objects/system/label/Countdown.tscn")
 

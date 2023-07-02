@@ -92,6 +92,7 @@ game_dash={
 2d_physics/layer_1="player"
 2d_physics/layer_2="wall"
 2d_physics/layer_3="spacetrigger"
+2d_physics/layer_4="pwrup"
 
 [papope]
 

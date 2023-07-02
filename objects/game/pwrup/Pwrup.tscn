@@ -1,0 +1,126 @@
+[gd_scene load_steps=16 format=3 uid="uid://cmd1xjk7m7n8s"]
+
+[ext_resource type="Script" path="res://objects/game/pwrup/Pwrup.gd" id="1_k4wcf"]
+[ext_resource type="Texture2D" uid="uid://bl8r7atennx4f" path="res://sprites/game/pwrup/pickup/pwrup_dynamite_1.png" id="2_kmxir"]
+[ext_resource type="Texture2D" uid="uid://45oftry7pfp5" path="res://sprites/game/pwrup/pickup/pwrup_revolver_1.png" id="2_m0itl"]
+[ext_resource type="Texture2D" uid="uid://bk5b3ly5eh4fn" path="res://sprites/game/pwrup/pickup/pwrup_revolver_2.png" id="3_83isc"]
+[ext_resource type="Texture2D" uid="uid://cr4ec2y1frog1" path="res://sprites/game/pwrup/pickup/pwrup_dynamite_2.png" id="3_308ur"]
+[ext_resource type="Texture2D" uid="uid://cspq7tiikh6k8" path="res://sprites/game/pwrup/pickup/pwrup_shield_1.png" id="6_mfr0a"]
+[ext_resource type="Texture2D" uid="uid://cvh3f4scveflw" path="res://sprites/game/pwrup/pickup/pwrup_shield_2.png" id="7_7eauf"]
+[ext_resource type="Texture2D" uid="uid://blnoqrr11wex8" path="res://sprites/game/pwrup/pickup/pwrup_trap_1.png" id="8_0nvvn"]
+[ext_resource type="Texture2D" uid="uid://duluan54cxm0w" path="res://sprites/game/pwrup/pickup/pwrup_trap_2.png" id="9_r0aqh"]
+[ext_resource type="Texture2D" uid="uid://cjtosht45p8ps" path="res://sprites/game/pwrup/pickup/pwrup_whip_1.png" id="10_u4roa"]
+[ext_resource type="Texture2D" uid="uid://dq6xxqd0gsyhh" path="res://sprites/game/pwrup/pickup/pwrup_whip_2.png" id="11_hq3rm"]
+
+[sub_resource type="Animation" id="Animation_g4ap6"]
+resource_name = "bob"
+length = 1.5
+loop_mode = 1
+step = 0.25
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-8, -0.25, 0, 0.25, 0, -10, -0.25, 0, 0.25, 0, -8, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.75, 1.5)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s7cdv"]
+_data = {
+"bob": SubResource("Animation_g4ap6")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yi3rf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kmxir")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_308ur")
+}],
+"loop": true,
+"name": &"dynamite",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_m0itl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_83isc")
+}],
+"loop": true,
+"name": &"revolver",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_mfr0a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_7eauf")
+}],
+"loop": true,
+"name": &"shield",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_0nvvn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_r0aqh")
+}],
+"loop": true,
+"name": &"trap",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_u4roa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hq3rm")
+}],
+"loop": true,
+"name": &"whip",
+"speed": 3.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dq78r"]
+radius = 4.0
+
+[node name="Pwrup" type="Area2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_k4wcf")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+autoplay = "bob"
+libraries = {
+"": SubResource("AnimationLibrary_s7cdv")
+}
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+sprite_frames = SubResource("SpriteFrames_yi3rf")
+animation = &"dynamite"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dq78r")

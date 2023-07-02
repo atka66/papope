@@ -81,6 +81,8 @@ const PERKS : Dictionary = {
 	PerkEnum.PREPARED: ['prepared', 'starts with random powerup', 19]
 }
 
+enum PwrupEnum { REVOLVER, DYNAMITE, SHIELD, TRAP, WHIP }
+
 const DAMAGE_LAVA = 1
 const DAMAGE_REVOLVER = 20
 const DAMAGE_WHIP = 30
