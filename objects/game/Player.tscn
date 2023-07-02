@@ -1,12 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://tlfkm8pk6hy7"]
+[gd_scene load_steps=14 format=3 uid="uid://tlfkm8pk6hy7"]
 
 [ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
 [ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="3_gq6vx"]
 [ext_resource type="Texture2D" uid="uid://m1y325q5dmor" path="res://sprites/game/player/crown.png" id="4_ep5y4"]
-[ext_resource type="Texture2D" uid="uid://6p8lvg2msyhr" path="res://sprites/game/player/crosshair.png" id="4_u1511"]
 [ext_resource type="Texture2D" uid="uid://c3u5ie7th23lt" path="res://sprites/game/player/lock.png" id="5_83h66"]
 [ext_resource type="PackedScene" uid="uid://bgodu2dbdau1j" path="res://objects/anim/InvulAnim.tscn" id="5_vhbum"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="7_gom1r"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_po7vx"]
 friction = 0.0
@@ -20,8 +20,23 @@ shader_parameter/border_color = Color(0, 0, 0, 1)
 [sub_resource type="CircleShape2D" id="CircleShape2D_bxsms"]
 radius = 16.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_417ft"]
+shader = ExtResource("7_gom1r")
+shader_parameter/line_thickness = 1.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r5u8j"]
+shader = ExtResource("7_gom1r")
+shader_parameter/line_thickness = 1.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w500e"]
+shader = ExtResource("7_gom1r")
+shader_parameter/line_thickness = 1.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+
 [node name="Player" type="RigidBody2D" groups=["players"]]
-collision_mask = 11
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_po7vx")
 gravity_scale = 0.0
 max_contacts_reported = 2
@@ -52,14 +67,59 @@ position = Vector2(0, -18)
 texture = ExtResource("4_ep5y4")
 
 [node name="InvulAnim" parent="." instance=ExtResource("5_vhbum")]
-visible = false
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bxsms")
 
-[node name="Crosshair" type="Sprite2D" parent="."]
-texture = ExtResource("4_u1511")
-hframes = 3
+[node name="Crosshairs" type="Node2D" parent="."]
+
+[node name="DynamiteCrosshair" type="CanvasGroup" parent="Crosshairs"]
+material = SubResource("ShaderMaterial_417ft")
+
+[node name="Center" type="Polygon2D" parent="Crosshairs/DynamiteCrosshair"]
+polygon = PackedVector2Array(-1, -1, 1, -1, 1, 1, -1, 1)
+
+[node name="Top" type="Polygon2D" parent="Crosshairs/DynamiteCrosshair"]
+polygon = PackedVector2Array(-1, -12, 1, -12, 1, -4, -1, -4)
+
+[node name="Bottom" type="Polygon2D" parent="Crosshairs/DynamiteCrosshair"]
+polygon = PackedVector2Array(-1, 4, 1, 4, 1, 12, -1, 12)
+
+[node name="RevolverCrosshair" type="CanvasGroup" parent="Crosshairs"]
+material = SubResource("ShaderMaterial_r5u8j")
+
+[node name="Circle" type="Polygon2D" parent="Crosshairs/RevolverCrosshair"]
+polygon = PackedVector2Array(10, 0, 9.00969, 4.33884, 6.2349, 7.81832, 2.22521, 9.74928, -2.22521, 9.74928, -6.2349, 7.81831, -9.00969, 4.33884, -10, -1.66893e-06, -9.00969, -4.33884, -6.2349, -7.81832, -2.22521, -9.74928, 2.22521, -9.74928, 6.2349, -7.81831, 9.00969, -4.33883, 10, 3.09944e-06, 8, 0, 7.20775, -3.47107, 4.98792, -6.25465, 1.78017, -7.79942, -1.78017, -7.79942, -4.98792, -6.25465, -7.20775, -3.47107, -8, 1.43051e-06, -7.20775, 3.47107, -4.98792, 6.25465, -1.78017, 7.79942, 1.78017, 7.79942, 4.98792, 6.25465, 7.20775, 3.47107, 8, 0)
+
+[node name="Top" type="Polygon2D" parent="Crosshairs/RevolverCrosshair"]
+polygon = PackedVector2Array(-1, -12, 1, -12, 1, -5, -1, -5)
+
+[node name="Bottom" type="Polygon2D" parent="Crosshairs/RevolverCrosshair"]
+polygon = PackedVector2Array(-1, 12, 1, 12, 1, 5, -1, 5)
+
+[node name="Left" type="Polygon2D" parent="Crosshairs/RevolverCrosshair"]
+polygon = PackedVector2Array(-12, 1, -5, 1, -5, -1, -12, -1)
+
+[node name="Right" type="Polygon2D" parent="Crosshairs/RevolverCrosshair"]
+polygon = PackedVector2Array(12, 1, 5, 1, 5, -1, 12, -1)
+
+[node name="WhipCrosshair" type="CanvasGroup" parent="Crosshairs"]
+material = SubResource("ShaderMaterial_w500e")
+
+[node name="Center" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
+polygon = PackedVector2Array(-1, -1, 1, -1, 1, 1, -1, 1)
+
+[node name="TopLeft" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
+polygon = PackedVector2Array(-9, -7.5, -7.5, -9, -3, -4.5, -4.5, -3)
+
+[node name="TopRight" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
+polygon = PackedVector2Array(9, -7.5, 7.5, -9, 3, -4.5, 4.5, -3)
+
+[node name="BottomLeft" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
+polygon = PackedVector2Array(-9, 7.5, -7.5, 9, -3, 4.5, -4.5, 3)
+
+[node name="BottomRight" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
+polygon = PackedVector2Array(9, 7.5, 7.5, 9, 3, 4.5, 4.5, 3)
 
 [node name="AudioDash" type="AudioStreamPlayer2D" parent="."]
 

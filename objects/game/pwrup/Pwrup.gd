@@ -29,3 +29,9 @@ func _process(delta):
 func despawn():
 	spawnAnimation()
 	queue_free()
+
+func _on_body_entered(body):
+	if body.is_in_group('players'):
+		if body.alive && !Global.playersFrozen:
+			body.pickup(type)
+			despawn()

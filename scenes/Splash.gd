@@ -7,7 +7,7 @@ func _ready():
 
 func _input(event):
 	# todo maybe add some controller presses to skip to lobby
-	if event.is_action_pressed("escape"):
+	if event.is_action_pressed("skip"):
 		toLobby()
 
 func toLobby() -> void:
