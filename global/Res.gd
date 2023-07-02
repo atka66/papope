@@ -4,7 +4,8 @@ extends Node
 @onready var PlayerObject = preload("res://objects/game/Player.tscn")
 @onready var HudObject = preload("res://objects/game/hud/Hud.tscn")
 @onready var PwrupObject = preload("res://objects/game/pwrup/Pwrup.tscn")
-@onready var SpawnAnimObject = preload("res://objects/anim/SpawnAnim.tscn")
+@onready var SpawnPlayerAnimObject = preload("res://objects/anim/SpawnPlayerAnim.tscn")
+@onready var SpawnPwrupAnimObject = preload("res://objects/anim/SpawnPwrupAnim.tscn")
 @onready var CountdownObject = preload("res://objects/system/label/Countdown.tscn")
 
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")

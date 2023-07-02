@@ -96,7 +96,7 @@ game_dash={
 
 [papope]
 
-pwrup_respawn_time=6
+pwrup_respawn_time=1
 hint_timer=6
 disconnect_on_init=false
 ghost_respawn_time=5

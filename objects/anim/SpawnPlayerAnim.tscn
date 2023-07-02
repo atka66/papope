@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dxkgfk2nfdrt2"]
 
-[ext_resource type="Script" path="res://objects/anim/SpawnAnim.gd" id="1_gmqjn"]
+[ext_resource type="Script" path="res://objects/anim/SpawnPlayerAnim.gd" id="1_se8nw"]
 
 [sub_resource type="Animation" id="Animation_18u1o"]
 resource_name = "anim"
@@ -60,8 +60,8 @@ _data = {
 "anim": SubResource("Animation_18u1o")
 }
 
-[node name="SpawnAnim" type="Node2D"]
-script = ExtResource("1_gmqjn")
+[node name="SpawnPlayerAnim" type="Node2D"]
+script = ExtResource("1_se8nw")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 autoplay = "anim"

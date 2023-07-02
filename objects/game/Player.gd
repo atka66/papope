@@ -25,9 +25,9 @@ func _ready():
 	$BodyParts/Body.color = color
 	
 	if !silent:
-		var spawnAnim = Res.SpawnAnimObject.instantiate()
-		spawnAnim.position = global_position
-		get_tree().get_root().add_child(spawnAnim)
+		var anim = Res.SpawnPlayerAnimObject.instantiate()
+		anim.position = global_position
+		get_tree().get_root().add_child(anim)
 	
 	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
 		$BodyParts/Face.frame = 6

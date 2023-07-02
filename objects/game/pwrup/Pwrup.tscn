@@ -117,6 +117,11 @@ libraries = {
 "": SubResource("AnimationLibrary_s7cdv")
 }
 
+[node name="Shadow" type="Polygon2D" parent="."]
+scale = Vector2(0.6, 0.25)
+color = Color(0, 0, 0, 0.501961)
+polygon = PackedVector2Array(8, 0, 5.65685, 5.65685, -1.19209e-06, 8, -5.65686, 5.65685, -8, -2.86102e-06, -5.65685, -5.65686, 4.05312e-06, -8, 5.65686, -5.65685)
+
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_yi3rf")
