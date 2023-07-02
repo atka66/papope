@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://poecvtp05qww"]
+
+[ext_resource type="Script" path="res://objects/anim/RevolverRay.gd" id="1_k333r"]
+
+[sub_resource type="Animation" id="Animation_4c5nn"]
+resource_name = "ray"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ray:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [3.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h6b1y"]
+_data = {
+"ray": SubResource("Animation_4c5nn")
+}
+
+[node name="RevolverRay" type="Node2D"]
+script = ExtResource("1_k333r")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+autoplay = "ray"
+libraries = {
+"": SubResource("AnimationLibrary_h6b1y")
+}
+
+[node name="Ray" type="Line2D" parent="."]
+points = PackedVector2Array(14, 0)
+width = 3.0
+default_color = Color(1, 0.941176, 0.65098, 1)
+
+[node name="MuzzleTop" type="CPUParticles2D" parent="."]
+position = Vector2(16, 0)
+emitting = false
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.5
+local_coords = true
+direction = Vector2(0.2, 1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 150.0
+angle_max = 90.0
+scale_amount_max = 8.0
+
+[node name="MuzzleBottom" type="CPUParticles2D" parent="."]
+position = Vector2(16, 0)
+emitting = false
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 1.0
+local_coords = true
+direction = Vector2(0.2, -1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 150.0
+angle_max = 90.0
+scale_amount_max = 8.0

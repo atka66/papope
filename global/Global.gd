@@ -206,6 +206,10 @@ func getWinnerTeamByScore() -> int:
 			return playersTeam[i]
 	return -1
 
+func incrementStat(playerId : int, stat : StatEnum, i: int) -> void:
+	if playersStats:
+		playersStats[playerId][stat] += i
+
 func shakeScreen(shakePwr):
 	if shakePwr > 0:
 		CameraNode.shakePwr = shakePwr

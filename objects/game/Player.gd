@@ -68,16 +68,18 @@ func _input(event):
 		
 		# todo perks: backfire + right
 		
-		#todo hitscan
+		$HitScan.target_position = rAxis
 		$Crosshairs.rotation = rAxis.angle()
 		$Crosshairs.position = rAxis
 		
 		match item:
 			Global.PwrupEnum.REVOLVER:
+				$HitScan.target_position = extendVectorTo(rAxis, 5000)
 				$Crosshairs.position *= 200
 			Global.PwrupEnum.DYNAMITE:
 				$Crosshairs.position *= 200
 			Global.PwrupEnum.WHIP:
+				$HitScan.target_position = extendVectorTo(rAxis, 96)
 				$Crosshairs.position *= 96
 				
 		# todo perk long_arms
@@ -99,6 +101,8 @@ func _input(event):
 				if !trapped && linear_velocity.length() < 1000:
 					if event.is_action_pressed("game_dash"):
 						dash(lAxis)
+				if event.is_action_pressed("game_use"):
+					useItem()
 
 func dash(axis: Vector2) -> void:
 	$AudioDash.stream = Res.AudioPlayerDash.pick_random()
@@ -121,6 +125,11 @@ func _on_remove(id):
 	if playerId == id:
 		queue_free()
 
+func extendVectorTo(vector: Vector2, length: float) -> Vector2:
+	if vector.length() == 0:
+		return Vector2.RIGHT
+	return vector * (float(length) / vector.length())
+
 func pickup(pwrup : Global.PwrupEnum) -> void: 
 	item = pwrup
 	hideCrosshairs()
@@ -139,6 +148,13 @@ func pickup(pwrup : Global.PwrupEnum) -> void:
 			$Crosshairs/WhipCrosshair.show()
 			ammo = 5
 	# todo akimbo perk 
+
+func useItem() -> void:
+	match item:
+		Global.PwrupEnum.REVOLVER:
+			Global.incrementStat(playerId, Global.StatEnum.REV_USE, 1)
+			apply_central_impulse(-$HitScan.target_position.normalized() * 100)
+			
 
 func hideCrosshairs() -> void:
 	$Crosshairs/DynamiteCrosshair.hide()
