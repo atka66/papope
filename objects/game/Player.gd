@@ -158,7 +158,7 @@ func useItem() -> void:
 			var hitAngle: float = $HitScan.target_position.angle()
 			if $HitScan.is_colliding():
 				hitPosition = $HitScan.get_collision_point()
-				spawnRicochet(hitPosition, hitAngle)
+				spawnRicochet(hitPosition, $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle())
 				# todo further coll detection
 			var revolverRay = Res.RevolverRayObject.instantiate()
 			revolverRay.position = position

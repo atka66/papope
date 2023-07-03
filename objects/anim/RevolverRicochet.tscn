@@ -17,7 +17,6 @@ explosiveness = 1.0
 lifetime_randomness = 0.5
 texture = ExtResource("2_v25om")
 particle_flag_align_y = true
-direction = Vector2(-1, 0)
 gravity = Vector2(0, 0)
 initial_velocity_min = 150.0
 initial_velocity_max = 300.0
