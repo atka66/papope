@@ -153,8 +153,16 @@ func useItem() -> void:
 	match item:
 		Global.PwrupEnum.REVOLVER:
 			Global.incrementStat(playerId, Global.StatEnum.REV_USE, 1)
-			apply_central_impulse(-$HitScan.target_position.normalized() * 100)
-			
+			apply_central_impulse(-$HitScan.target_position.normalized() * 200)
+			var hitPosition: Vector2 = global_position + $HitScan.target_position
+			if $HitScan.is_colliding():
+				hitPosition = $HitScan.get_collision_point()
+				# todo further coll detection
+			var revolverRay = Res.RevolverRayObject.instantiate()
+			revolverRay.position = position
+			revolverRay.rotation = $HitScan.target_position.angle()
+			revolverRay.length = (position - hitPosition).length()
+			get_tree().get_current_scene().add_child(revolverRay)
 
 func hideCrosshairs() -> void:
 	$Crosshairs/DynamiteCrosshair.hide()

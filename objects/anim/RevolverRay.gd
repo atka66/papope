@@ -4,8 +4,5 @@ extends Node2D
 
 func _ready():
 	$Ray.add_point(Vector2(length, 0))
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	await $Audio.finished
+	queue_free()

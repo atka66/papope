@@ -6,6 +6,7 @@ extends Node
 @onready var PwrupObject = preload("res://objects/game/pwrup/Pwrup.tscn")
 @onready var SpawnPlayerAnimObject = preload("res://objects/anim/SpawnPlayerAnim.tscn")
 @onready var SpawnPwrupAnimObject = preload("res://objects/anim/SpawnPwrupAnim.tscn")
+@onready var RevolverRayObject = preload("res://objects/anim/RevolverRay.tscn")
 @onready var CountdownObject = preload("res://objects/system/label/Countdown.tscn")
 
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
