@@ -78,7 +78,6 @@ libraries = {
 [node name="Ray" type="Line2D" parent="."]
 points = PackedVector2Array(14, 0)
 width = 3.0
-default_color = Color(1, 0.941176, 0.65098, 1)
 
 [node name="MuzzleTop" type="CPUParticles2D" parent="."]
 position = Vector2(16, 0)
