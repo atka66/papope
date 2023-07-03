@@ -8,6 +8,7 @@ var alive: bool = true
 var hp: int = 1
 var item = null
 var ammo: int = 0
+var shielded: bool = false
 var trapped: bool = false
 var fallWater: bool = false
 var inSpace: bool = false
@@ -24,7 +25,7 @@ func _ready():
 	hp = Global.playersMaxHp[playerId]
 	Global.playersKills[playerId] = 0
 	
-	$InvulAnim.hide()
+	$Shield.hide()
 	if !Global.playersCrowned[playerId]:
 		$Crown.hide()
 	$Lock.hide()
@@ -165,12 +166,25 @@ func useItem() -> void:
 			revolverRay.rotation = hitAngle
 			revolverRay.length = (position - hitPosition).length()
 			get_tree().get_current_scene().add_child(revolverRay)
+		Global.PwrupEnum.SHIELD:
+			shield()
 
 func spawnRicochet(hitPosition: Vector2, hitAngle: float) -> void:
 	var ricochet = Res.RevolverRicochetObject.instantiate()
 	ricochet.position = hitPosition
 	ricochet.rotation = hitAngle
 	get_tree().get_current_scene().add_child(ricochet)
+
+func shield() -> void:
+	shielded = true
+	$Shield.show()
+	$AudioShieldStart.play()
+	$Shield/Timer.start(5.0)
+
+func unshield() -> void:
+	shielded = false
+	$Shield.hide()
+	$AudioShieldEnd.play()	
 
 func hideCrosshairs() -> void:
 	$Crosshairs/DynamiteCrosshair.hide()
