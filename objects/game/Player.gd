@@ -201,6 +201,9 @@ func untrap():
 	trapped = false
 	$Lock.hide()
 
+func directExplosion():
+	$AudioHurtDynamite.play()
+
 func spawnRicochet(hitPosition: Vector2, hitAngle: float) -> void:
 	var ricochet = Res.RevolverRicochetObject.instantiate()
 	ricochet.position = hitPosition

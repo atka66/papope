@@ -6,7 +6,7 @@ var MovingBackgroundNode: Node2D
 var CameraNode: Camera2D
 
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
-const DEBUG = false
+const DEBUG = true
 
 const VERSION = '1.3.5'
 const TEAM_COLORS = {

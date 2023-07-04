@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bykufej32f0bo"]
+[gd_scene load_steps=11 format=3 uid="uid://bykufej32f0bo"]
 
 [ext_resource type="Script" path="res://objects/game/pwrup/Dynamite.gd" id="1_aju7c"]
 [ext_resource type="Texture2D" uid="uid://dv8c73hdc0ufd" path="res://sprites/game/pwrup/dynamite.png" id="1_iorbu"]
 [ext_resource type="Texture2D" uid="uid://bpcdoonpygx7q" path="res://sprites/anim/shard.png" id="3_6epn1"]
 [ext_resource type="AudioStream" uid="uid://c03hqxl48nyv2" path="res://audio/sfx/pwrup/dyn_throw.ogg" id="3_hyiov"]
 [ext_resource type="AudioStream" uid="uid://6583j6tfbcpf" path="res://audio/sfx/pwrup/dyn_fuse.ogg" id="4_iqwfy"]
+[ext_resource type="AudioStream" uid="uid://8rlvv3jw2k36" path="res://audio/sfx/pwrup/bounce.ogg" id="6_t7fsh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mcsm4"]
 bounce = 1.0
@@ -120,4 +121,7 @@ stream = ExtResource("4_iqwfy")
 bus = &"sfx"
 
 [node name="AudioBounce" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_t7fsh")
 bus = &"sfx"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

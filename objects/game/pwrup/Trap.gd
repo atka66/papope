@@ -9,5 +9,6 @@ func _ready():
 func _on_body_entered(body):
 	if armed:
 		if body.is_in_group('trappables'):
+			# todo dmg
 			body.getTrapped()
 			$Anim.play("spring")

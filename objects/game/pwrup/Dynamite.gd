@@ -19,3 +19,12 @@ func getShot(playerId: int, normal: Vector2) -> void:
 
 func getTrapped():
 	explode()
+
+
+func _on_body_entered(body):
+	if body.is_in_group("players"):
+		if body.alive && !body.shielded:
+			body.directExplosion()
+		explode()
+	else:
+		$AudioBounce.play()
