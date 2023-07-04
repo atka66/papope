@@ -79,6 +79,7 @@ texture = ExtResource("4_ep5y4")
 [node name="Shield" type="Node2D" parent="."]
 
 [node name="Timer" type="Timer" parent="Shield"]
+one_shot = true
 
 [node name="Circle" type="ColorRect" parent="Shield"]
 material = SubResource("ShaderMaterial_finae")

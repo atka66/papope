@@ -191,7 +191,7 @@ func shield() -> void:
 func unshield() -> void:
 	shielded = false
 	$Shield.hide()
-	$AudioShieldEnd.play()	
+	$AudioShieldEnd.play()
 
 func hideCrosshairs() -> void:
 	$Crosshairs/DynamiteCrosshair.hide()
