@@ -5,6 +5,7 @@ extends Node
 @onready var HudObject = preload("res://objects/game/hud/Hud.tscn")
 @onready var PwrupObject = preload("res://objects/game/pwrup/Pwrup.tscn")
 @onready var DynamiteObject = preload("res://objects/game/pwrup/Dynamite.tscn")
+@onready var TrapObject = preload("res://objects/game/pwrup/Trap.tscn")
 @onready var SpawnPlayerAnimObject = preload("res://objects/anim/SpawnPlayerAnim.tscn")
 @onready var SpawnPwrupAnimObject = preload("res://objects/anim/SpawnPwrupAnim.tscn")
 @onready var RevolverRayObject = preload("res://objects/anim/RevolverRay.tscn")
@@ -23,6 +24,11 @@ extends Node
 	preload("res://audio/sfx/pwrup/explode_1.ogg"),
 	preload("res://audio/sfx/pwrup/explode_2.ogg"),
 	preload("res://audio/sfx/pwrup/explode_3.ogg")
+]
+@onready var AudioWhipHuts = [
+	preload("res://audio/sfx/pwrup/whip_huts_1.ogg"),
+	preload("res://audio/sfx/pwrup/whip_huts_2.ogg"),
+	preload("res://audio/sfx/pwrup/whip_huts_3.ogg")
 ]
 @onready var AudioPlayerDash = [
 	preload("res://audio/sfx/player/dash_1.ogg"),

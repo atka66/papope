@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://tlfkm8pk6hy7"]
+[gd_scene load_steps=19 format=3 uid="uid://tlfkm8pk6hy7"]
 
 [ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
@@ -9,6 +9,7 @@
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="7_gom1r"]
 [ext_resource type="AudioStream" uid="uid://chl7pwr2aquq0" path="res://audio/sfx/pwrup/shield_start.ogg" id="8_eksu2"]
 [ext_resource type="AudioStream" uid="uid://buth7w23vc0am" path="res://audio/sfx/pwrup/shield_end.ogg" id="9_0h1ux"]
+[ext_resource type="AudioStream" uid="uid://cn7iqp0v80dvw" path="res://audio/sfx/pwrup/rev_hit.ogg" id="10_0o6vg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_po7vx"]
 friction = 0.0
@@ -45,7 +46,7 @@ shader = ExtResource("7_gom1r")
 shader_parameter/line_thickness = 1.0
 shader_parameter/line_color = Color(0, 0, 0, 1)
 
-[node name="Player" type="RigidBody2D" groups=["players"]]
+[node name="Player" type="RigidBody2D" groups=["players", "shootables", "trappables"]]
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_po7vx")
 gravity_scale = 0.0
@@ -71,6 +72,9 @@ hframes = 7
 
 [node name="Lock" type="Sprite2D" parent="."]
 texture = ExtResource("5_83h66")
+
+[node name="Timer" type="Timer" parent="Lock"]
+one_shot = true
 
 [node name="Crown" type="Sprite2D" parent="."]
 position = Vector2(0, -18)
@@ -162,6 +166,11 @@ bus = &"sfx"
 stream = ExtResource("9_0h1ux")
 bus = &"sfx"
 
+[node name="AudioRevolverHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_0o6vg")
+bus = &"sfx"
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="Lock/Timer" to="." method="untrap"]
 [connection signal="timeout" from="Shield/Timer" to="." method="unshield"]

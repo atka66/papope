@@ -159,7 +159,11 @@ func useItem() -> void:
 			var hitAngle: float = $HitScan.target_position.angle()
 			if $HitScan.is_colliding():
 				hitPosition = $HitScan.get_collision_point()
-				spawnRicochet(hitPosition, $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle())
+				var collider = $HitScan.get_collider()
+				if collider.is_in_group('shootables'):
+					collider.getShot(playerId, $HitScan.target_position.normalized())
+				else:
+					spawnRicochet(hitPosition, $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle())
 				# todo further coll detection
 			var revolverRay = Res.RevolverRayObject.instantiate()
 			revolverRay.position = position
@@ -170,11 +174,32 @@ func useItem() -> void:
 			Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
 			var dynamite = Res.DynamiteObject.instantiate()
 			dynamite.position = position + ($HitScan.target_position.normalized()) * 20
+			dynamite.origin = self
 			dynamite.originPlayerId = playerId
 			dynamite.apply_central_impulse($HitScan.target_position * 190)
 			get_tree().get_current_scene().add_child(dynamite)
 		Global.PwrupEnum.SHIELD:
 			shield()
+		Global.PwrupEnum.TRAP:
+			Global.incrementStat(playerId, Global.StatEnum.TRP_USE, 1)
+			var trap = Res.TrapObject.instantiate()
+			trap.originPlayerId = playerId
+			trap.rotation_degrees += (randi() % 30) - 60
+			trap.position = position
+			get_tree().get_current_scene().add_child(trap)
+
+func getShot(playerId: int, normal: Vector2) -> void:
+	apply_central_impulse(normal * 100)
+	$AudioRevolverHit.play()
+
+func getTrapped() -> void:
+	trapped = true
+	$Lock.show()
+	$Lock/Timer.start(2.0)
+
+func untrap():
+	trapped = false
+	$Lock.hide()
 
 func spawnRicochet(hitPosition: Vector2, hitAngle: float) -> void:
 	var ricochet = Res.RevolverRicochetObject.instantiate()
@@ -197,4 +222,3 @@ func hideCrosshairs() -> void:
 	$Crosshairs/DynamiteCrosshair.hide()
 	$Crosshairs/RevolverCrosshair.hide()
 	$Crosshairs/WhipCrosshair.hide()
-	
