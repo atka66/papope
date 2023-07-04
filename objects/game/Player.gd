@@ -153,40 +153,60 @@ func pickup(pwrup : Global.PwrupEnum) -> void:
 func useItem() -> void:
 	match item:
 		Global.PwrupEnum.REVOLVER:
-			Global.incrementStat(playerId, Global.StatEnum.REV_USE, 1)
-			apply_central_impulse(-$HitScan.target_position.normalized() * 200)
-			var hitPosition: Vector2 = global_position + $HitScan.target_position
-			var hitAngle: float = $HitScan.target_position.angle()
-			if $HitScan.is_colliding():
-				hitPosition = $HitScan.get_collision_point()
-				var collider = $HitScan.get_collider()
-				if collider.is_in_group('shootables'):
-					collider.getShot(playerId, $HitScan.target_position.normalized())
-				else:
-					spawnRicochet(hitPosition, $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle())
-				# todo further coll detection
-			var revolverRay = Res.RevolverRayObject.instantiate()
-			revolverRay.position = position
-			revolverRay.rotation = hitAngle
-			revolverRay.length = (position - hitPosition).length()
-			get_tree().get_current_scene().add_child(revolverRay)
+			useRevolver()
 		Global.PwrupEnum.DYNAMITE:
-			Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
-			var dynamite = Res.DynamiteObject.instantiate()
-			dynamite.position = position + ($HitScan.target_position.normalized()) * 20
-			dynamite.origin = self
-			dynamite.originPlayerId = playerId
-			dynamite.apply_central_impulse($HitScan.target_position * 190)
-			get_tree().get_current_scene().add_child(dynamite)
+			useDynamite()
 		Global.PwrupEnum.SHIELD:
-			shield()
+			useShield()
 		Global.PwrupEnum.TRAP:
-			Global.incrementStat(playerId, Global.StatEnum.TRP_USE, 1)
-			var trap = Res.TrapObject.instantiate()
-			trap.originPlayerId = playerId
-			trap.rotation_degrees += (randi() % 30) - 60
-			trap.position = position
-			get_tree().get_current_scene().add_child(trap)
+			useTrap()
+		Global.PwrupEnum.WHIP:
+			useWhip()
+
+func useRevolver() -> void:
+	Global.incrementStat(playerId, Global.StatEnum.REV_USE, 1)
+	apply_central_impulse(-$HitScan.target_position.normalized() * 200)
+	var hitPosition: Vector2 = global_position + $HitScan.target_position
+	var hitAngle: float = $HitScan.target_position.angle()
+	if $HitScan.is_colliding():
+		hitPosition = $HitScan.get_collision_point()
+		var collider = $HitScan.get_collider()
+		if collider.is_in_group('shootables'):
+			collider.getShot(playerId, $HitScan.target_position.normalized())
+		else:
+			spawnRicochet(hitPosition, $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle())
+		# todo further coll detection
+	var revolverRay = Res.RevolverRayObject.instantiate()
+	revolverRay.position = position
+	revolverRay.rotation = hitAngle
+	revolverRay.length = (position - hitPosition).length()
+	get_tree().get_current_scene().add_child(revolverRay)
+
+func useDynamite() -> void:
+	Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
+	var dynamite = Res.DynamiteObject.instantiate()
+	dynamite.position = position + ($HitScan.target_position.normalized()) * 20
+	dynamite.origin = self
+	dynamite.originPlayerId = playerId
+	dynamite.apply_central_impulse($HitScan.target_position * 190)
+	get_tree().get_current_scene().add_child(dynamite)
+
+func useShield() -> void:
+	shielded = true
+	$Shield.show()
+	$AudioShieldStart.play()
+	$Shield/Timer.start(5.0)
+
+func useTrap() -> void:
+	Global.incrementStat(playerId, Global.StatEnum.TRP_USE, 1)
+	var trap = Res.TrapObject.instantiate()
+	trap.originPlayerId = playerId
+	trap.rotation_degrees += (randi() % 30) - 60
+	trap.position = position
+	get_tree().get_current_scene().add_child(trap)
+
+func useWhip() -> void:
+	Global.incrementStat(playerId, Global.StatEnum.WHP_USE, 1)
 
 func getShot(playerId: int, normal: Vector2) -> void:
 	apply_central_impulse(normal * 100)
@@ -209,12 +229,6 @@ func spawnRicochet(hitPosition: Vector2, hitAngle: float) -> void:
 	ricochet.position = hitPosition
 	ricochet.rotation = hitAngle
 	get_tree().get_current_scene().add_child(ricochet)
-
-func shield() -> void:
-	shielded = true
-	$Shield.show()
-	$AudioShieldStart.play()
-	$Shield/Timer.start(5.0)
 
 func unshield() -> void:
 	shielded = false
