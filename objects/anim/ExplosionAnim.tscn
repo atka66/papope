@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfhibm36q8vi7"]
+
+[ext_resource type="Script" path="res://objects/anim/ExplosionAnim.gd" id="1_rq0pg"]
+[ext_resource type="Texture2D" uid="uid://bpcdoonpygx7q" path="res://sprites/anim/shard.png" id="2_p87k8"]
+
+[sub_resource type="Curve" id="Curve_of6bu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_pnjdg"]
+_data = [Vector2(0, 0), 0.0, 14.3564, 0, 0, Vector2(0.111702, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.77013, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_d8fcw"]
+offsets = PackedFloat32Array(0, 0.426752)
+
+[node name="ExplosionAnim" type="Node2D"]
+script = ExtResource("1_rq0pg")
+
+[node name="Smoke" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 10
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.5
+direction = Vector2(0, -1)
+spread = 90.0
+gravity = Vector2(0, -100)
+initial_velocity_min = 150.0
+initial_velocity_max = 300.0
+angular_velocity_max = 180.0
+linear_accel_min = -50.0
+linear_accel_max = -50.0
+damping_min = 100.0
+damping_max = 100.0
+angle_max = 30.0
+scale_amount_min = 0.0
+scale_amount_max = 30.0
+scale_amount_curve = SubResource("Curve_of6bu")
+color = Color(0.752941, 0.8, 0.878431, 1)
+
+[node name="BigBoom" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 1
+lifetime = 0.3
+one_shot = true
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+angular_velocity_max = 200.0
+angle_max = 720.0
+scale_amount_min = 100.0
+scale_amount_max = 100.0
+scale_amount_curve = SubResource("Curve_pnjdg")
+color_ramp = SubResource("Gradient_d8fcw")
+
+[node name="Shards" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.5
+texture = ExtResource("2_p87k8")
+particle_flag_align_y = true
+direction = Vector2(0, -1)
+spread = 120.0
+gravity = Vector2(0, 98)
+initial_velocity_min = 250.0
+initial_velocity_max = 500.0
+damping_min = 100.0
+damping_max = 100.0
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"

@@ -1,0 +1,123 @@
+[gd_scene load_steps=10 format=3 uid="uid://bykufej32f0bo"]
+
+[ext_resource type="Script" path="res://objects/game/pwrup/Dynamite.gd" id="1_aju7c"]
+[ext_resource type="Texture2D" uid="uid://dv8c73hdc0ufd" path="res://sprites/game/pwrup/dynamite.png" id="1_iorbu"]
+[ext_resource type="Texture2D" uid="uid://bpcdoonpygx7q" path="res://sprites/anim/shard.png" id="3_6epn1"]
+[ext_resource type="AudioStream" uid="uid://c03hqxl48nyv2" path="res://audio/sfx/pwrup/dyn_throw.ogg" id="3_hyiov"]
+[ext_resource type="AudioStream" uid="uid://6583j6tfbcpf" path="res://audio/sfx/pwrup/dyn_fuse.ogg" id="4_iqwfy"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mcsm4"]
+bounce = 1.0
+
+[sub_resource type="Animation" id="Animation_houah"]
+resource_name = "loop"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 13.9626]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"explode"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioThrow")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioIdle")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xxg5i"]
+_data = {
+"loop": SubResource("Animation_houah")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xviia"]
+radius = 8.0
+
+[node name="Dynamite" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_mcsm4")
+gravity_scale = 0.0
+max_contacts_reported = 3
+contact_monitor = true
+lock_rotation = true
+script = ExtResource("1_aju7c")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+autoplay = "loop"
+libraries = {
+"": SubResource("AnimationLibrary_xxg5i")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xviia")
+
+[node name="Container" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="Container"]
+texture = ExtResource("1_iorbu")
+
+[node name="Smoke" type="CPUParticles2D" parent="Container"]
+position = Vector2(10, 0)
+amount = 5
+lifetime = 0.2
+lifetime_randomness = 1.0
+texture = ExtResource("3_6epn1")
+particle_flag_align_y = true
+spread = 120.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+scale_amount_min = 0.5
+
+[node name="AudioThrow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_hyiov")
+bus = &"sfx"
+
+[node name="AudioIdle" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_iqwfy")
+bus = &"sfx"
+
+[node name="AudioBounce" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"

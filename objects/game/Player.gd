@@ -166,6 +166,13 @@ func useItem() -> void:
 			revolverRay.rotation = hitAngle
 			revolverRay.length = (position - hitPosition).length()
 			get_tree().get_current_scene().add_child(revolverRay)
+		Global.PwrupEnum.DYNAMITE:
+			Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
+			var dynamite = Res.DynamiteObject.instantiate()
+			dynamite.position = position + ($HitScan.target_position.normalized()) * 20
+			dynamite.originPlayerId = playerId
+			dynamite.apply_central_impulse($HitScan.target_position * 190)
+			get_tree().get_current_scene().add_child(dynamite)
 		Global.PwrupEnum.SHIELD:
 			shield()
 
