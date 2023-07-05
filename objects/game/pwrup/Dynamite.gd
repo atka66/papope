@@ -1,7 +1,6 @@
 extends RigidBody2D
 
 @export var origin: Node2D
-@export var originPlayerId: int = 0
 @export var targetNorm: Vector2
 @export var throwForce: float
 
@@ -12,7 +11,7 @@ func _ready():
 func explode():
 	var explosion = Res.ExplosionAnimObject.instantiate()
 	explosion.position = position
-	explosion.originPlayerId = originPlayerId
+	explosion.originPlayerId = origin.playerId
 	explosion.shakePwr = 15
 	get_tree().get_current_scene().add_child(explosion)
 	queue_free()

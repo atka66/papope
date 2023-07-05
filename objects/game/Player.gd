@@ -146,52 +146,35 @@ func pickup(pwrup : Global.PwrupEnum) -> void:
 func useItem() -> void:
 	match item:
 		Global.PwrupEnum.REVOLVER:
-			useRevolver()
+			Global.incrementStat(playerId, Global.StatEnum.REV_USE, 1)
+			apply_central_impulse(-$LookVector.position.normalized() * 200)
+			var revolverRay = Res.RevolverRayObject.instantiate()
+			revolverRay.position = position
+			revolverRay.origin = self
+			revolverRay.targetNorm = $LookVector.position.normalized()
+			get_tree().get_current_scene().add_child(revolverRay)
 		Global.PwrupEnum.DYNAMITE:
-			useDynamite()
+			Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
+			var dynamite = Res.DynamiteObject.instantiate()
+			dynamite.position = position + ($LookVector.position.normalized()) * 20
+			dynamite.origin = self
+			dynamite.targetNorm = $LookVector.position.normalized()
+			dynamite.throwForce = $LookVector.position.length() * 190
+			get_tree().get_current_scene().add_child(dynamite)
 		Global.PwrupEnum.SHIELD:
-			useShield()
+			shielded = true
+			$Shield.show()
+			$AudioShieldStart.play()
+			$Shield/Timer.start(5.0)
 		Global.PwrupEnum.TRAP:
-			useTrap()
+			Global.incrementStat(playerId, Global.StatEnum.TRP_USE, 1)
+			var trap = Res.TrapObject.instantiate()
+			trap.originPlayerId = playerId
+			trap.rotation_degrees += (randi() % 30) - 60
+			trap.position = position
+			get_tree().get_current_scene().add_child(trap)
 		Global.PwrupEnum.WHIP:
-			useWhip()
-
-func useRevolver() -> void:
-	Global.incrementStat(playerId, Global.StatEnum.REV_USE, 1)
-	apply_central_impulse(-$LookVector.position.normalized() * 200)
-	var revolverRay = Res.RevolverRayObject.instantiate()
-	revolverRay.position = position
-	revolverRay.origin = self
-	revolverRay.originPlayerId = playerId
-	revolverRay.targetNorm = $LookVector.position.normalized()
-	get_tree().get_current_scene().add_child(revolverRay)
-
-func useDynamite() -> void:
-	Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
-	var dynamite = Res.DynamiteObject.instantiate()
-	dynamite.position = position + ($LookVector.position.normalized()) * 20
-	dynamite.origin = self
-	dynamite.originPlayerId = playerId
-	dynamite.targetNorm = $LookVector.position.normalized()
-	dynamite.throwForce = $LookVector.position.length() * 190
-	get_tree().get_current_scene().add_child(dynamite)
-
-func useShield() -> void:
-	shielded = true
-	$Shield.show()
-	$AudioShieldStart.play()
-	$Shield/Timer.start(5.0)
-
-func useTrap() -> void:
-	Global.incrementStat(playerId, Global.StatEnum.TRP_USE, 1)
-	var trap = Res.TrapObject.instantiate()
-	trap.originPlayerId = playerId
-	trap.rotation_degrees += (randi() % 30) - 60
-	trap.position = position
-	get_tree().get_current_scene().add_child(trap)
-
-func useWhip() -> void:
-	Global.incrementStat(playerId, Global.StatEnum.WHP_USE, 1)
+			Global.incrementStat(playerId, Global.StatEnum.WHP_USE, 1)
 
 func getShot(playerId: int, normal: Vector2) -> void:
 	apply_central_impulse(normal * 100)

@@ -2,7 +2,6 @@ extends Node2D
 
 const MAX_LENGTH: int = 5000
 @export var origin: Node2D
-@export var originPlayerId: int = 0
 @export var targetNorm: Vector2
 
 func _ready():
@@ -18,7 +17,7 @@ func _ready():
 		hitPosition = $HitScan.get_collision_point()
 		var collider = $HitScan.get_collider()
 		if collider.is_in_group('shootables'):
-			collider.getShot(originPlayerId, $HitScan.target_position.normalized())
+			collider.getShot(origin.playerId, $HitScan.target_position.normalized())
 		else:
 			spawnRicochet(hitPosition, $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle())
 		# todo further coll detection
