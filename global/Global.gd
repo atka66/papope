@@ -213,3 +213,8 @@ func incrementStat(playerId : int, stat : StatEnum, i: int) -> void:
 func shakeScreen(shakePwr):
 	if shakePwr > 0:
 		CameraNode.shakePwr = shakePwr
+
+func extendVectorTo(vector: Vector2, length: float) -> Vector2:
+	if vector.length() == 0:
+		return Vector2.RIGHT
+	return vector * (float(length) / vector.length())

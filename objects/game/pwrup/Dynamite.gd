@@ -2,9 +2,12 @@ extends RigidBody2D
 
 @export var origin: Node2D
 @export var originPlayerId: int = 0
+@export var targetNorm: Vector2
+@export var throwForce: float
 
 func _ready():
 	add_collision_exception_with(origin)
+	apply_central_impulse(targetNorm * throwForce)
 
 func explode():
 	var explosion = Res.ExplosionAnimObject.instantiate()

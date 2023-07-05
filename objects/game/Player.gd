@@ -69,18 +69,16 @@ func _input(event):
 		
 		# todo perks: backfire + right
 		
-		$HitScan.target_position = rAxis
+		$LookVector.position = rAxis
 		$Crosshairs.rotation = rAxis.angle()
 		$Crosshairs.position = rAxis
 		
 		match item:
 			Global.PwrupEnum.REVOLVER:
-				$HitScan.target_position = extendVectorTo(rAxis, 5000)
 				$Crosshairs.position *= 200
 			Global.PwrupEnum.DYNAMITE:
 				$Crosshairs.position *= 200
 			Global.PwrupEnum.WHIP:
-				$HitScan.target_position = extendVectorTo(rAxis, 96)
 				$Crosshairs.position *= 96
 				
 		# todo perk long_arms
@@ -126,11 +124,6 @@ func _on_remove(id):
 	if playerId == id:
 		queue_free()
 
-func extendVectorTo(vector: Vector2, length: float) -> Vector2:
-	if vector.length() == 0:
-		return Vector2.RIGHT
-	return vector * (float(length) / vector.length())
-
 func pickup(pwrup : Global.PwrupEnum) -> void: 
 	item = pwrup
 	hideCrosshairs()
@@ -165,30 +158,22 @@ func useItem() -> void:
 
 func useRevolver() -> void:
 	Global.incrementStat(playerId, Global.StatEnum.REV_USE, 1)
-	apply_central_impulse(-$HitScan.target_position.normalized() * 200)
-	var hitPosition: Vector2 = global_position + $HitScan.target_position
-	var hitAngle: float = $HitScan.target_position.angle()
-	if $HitScan.is_colliding():
-		hitPosition = $HitScan.get_collision_point()
-		var collider = $HitScan.get_collider()
-		if collider.is_in_group('shootables'):
-			collider.getShot(playerId, $HitScan.target_position.normalized())
-		else:
-			spawnRicochet(hitPosition, $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle())
-		# todo further coll detection
+	apply_central_impulse(-$LookVector.position.normalized() * 200)
 	var revolverRay = Res.RevolverRayObject.instantiate()
 	revolverRay.position = position
-	revolverRay.rotation = hitAngle
-	revolverRay.length = (position - hitPosition).length()
+	revolverRay.origin = self
+	revolverRay.originPlayerId = playerId
+	revolverRay.targetNorm = $LookVector.position.normalized()
 	get_tree().get_current_scene().add_child(revolverRay)
 
 func useDynamite() -> void:
 	Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
 	var dynamite = Res.DynamiteObject.instantiate()
-	dynamite.position = position + ($HitScan.target_position.normalized()) * 20
+	dynamite.position = position + ($LookVector.position.normalized()) * 20
 	dynamite.origin = self
 	dynamite.originPlayerId = playerId
-	dynamite.apply_central_impulse($HitScan.target_position * 190)
+	dynamite.targetNorm = $LookVector.position.normalized()
+	dynamite.throwForce = $LookVector.position.length() * 190
 	get_tree().get_current_scene().add_child(dynamite)
 
 func useShield() -> void:
@@ -223,12 +208,6 @@ func untrap():
 
 func directExplosion():
 	$AudioHurtDynamite.play()
-
-func spawnRicochet(hitPosition: Vector2, hitAngle: float) -> void:
-	var ricochet = Res.RevolverRicochetObject.instantiate()
-	ricochet.position = hitPosition
-	ricochet.rotation = hitAngle
-	get_tree().get_current_scene().add_child(ricochet)
 
 func unshield() -> void:
 	shielded = false

@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://8rlvv3jw2k36" path="res://audio/sfx/pwrup/bounce.ogg" id="6_t7fsh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mcsm4"]
+friction = 0.0
 bounce = 1.0
 
 [sub_resource type="Animation" id="Animation_houah"]

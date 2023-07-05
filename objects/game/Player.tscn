@@ -153,8 +153,7 @@ polygon = PackedVector2Array(-9, 7.5, -7.5, 9, -3, 4.5, -4.5, 3)
 [node name="BottomRight" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
 polygon = PackedVector2Array(9, 7.5, 7.5, 9, 3, 4.5, 4.5, 3)
 
-[node name="HitScan" type="RayCast2D" parent="."]
-collision_mask = 3
+[node name="LookVector" type="Marker2D" parent="."]
 
 [node name="AudioDash" type="AudioStreamPlayer2D" parent="."]
 bus = &"sfx"

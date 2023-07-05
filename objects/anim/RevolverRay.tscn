@@ -76,8 +76,11 @@ libraries = {
 }
 
 [node name="Ray" type="Line2D" parent="."]
-points = PackedVector2Array(14, 0)
 width = 3.0
+
+[node name="HitScan" type="RayCast2D" parent="."]
+exclude_parent = false
+collision_mask = 3
 
 [node name="MuzzleTop" type="CPUParticles2D" parent="."]
 position = Vector2(16, 0)
