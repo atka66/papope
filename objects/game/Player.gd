@@ -195,6 +195,15 @@ func getWhipped(playerId: int, normal: Vector2) -> void:
 	hurtSound(Res.AudioHurtWhip)
 	apply_central_impulse(normal * 1000)
 
+func getZapped() -> void:
+	hurtSound(Res.AudioHurtCactus.pick_random()) #todo change?
+	
+	var vector: Vector2 = Vector2(-linear_velocity.x, 0)
+	var vel = Vector2.RIGHT
+	if global_position.x < 336:
+		vel.x *= -1
+	apply_central_impulse(vector + (vel * 800))
+
 func untrap():
 	trapped = false
 	$Lock.hide()

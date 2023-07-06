@@ -107,7 +107,7 @@ animations = [{
 radius = 4.0
 
 [node name="Pwrup" type="Area2D" groups=["pwrups"]]
-collision_layer = 8
+collision_layer = 0
 script = ExtResource("1_k4wcf")
 
 [node name="Anim" type="AnimationPlayer" parent="."]

@@ -90,7 +90,6 @@ exclude_parent = false
 collision_mask = 19
 
 [node name="MuzzleTop" type="CPUParticles2D" parent="."]
-position = Vector2(16, 0)
 emitting = false
 lifetime = 0.3
 one_shot = true
@@ -105,7 +104,6 @@ angle_max = 90.0
 scale_amount_max = 8.0
 
 [node name="MuzzleBottom" type="CPUParticles2D" parent="."]
-position = Vector2(16, 0)
 emitting = false
 lifetime = 0.3
 one_shot = true

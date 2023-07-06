@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://objects/game/obstacle/SpaceRay.gd" id="1_6gkwr"]
 [ext_resource type="Texture2D" uid="uid://71h3l5q52df7" path="res://sprites/game/obstacle/spaceray.png" id="2_yl0nb"]
-[ext_resource type="AudioStream" uid="uid://xe2mrerbnwgd" path="res://audio/sfx/obstacle/start.ogg" id="3_tggbw"]
 [ext_resource type="Texture2D" uid="uid://bpcdoonpygx7q" path="res://sprites/anim/shard.png" id="3_uabs2"]
-[ext_resource type="AudioStream" uid="uid://c7blefqegaivx" path="res://audio/sfx/obstacle/ongoing.ogg" id="4_s1sd1"]
-[ext_resource type="AudioStream" uid="uid://dr3ve5nnnqaby" path="res://audio/sfx/obstacle/stop.ogg" id="5_4n5th"]
+[ext_resource type="AudioStream" uid="uid://xe2mrerbnwgd" path="res://audio/sfx/obstacle/spaceray_start.ogg" id="4_4iva0"]
+[ext_resource type="AudioStream" uid="uid://c7blefqegaivx" path="res://audio/sfx/obstacle/spaceray_ongoing.ogg" id="5_tsp6w"]
+[ext_resource type="AudioStream" uid="uid://dr3ve5nnnqaby" path="res://audio/sfx/obstacle/spaceray_stop.ogg" id="6_lum2m"]
 
 [sub_resource type="Animation" id="Animation_8ylt1"]
 resource_name = "loop"
@@ -70,7 +70,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0, 18.8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [true, true]
+"values": [true, false]
 }
 tracks/5/type = "method"
 tracks/5/imported = false
@@ -124,10 +124,10 @@ tracks/8/path = NodePath("ParticlesBottom:emitting")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 18.8, 22.8),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 18.8),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false, true, false]
+"values": [false, true]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
@@ -136,10 +136,10 @@ tracks/9/path = NodePath("ParticlesTop:emitting")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 18.8, 22.8),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 18.8),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false, true, false]
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0lvuk"]
@@ -225,12 +225,15 @@ libraries = {
 
 [node name="Phase1" type="ColorRect" parent="."]
 visible = false
-offset_left = 8.94888
+offset_left = 35.8536
 offset_top = -256.0
-offset_right = 8.94888
+offset_right = 35.8536
 offset_bottom = 256.0
 
 [node name="Phase2" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 17
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Phase2"]
 scale = Vector2(5, 5)
@@ -243,6 +246,7 @@ disabled = true
 
 [node name="ParticlesBottom" type="CPUParticles2D" parent="."]
 position = Vector2(0, 256)
+emitting = false
 amount = 100
 lifetime = 0.3
 lifetime_randomness = 1.0
@@ -260,6 +264,7 @@ scale_amount_max = 3.0
 
 [node name="ParticlesTop" type="CPUParticles2D" parent="."]
 position = Vector2(0, -256)
+emitting = false
 amount = 100
 lifetime = 0.3
 lifetime_randomness = 1.0
@@ -277,15 +282,15 @@ angular_velocity_max = 1000.0
 scale_amount_max = 3.0
 
 [node name="AudioStart" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_tggbw")
+stream = ExtResource("4_4iva0")
 bus = &"sfx"
 
 [node name="AudioOngoing" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_s1sd1")
+stream = ExtResource("5_tsp6w")
 bus = &"sfx"
 
 [node name="AudioStop" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_4n5th")
+stream = ExtResource("6_lum2m")
 bus = &"sfx"
 
-[node name="AudioCollisionPlayer" type="AudioStreamPlayer2D" parent="."]
+[connection signal="body_entered" from="Phase2" to="." method="_on_phase_2_body_entered"]

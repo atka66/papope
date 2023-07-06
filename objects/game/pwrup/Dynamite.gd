@@ -19,10 +19,13 @@ func explode():
 func getShot(playerId: int, normal: Vector2) -> void:
 	explode()
 
-func getTrapped(playerId: int):
+func getTrapped(playerId: int) -> void:
 	explode()
 
-func getWhipped(playerId: int, normal: Vector2):
+func getWhipped(playerId: int, normal: Vector2) -> void:
+	explode()
+
+func getZapped() -> void:
 	explode()
 
 func _on_body_entered(body):

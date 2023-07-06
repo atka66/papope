@@ -6,8 +6,12 @@ const MAX_LENGTH: int = 5000
 
 func _ready():
 	$HitScan.add_exception(origin)
-	$Ray.add_point(targetNorm * 14)
+
+	var originPoint: Vector2 = targetNorm * 14
+	$Ray.add_point(originPoint)
+	$MuzzleTop.position = originPoint
 	$MuzzleTop.rotate(targetNorm.angle())
+	$MuzzleBottom.position = originPoint
 	$MuzzleBottom.rotate(targetNorm.angle())
 	
 	var hitPosition: Vector2

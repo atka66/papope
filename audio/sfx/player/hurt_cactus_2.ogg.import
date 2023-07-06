@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/hurt_cactus_2.ogg-5433b5be0e7312d776135044cfd
 [params]
 
 loop=false
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

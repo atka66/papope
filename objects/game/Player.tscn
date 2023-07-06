@@ -45,7 +45,7 @@ shader = ExtResource("7_gom1r")
 shader_parameter/line_thickness = 1.0
 shader_parameter/line_color = Color(0, 0, 0, 1)
 
-[node name="Player" type="RigidBody2D" groups=["players", "shootables", "trappables", "whippables"]]
+[node name="Player" type="RigidBody2D" groups=["players", "shootables", "trappables", "whippables", "zappables"]]
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_po7vx")
 gravity_scale = 0.0
