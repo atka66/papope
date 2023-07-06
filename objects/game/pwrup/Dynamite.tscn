@@ -76,7 +76,7 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_xviia"]
 radius = 8.0
 
-[node name="Dynamite" type="RigidBody2D" groups=["shootables", "trappables"]]
+[node name="Dynamite" type="RigidBody2D" groups=["shootables", "trappables", "whippables"]]
 collision_layer = 16
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_mcsm4")
@@ -112,6 +112,7 @@ gravity = Vector2(0, 0)
 initial_velocity_min = 100.0
 initial_velocity_max = 200.0
 scale_amount_min = 0.5
+scale_amount_max = 1.5
 
 [node name="AudioThrow" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_hyiov")

@@ -4,13 +4,15 @@ extends Node
 @onready var PlayerObject = preload("res://objects/game/Player.tscn")
 @onready var HudObject = preload("res://objects/game/hud/Hud.tscn")
 @onready var PwrupObject = preload("res://objects/game/pwrup/Pwrup.tscn")
+@onready var RevolverRayObject = preload("res://objects/game/pwrup/RevolverRay.tscn")
 @onready var DynamiteObject = preload("res://objects/game/pwrup/Dynamite.tscn")
 @onready var TrapObject = preload("res://objects/game/pwrup/Trap.tscn")
+@onready var WhiplashObject = preload("res://objects/game/pwrup/Whiplash.tscn")
 @onready var SpawnPlayerAnimObject = preload("res://objects/anim/SpawnPlayerAnim.tscn")
 @onready var SpawnPwrupAnimObject = preload("res://objects/anim/SpawnPwrupAnim.tscn")
-@onready var RevolverRayObject = preload("res://objects/anim/RevolverRay.tscn")
 @onready var RevolverRicochetObject = preload("res://objects/anim/RevolverRicochet.tscn")
 @onready var ExplosionAnimObject = preload("res://objects/anim/ExplosionAnim.tscn")
+@onready var CrackAnimObject = preload("res://objects/anim/CrackAnim.tscn")
 @onready var CountdownObject = preload("res://objects/system/label/Countdown.tscn")
 
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
@@ -34,6 +36,15 @@ extends Node
 	preload("res://audio/sfx/player/dash_1.ogg"),
 	preload("res://audio/sfx/player/dash_2.ogg"),
 	preload("res://audio/sfx/player/dash_3.ogg")
+]
+@onready var AudioHurtRevolver = preload("res://audio/sfx/player/hurt_revolver.ogg")
+@onready var AudioHurtDynamite = preload("res://audio/sfx/player/hurt_dynamite.ogg")
+@onready var AudioHurtWhip = preload("res://audio/sfx/player/hurt_whip.ogg")
+@onready var AudioHurtTrap = preload("res://audio/sfx/player/hurt_trap.ogg")
+@onready var AudioHurtFall = preload("res://audio/sfx/player/hurt_fall.ogg")
+@onready var AudioHurtCactus = [
+	preload("res://audio/sfx/player/hurt_cactus_1.ogg"),
+	preload("res://audio/sfx/player/hurt_cactus_2.ogg")
 ]
 
 @onready var AudioMusicDefault = preload("res://audio/music/default.ogg")

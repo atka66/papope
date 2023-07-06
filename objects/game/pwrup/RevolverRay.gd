@@ -19,7 +19,10 @@ func _ready():
 		if collider.is_in_group('shootables'):
 			collider.getShot(origin.playerId, $HitScan.target_position.normalized())
 		else:
-			spawnRicochet(hitPosition, $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle())
+			var ricochet = Res.RevolverRicochetObject.instantiate()
+			ricochet.position = hitPosition
+			ricochet.rotation = $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle()
+			get_tree().get_current_scene().add_child(ricochet)
 		# todo further coll detection
 	else:
 		hitPosition = $HitScan.target_position
@@ -27,9 +30,3 @@ func _ready():
 
 	await $Audio.finished
 	queue_free()
-
-func spawnRicochet(hitPosition: Vector2, hitAngle: float) -> void:
-	var ricochet = Res.RevolverRicochetObject.instantiate()
-	ricochet.position = hitPosition
-	ricochet.rotation = hitAngle
-	get_tree().get_current_scene().add_child(ricochet)

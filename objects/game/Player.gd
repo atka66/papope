@@ -6,7 +6,7 @@ var silent: bool = false
 
 var alive: bool = true
 var hp: int = 1
-var item = null
+var item: Global.PwrupEnum
 var ammo: int = 0
 var shielded: bool = false
 var trapped: bool = false
@@ -169,28 +169,38 @@ func useItem() -> void:
 		Global.PwrupEnum.TRAP:
 			Global.incrementStat(playerId, Global.StatEnum.TRP_USE, 1)
 			var trap = Res.TrapObject.instantiate()
-			trap.originPlayerId = playerId
-			trap.rotation_degrees += (randi() % 30) - 60
 			trap.position = position
+			trap.rotation_degrees += (randi() % 30) - 60
+			trap.originPlayerId = playerId
 			get_tree().get_current_scene().add_child(trap)
 		Global.PwrupEnum.WHIP:
 			Global.incrementStat(playerId, Global.StatEnum.WHP_USE, 1)
+			var whiplash = Res.WhiplashObject.instantiate()
+			whiplash.position = position
+			whiplash.origin = self
+			whiplash.targetNorm = $LookVector.position.normalized()
+			get_tree().get_current_scene().add_child(whiplash)
 
 func getShot(playerId: int, normal: Vector2) -> void:
+	hurtSound(Res.AudioHurtRevolver)
 	apply_central_impulse(normal * 100)
-	$AudioRevolverHit.play()
 
-func getTrapped() -> void:
+func getTrapped(playerId: int) -> void:
+	hurtSound(Res.AudioHurtTrap)
 	trapped = true
 	$Lock.show()
 	$Lock/Timer.start(2.0)
+
+func getWhipped(playerId: int, normal: Vector2) -> void:
+	hurtSound(Res.AudioHurtWhip)
+	apply_central_impulse(normal * 1000)
 
 func untrap():
 	trapped = false
 	$Lock.hide()
 
 func directExplosion():
-	$AudioHurtDynamite.play()
+	hurtSound(Res.AudioHurtDynamite)
 
 func unshield() -> void:
 	shielded = false
@@ -201,3 +211,8 @@ func hideCrosshairs() -> void:
 	$Crosshairs/DynamiteCrosshair.hide()
 	$Crosshairs/RevolverCrosshair.hide()
 	$Crosshairs/WhipCrosshair.hide()
+
+func hurtSound(sound: AudioStreamOggVorbis) -> void:
+	if !shielded:
+		$AudioHurt.stream = sound
+		$AudioHurt.play()

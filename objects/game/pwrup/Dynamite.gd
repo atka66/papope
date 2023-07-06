@@ -19,9 +19,11 @@ func explode():
 func getShot(playerId: int, normal: Vector2) -> void:
 	explode()
 
-func getTrapped():
+func getTrapped(playerId: int):
 	explode()
 
+func getWhipped(playerId: int, normal: Vector2):
+	explode()
 
 func _on_body_entered(body):
 	if body.is_in_group("players"):

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bvvmj44vrb5ub"]
+
+[ext_resource type="Script" path="res://objects/anim/CrackAnim.gd" id="1_s6cq4"]
+[ext_resource type="Texture2D" uid="uid://bpcdoonpygx7q" path="res://sprites/anim/shard.png" id="2_8n1ub"]
+
+[sub_resource type="Curve" id="Curve_yjq0x"]
+_data = [Vector2(0, 1), 0.0, -1.04444, 0, 0, Vector2(1, 0), -1.01387, 0.0, 0, 0]
+point_count = 2
+
+[node name="CrackAnim" type="Node2D"]
+script = ExtResource("1_s6cq4")
+
+[node name="Crack" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 10
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.5
+texture = ExtResource("2_8n1ub")
+particle_flag_align_y = true
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 300.0
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_yjq0x")
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"

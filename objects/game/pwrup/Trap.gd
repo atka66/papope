@@ -3,12 +3,12 @@ extends Area2D
 @export var originPlayerId: int = 0
 @export var armed: bool = false
 
-func _ready():
-	$AudioSprung.stream = Res.AudioWhipHuts.pick_random()
-
 func _on_body_entered(body):
 	if armed:
 		if body.is_in_group('trappables'):
 			# todo dmg
-			body.getTrapped()
+			body.getTrapped(originPlayerId)
 			$Anim.play("spring")
+			var crack = Res.CrackAnimObject.instantiate()
+			crack.position = position
+			get_tree().get_current_scene().add_child(crack)
