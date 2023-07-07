@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://byt0mpq4frnq8"]
+[gd_scene load_steps=14 format=3 uid="uid://byt0mpq4frnq8"]
 
 [ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="1_k2qbb"]
 [ext_resource type="Script" path="res://objects/game/hud/Hud.gd" id="1_sv67i"]
 [ext_resource type="Texture2D" uid="uid://dkw2b0pnwpugk" path="res://sprites/game/hud/hud.png" id="2_05hp3"]
+[ext_resource type="Texture2D" uid="uid://u1ukb7vraab2" path="res://sprites/game/hud/hud_revolver_drum.png" id="4_jks62"]
+[ext_resource type="Texture2D" uid="uid://drtx8a3qwxbd7" path="res://sprites/game/hud/hud_revolver_ammo.png" id="5_gprcb"]
 
 [sub_resource type="Animation" id="Animation_8p6r6"]
 resource_name = "fromleft"
@@ -88,6 +90,68 @@ _data = {
 "flicker": SubResource("Animation_h2fdj")
 }
 
+[sub_resource type="Animation" id="Animation_2cpcv"]
+resource_name = "pickup_revolver"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RevolverDrum1:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Vector2(-32, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RevolverDrum1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_3qspr"]
+resource_name = "discard_revolver"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RevolverDrum1:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 0.2),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-32, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RevolverDrum1:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o3ipx"]
+_data = {
+"discard_revolver": SubResource("Animation_3qspr"),
+"pickup_revolver": SubResource("Animation_2cpcv")
+}
+
 [node name="Hud" type="Node2D"]
 script = ExtResource("1_sv67i")
 
@@ -142,3 +206,38 @@ libraries = {
 [node name="Hud" type="Sprite2D" parent="Container"]
 texture = ExtResource("2_05hp3")
 centered = false
+
+[node name="Inventory" type="Node2D" parent="Container"]
+position = Vector2(66, 14)
+
+[node name="Anim" type="AnimationPlayer" parent="Container/Inventory"]
+libraries = {
+"": SubResource("AnimationLibrary_o3ipx")
+}
+
+[node name="RevolverDrum1" type="Sprite2D" parent="Container/Inventory"]
+texture = ExtResource("4_jks62")
+
+[node name="Ammo1" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+position = Vector2(0, -10)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo2" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+position = Vector2(8, -5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo3" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+position = Vector2(8, 5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo4" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+position = Vector2(0, 10)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo5" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+position = Vector2(-8, 5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo6" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+position = Vector2(-8, -5)
+texture = ExtResource("5_gprcb")

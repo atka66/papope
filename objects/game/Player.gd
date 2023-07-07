@@ -2,11 +2,12 @@ extends RigidBody2D
 
 @export var playerId: int = 0
 @onready var Lobby: Node2D = get_node('/root/Lobby')
-var silent: bool = false
+var hud: Node
 
+var silent: bool = false
 var alive: bool = true
 var hp: int = 1
-var item: Global.PwrupEnum
+var item = null
 var ammo: int = 0
 var shielded: bool = false
 var trapped: bool = false
@@ -141,6 +142,7 @@ func pickup(pwrup : Global.PwrupEnum) -> void:
 		Global.PwrupEnum.WHIP:
 			$Crosshairs/WhipCrosshair.show()
 			ammo = 5
+	hud.pickup(item)
 	# todo akimbo perk 
 
 func useItem() -> void:
@@ -180,6 +182,13 @@ func useItem() -> void:
 			whiplash.origin = self
 			whiplash.targetNorm = $LookVector.position.normalized()
 			get_tree().get_current_scene().add_child(whiplash)
+
+	if item != null:
+			ammo -= 1
+			if ammo < 1:
+				hud.discard(item)
+				item = null
+				hideCrosshairs()
 
 func getShot(playerId: int, normal: Vector2) -> void:
 	hurtSound(Res.AudioHurtRevolver)

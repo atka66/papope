@@ -13,7 +13,9 @@ var maxHp: int = 1
 var delayedHp: int = 1
 
 func _ready():
+	player.hud = self
 	hide()
+	$Container/Inventory/RevolverDrum1.hide()
 	if fromRight:
 		$Anim.play("fromright")
 	else:
@@ -50,3 +52,15 @@ func handleHpBar():
 
 func _process(delta):
 	handleHpBar()
+
+func pickup(item: Global.PwrupEnum) -> void:
+	$Container/Inventory/RevolverDrum1.hide()
+	match item:
+		Global.PwrupEnum.REVOLVER:
+			# todo akimbo check
+			$Container/Inventory/Anim.play("pickup_revolver")
+
+func discard(item: Global.PwrupEnum) -> void:
+	match item:
+		Global.PwrupEnum.REVOLVER:
+			$Container/Inventory/Anim.play("discard_revolver")

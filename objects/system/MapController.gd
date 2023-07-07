@@ -50,9 +50,9 @@ func spawnPlayer(playerId : int) -> void:
 	player.position = get_parent().get_node("PlayerSpawner" + str(playerId)).position
 	player.playerId = playerId
 	get_parent().add_child(player)
-	spawnPlayerHud(player)
+	player.hud = spawnPlayerHud(player)
 
-func spawnPlayerHud(player : RigidBody2D) -> void:
+func spawnPlayerHud(player : RigidBody2D) -> Object:
 	var hud = Res.HudObject.instantiate()
 	if player.playerId == 0: hud.position = Vector2(0, 4)
 	if player.playerId == 1: hud.position = Vector2(568, 4)
@@ -62,6 +62,7 @@ func spawnPlayerHud(player : RigidBody2D) -> void:
 	hud.player = player
 	hud.fromRight = (player.playerId % 2 == 1)
 	$HudCanvas.add_child(hud)
+	return hud
 
 func initCountdown() -> void:
 	var countdown = Res.CountdownObject.instantiate()
