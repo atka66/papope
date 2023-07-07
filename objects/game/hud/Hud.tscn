@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://byt0mpq4frnq8"]
+[gd_scene load_steps=15 format=3 uid="uid://byt0mpq4frnq8"]
 
 [ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="1_k2qbb"]
 [ext_resource type="Script" path="res://objects/game/hud/Hud.gd" id="1_sv67i"]
@@ -90,66 +90,70 @@ _data = {
 "flicker": SubResource("Animation_h2fdj")
 }
 
-[sub_resource type="Animation" id="Animation_2cpcv"]
-resource_name = "pickup_revolver"
-length = 0.2
+[sub_resource type="Animation" id="Animation_3oshu"]
+resource_name = "fire_2"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("RevolverDrum1:position")
-tracks/0/interp = 2
+tracks/0/path = NodePath("RevolverDrum2:rotation")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.2, 1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-32, 0), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("RevolverDrum1:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"values": [0.959931, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_3qspr"]
-resource_name = "discard_revolver"
-length = 0.2
+[sub_resource type="Animation" id="Animation_4e3tr"]
+resource_name = "fire"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("RevolverDrum1:position")
-tracks/0/interp = 2
+tracks/0/path = NodePath("RevolverDrum1:rotation")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 0.2),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(-32, 0)]
+"values": [0.959931, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vu8wd"]
+resource_name = "fire_both"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RevolverDrum1:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.959931, 0.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("RevolverDrum1:visible")
+tracks/1/path = NodePath("RevolverDrum2:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.2),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.959931, 0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o3ipx"]
 _data = {
-"discard_revolver": SubResource("Animation_3qspr"),
-"pickup_revolver": SubResource("Animation_2cpcv")
+"fire_1": SubResource("Animation_4e3tr"),
+"fire_2": SubResource("Animation_3oshu"),
+"fire_both": SubResource("Animation_vu8wd")
 }
 
 [node name="Hud" type="Node2D"]
@@ -210,34 +214,64 @@ centered = false
 [node name="Inventory" type="Node2D" parent="Container"]
 position = Vector2(66, 14)
 
-[node name="Anim" type="AnimationPlayer" parent="Container/Inventory"]
+[node name="RevolverAnim" type="AnimationPlayer" parent="Container/Inventory"]
 libraries = {
 "": SubResource("AnimationLibrary_o3ipx")
 }
 
 [node name="RevolverDrum1" type="Sprite2D" parent="Container/Inventory"]
+rotation = 0.959931
 texture = ExtResource("4_jks62")
 
-[node name="Ammo1" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+[node name="Ammo0" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
 position = Vector2(0, -10)
 texture = ExtResource("5_gprcb")
 
-[node name="Ammo2" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+[node name="Ammo1" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
 position = Vector2(8, -5)
 texture = ExtResource("5_gprcb")
 
-[node name="Ammo3" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+[node name="Ammo2" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
 position = Vector2(8, 5)
 texture = ExtResource("5_gprcb")
 
-[node name="Ammo4" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+[node name="Ammo3" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
 position = Vector2(0, 10)
 texture = ExtResource("5_gprcb")
 
-[node name="Ammo5" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+[node name="Ammo4" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
 position = Vector2(-8, 5)
 texture = ExtResource("5_gprcb")
 
-[node name="Ammo6" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+[node name="Ammo5" type="Sprite2D" parent="Container/Inventory/RevolverDrum1"]
+position = Vector2(-8, -5)
+texture = ExtResource("5_gprcb")
+
+[node name="RevolverDrum2" type="Sprite2D" parent="Container/Inventory"]
+position = Vector2(32, 0)
+rotation = 0.959931
+texture = ExtResource("4_jks62")
+
+[node name="Ammo0" type="Sprite2D" parent="Container/Inventory/RevolverDrum2"]
+position = Vector2(0, -10)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo1" type="Sprite2D" parent="Container/Inventory/RevolverDrum2"]
+position = Vector2(8, -5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo2" type="Sprite2D" parent="Container/Inventory/RevolverDrum2"]
+position = Vector2(8, 5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo3" type="Sprite2D" parent="Container/Inventory/RevolverDrum2"]
+position = Vector2(0, 10)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo4" type="Sprite2D" parent="Container/Inventory/RevolverDrum2"]
+position = Vector2(-8, 5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo5" type="Sprite2D" parent="Container/Inventory/RevolverDrum2"]
 position = Vector2(-8, -5)
 texture = ExtResource("5_gprcb")

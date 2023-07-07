@@ -142,7 +142,7 @@ func pickup(pwrup : Global.PwrupEnum) -> void:
 		Global.PwrupEnum.WHIP:
 			$Crosshairs/WhipCrosshair.show()
 			ammo = 5
-	hud.pickup(item)
+	hud.pickup(item, ammo)
 	# todo akimbo perk 
 
 func useItem() -> void:
@@ -185,8 +185,9 @@ func useItem() -> void:
 
 	if item != null:
 			ammo -= 1
+			hud.useItem(item, ammo)
 			if ammo < 1:
-				hud.discard(item)
+				hud.hideItems()
 				item = null
 				hideCrosshairs()
 

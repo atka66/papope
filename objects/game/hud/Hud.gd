@@ -15,7 +15,7 @@ var delayedHp: int = 1
 func _ready():
 	player.hud = self
 	hide()
-	$Container/Inventory/RevolverDrum1.hide()
+	hideItems()
 	if fromRight:
 		$Anim.play("fromright")
 	else:
@@ -53,14 +53,37 @@ func handleHpBar():
 func _process(delta):
 	handleHpBar()
 
-func pickup(item: Global.PwrupEnum) -> void:
-	$Container/Inventory/RevolverDrum1.hide()
+func pickup(item: Global.PwrupEnum, ammo: int) -> void:
+	hideItems()
 	match item:
 		Global.PwrupEnum.REVOLVER:
-			# todo akimbo check
-			$Container/Inventory/Anim.play("pickup_revolver")
+			$Container/Inventory/RevolverDrum1.show()
+			if ammo > 6:
+				$Container/Inventory/RevolverDrum2.show()
+				$Container/Inventory/RevolverAnim.play("fire_both")
+			else:
+				$Container/Inventory/RevolverAnim.play("fire_1")
+	updateAmmo(item, ammo)
 
-func discard(item: Global.PwrupEnum) -> void:
+func useItem(item: Global.PwrupEnum, ammo: int) -> void:
 	match item:
 		Global.PwrupEnum.REVOLVER:
-			$Container/Inventory/Anim.play("discard_revolver")
+			if ammo > 5:
+				$Container/Inventory/RevolverAnim.play("fire_2")
+			else:
+				$Container/Inventory/RevolverAnim.play("fire_1")
+	updateAmmo(item, ammo)
+
+func updateAmmo(item: Global.PwrupEnum, ammo: int) -> void:
+	match item:
+		Global.PwrupEnum.REVOLVER:
+			for i in range(6):
+				var ammoNode: Node = get_node('Container/Inventory/RevolverDrum1/Ammo' + str(i))
+				ammoNode.visible = i < ammo
+			for i in range(6, 12):
+				var ammoNode: Node = get_node('Container/Inventory/RevolverDrum2/Ammo' + str(i - 6))
+				ammoNode.visible = i < ammo
+
+func hideItems() -> void:
+	$Container/Inventory/RevolverDrum1.hide()
+	$Container/Inventory/RevolverDrum2.hide()
