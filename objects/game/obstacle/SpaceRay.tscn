@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bgden6gwe6aig"]
+[gd_scene load_steps=20 format=3 uid="uid://bgden6gwe6aig"]
 
 [ext_resource type="Script" path="res://objects/game/obstacle/SpaceRay.gd" id="1_6gkwr"]
 [ext_resource type="Texture2D" uid="uid://71h3l5q52df7" path="res://sprites/game/obstacle/spaceray.png" id="2_yl0nb"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://xe2mrerbnwgd" path="res://audio/sfx/obstacle/spaceray_start.ogg" id="4_4iva0"]
 [ext_resource type="AudioStream" uid="uid://c7blefqegaivx" path="res://audio/sfx/obstacle/spaceray_ongoing.ogg" id="5_tsp6w"]
 [ext_resource type="AudioStream" uid="uid://dr3ve5nnnqaby" path="res://audio/sfx/obstacle/spaceray_stop.ogg" id="6_lum2m"]
+[ext_resource type="AudioStream" uid="uid://dm244cgxq34p1" path="res://audio/sfx/obstacle/spaceray_hit.ogg" id="7_t06oj"]
 
 [sub_resource type="Animation" id="Animation_8ylt1"]
 resource_name = "loop"
@@ -292,5 +293,8 @@ bus = &"sfx"
 [node name="AudioStop" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_lum2m")
 bus = &"sfx"
+
+[node name="AudioHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_t06oj")
 
 [connection signal="body_entered" from="Phase2" to="." method="_on_phase_2_body_entered"]
