@@ -7,8 +7,10 @@ func _ready():
 	initPlayers()
 
 func _input(event):
+	if event.is_action_pressed("quit") and !OS.has_feature("web"):
+		get_tree().quit()
 	if Global.DEBUG: 
-		if Input.is_action_just_pressed("test1"): 
+		if event.is_action_pressed("test1"): 
 			for i in range(4):
 				if !Global.playersConnected[i]:
 					Global.playersConnected[i] = true
@@ -17,14 +19,14 @@ func _input(event):
 					Global.playersJoined[i] = true
 					Global.joinPlayer(i, false)
 					break
-		if Input.is_action_just_pressed("test2"): 
+		if event.is_action_pressed("test2"): 
 			for i in range(4):
 				if Global.playersConnected[i]:
 					if Global.playersJoined[i]:
 						Global.playersJoined[i] = false
 						Global.leavePlayer(i)
 						break
-		if Input.is_action_just_pressed("test3"):
+		if event.is_action_pressed("test3"):
 			Global.goToMap()
 
 func initPlayers() -> void:

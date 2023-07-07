@@ -27,6 +27,10 @@ func _ready():
 			spawnPlayer(i)
 			await get_tree().create_timer(0.25).timeout
 
+func _input(event):
+	if event.is_action_pressed("quit"):
+		get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
+
 func pwrupSpawnLoop() -> void:
 	await get_tree().create_timer(ProjectSettings.get("papope/pwrup_respawn_time")).timeout
 	var spawner = spawners.pick_random()
