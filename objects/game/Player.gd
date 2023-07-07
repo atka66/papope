@@ -258,3 +258,7 @@ func hurtSound(sound: AudioStreamOggVorbis) -> void:
 	if !shielded:
 		$AudioHurt.stream = sound
 		$AudioHurt.play()
+
+func die():
+	#todo set hud color to teamcolors[4]
+	pass
