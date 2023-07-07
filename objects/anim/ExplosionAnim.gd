@@ -19,6 +19,9 @@ func _ready():
 			if dist < 150.0:
 				var power: float = 150.0 - dist
 				player.apply_central_impulse(position.direction_to(player.position) * power * 10)
+				var dmg: float = power / 1.5
+				# todo righteousness
+				player.hurt(dmg)
 
 func _process(delta):
 	if !$BigBoom.emitting && !$Smoke.emitting && !$Shards.emitting:

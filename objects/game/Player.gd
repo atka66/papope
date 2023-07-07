@@ -183,20 +183,28 @@ func useItem() -> void:
 
 func getShot(playerId: int, normal: Vector2) -> void:
 	hurtSound(Res.AudioHurtRevolver)
+	hurt(Global.DAMAGE_REVOLVER)
+	#todo was just killed?
 	apply_central_impulse(normal * 100)
 
 func getTrapped(playerId: int) -> void:
 	hurtSound(Res.AudioHurtTrap)
+	hurt(Global.DAMAGE_TRAP)
+	# todo was just killed?
 	trapped = true
 	$Lock.show()
 	$Lock/Timer.start(2.0)
 
 func getWhipped(playerId: int, normal: Vector2) -> void:
 	hurtSound(Res.AudioHurtWhip)
+	hurt(Global.DAMAGE_WHIP)
+	# todo was just killed?
 	apply_central_impulse(normal * 1000)
 
 func getZapped() -> void:
 	hurtSound(Res.AudioHurtCactus.pick_random()) #todo change?
+	hurt(Global.DAMAGE_SPACERAY)
+	#todo was just killed?
 	
 	var vector: Vector2 = Vector2(-linear_velocity.x, 0)
 	var vel = Vector2.RIGHT
@@ -220,6 +228,21 @@ func hideCrosshairs() -> void:
 	$Crosshairs/DynamiteCrosshair.hide()
 	$Crosshairs/RevolverCrosshair.hide()
 	$Crosshairs/WhipCrosshair.hide()
+
+func hurt(damage: int) -> void:
+	var actualDamage: int = damage
+	if Global.playersPerks[playerId].has(Global.PerkEnum.ARMORED):
+		actualDamage = int(ceil(float(damage) / 2))
+	if actualDamage > 0 && alive && !Global.playersFrozen:
+		if shielded:
+			# todo falling text
+			pass
+		else:
+			# todo falling text
+			hp -= actualDamage
+			# todo feathers
+			$Hurt/Anim.stop()
+			$Hurt/Anim.play("hurt")
 
 func hurtSound(sound: AudioStreamOggVorbis) -> void:
 	if !shielded:

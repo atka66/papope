@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://tlfkm8pk6hy7"]
+[gd_scene load_steps=22 format=3 uid="uid://tlfkm8pk6hy7"]
 
 [ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
@@ -18,6 +18,37 @@ bounce = 1.0
 shader = ExtResource("2_uodpr")
 shader_parameter/width = 0.45
 shader_parameter/border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_qf4hf"]
+resource_name = "hurt"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_724w8"]
+resource_name = "heal"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vn70s"]
+_data = {
+"heal": SubResource("Animation_724w8"),
+"hurt": SubResource("Animation_qf4hf")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d0ghp"]
+shader = ExtResource("2_uodpr")
+shader_parameter/width = 0.45
+shader_parameter/border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_finae"]
 shader = ExtResource("2_uodpr")
@@ -78,6 +109,21 @@ one_shot = true
 [node name="Crown" type="Sprite2D" parent="."]
 position = Vector2(0, -18)
 texture = ExtResource("4_ep5y4")
+
+[node name="Hurt" type="Node2D" parent="."]
+
+[node name="Anim" type="AnimationPlayer" parent="Hurt"]
+autoplay = "hurt"
+libraries = {
+"": SubResource("AnimationLibrary_vn70s")
+}
+
+[node name="Circle" type="ColorRect" parent="Hurt"]
+material = SubResource("ShaderMaterial_d0ghp")
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
 
 [node name="Shield" type="Node2D" parent="."]
 
