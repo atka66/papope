@@ -19,6 +19,9 @@ shader = ExtResource("2_uodpr")
 shader_parameter/width = 0.45
 shader_parameter/border_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Animation" id="Animation_724w8"]
+resource_name = "heal"
+
 [sub_resource type="Animation" id="Animation_qf4hf"]
 resource_name = "hurt"
 length = 0.2
@@ -35,9 +38,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
-
-[sub_resource type="Animation" id="Animation_724w8"]
-resource_name = "heal"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vn70s"]
 _data = {

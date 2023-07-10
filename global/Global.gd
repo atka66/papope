@@ -4,6 +4,7 @@ signal player_remove(id)
 
 var MovingBackgroundNode: Node2D
 var CameraNode: Camera2D
+var MapControllerNode: Node2D
 
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 const DEBUG = true
@@ -105,6 +106,9 @@ const TEAM_COLOR_STRINGS = {
 const CONVEYOR_VEL_AREA = 0.68
 const CONVEYOR_VEL_RIGID = Vector2(-200.0, 0)
 
+const OUTSIDE_CD: int = 3 * 60
+const TIMEBOMB_CD: int = 60 * 60
+
 var options = {
 	'mode': ['normal', 'one-hit', 'cards'],
 	'map': ['random', 'hell', 'western', 'ship', 'space', 'highway', 'pacman', 'conveyor'],
@@ -199,6 +203,19 @@ func goToMap() -> void:
 	else:
 		#todo get_tree().change_scene_to_file("res://maps/PostGame.tscn")
 		pass
+
+func getWinnerTeam() -> int:
+	var aliveTeams: Array[int] = []
+	for player in get_tree().get_nodes_in_group('players'):
+		if player.hp > 0 && !aliveTeams.has(playersTeam[player.playerId]):
+			aliveTeams.append(playersTeam[player.playerId])
+	
+	if len(aliveTeams) == 0:
+		return -2
+	elif len(aliveTeams) == 1:
+		return aliveTeams[0]
+	else:
+		return -1
 
 func getWinnerTeamByScore() -> int:
 	for i in range(4):

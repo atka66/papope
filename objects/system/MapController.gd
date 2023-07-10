@@ -3,6 +3,10 @@ extends Node2D
 var spawners: Array[Node2D]
 
 func _ready():
+	Global.MapControllerNode = self
+	
+	$AudioRoundStart.play()
+	
 	get_node("/root/Music").play(Global.selectedMap)
 	
 	for child in get_parent().get_children():
@@ -68,6 +72,26 @@ func initCountdown() -> void:
 	var countdown = Res.CountdownObject.instantiate()
 	countdown.position = Vector2(340, 64)
 	$HudCanvas.add_child(countdown)
+
+func endRound(aliveTeamId: int) -> void:
+	$AudioRoundEnd.play()
+	
+	for player in get_tree().get_nodes_in_group('players'):
+		if Global.playersJoined[player.playerId] && player.hp > 0 && player.hp <= Global.playersMaxHp[player.playerId] / 10:
+			Global.registerAchievement(player.playerId, Global.AchiEnum.DAREDEVIL)
+
+	Global.playersFrozen = true
+	if aliveTeamId > -1: # team points are accounted
+		for i in range(4):
+			if Global.playersJoined[i] && Global.playersTeam[i] == aliveTeamId:
+				Global.playersPoints[i] += 1
+	
+	var endBanner = Res.RoundEndBannerObject.instantiate()
+	endBanner.aliveTeamId = aliveTeamId
+	$HudCanvas.add_child(endBanner)
+
+func playGoSound() -> void:
+	$AudioRoundGo.play()
 
 func _on_space_trigger_body_entered(body):
 	if body.is_in_group("players"):

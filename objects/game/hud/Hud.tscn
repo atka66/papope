@@ -91,13 +91,13 @@ _data = {
 "flicker": SubResource("Animation_h2fdj")
 }
 
-[sub_resource type="Animation" id="Animation_3oshu"]
-resource_name = "fire_2"
+[sub_resource type="Animation" id="Animation_4e3tr"]
+resource_name = "fire"
 length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Drum2:rotation")
+tracks/0/path = NodePath("Drum1:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -107,13 +107,13 @@ tracks/0/keys = {
 "values": [0.959931, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_4e3tr"]
-resource_name = "fire"
+[sub_resource type="Animation" id="Animation_3oshu"]
+resource_name = "fire_2"
 length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Drum1:rotation")
+tracks/0/path = NodePath("Drum2:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {

@@ -1,6 +1,7 @@
 extends Node
 
 @onready var CustomLabelObject = preload("res://objects/system/label/CustomLabel.tscn")
+@onready var RoundEndBannerObject = preload("res://objects/system/label/RoundEndBanner.tscn")
 @onready var PlayerObject = preload("res://objects/game/Player.tscn")
 @onready var HudObject = preload("res://objects/game/hud/Hud.tscn")
 @onready var PwrupObject = preload("res://objects/game/pwrup/Pwrup.tscn")

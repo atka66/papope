@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://3256wkq2cd6w"]
+[gd_scene load_steps=9 format=3 uid="uid://3256wkq2cd6w"]
 
 [ext_resource type="Script" path="res://objects/system/MapController.gd" id="1_478ud"]
 [ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="1_re0bo"]
+[ext_resource type="AudioStream" uid="uid://dvr5wmkt3vyoe" path="res://audio/sfx/system/round_start.ogg" id="3_s1fne"]
+[ext_resource type="AudioStream" uid="uid://cqdf1k8tkujmt" path="res://audio/sfx/system/round_go.ogg" id="4_81ely"]
+[ext_resource type="AudioStream" uid="uid://blv4svyrnvrl3" path="res://audio/sfx/system/round_end.ogg" id="5_rykcw"]
 
 [sub_resource type="Animation" id="Animation_lsqmc"]
 resource_name = "appear"
@@ -56,3 +59,15 @@ autoplay = "disappear"
 libraries = {
 "": SubResource("AnimationLibrary_p3b64")
 }
+
+[node name="AudioRoundStart" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_s1fne")
+bus = &"sfx"
+
+[node name="AudioRoundGo" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_81ely")
+bus = &"sfx"
+
+[node name="AudioRoundEnd" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_rykcw")
+bus = &"sfx"

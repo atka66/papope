@@ -23,9 +23,7 @@ func _ready():
 	
 	maxHp = Global.playersMaxHp[player.playerId]
 	delayedHp = maxHp
-	playerColor = Global.TEAM_COLORS[Global.playersTeam[player.playerId]]
-	$Container/FaceBg.color = playerColor
-	$Container/HpBar.color = playerColor
+	setHudColor(Global.TEAM_COLORS[Global.playersTeam[player.playerId]])
 	
 	# todo perks
 	
@@ -37,8 +35,13 @@ func _ready():
 func _process(delta):
 	handleHpBar()
 	handleShake()
-	
 	prevHp = player.hp
+	# todo score
+
+func setHudColor(color: Color):
+	playerColor = color
+	$Container/FaceBg.color = playerColor
+	$Container/HpBar.color = playerColor
 
 func handleHpBar() -> void:
 	$Container/HpBar.scale = Vector2(min(float(player.hp) / maxHp, 1.0), 1)
@@ -59,7 +62,7 @@ func handleHpBar() -> void:
 func handleShake() -> void:
 	if player.hp < prevHp:
 		hudShakePwr = 7
-		Input.start_joy_vibration(player.playerId, 1.0, 1.0, 0.2)
+		Input.start_joy_vibration(player.playerId, 1.0, 1.0, 0.2) # todo not working, fix it
 	if hudShakePwr > 0:
 		$Container.position = Vector2((randi() % (hudShakePwr * 2)) - hudShakePwr, (randi() % (hudShakePwr * 2)) - hudShakePwr)
 		hudShakePwr -= 1

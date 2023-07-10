@@ -1,14 +1,17 @@
 extends RigidBody2D
 
 @export var playerId: int = 0
-@onready var Lobby: Node2D = get_node('/root/Lobby')
 var hud: Node
 
 var silent: bool = false
 var alive: bool = true
+var deathReason: Global.DeathEnum = Global.DeathEnum.DEFAULT
 var hp: int = 1
 var item = null
 var ammo: int = 0
+var contactsLava: bool = false
+var outsideCd: int = Global.OUTSIDE_CD
+var timebombCd: int = Global.TIMEBOMB_CD
 var shielded: bool = false
 var trapped: bool = false
 var fallWater: bool = false
@@ -86,7 +89,7 @@ func _input(event):
 
 	if event.device == playerId && !inputCd:
 		inputCd = true
-		if Lobby != null:
+		if Global.MapControllerNode == null:
 			if event.is_action_pressed("skin_next"):
 				Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
 				$BodyParts/Face.frame = Global.playersSkin[playerId]
@@ -111,9 +114,71 @@ func dash(axis: Vector2) -> void:
 	var impulse: Vector2 = linear_velocity.normalized() * speed * dashMultiplier
 	apply_central_impulse(impulse)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	inputCd = false
+	if Global.MapControllerNode != null:
+		if alive:
+			if contactsLava && !shielded:
+				hurt(Global.DAMAGE_LAVA)
+			if outsideCd < 1:
+				die(Global.DeathEnum.DEFAULT)
+			if timebombCd < 1:
+				die(Global.DeathEnum.EXPLOSION)
+				var explosion = Res.ExplosionAnimObject.instantiate()
+				explosion.position = position
+				explosion.originPlayerId = playerId
+				explosion.shakePwr = 15
+				get_tree().get_current_scene().add_child(explosion)
+			if hp < 1:
+				$BodyParts/Body.color = Global.TEAM_COLORS[4]
+				alive = false
+				# todo no chicken idle sound
+				
+				# todo falling message
+				
+				# todo register no refunds
+				
+				hp = 0
+				ammo = 0
+				item = null
+				hideCrosshairs()
+				# todo hide timebomb
+				
+				Global.shakeScreen(10)
+				
+				if !Global.playersFrozen:
+					var aliveTeamId: int = Global.getWinnerTeam()
+					if aliveTeamId != -1:
+						Global.MapControllerNode.endRound(aliveTeamId)
+						pass
+
+			if !Global.playersFrozen and !fallWater:
+				if Global.playersPerks[playerId].has(Global.PerkEnum.TIME_BOMB):
+					# todo timebomb display
+					timebombCd -= 1
+				if isOutside():
+					if outsideCd > 0:
+						updateOutsideLabel()
+						# todo show outside label
+						outsideCd -= 1
+				else:
+					# todo hide outside label
+					outsideCd = Global.OUTSIDE_CD
+		else:
+			# todo hide outside label
+			pass
+
+func isOutside() -> bool:
+	return (
+		global_position.x < Global.CameraNode.global_position.x 
+		|| global_position.x > Global.CameraNode.global_position.x + 680 
+		|| global_position.y < Global.CameraNode.global_position.y 
+		|| global_position.y > Global.CameraNode.global_position.y + 384
+	)
+
+func updateOutsideLabel() -> void:
+	# todo
+	pass
 
 func _physics_process(delta):
 	if !inSpace:
@@ -255,10 +320,11 @@ func hurt(damage: int) -> void:
 			$Hurt/Anim.play("hurt")
 
 func hurtSound(sound: AudioStreamOggVorbis) -> void:
-	if !shielded:
+	if alive && !shielded:
 		$AudioHurt.stream = sound
 		$AudioHurt.play()
 
-func die():
-	#todo set hud color to teamcolors[4]
-	pass
+func die(reason: Global.DeathEnum) -> void:
+	hud.setHudColor(Global.TEAM_COLORS[4])
+	hp = 0
+	deathReason = reason
