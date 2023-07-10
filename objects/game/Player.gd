@@ -140,6 +140,8 @@ func _process(delta):
 				
 				hp = 0
 				ammo = 0
+				hud.setHudColor(Global.TEAM_COLORS[4])
+				hud.hideItems()
 				item = null
 				hideCrosshairs()
 				# todo hide timebomb
@@ -325,6 +327,5 @@ func hurtSound(sound: AudioStreamOggVorbis) -> void:
 		$AudioHurt.play()
 
 func die(reason: Global.DeathEnum) -> void:
-	hud.setHudColor(Global.TEAM_COLORS[4])
 	hp = 0
 	deathReason = reason

@@ -117,7 +117,7 @@ var options = {
 var optionsSelected = {
 	'mode': ProjectSettings.get("papope/default_option_mode"),
 	'map': ProjectSettings.get("papope/default_option_map"),
-	'rounds': ProjectSettings.get("papope/default_option_rounds")
+	'rounds': 0 #todo ProjectSettings.get("papope/default_option_rounds")
 }
 var currentOption = options.keys()[0]
 
@@ -201,8 +201,7 @@ func goToMap() -> void:
 		if selectedMap == 'pacman': get_tree().change_scene_to_file("res://maps/MapPacman.tscn")
 		if selectedMap == 'conveyor': get_tree().change_scene_to_file("res://maps/MapConveyor.tscn")
 	else:
-		#todo get_tree().change_scene_to_file("res://maps/PostGame.tscn")
-		pass
+		get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
 
 func getWinnerTeam() -> int:
 	var aliveTeams: Array[int] = []
