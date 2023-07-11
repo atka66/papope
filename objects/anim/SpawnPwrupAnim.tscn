@@ -72,6 +72,8 @@ _data = {
 }
 
 [node name="SpawnPwrupAnim" type="Node2D"]
+z_index = 5
+z_as_relative = false
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 autoplay = "anim"

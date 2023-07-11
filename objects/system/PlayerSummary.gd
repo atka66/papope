@@ -83,7 +83,7 @@ func finalizePoster(finalizingPlayerId: int) -> void:
 			var anim = Res.SpawnPlayerAnimObject.instantiate()
 			anim.position = $Container/Face.global_position
 			anim.withFireSound = true
-			get_tree().get_current_scene().add_child(anim)
+			Global.addToScene(anim)
 			$Container/Anim.play("shake")
 
 func distributeAchievements():

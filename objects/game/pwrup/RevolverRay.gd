@@ -23,10 +23,10 @@ func _ready():
 		if collider.is_in_group('shootables'):
 			collider.getShot(origin.playerId, $HitScan.target_position.normalized())
 		else:
-			var ricochet = Res.RevolverRicochetObject.instantiate()
+			var ricochet = Res.RevolverRicochetAnimObject.instantiate()
 			ricochet.position = hitPosition
 			ricochet.rotation = $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle()
-			get_tree().get_current_scene().add_child(ricochet)
+			Global.addToScene(ricochet)
 		# todo further coll detection
 	else:
 		hitPosition = $HitScan.target_position

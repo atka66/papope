@@ -11,4 +11,4 @@ func _on_body_entered(body):
 			$Anim.play("spring")
 			var crack = Res.CrackAnimObject.instantiate()
 			crack.position = position
-			get_tree().get_current_scene().add_child(crack)
+			Global.addToScene(crack)

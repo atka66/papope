@@ -61,6 +61,8 @@ _data = {
 }
 
 [node name="SpawnPlayerAnim" type="Node2D"]
+z_index = 5
+z_as_relative = false
 script = ExtResource("1_se8nw")
 
 [node name="Anim" type="AnimationPlayer" parent="."]

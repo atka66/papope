@@ -11,13 +11,19 @@ extends Node
 @onready var WhiplashObject = preload("res://objects/game/pwrup/Whiplash.tscn")
 @onready var SpawnPlayerAnimObject = preload("res://objects/anim/SpawnPlayerAnim.tscn")
 @onready var SpawnPwrupAnimObject = preload("res://objects/anim/SpawnPwrupAnim.tscn")
-@onready var RevolverRicochetObject = preload("res://objects/anim/RevolverRicochet.tscn")
+@onready var RevolverRicochetAnimObject = preload("res://objects/anim/RevolverRicochet.tscn")
 @onready var ExplosionAnimObject = preload("res://objects/anim/ExplosionAnim.tscn")
 @onready var CrackAnimObject = preload("res://objects/anim/CrackAnim.tscn")
+@onready var CollisionAnimObject = preload("res://objects/anim/CollisionAnim.tscn")
 @onready var CountdownObject = preload("res://objects/system/label/Countdown.tscn")
 
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
 
+@onready var AudioPlayerCollide = [
+	preload("res://audio/sfx/player/collide_1.ogg"),
+	preload("res://audio/sfx/player/collide_2.ogg"),
+	preload("res://audio/sfx/player/collide_3.ogg")
+]
 @onready var AudioRevolverFire = preload("res://audio/sfx/pwrup/rev_fire.ogg")
 @onready var AudioRevolverRicochet = [
 	preload("res://audio/sfx/pwrup/rev_ricochet_1.ogg"),

@@ -16,6 +16,7 @@ var shielded: bool = false
 var trapped: bool = false
 var fallWater: bool = false
 var inSpace: bool = false
+var hit: bool = false
 
 var thrust: Vector2 = Vector2.ZERO
 var speed: int = 20
@@ -42,7 +43,7 @@ func _ready():
 	if !silent:
 		var anim = Res.SpawnPlayerAnimObject.instantiate()
 		anim.position = global_position
-		get_tree().get_root().add_child(anim)
+		Global.addToScene(anim)
 	
 	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
 		$BodyParts/Face.frame = 6
@@ -128,7 +129,7 @@ func _process(delta):
 				explosion.position = position
 				explosion.originPlayerId = playerId
 				explosion.shakePwr = 15
-				get_tree().get_current_scene().add_child(explosion)
+				Global.addToScene(explosion)
 			if hp < 1:
 				$BodyParts/Body.color = Global.TEAM_COLORS[4]
 				alive = false
@@ -221,7 +222,7 @@ func useItem() -> void:
 			revolverRay.position = position
 			revolverRay.origin = self
 			revolverRay.targetNorm = $LookVector.position.normalized()
-			get_tree().get_current_scene().add_child(revolverRay)
+			Global.addToScene(revolverRay)
 		Global.PwrupEnum.DYNAMITE:
 			Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
 			var dynamite = Res.DynamiteObject.instantiate()
@@ -229,7 +230,7 @@ func useItem() -> void:
 			dynamite.origin = self
 			dynamite.targetNorm = $LookVector.position.normalized()
 			dynamite.throwForce = $LookVector.position.length() * 190
-			get_tree().get_current_scene().add_child(dynamite)
+			Global.addToScene(dynamite)
 		Global.PwrupEnum.SHIELD:
 			shielded = true
 			$Shield.show()
@@ -241,14 +242,14 @@ func useItem() -> void:
 			trap.position = position
 			trap.rotation_degrees += (randi() % 30) - 60
 			trap.originPlayerId = playerId
-			get_tree().get_current_scene().add_child(trap)
+			Global.addToScene(trap)
 		Global.PwrupEnum.WHIP:
 			Global.incrementStat(playerId, Global.StatEnum.WHP_USE, 1)
 			var whiplash = Res.WhiplashObject.instantiate()
 			whiplash.position = position
 			whiplash.origin = self
 			whiplash.targetNorm = $LookVector.position.normalized()
-			get_tree().get_current_scene().add_child(whiplash)
+			Global.addToScene(whiplash)
 
 	if item != null:
 			ammo -= 1
@@ -329,3 +330,19 @@ func hurtSound(sound: AudioStreamOggVorbis) -> void:
 func die(reason: Global.DeathEnum) -> void:
 	hp = 0
 	deathReason = reason
+
+func _on_body_entered(body):
+	if body.is_in_group('players'):
+		if !hit:
+			body.hit = true
+			var collisionAnim = Res.CollisionAnimObject.instantiate()
+			var animScale = (thrust.length() + body.thrust.length()) / 30
+			collisionAnim.scale = Vector2(animScale, animScale)
+			collisionAnim.position = global_position - ((global_position - body.global_position) / 2)
+			collisionAnim.look_at(global_position)
+			Global.addToScene(collisionAnim)
+		# todo spiky, vampire, cuddles perks
+		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
+		hit = false
+	# todo cacti
+	# todo wall sound

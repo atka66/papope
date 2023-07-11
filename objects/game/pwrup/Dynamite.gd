@@ -13,7 +13,7 @@ func explode():
 	explosion.position = position
 	explosion.originPlayerId = origin.playerId
 	explosion.shakePwr = 15
-	get_tree().get_current_scene().add_child(explosion)
+	Global.addToScene(explosion)
 	queue_free()
 
 func getShot(playerId: int, normal: Vector2) -> void:

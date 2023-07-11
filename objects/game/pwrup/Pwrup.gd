@@ -20,7 +20,7 @@ func _ready():
 func spawnAnimation():
 	var anim = Res.SpawnPwrupAnimObject.instantiate()
 	anim.position = global_position
-	get_tree().get_root().add_child(anim)
+	Global.addToScene(anim)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

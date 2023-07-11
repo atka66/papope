@@ -20,7 +20,7 @@ func _ready():
 		hitPosition = $HitScan.target_position + global_position
 	var crack = Res.CrackAnimObject.instantiate()
 	crack.position = hitPosition
-	get_tree().get_current_scene().add_child(crack)
+	Global.addToScene(crack)
 
 func _process(delta):
 	position = origin.position

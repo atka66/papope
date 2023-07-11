@@ -239,3 +239,6 @@ func extendVectorTo(vector: Vector2, length: float) -> Vector2:
 	if vector.length() == 0:
 		return Vector2.RIGHT
 	return vector * (float(length) / vector.length())
+
+func addToScene(object: Object) -> void:
+	get_tree().get_current_scene().add_child(object)
