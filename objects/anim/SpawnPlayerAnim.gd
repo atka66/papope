@@ -1,8 +1,13 @@
 extends Node2D
 
+@export var withFireSound: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Audio.stream = Res.AudioRevolverRicochet.pick_random()
+	if withFireSound:
+		$Audio.stream = Res.AudioRevolverFire
+	else:
+		$Audio.stream = Res.AudioRevolverRicochet.pick_random()
 	$Audio.play()
 	await $Audio.finished
 	queue_free()

@@ -1,9 +1,92 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0cxgyxhm7ecc"]
+[gd_scene load_steps=7 format=3 uid="uid://c0cxgyxhm7ecc"]
 
 [ext_resource type="Script" path="res://scenes/PostGame.gd" id="1_irosb"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_5yc4x"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_sy2d7"]
+[ext_resource type="PackedScene" uid="uid://bkf1p0bddiurc" path="res://objects/system/PlayerSummary.tscn" id="4_cetg5"]
+
+[sub_resource type="Animation" id="Animation_hqb4x"]
+resource_name = "auto"
+length = 8.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AudioCash")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..:canProceed")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_51s2y"]
+_data = {
+"auto": SubResource("Animation_hqb4x")
+}
 
 [node name="PostGame" type="Node2D"]
 script = ExtResource("1_irosb")
 
+[node name="Anim" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Dim")
+autoplay = "auto"
+libraries = {
+"": SubResource("AnimationLibrary_51s2y")
+}
+
 [node name="MovingBackground" parent="." instance=ExtResource("2_5yc4x")]
+
+[node name="LobbyHint" parent="." instance=ExtResource("3_sy2d7")]
+position = Vector2(340, 8)
+fontSize = 2
+alignment = 1
+
+[node name="PlayerSummary0" parent="." instance=ExtResource("4_cetg5")]
+
+[node name="PlayerSummary1" parent="." instance=ExtResource("4_cetg5")]
+position = Vector2(170, 0)
+playerId = 1
+
+[node name="PlayerSummary2" parent="." instance=ExtResource("4_cetg5")]
+position = Vector2(340, 0)
+playerId = 2
+
+[node name="PlayerSummary3" parent="." instance=ExtResource("4_cetg5")]
+position = Vector2(510, 0)
+playerId = 3
+
+[node name="AudioCash" type="AudioStreamPlayer" parent="."]
+bus = &"sfx"
+
+[node name="Dim" type="ColorRect" parent="."]
+offset_right = 680.0
+offset_bottom = 384.0
+color = Color(0, 0, 0, 1)

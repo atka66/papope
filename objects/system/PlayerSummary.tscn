@@ -1,0 +1,123 @@
+[gd_scene load_steps=13 format=3 uid="uid://bkf1p0bddiurc"]
+
+[ext_resource type="Script" path="res://objects/system/PlayerSummary.gd" id="1_3cgc4"]
+[ext_resource type="Texture2D" uid="uid://fxafi38bmclt" path="res://sprites/post/wantedposter.png" id="1_jnuo6"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="2_xcrvs"]
+[ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="3_5kh11"]
+[ext_resource type="Shader" path="res://shaders/poster.gdshader" id="3_yaemd"]
+
+[sub_resource type="Animation" id="Animation_qefva"]
+resource_name = "anim"
+length = 8.0
+step = 0.05
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2, 4, 6, 6.15, 6.3, 6.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"calculateScore"
+}, {
+"args": [],
+"method": &"showAchievements"
+}, {
+"args": [0],
+"method": &"finalizePoster"
+}, {
+"args": [1],
+"method": &"finalizePoster"
+}, {
+"args": [2],
+"method": &"finalizePoster"
+}, {
+"args": [3],
+"method": &"finalizePoster"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bfyey"]
+_data = {
+"anim": SubResource("Animation_qefva")
+}
+
+[sub_resource type="Animation" id="Animation_v4l8c"]
+resource_name = "shake"
+length = 0.35
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35),
+"transitions": PackedFloat32Array(10, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -24), Vector2(0, 20), Vector2(0, -16), Vector2(0, 12), Vector2(0, -8), Vector2(0, 4), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x21bq"]
+_data = {
+"shake": SubResource("Animation_v4l8c")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1niiq"]
+shader = ExtResource("3_yaemd")
+
+[sub_resource type="Gradient" id="Gradient_qdyyl"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_htyuy"]
+gradient = SubResource("Gradient_qdyyl")
+width = 64
+
+[node name="PlayerSummary" type="Node2D"]
+script = ExtResource("1_3cgc4")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+autoplay = "anim"
+libraries = {
+"": SubResource("AnimationLibrary_bfyey")
+}
+
+[node name="Container" type="Node2D" parent="."]
+
+[node name="Anim" type="AnimationPlayer" parent="Container"]
+libraries = {
+"": SubResource("AnimationLibrary_x21bq")
+}
+
+[node name="Poster" type="Sprite2D" parent="Container"]
+scale = Vector2(2, 2)
+texture = ExtResource("1_jnuo6")
+centered = false
+
+[node name="WantedLabel" parent="Container" instance=ExtResource("2_xcrvs")]
+position = Vector2(85, 28)
+fontSize = 3
+alignment = 1
+
+[node name="MoneyLabel" parent="Container" instance=ExtResource("2_xcrvs")]
+position = Vector2(48, 160)
+fontSize = 4
+
+[node name="Face" type="Sprite2D" parent="Container"]
+material = SubResource("ShaderMaterial_1niiq")
+position = Vector2(85, 97)
+scale = Vector2(3, 3)
+texture = ExtResource("3_5kh11")
+hframes = 7
+
+[node name="TeamBanner" type="TextureRect" parent="Container"]
+offset_left = 36.0
+offset_top = 145.0
+offset_right = 132.0
+offset_bottom = 153.0
+texture = SubResource("GradientTexture1D_htyuy")

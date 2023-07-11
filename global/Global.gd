@@ -5,6 +5,7 @@ signal player_remove(id)
 var MovingBackgroundNode: Node2D
 var CameraNode: Camera2D
 var MapControllerNode: Node2D
+var MusicNode: Node
 
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 const DEBUG = true
@@ -221,6 +222,10 @@ func getWinnerTeamByScore() -> int:
 		if playersPoints[i] == options['rounds'][optionsSelected['rounds']]:
 			return playersTeam[i]
 	return -1
+
+func registerAchievement(playerId: int, achievement: AchiEnum):
+	if not (achievement in playersAchievements[playerId]):
+		playersAchievements[playerId].append(achievement)
 
 func incrementStat(playerId : int, stat : StatEnum, i: int) -> void:
 	if playersStats:

@@ -2,7 +2,7 @@ extends Node2D
 
 func _ready():
 	#await get_tree().create_timer(1.0).timeout #TODO check if needed
-	get_node("/root/Music").play('splash')
+	Global.MusicNode.play('splash')
 	$Anim.play("splash")
 
 func _input(event):

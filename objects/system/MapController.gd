@@ -7,7 +7,7 @@ func _ready():
 	
 	$AudioRoundStart.play()
 	
-	get_node("/root/Music").play(Global.selectedMap)
+	Global.MusicNode.play(Global.selectedMap)
 	
 	for child in get_parent().get_children():
 		if child.is_in_group("pwrupSpawners"):
@@ -34,6 +34,9 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("quit"):
 		get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
+	if Global.DEBUG:
+		if Input.is_action_just_pressed("test1"): 
+			get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
 
 func pwrupSpawnLoop() -> void:
 	await get_tree().create_timer(ProjectSettings.get("papope/pwrup_respawn_time")).timeout

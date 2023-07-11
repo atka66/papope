@@ -1,25 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://3256wkq2cd6w"]
+[gd_scene load_steps=8 format=3 uid="uid://3256wkq2cd6w"]
 
 [ext_resource type="Script" path="res://objects/system/MapController.gd" id="1_478ud"]
 [ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="1_re0bo"]
 [ext_resource type="AudioStream" uid="uid://dvr5wmkt3vyoe" path="res://audio/sfx/system/round_start.ogg" id="3_s1fne"]
 [ext_resource type="AudioStream" uid="uid://cqdf1k8tkujmt" path="res://audio/sfx/system/round_go.ogg" id="4_81ely"]
 [ext_resource type="AudioStream" uid="uid://blv4svyrnvrl3" path="res://audio/sfx/system/round_end.ogg" id="5_rykcw"]
-
-[sub_resource type="Animation" id="Animation_lsqmc"]
-resource_name = "appear"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_3drhq"]
 resource_name = "disappear"
@@ -38,7 +23,6 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p3b64"]
 _data = {
-"appear": SubResource("Animation_lsqmc"),
 "disappear": SubResource("Animation_3drhq")
 }
 

@@ -2,6 +2,9 @@ extends Node
 
 var muted = false
 
+func _ready():
+	Global.MusicNode = self
+
 func play(stage: String) -> void:
 	var audioStream = Res.AudioMusicDefault
 	match stage:
