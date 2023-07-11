@@ -1,30 +1,30 @@
 ## Layers
 
 # Help:
+X: done in new version
 {Scenes}
 {_Scenes but not by Z setting_}
 [Nodes]
 
--103 : {MapController}
--55  : [BgCanvas]
--54  : [Stars]
--53  : [Comets]
--52  : [Backgrounds (in MovingBackground.tscn)]
--50  : [BgTiles]
--49  : [BackgroundDim]
--2   : {DestructibleParticle}, {PlayerSpawner}, {PwrupSpawner}, {Block}, {FallTrigger}, {SpaceTrigger}, {Lava}, {TrafficLane}
--1   : {Dynamite}, {Trap}, {RevolverRay}, {PlayerSlot}, [FeatherPar], [DashPar], [SmokeParticles]
-0    : {Player}
-1    : {Tree}, {Mast}, {Cactus}, {Destructible}
-2    : {Car}
-3    : {Pwrup}, {Whiplash}
-4    : {Ghost}, {DeadGhost}
-5    : {SpawnPlayerAnim}, {SpawnPwrupAnim}, {CollisionAnim}, {DespawnAnim}, {ExplosionAnim}, {CrackAnim}
-6    : [EmberParticles], {Spaceray}
-50   : [FgTiles1]
-80   : [ShaderNode], {_WorldEnvironment_}
-89   : [Crosshairs]
-90   : {Hud}
-91   : {HudRevolver}, {HudAmmo}
-100  : {Dim}, {PerkOverlay}
-101  : {CustomLabel}, [SpawnSelectedFlashing], [LeftArrow], [RightArrow]
+X -103   : {MapController}
+X -55    : [Container (in MapSpace.tscn > [BgCanvas])]
+X -54    : [Stars]
+X -53    : [Comets]
+X -52    : [Backgrounds (in MovingBackground.tscn)]
+X -50    : [BgTiles]
+X -49    : [BackgroundDim (in MovingBackground.tscn)]
+-2     : {DestructibleParticle}, {PlayerSpawner}, {PwrupSpawner}, {Block}, {FallTrigger}, {SpaceTrigger}, {Lava}, {TrafficLane}
+-1     : {Dynamite}, {Trap}, {RevolverRay}, {PlayerSlot}, [FeatherPar], [DashPar], [SmokeParticles]
+X 0      : {Player}
+1      : {Tree}, {Mast}, {Cactus}, {Destructible}
+2      : {Car}
+X 3      : {Pwrup}, {Whiplash}
+4      : {Ghost}, {DeadGhost}
+X 5    : {SpawnPlayerAnim}, {SpawnPwrupAnim}, {CollisionAnim}, {ExplosionAnim}, {CrackAnim}, {RevolverRicochet}
+6      : [EmberParticles], {Spaceray}
+50     : [FgTiles1]
+80     : [ShaderNode], {_WorldEnvironment_}
+X 89     : [Crosshairs]
+X 90     : [HudCanvas]
+100    : [Dim (in MapController.tscn)], {PerkOverlay}
+101    : {CustomLabel}, [SpawnSelectedFlashing], [LeftArrow], [RightArrow]

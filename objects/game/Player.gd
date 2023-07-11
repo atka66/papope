@@ -112,8 +112,13 @@ func dash(axis: Vector2) -> void:
 	$AudioDash.stream = Res.AudioPlayerDash.pick_random()
 	$AudioDash.play()
 	
+	# todo chicken
+	# todo no legs
+	
 	var impulse: Vector2 = linear_velocity.normalized() * speed * dashMultiplier
 	apply_central_impulse(impulse)
+	
+	# todo dash animation
 
 func _process(delta):
 	inputCd = false

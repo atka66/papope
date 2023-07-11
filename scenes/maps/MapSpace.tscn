@@ -54,6 +54,8 @@ size = Vector2(320, 320)
 layer = -55
 
 [node name="Container" type="Node2D" parent="BgCanvas"]
+z_index = -55
+z_as_relative = false
 
 [node name="Background" type="ColorRect" parent="BgCanvas/Container"]
 material = SubResource("ShaderMaterial_j23ed")
@@ -62,6 +64,8 @@ offset_bottom = 384.0
 script = ExtResource("3_sm5x8")
 
 [node name="Stars" type="CPUParticles2D" parent="BgCanvas"]
+z_index = -54
+z_as_relative = false
 position = Vector2(340, 192)
 amount = 50
 lifetime = 8.0
@@ -80,6 +84,8 @@ angle_max = 90.0
 scale_amount_max = 3.0
 
 [node name="Comets" type="CPUParticles2D" parent="BgCanvas"]
+z_index = -53
+z_as_relative = false
 position = Vector2(340, 192)
 amount = 1
 lifetime = 0.5

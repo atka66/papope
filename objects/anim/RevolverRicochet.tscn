@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://bpcdoonpygx7q" path="res://sprites/anim/shard.png" id="2_v25om"]
 
 [node name="RevolverRicochet" type="Node2D"]
+z_index = 5
+z_as_relative = false
 script = ExtResource("1_co880")
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]

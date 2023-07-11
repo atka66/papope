@@ -27,13 +27,18 @@ _data = {
 }
 
 [node name="MapController" type="Node2D"]
+z_index = -103
+z_as_relative = false
 script = ExtResource("1_478ud")
 
 [node name="HudCanvas" type="CanvasLayer" parent="."]
+layer = 90
 
 [node name="Camera" parent="." instance=ExtResource("1_re0bo")]
 
 [node name="Dim" type="ColorRect" parent="."]
+z_index = 100
+z_as_relative = false
 offset_right = 680.0
 offset_bottom = 384.0
 color = Color(0, 0, 0, 1)

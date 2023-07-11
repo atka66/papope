@@ -8,6 +8,8 @@ _data = [Vector2(0, 1), 0.0, -1.04444, 0, 0, Vector2(1, 0), -1.01387, 0.0, 0, 0]
 point_count = 2
 
 [node name="CrackAnim" type="Node2D"]
+z_index = 5
+z_as_relative = false
 script = ExtResource("1_s6cq4")
 
 [node name="Crack" type="CPUParticles2D" parent="."]

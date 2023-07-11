@@ -67,6 +67,8 @@ _data = {
 }
 
 [node name="RevolverRay" type="Node2D"]
+z_index = -1
+z_as_relative = false
 script = ExtResource("1_c0kx1")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
