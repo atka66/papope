@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://blowjnyuxsgin"]
 
-[ext_resource type="Script" path="res://notes/a.gd" id="1_8fy7c"]
+[ext_resource type="Script" path="res://notes/CircleGenerator.gd" id="1_nyod7"]
 
 [node name="a" type="Node2D"]
-script = ExtResource("1_8fy7c")
+script = ExtResource("1_nyod7")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(10, 0, 9.00969, 4.33884, 6.2349, 7.81832, 2.22521, 9.74928, -2.22521, 9.74928, -6.2349, 7.81831, -9.00969, 4.33884, -10, -1.66893e-06, -9.00969, -4.33884, -6.2349, -7.81832, -2.22521, -9.74928, 2.22521, -9.74928, 6.2349, -7.81831, 9.00969, -4.33883, 10, 3.09944e-06, 8, 0, 7.20775, -3.47107, 4.98792, -6.25465, 1.78017, -7.79942, -1.78017, -7.79942, -4.98792, -6.25465, -7.20775, -3.47107, -8, 1.43051e-06, -7.20775, 3.47107, -4.98792, 6.25465, -1.78017, 7.79942, 1.78017, 7.79942, 4.98792, 6.25465, 7.20775, 3.47107, 8, -2.38419e-06)

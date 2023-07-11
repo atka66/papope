@@ -216,6 +216,8 @@ animations = [{
 size = Vector2(64, 512)
 
 [node name="SpaceRay" type="Node2D"]
+z_index = 6
+z_as_relative = false
 script = ExtResource("1_6gkwr")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
