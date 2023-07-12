@@ -15,6 +15,7 @@ friction = 0.0
 bounce = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qd1a5"]
+resource_local_to_scene = true
 shader = ExtResource("2_uodpr")
 shader_parameter/width = 0.45
 shader_parameter/border_color = Color(0, 0, 0, 1)
@@ -62,16 +63,19 @@ shader = ExtResource("6_ii0ia")
 radius = 16.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_417ft"]
+resource_local_to_scene = true
 shader = ExtResource("7_gom1r")
 shader_parameter/line_thickness = 1.0
 shader_parameter/line_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r5u8j"]
+resource_local_to_scene = true
 shader = ExtResource("7_gom1r")
 shader_parameter/line_thickness = 1.0
 shader_parameter/line_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w500e"]
+resource_local_to_scene = true
 shader = ExtResource("7_gom1r")
 shader_parameter/line_thickness = 1.0
 shader_parameter/line_color = Color(0, 0, 0, 1)

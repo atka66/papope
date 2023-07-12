@@ -23,7 +23,6 @@ var speed: int = 20
 var dashMultiplier: int = 30
 var frictionCustom: float = 0.1
 
-var color: Color = Global.TEAM_COLORS[0]
 var inputCd: bool = false
 
 func _ready():
@@ -36,9 +35,7 @@ func _ready():
 	$Lock.hide()
 	hideCrosshairs()
 	
-	color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
-	$BodyParts/Body.color = color
-	$Crosshairs.modulate = color
+	updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
 	
 	if !silent:
 		var anim = Res.SpawnPlayerAnimObject.instantiate()
@@ -99,7 +96,7 @@ func _input(event):
 						Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
 					if event.is_action_pressed("game_dash"):
 						Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
-					$BodyParts/Body.color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
+					updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
 		else:
 			if alive && !Global.playersFrozen && !fallWater:
 				if !trapped && linear_velocity.length() < 1000:
@@ -107,6 +104,17 @@ func _input(event):
 						dash(lAxis)
 				if event.is_action_pressed("game_use"):
 					useItem()
+
+func updateColor(color: Color) -> void:
+	var borderColor: Color = color.darkened(0.8)
+	$BodyParts/Body.color = color
+	$BodyParts.material.set_shader_parameter("border_color", borderColor)
+	$Crosshairs.modulate = color
+	$Crosshairs/DynamiteCrosshair.material.set_shader_parameter("line_color", borderColor)
+	$Crosshairs/RevolverCrosshair.material.set_shader_parameter("line_color", borderColor)
+	$Crosshairs/WhipCrosshair.material.set_shader_parameter("line_color", borderColor)
+	if hud:
+		hud.setHudColor(color)
 
 func dash(axis: Vector2) -> void:
 	$AudioDash.stream = Res.AudioPlayerDash.pick_random()
@@ -136,7 +144,7 @@ func _process(delta):
 				explosion.shakePwr = 15
 				Global.addToScene(explosion)
 			if hp < 1:
-				$BodyParts/Body.color = Global.TEAM_COLORS[4]
+				updateColor(Global.TEAM_COLORS[4])
 				alive = false
 				# todo no chicken idle sound
 				
@@ -146,7 +154,6 @@ func _process(delta):
 				
 				hp = 0
 				ammo = 0
-				hud.setHudColor(Global.TEAM_COLORS[4])
 				hud.hideItems()
 				item = null
 				hideCrosshairs()
