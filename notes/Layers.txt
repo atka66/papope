@@ -7,7 +7,7 @@ X: done in new version
 [Nodes]
 
 X -103   : {MapController}
-X -55    : [Container (in MapSpace.tscn > [BgCanvas])]
+X -55    : [Container (in MapSpace.tscn > [BgCanvas])], [BgNode]
 X -54    : [Stars]
 X -53    : [Comets]
 X -52    : [Backgrounds (in MovingBackground.tscn)]

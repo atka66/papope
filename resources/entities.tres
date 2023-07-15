@@ -1,0 +1,10 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://f6it3hyegjt4"]
+
+[ext_resource type="PackedScene" uid="uid://dg13tmnfpscdp" path="res://objects/game/entity/Cactus.tscn" id="1_lf8ji"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ra88y"]
+resource_name = "western"
+scenes/1/scene = ExtResource("1_lf8ji")
+
+[resource]
+sources/0 = SubResource("TileSetScenesCollectionSource_ra88y")

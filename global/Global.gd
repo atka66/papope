@@ -192,15 +192,15 @@ func goToMap() -> void:
 			selectedMapIndex = optionsSelected['map']
 
 		# TODO selectedMap = options['map'][selectedMapIndex]
-		selectedMap = 'space'
+		selectedMap = 'western'
 		
-		if selectedMap == 'hell': get_tree().change_scene_to_file("res://maps/MapHell.tscn")
-		if selectedMap == 'western': get_tree().change_scene_to_file("res://maps/MapWestern.tscn")
-		if selectedMap == 'ship': get_tree().change_scene_to_file("res://maps/MapShip.tscn")
+		if selectedMap == 'hell': get_tree().change_scene_to_file("res://scenes/maps/MapHell.tscn")
+		if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")
+		if selectedMap == 'ship': get_tree().change_scene_to_file("res://scenes/maps/MapShip.tscn")
 		if selectedMap == 'space': get_tree().change_scene_to_file("res://scenes/maps/MapSpace.tscn")
-		if selectedMap == 'highway': get_tree().change_scene_to_file("res://maps/MapTraffic.tscn")
-		if selectedMap == 'pacman': get_tree().change_scene_to_file("res://maps/MapPacman.tscn")
-		if selectedMap == 'conveyor': get_tree().change_scene_to_file("res://maps/MapConveyor.tscn")
+		if selectedMap == 'highway': get_tree().change_scene_to_file("res://scenes/maps/MapTraffic.tscn")
+		if selectedMap == 'pacman': get_tree().change_scene_to_file("res://scenes/maps/MapPacman.tscn")
+		if selectedMap == 'conveyor': get_tree().change_scene_to_file("res://scenes/maps/MapConveyor.tscn")
 	else:
 		get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
 

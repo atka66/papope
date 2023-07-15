@@ -1,8 +1,13 @@
 extends Node2D
 
 var spawners: Array[Node2D]
+var determRandom: RandomNumberGenerator
 
 func _ready():
+	determRandom = RandomNumberGenerator.new()
+	determRandom.set_seed(123)
+	
+	$Dim.show()
 	Global.MapControllerNode = self
 	
 	$AudioRoundStart.play()

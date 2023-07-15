@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqmbrv778fuyv"]
+
+[ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_8pi4b"]
+[ext_resource type="Texture2D" uid="uid://cgh17i3pkuu57" path="res://sprites/bg/desert.png" id="2_dr5n7"]
+[ext_resource type="TileSet" uid="uid://6i4o3v5nmj85" path="res://resources/tileset.tres" id="3_pitge"]
+[ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="3_wgx4m"]
+[ext_resource type="TileSet" uid="uid://f6it3hyegjt4" path="res://resources/entities.tres" id="4_g0qm8"]
+
+[node name="MapWestern" type="Node2D"]
+
+[node name="MapController" parent="." instance=ExtResource("1_8pi4b")]
+
+[node name="BgNode" type="Node2D" parent="."]
+z_index = -55
+z_as_relative = false
+
+[node name="TextureRect" type="TextureRect" parent="BgNode"]
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 832.0
+offset_bottom = 522.0
+texture = ExtResource("2_dr5n7")
+stretch_mode = 1
+
+[node name="BgTiles" type="TileMap" parent="."]
+z_index = -51
+z_as_relative = false
+tile_set = ExtResource("3_pitge")
+format = 2
+
+[node name="Entities" type="TileMap" parent="."]
+tile_set = ExtResource("4_g0qm8")
+format = 2
+layer_0/tile_data = PackedInt32Array(458758, 0, 65536, 851971, 0, 65536, 1114120, 0, 65536, 196621, 0, 65536, 917520, 0, 65536, 1310748, 0, 65536, 1048616, 0, 65536, 589861, 0, 65536, 262176, 0, 65536, 524313, 0, 65536)
+
+[node name="PlayerSpawner0" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(96, 192)
+
+[node name="PlayerSpawner1" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(576, 192)
+
+[node name="PlayerSpawner2" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(352, 64)
+
+[node name="PlayerSpawner3" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(352, 320)
+
+[node name="PwrupSpawner0" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(64, 288)
+texture = ExtResource("3_wgx4m")
+
+[node name="PwrupSpawner1" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(608, 96)
+texture = ExtResource("3_wgx4m")

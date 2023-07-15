@@ -37,6 +37,7 @@ layer = 90
 [node name="Camera" parent="." instance=ExtResource("1_re0bo")]
 
 [node name="Dim" type="ColorRect" parent="."]
+visible = false
 z_index = 100
 z_as_relative = false
 offset_right = 680.0
