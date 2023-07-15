@@ -356,5 +356,8 @@ func _on_body_entered(body):
 		# todo spiky, vampire, cuddles perks
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
-	# todo cacti
+	if body.is_in_group('cacti'):
+		# todo chicken noises
+		hurt(Global.DAMAGE_CACTUS)
+		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 	# todo wall sound
