@@ -5,9 +5,9 @@ extends Node2D
 
 func handleSpawnSprite():
 	if Global.playersConnected[playerId] and !Global.playersJoined[playerId]:
-		$SlotSprite.show()
+		$Slot.show()
 	else:
-		$SlotSprite.hide()
+		$Slot.hide()
 
 func handleHints() -> void:
 	$JoinLabel.hide()
