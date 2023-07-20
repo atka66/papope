@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7vf6towmyv65"]
+
+[ext_resource type="Texture2D" uid="uid://wkdnmgkpo7d5" path="res://sprites/game/entity/railtie.png" id="1_wh1vo"]
+[ext_resource type="Texture2D" uid="uid://cboqk32j73d88" path="res://sprites/game/entity/rail.png" id="2_eq81a"]
+
+[node name="Railway" type="Node2D"]
+
+[node name="Tie1" type="Sprite2D" parent="."]
+position = Vector2(0, 9)
+texture = ExtResource("1_wh1vo")
+
+[node name="Tie2" type="Sprite2D" parent="."]
+position = Vector2(16, 17)
+texture = ExtResource("1_wh1vo")
+
+[node name="Rail1" type="Sprite2D" parent="."]
+position = Vector2(6, 3)
+texture = ExtResource("2_eq81a")
+
+[node name="Rail2" type="Sprite2D" parent="."]
+position = Vector2(22, 11)
+texture = ExtResource("2_eq81a")
+
+[node name="Rail3" type="Sprite2D" parent="."]
+position = Vector2(-6, 14)
+texture = ExtResource("2_eq81a")
+
+[node name="Rail4" type="Sprite2D" parent="."]
+position = Vector2(10, 22)
+texture = ExtResource("2_eq81a")

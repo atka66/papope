@@ -1,0 +1,16 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dic4xkv1t1ph5"]
+
+[ext_resource type="Texture2D" uid="uid://b1bamscm8lm1w" path="res://sprites/tileset/ts_western.png" id="1_qgsbu"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_axr8n"]
+texture = ExtResource("1_qgsbu")
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+0:2/0 = 0
+0:2/0/probability = 0.1
+1:2/0 = 0
+1:2/0/probability = 0.5
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_axr8n")
