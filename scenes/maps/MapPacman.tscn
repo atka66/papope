@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://cg33eqlqg7etu"]
+
+[ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_8hv21"]
+[ext_resource type="TileSet" uid="uid://dlf7hk4u3ysmn" path="res://resources/tileset_pacman.tres" id="2_0nuug"]
+[ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="2_w0d2i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fti5q"]
+size = Vector2(1024, 48)
+
+[node name="MapPacman" type="Node2D"]
+
+[node name="MapController" parent="." instance=ExtResource("1_8hv21")]
+
+[node name="BgTiles" type="TileMap" parent="."]
+z_index = -51
+z_as_relative = false
+tile_set = ExtResource("2_0nuug")
+format = 2
+layer_0/tile_data = PackedInt32Array(1, 65537, 2, 2, 131073, 0, 3, 131073, 0, 4, 131073, 0, 5, 131073, 0, 6, 131073, 0, 7, 131073, 0, 8, 131073, 0, 9, 131073, 0, 10, 131073, 0, 11, 131073, 0, 12, 131073, 0, 13, 131073, 0, 14, 131073, 0, 15, 131073, 0, 16, 131073, 0, 17, 131073, 0, 18, 131073, 0, 720898, 131073, 0, 720899, 131073, 0, 720900, 131073, 0, 720901, 131073, 0, 720904, 131073, 0, 720903, 131073, 0, 720902, 131073, 0, 720905, 131073, 0, 720906, 131073, 0, 720907, 131073, 0, 720908, 131073, 0, 720909, 131073, 0, 720910, 131073, 0, 720911, 131073, 0, 720912, 131073, 0, 720913, 131073, 0, 720914, 131073, 0, 720915, 196609, 2, 262145, 196609, 2, 262163, 1, 2, 720897, 1, 2, 458771, 65537, 2, 458753, 131073, 2, 19, 131073, 2, 65555, 65537, 0, 131091, 65537, 0, 196627, 65537, 0, 524307, 65537, 0, 589843, 65537, 0, 655379, 65537, 0, 655361, 65537, 0, 589825, 65537, 0, 524289, 65537, 0, 196609, 65537, 0, 131073, 65537, 0, 65537, 65537, 0, 262144, 131073, 0, 327679, 131073, 0, 327678, 131073, 0, 458752, 131073, 0, 524287, 131073, 0, 524286, 131073, 0, 524285, 131073, 0, 327677, 131073, 0, 262164, 131073, 0, 262165, 131073, 0, 262166, 131073, 0, 262167, 131073, 0, 458772, 131073, 0, 458773, 131073, 0, 458774, 131073, 0, 458775, 131073, 0)
+
+[node name="PlayerSpawner0" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(80, 48)
+
+[node name="PlayerSpawner1" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(592, 48)
+
+[node name="PlayerSpawner2" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(80, 336)
+
+[node name="PlayerSpawner3" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(592, 336)
+
+[node name="PwrupSpawner0" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(336, 112)
+texture = ExtResource("2_w0d2i")
+
+[node name="PwrupSpawner1" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(336, 272)
+texture = ExtResource("2_w0d2i")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-104, 0)
+shape = SubResource("RectangleShape2D_fti5q")

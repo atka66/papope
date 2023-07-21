@@ -1,0 +1,25 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dlf7hk4u3ysmn"]
+
+[ext_resource type="Texture2D" uid="uid://c8ff5ivxfiokh" path="res://sprites/tileset/ts_pacman.png" id="1_xhsyy"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u2bsr"]
+texture = ExtResource("1_xhsyy")
+texture_region_size = Vector2i(32, 32)
+1:0/0 = 0
+2:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 32)
+sources/1 = SubResource("TileSetAtlasSource_u2bsr")

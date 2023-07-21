@@ -101,6 +101,10 @@ func endRound(aliveTeamId: int) -> void:
 func playGoSound() -> void:
 	$AudioRoundGo.play()
 
+func initGhostSpawn() -> void:
+	#todo
+	pass
+
 func _on_space_trigger_body_entered(body):
 	if body.is_in_group("players"):
 		body.inSpace = true
