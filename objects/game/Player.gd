@@ -359,5 +359,6 @@ func _on_body_entered(body):
 	if body.is_in_group('cacti'):
 		# todo chicken noises
 		hurt(Global.DAMAGE_CACTUS)
+		body.bounce()
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 	# todo wall sound

@@ -82,7 +82,7 @@ width = 3.0
 
 [node name="HitScan" type="RayCast2D" parent="."]
 exclude_parent = false
-collision_mask = 19
+collision_mask = 27
 
 [node name="MuzzleTop" type="CPUParticles2D" parent="."]
 emitting = false
