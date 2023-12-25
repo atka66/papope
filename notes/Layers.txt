@@ -17,7 +17,7 @@ X -49    : [BackgroundDim (in MovingBackground.tscn)]
 -1     : {Dynamite}, {Trap}, {RevolverRay}, {PlayerSlot}, [FeatherPar], [DashPar], [SmokeParticles]
 X 0      : {Player}
 1      : {Tree}, {Mast}, {Cactus}, {Destructible}
-2      : {Car}
+2      : {Car}, {Pellet}
 X 3      : {Pwrup}, {Whiplash}
 4      : {Ghost}, {DeadGhost}
 X 5    : {SpawnPlayerAnim}, {SpawnPwrupAnim}, {CollisionAnim}, {ExplosionAnim}, {CrackAnim}, {RevolverRicochet}
