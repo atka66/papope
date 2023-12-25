@@ -104,6 +104,7 @@ scale_amount_max = 3.0
 color_ramp = SubResource("Gradient_45nc1")
 
 [node name="BgTiles" type="TileMap" parent="."]
+light_mask = 3
 z_index = -50
 z_as_relative = false
 tile_set = ExtResource("4_lq3qj")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bgden6gwe6aig"]
+[gd_scene load_steps=22 format=3 uid="uid://bgden6gwe6aig"]
 
 [ext_resource type="Script" path="res://objects/game/obstacle/SpaceRay.gd" id="1_6gkwr"]
 [ext_resource type="Texture2D" uid="uid://71h3l5q52df7" path="res://sprites/game/obstacle/spaceray.png" id="2_yl0nb"]
@@ -148,6 +148,14 @@ _data = {
 "loop": SubResource("Animation_8ylt1")
 }
 
+[sub_resource type="Gradient" id="Gradient_4cad6"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ydxlq"]
+gradient = SubResource("Gradient_4cad6")
+height = 35
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_wvmgf"]
 atlas = ExtResource("2_yl0nb")
 region = Rect2(0, 0, 32, 96)
@@ -221,10 +229,10 @@ z_as_relative = false
 script = ExtResource("1_6gkwr")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-autoplay = "loop"
 libraries = {
 "": SubResource("AnimationLibrary_0lvuk")
 }
+autoplay = "loop"
 
 [node name="Phase1" type="ColorRect" parent="."]
 visible = false
@@ -237,6 +245,11 @@ offset_bottom = 256.0
 visible = false
 collision_layer = 0
 collision_mask = 17
+
+[node name="PointLight2D" type="PointLight2D" parent="Phase2"]
+range_item_cull_mask = 2
+texture = SubResource("GradientTexture2D_ydxlq")
+texture_scale = 10.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Phase2"]
 scale = Vector2(5, 5)

@@ -1,11 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://cg33eqlqg7etu"]
+[gd_scene load_steps=10 format=3 uid="uid://cg33eqlqg7etu"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_8hv21"]
 [ext_resource type="TileSet" uid="uid://dlf7hk4u3ysmn" path="res://resources/tileset_pacman.tres" id="2_0nuug"]
 [ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="2_w0d2i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fti5q"]
-size = Vector2(1024, 48)
+size = Vector2(560, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b5a0k"]
+size = Vector2(192, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6u4dr"]
+size = Vector2(192, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ky78b"]
+size = Vector2(192, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ivd1"]
+size = Vector2(192, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8jcaj"]
+size = Vector2(560, 48)
 
 [node name="MapPacman" type="Node2D"]
 
@@ -55,5 +70,25 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Walls"]
-position = Vector2(-104, 0)
+position = Vector2(336, 0)
 shape = SubResource("RectangleShape2D_fti5q")
+
+[node name="CollisionShape3" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-40, 64)
+shape = SubResource("RectangleShape2D_b5a0k")
+
+[node name="CollisionShape4" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-40, 320)
+shape = SubResource("RectangleShape2D_6u4dr")
+
+[node name="CollisionShape5" type="CollisionShape2D" parent="Walls"]
+position = Vector2(712, 64)
+shape = SubResource("RectangleShape2D_ky78b")
+
+[node name="CollisionShape6" type="CollisionShape2D" parent="Walls"]
+position = Vector2(712, 320)
+shape = SubResource("RectangleShape2D_5ivd1")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(336, 384)
+shape = SubResource("RectangleShape2D_8jcaj")
