@@ -85,9 +85,9 @@ z_as_relative = false
 collision_mask = 11
 physics_material_override = SubResource("PhysicsMaterial_po7vx")
 gravity_scale = 0.0
+lock_rotation = true
 max_contacts_reported = 2
 contact_monitor = true
-lock_rotation = true
 script = ExtResource("1_srq66")
 
 [node name="BodyParts" type="CanvasGroup" parent="."]
@@ -118,10 +118,10 @@ texture = ExtResource("4_ep5y4")
 [node name="Hurt" type="Node2D" parent="."]
 
 [node name="Anim" type="AnimationPlayer" parent="Hurt"]
-autoplay = "hurt"
 libraries = {
 "": SubResource("AnimationLibrary_vn70s")
 }
+autoplay = "hurt"
 
 [node name="Circle" type="ColorRect" parent="Hurt"]
 material = SubResource("ShaderMaterial_d0ghp")

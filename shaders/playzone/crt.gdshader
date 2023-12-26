@@ -2,20 +2,20 @@ shader_type canvas_item;
 
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
-const float screen_width = 680.0;
-const float screen_height = 384.0;
+uniform float screen_width = 680.0;
+uniform float screen_height = 384.0;
 
 // Curvature
 const float BarrelPower =1.05;
 // Color bleeding
-const float color_bleeding = 1.1;
-const float bleeding_range_x = 1.0;
-const float bleeding_range_y = 1.0;
+uniform float color_bleeding = 1.1;
+uniform float bleeding_range_x = 1.0;
+uniform float bleeding_range_y = 1.0;
 // Scanline
-const float lines_distance = 4.0;
-const float scan_size = 2.0;
-const float scanline_alpha = 0.8;
-const float lines_velocity = 30.0;
+uniform float lines_distance = 4.0;
+uniform float scan_size = 2.0;
+uniform float scanline_alpha = 0.8;
+uniform float lines_velocity = 30.0;
 
 vec2 distort(vec2 p) 
 {
@@ -42,7 +42,7 @@ void get_color_scanline(vec2 uv,inout vec4 c,float time){
 
 void fragment()
 {
-	vec2 xy = UV * 2.0;
+	vec2 xy = SCREEN_UV * 2.0;
 	xy.x -= 1.0;
 	xy.y -= 1.0;
 	
@@ -51,7 +51,7 @@ void fragment()
 		xy = distort(xy);
 	}
 	else{
-		xy = UV;
+		xy = SCREEN_UV;
 	}
 	
 	float pixel_size_x = 1.0/screen_width*bleeding_range_x;

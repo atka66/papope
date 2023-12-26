@@ -8,6 +8,15 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gml0l"]
 shader = ExtResource("2_lk66l")
+shader_parameter/screen_width = 680.0
+shader_parameter/screen_height = 384.0
+shader_parameter/color_bleeding = 1.1
+shader_parameter/bleeding_range_x = 1.0
+shader_parameter/bleeding_range_y = 1.0
+shader_parameter/lines_distance = 4.0
+shader_parameter/scan_size = 2.0
+shader_parameter/scanline_alpha = 0.8
+shader_parameter/lines_velocity = 30.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fti5q"]
 size = Vector2(560, 48)
@@ -43,10 +52,10 @@ size = Vector2(80, 16)
 
 [node name="MapController" parent="." instance=ExtResource("1_8hv21")]
 
-[node name="PlayzoneShader" type="ColorRect" parent="."]
-visible = false
-z_index = 80
-z_as_relative = false
+[node name="ShaderCanvas" type="CanvasLayer" parent="."]
+layer = 80
+
+[node name="ShaderRect" type="ColorRect" parent="ShaderCanvas"]
 material = SubResource("ShaderMaterial_gml0l")
 offset_left = -128.0
 offset_top = -128.0
