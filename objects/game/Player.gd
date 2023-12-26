@@ -343,6 +343,9 @@ func die(reason: Global.DeathEnum) -> void:
 	hp = 0
 	deathReason = reason
 
+func _integrate_forces(state):
+	Global.pacmanWrap(state)
+
 func _on_body_entered(body):
 	if body.is_in_group('players'):
 		if !hit:

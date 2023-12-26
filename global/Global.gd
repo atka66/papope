@@ -192,7 +192,7 @@ func goToMap() -> void:
 			selectedMapIndex = optionsSelected['map']
 
 		# TODO selectedMap = options['map'][selectedMapIndex]
-		selectedMap = 'pacman'
+		selectedMap = 'western'
 		
 		if selectedMap == 'hell': get_tree().change_scene_to_file("res://scenes/maps/MapHell.tscn")
 		if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")
@@ -242,3 +242,9 @@ func extendVectorTo(vector: Vector2, length: float) -> Vector2:
 
 func addToScene(object: Object) -> void:
 	get_tree().get_current_scene().add_child(object)
+
+func pacmanWrap(state: PhysicsDirectBodyState2D) -> void:
+	if selectedMap == 'pacman':
+		var xform = state.transform
+		xform.origin.x = wrapf(xform.origin.x, -48, 728)
+		state.transform = xform

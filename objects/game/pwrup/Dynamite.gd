@@ -28,6 +28,9 @@ func getWhipped(playerId: int, normal: Vector2) -> void:
 func getZapped() -> void:
 	explode()
 
+func _integrate_forces(state):
+	Global.pacmanWrap(state)
+
 func _on_body_entered(body):
 	if body.is_in_group("players"):
 		if body.alive && !body.shielded:
