@@ -1,9 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://cg33eqlqg7etu"]
+[gd_scene load_steps=17 format=3 uid="uid://cg33eqlqg7etu"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_8hv21"]
 [ext_resource type="TileSet" uid="uid://dlf7hk4u3ysmn" path="res://resources/tileset_pacman.tres" id="2_0nuug"]
+[ext_resource type="Shader" path="res://shaders/playzone/crt.gdshader" id="2_lk66l"]
 [ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="2_w0d2i"]
 [ext_resource type="PackedScene" uid="uid://ciy5hryn8y8fi" path="res://objects/game/entity/Pellet.tscn" id="4_82ut7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gml0l"]
+shader = ExtResource("2_lk66l")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fti5q"]
 size = Vector2(560, 48)
@@ -38,6 +42,16 @@ size = Vector2(80, 16)
 [node name="MapPacman" type="Node2D"]
 
 [node name="MapController" parent="." instance=ExtResource("1_8hv21")]
+
+[node name="PlayzoneShader" type="ColorRect" parent="."]
+visible = false
+z_index = 80
+z_as_relative = false
+material = SubResource("ShaderMaterial_gml0l")
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 808.0
+offset_bottom = 512.0
 
 [node name="BgTiles" type="TileMap" parent="."]
 z_index = -51

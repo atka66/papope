@@ -45,10 +45,10 @@ offset_bottom = 384.0
 color = Color(0, 0, 0, 1)
 
 [node name="Anim" type="AnimationPlayer" parent="Dim"]
-autoplay = "disappear"
 libraries = {
 "": SubResource("AnimationLibrary_p3b64")
 }
+autoplay = "disappear"
 
 [node name="AudioRoundStart" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_s1fne")
