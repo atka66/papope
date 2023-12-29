@@ -16,6 +16,8 @@ extends Node
 @onready var CrackAnimObject = preload("res://objects/anim/CrackAnim.tscn")
 @onready var CollisionAnimObject = preload("res://objects/anim/CollisionAnim.tscn")
 @onready var CountdownObject = preload("res://objects/system/label/Countdown.tscn")
+@onready var GhostObject = preload("res://objects/game/entity/Ghost.tscn")
+@onready var DeadGhostObject = preload("res://objects/game/entity/DeadGhost.tscn")
 
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
 

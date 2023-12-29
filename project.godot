@@ -127,6 +127,7 @@ default_option_mode=0
 default_option_map=0
 default_option_rounds=1
 allow_players_set_options=true
+ghost_speed=2.0
 
 [rendering]
 

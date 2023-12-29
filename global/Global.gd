@@ -192,7 +192,7 @@ func goToMap() -> void:
 			selectedMapIndex = optionsSelected['map']
 
 		# TODO selectedMap = options['map'][selectedMapIndex]
-		selectedMap = 'western'
+		selectedMap = 'pacman'
 		
 		if selectedMap == 'hell': get_tree().change_scene_to_file("res://scenes/maps/MapHell.tscn")
 		if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")
@@ -203,6 +203,15 @@ func goToMap() -> void:
 		if selectedMap == 'conveyor': get_tree().change_scene_to_file("res://scenes/maps/MapConveyor.tscn")
 	else:
 		get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
+
+func startRound() -> void:
+	playersFrozen = false
+	MapControllerNode.playGoSound()
+	if selectedMap == 'pacman':
+		initGhostSpawn()
+
+func initGhostSpawn():
+	MapControllerNode.initGhostSpawn()
 
 func getWinnerTeam() -> int:
 	var aliveTeams: Array[int] = []

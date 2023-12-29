@@ -102,8 +102,14 @@ func playGoSound() -> void:
 	$AudioRoundGo.play()
 
 func initGhostSpawn() -> void:
-	#todo
-	pass
+	var spawnNode = get_parent().get_node('GhostPath/SpawnNode' + str(randi() % 2))
+	var respawnTime = ProjectSettings.get("papope/ghost_respawn_time")
+	for i in range(respawnTime):
+		# TODO showCount(spawnNode.position, str(respawnTime - i))
+		await get_tree().create_timer(1).timeout
+	var ghost = Res.GhostObject.instantiate()
+	ghost.destNode = spawnNode
+	get_parent().add_child(ghost)
 
 func _on_space_trigger_body_entered(body):
 	if body.is_in_group("players"):

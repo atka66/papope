@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbvp216mvwfwv"]
+
+[ext_resource type="Texture2D" uid="uid://c0ci7blq5byxi" path="res://sprites/game/entity/ghost.png" id="1_5wanf"]
+[ext_resource type="Script" path="res://objects/game/entity/DeadGhost.gd" id="1_mt6q2"]
+[ext_resource type="AudioStream" uid="uid://dwujokto6bp1u" path="res://audio/sfx/player/death.ogg" id="3_3w3q1"]
+
+[sub_resource type="Animation" id="Animation_ym8dr"]
+resource_name = "disappear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5ih4d"]
+_data = {
+"disappear": SubResource("Animation_ym8dr")
+}
+
+[node name="DeadGhost" type="Node2D"]
+z_index = 4
+z_as_relative = false
+script = ExtResource("1_mt6q2")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5ih4d")
+}
+autoplay = "disappear"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("1_5wanf")
+hframes = 3
+frame = 2
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_3w3q1")
+autoplay = true
+bus = &"sfx"

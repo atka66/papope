@@ -19,7 +19,7 @@ X 0      : {Player}
 1      : {Tree}, {Mast}, {Cactus}, {Destructible}
 2      : {Car}, {Pellet}
 X 3      : {Pwrup}, {Whiplash}
-4      : {Ghost}, {DeadGhost}
+X 4      : {Ghost}, {DeadGhost}
 X 5    : {SpawnPlayerAnim}, {SpawnPwrupAnim}, {CollisionAnim}, {ExplosionAnim}, {CrackAnim}, {RevolverRicochet}
 6      : [EmberParticles], {Spaceray}
 50     : [FgTiles1]

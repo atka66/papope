@@ -420,3 +420,145 @@ position = Vector2(528, 336)
 
 [node name="Pellet70" parent="Pellets" instance=ExtResource("4_82ut7")]
 position = Vector2(560, 336)
+
+[node name="GhostPath" type="Node" parent="."]
+
+[node name="SpawnNode0" type="Marker2D" parent="GhostPath"]
+position = Vector2(208, 192)
+metadata/neighbors = [0]
+
+[node name="SpawnNode1" type="Marker2D" parent="GhostPath"]
+position = Vector2(464, 192)
+metadata/neighbors = [13]
+
+[node name="Node0" type="Marker2D" parent="GhostPath"]
+position = Vector2(272, 192)
+metadata/neighbors = [1, 7, 30]
+
+[node name="Node1" type="Marker2D" parent="GhostPath"]
+position = Vector2(272, 112)
+metadata/neighbors = [0, 2, 26]
+
+[node name="Node2" type="Marker2D" parent="GhostPath"]
+position = Vector2(208, 112)
+metadata/neighbors = [1, 3, 8]
+
+[node name="Node3" type="Marker2D" parent="GhostPath"]
+position = Vector2(144, 112)
+metadata/neighbors = [2, 4]
+
+[node name="Node4" type="Marker2D" parent="GhostPath"]
+position = Vector2(144, 192)
+metadata/neighbors = [3, 5, 10]
+
+[node name="Node5" type="Marker2D" parent="GhostPath"]
+position = Vector2(144, 272)
+metadata/neighbors = [4, 6]
+
+[node name="Node6" type="Marker2D" parent="GhostPath"]
+position = Vector2(208, 272)
+metadata/neighbors = [5, 7, 12]
+
+[node name="Node7" type="Marker2D" parent="GhostPath"]
+position = Vector2(272, 272)
+metadata/neighbors = [0, 6, 29]
+
+[node name="Node8" type="Marker2D" parent="GhostPath"]
+position = Vector2(208, 48)
+metadata/neighbors = [2, 9]
+
+[node name="Node9" type="Marker2D" parent="GhostPath"]
+position = Vector2(80, 48)
+metadata/neighbors = [8, 10]
+
+[node name="Node10" type="Marker2D" parent="GhostPath"]
+position = Vector2(80, 192)
+metadata/neighbors = [4, 9, 11]
+
+[node name="Node11" type="Marker2D" parent="GhostPath"]
+position = Vector2(80, 336)
+metadata/neighbors = [10, 12]
+
+[node name="Node12" type="Marker2D" parent="GhostPath"]
+position = Vector2(208, 336)
+metadata/neighbors = [6, 11]
+
+[node name="Node13" type="Marker2D" parent="GhostPath"]
+position = Vector2(400, 192)
+metadata/neighbors = [14, 20, 30]
+
+[node name="Node14" type="Marker2D" parent="GhostPath"]
+position = Vector2(400, 112)
+metadata/neighbors = [13, 15, 27]
+
+[node name="Node15" type="Marker2D" parent="GhostPath"]
+position = Vector2(464, 112)
+metadata/neighbors = [14, 16, 21]
+
+[node name="Node16" type="Marker2D" parent="GhostPath"]
+position = Vector2(528, 112)
+metadata/neighbors = [15, 17]
+
+[node name="Node17" type="Marker2D" parent="GhostPath"]
+position = Vector2(528, 192)
+metadata/neighbors = [16, 18, 23]
+
+[node name="Node18" type="Marker2D" parent="GhostPath"]
+position = Vector2(528, 272)
+metadata/neighbors = [17, 19]
+
+[node name="Node19" type="Marker2D" parent="GhostPath"]
+position = Vector2(464, 272)
+metadata/neighbors = [18, 20, 25]
+
+[node name="Node20" type="Marker2D" parent="GhostPath"]
+position = Vector2(400, 272)
+metadata/neighbors = [13, 19, 28]
+
+[node name="Node21" type="Marker2D" parent="GhostPath"]
+position = Vector2(464, 48)
+metadata/neighbors = [15, 22]
+
+[node name="Node22" type="Marker2D" parent="GhostPath"]
+position = Vector2(592, 48)
+metadata/neighbors = [21, 23]
+
+[node name="Node23" type="Marker2D" parent="GhostPath"]
+position = Vector2(592, 192)
+metadata/neighbors = [17, 22, 24]
+
+[node name="Node24" type="Marker2D" parent="GhostPath"]
+position = Vector2(592, 336)
+metadata/neighbors = [23, 25]
+
+[node name="Node25" type="Marker2D" parent="GhostPath"]
+position = Vector2(464, 336)
+metadata/neighbors = [19, 24]
+
+[node name="Node26" type="Marker2D" parent="GhostPath"]
+position = Vector2(272, 48)
+metadata/neighbors = [1, 27]
+
+[node name="Node27" type="Marker2D" parent="GhostPath"]
+position = Vector2(400, 48)
+metadata/neighbors = [14, 26]
+
+[node name="Node28" type="Marker2D" parent="GhostPath"]
+position = Vector2(400, 336)
+metadata/neighbors = [20, 29]
+
+[node name="Node29" type="Marker2D" parent="GhostPath"]
+position = Vector2(272, 336)
+metadata/neighbors = [7, 28]
+
+[node name="Node30" type="Marker2D" parent="GhostPath"]
+position = Vector2(336, 192)
+metadata/neighbors = [0, 13, 31, 32]
+
+[node name="Node31" type="Marker2D" parent="GhostPath"]
+position = Vector2(336, 112)
+metadata/neighbors = [30]
+
+[node name="Node32" type="Marker2D" parent="GhostPath"]
+position = Vector2(336, 272)
+metadata/neighbors = [30]
