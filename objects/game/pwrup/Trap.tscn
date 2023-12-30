@@ -124,14 +124,14 @@ radius = 6.0
 z_index = -1
 z_as_relative = false
 collision_layer = 0
-collision_mask = 17
+collision_mask = 49
 script = ExtResource("1_4y0on")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-autoplay = "arm"
 libraries = {
 "": SubResource("AnimationLibrary_frxre")
 }
+autoplay = "arm"
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_idjxi")
@@ -144,4 +144,5 @@ shape = SubResource("CircleShape2D_kwslm")
 stream = ExtResource("1_abu71")
 bus = &"sfx"
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -116,9 +116,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Ghost" type="Area2D"]
+[node name="Ghost" type="Area2D" groups=["shootables", "trappables", "whippables"]]
 z_index = 4
 z_as_relative = false
+collision_layer = 32
+collision_mask = 17
 script = ExtResource("1_bgrbh")
 moving = true
 
@@ -155,3 +157,5 @@ bus = &"sfx"
 [node name="AudioWalk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_yodip")
 bus = &"sfx"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

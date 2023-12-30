@@ -49,9 +49,29 @@ func _input(event):
 			die()
 
 func die():
-	# TODO kill ghosts on revolver, trap and dynamite
 	var deadGhost = Res.DeadGhostObject.instantiate()
 	deadGhost.position = global_position
 	get_parent().add_child(deadGhost)
 	Global.initGhostSpawn()
 	queue_free()
+
+func getShot(playerId: int, normal: Vector2) -> void:
+	die()
+
+func getTrapped(playerId: int) -> void:
+	#TODO ghost kill achievement?
+	die()
+
+func getWhipped(playerId: int, normal: Vector2) -> void:
+	die()
+
+
+func _on_body_entered(body):
+	if body.is_in_group('players') && body.alive && !Global.playersFrozen:
+		body.get_node('AudioScared').play()
+		body.die(Global.DeathEnum.GHOST)
+		# TODO Global.registerAchievement(body.playerId, Global.AchiEnum.SPOOKED)
+	if body.is_in_group('dynamites'):
+		body.explode()
+		# TODO Global.incrementStat(body.originPlayerId, Global.StatEnum.GHOST_KILL, 1)
+		die()

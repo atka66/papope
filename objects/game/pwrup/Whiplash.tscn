@@ -59,6 +59,7 @@ sprite_frames = SubResource("SpriteFrames_rgyqd")
 autoplay = "default"
 
 [node name="HitScan" type="RayCast2D" parent="."]
-collision_mask = 27
+collision_mask = 59
+collide_with_areas = true
 
 [connection signal="animation_finished" from="Container/WhipSprite" to="." method="_on_animated_sprite_2d_animation_finished"]

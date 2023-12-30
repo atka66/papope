@@ -281,6 +281,7 @@ func getTrapped(playerId: int) -> void:
 	hurtSound(Res.AudioHurtTrap)
 	hurt(Global.DAMAGE_TRAP)
 	# todo was just killed?
+	#TODO stepped in his own trap?
 	trapped = true
 	$Lock.show()
 	$Lock/Timer.start(2.0)

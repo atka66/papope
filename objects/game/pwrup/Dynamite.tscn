@@ -76,7 +76,7 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_xviia"]
 radius = 8.0
 
-[node name="Dynamite" type="RigidBody2D" groups=["shootables", "trappables", "whippables", "zappables"]]
+[node name="Dynamite" type="RigidBody2D" groups=["dynamites", "shootables", "trappables", "whippables", "zappables"]]
 z_index = -1
 z_as_relative = false
 collision_layer = 16
