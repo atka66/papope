@@ -198,7 +198,7 @@ func goToMap() -> void:
 		if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")
 		if selectedMap == 'ship': get_tree().change_scene_to_file("res://scenes/maps/MapShip.tscn")
 		if selectedMap == 'space': get_tree().change_scene_to_file("res://scenes/maps/MapSpace.tscn")
-		if selectedMap == 'highway': get_tree().change_scene_to_file("res://scenes/maps/MapTraffic.tscn")
+		if selectedMap == 'highway': get_tree().change_scene_to_file("res://scenes/maps/MapHighway.tscn")
 		if selectedMap == 'pacman': get_tree().change_scene_to_file("res://scenes/maps/MapPacman.tscn")
 		if selectedMap == 'conveyor': get_tree().change_scene_to_file("res://scenes/maps/MapConveyor.tscn")
 	else:

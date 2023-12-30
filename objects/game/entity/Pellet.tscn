@@ -9,6 +9,7 @@ radius = 2.0
 [node name="Pellet" type="Area2D"]
 z_index = 2
 z_as_relative = false
+collision_layer = 0
 script = ExtResource("1_2qk1d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
