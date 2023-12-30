@@ -19,14 +19,14 @@ func _ready():
 	$HitScan.force_raycast_update()
 	if $HitScan.is_colliding():
 		hitPosition = $HitScan.get_collision_point()
+		var hitAngle = $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle()
 		var collider = $HitScan.get_collider()
 		if collider.is_in_group('shootables'):
 			collider.getShot(origin.playerId, $HitScan.target_position.normalized())
+			if collider.is_in_group('car'):
+				spawnRicochet(hitPosition, hitAngle)
 		else:
-			var ricochet = Res.RevolverRicochetAnimObject.instantiate()
-			ricochet.position = hitPosition
-			ricochet.rotation = $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle()
-			Global.addToScene(ricochet)
+			spawnRicochet(hitPosition, hitAngle)
 		# todo further coll detection
 	else:
 		hitPosition = $HitScan.target_position
@@ -34,3 +34,9 @@ func _ready():
 
 	await $Audio.finished
 	queue_free()
+
+func spawnRicochet(position: Vector2, angle: float) -> void:
+	var ricochet = Res.RevolverRicochetAnimObject.instantiate()
+	ricochet.position = position
+	ricochet.rotation = angle
+	Global.addToScene(ricochet)

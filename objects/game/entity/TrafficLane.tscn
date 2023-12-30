@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvg2wxjxjxdfa"]
+
+[ext_resource type="Script" path="res://objects/game/entity/TrafficLane.gd" id="1_l7d7q"]
+
+[node name="TrafficLane" type="Marker2D"]
+script = ExtResource("1_l7d7q")

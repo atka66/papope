@@ -1,7 +1,5 @@
 extends Node
 
-var muted = false
-
 func _ready():
 	Global.MusicNode = self
 
@@ -24,12 +22,4 @@ func play(stage: String) -> void:
 			audioStream = Res.AudioMusicConveyor
 	if $Audio.stream != audioStream:
 		$Audio.stream = audioStream
-		if !muted:
-			$Audio.play()
-
-func mute() -> void:
-	muted = !muted
-	if muted:
-		$Audio.stop()
-	else:
 		$Audio.play()

@@ -18,6 +18,7 @@ extends Node
 @onready var CountdownObject = preload("res://objects/system/label/Countdown.tscn")
 @onready var GhostObject = preload("res://objects/game/entity/Ghost.tscn")
 @onready var DeadGhostObject = preload("res://objects/game/entity/DeadGhost.tscn")
+@onready var CarObject = preload("res://objects/game/entity/Car.tscn")
 
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
 
@@ -55,6 +56,21 @@ extends Node
 @onready var AudioHurtCactus = [
 	preload("res://audio/sfx/player/hurt_cactus_1.ogg"),
 	preload("res://audio/sfx/player/hurt_cactus_2.ogg")
+]
+
+@onready var AudioCarHorn = [
+	preload("res://audio/sfx/entity/car_horn_1.ogg"),
+	preload("res://audio/sfx/entity/car_horn_2.ogg"),
+	preload("res://audio/sfx/entity/car_horn_3.ogg"),
+	preload("res://audio/sfx/entity/car_horn_4.ogg"),
+	preload("res://audio/sfx/entity/car_horn_5.ogg"),
+	preload("res://audio/sfx/entity/car_horn_6.ogg")
+]
+
+@onready var AudioCollisionCar = [
+	preload("res://audio/sfx/entity/car_1.ogg"),
+	preload("res://audio/sfx/entity/car_2.ogg"),
+	preload("res://audio/sfx/entity/car_3.ogg")
 ]
 
 @onready var AudioMusicDefault = preload("res://audio/music/default.ogg")

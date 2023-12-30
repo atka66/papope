@@ -46,15 +46,15 @@ func _input(event):
 func pwrupSpawnLoop() -> void:
 	await get_tree().create_timer(ProjectSettings.get("papope/pwrup_respawn_time")).timeout
 	var spawner = spawners.pick_random()
-	var pwrupGroupName = spawner.name + "pwrups"
-	for spawnerPwrups in get_tree().get_nodes_in_group(pwrupGroupName):
-		spawnerPwrups.despawn()
-	var pwrup = Res.PwrupObject.instantiate()
-	pwrup.add_to_group(pwrupGroupName)
-	pwrup.type = Global.PwrupEnum.values().pick_random()
-	pwrup.position = spawner.position
-	get_parent().add_child(pwrup)
-	
+	if spawner != null:
+		var pwrupGroupName = spawner.name + "pwrups"
+		for spawnerPwrups in get_tree().get_nodes_in_group(pwrupGroupName):
+			spawnerPwrups.despawn()
+		var pwrup = Res.PwrupObject.instantiate()
+		pwrup.add_to_group(pwrupGroupName)
+		pwrup.type = Global.PwrupEnum.values().pick_random()
+		pwrup.position = spawner.position
+		get_parent().add_child(pwrup)
 	pwrupSpawnLoop()
 
 func spawnPlayer(playerId : int) -> void:

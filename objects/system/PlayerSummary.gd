@@ -49,7 +49,7 @@ func showAchievement(y: int, achievement: Global.AchiEnum) -> void:
 	#nameLabel.color = Color.black
 	#nameLabel.aliveTime = 0
 	#nameLabel.alignment = Label.ALIGN_LEFT
-	#nameLabel.audio = Res.AudioPlayerDash[randi() % len(Res.AudioPlayerDash)]
+	#nameLabel.audio = Res.AudioPlayerDash.pick_random()
 	add_child(nameLabel)
 	var descriptionLabel = Res.CustomLabelObject.instantiate()
 	descriptionLabel.position = Vector2(14, y + 11)

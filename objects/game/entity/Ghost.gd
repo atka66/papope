@@ -12,7 +12,7 @@ var destNode = null
 
 func _ready():
 	position = destNode.position
-	$Container/Body.modulate = GHOST_COLORS[randi() % len(GHOST_COLORS)]
+	$Container/Body.modulate = GHOST_COLORS.pick_random()
 
 func _process(delta):
 	if moving:
@@ -35,7 +35,7 @@ func _process(delta):
 			else:
 				var randomNode = prevNode
 				while randomNode == prevNode:
-					var randomNodeId = neighbors[randi() % len(neighbors)]
+					var randomNodeId = neighbors.pick_random()
 					randomNode = get_parent().get_node('GhostPath/Node' + str(randomNodeId))
 				candidateNode = randomNode
 			prevNode = destNode
