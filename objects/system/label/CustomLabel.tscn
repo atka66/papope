@@ -1,11 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://bli02m5v875nl"]
+[gd_scene load_steps=5 format=3 uid="uid://bli02m5v875nl"]
 
 [ext_resource type="Script" path="res://objects/system/label/CustomLabel.gd" id="1_1kkh4"]
 [ext_resource type="Texture2D" uid="uid://bcvmruf8ncm54" path="res://fonts/placeholder.png" id="2_5cwax"]
+[ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="3_8xr18"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yts4u"]
+font = ExtResource("3_8xr18")
+font_size = 20
 
 [node name="CustomLabel" type="Node2D"]
 script = ExtResource("1_1kkh4")
+text = null
 
 [node name="PlaceholderSprite" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("2_5cwax")
 centered = false
+
+[node name="Label" type="Label" parent="."]
+offset_right = 1.0
+offset_bottom = 22.0
+label_settings = SubResource("LabelSettings_yts4u")
+uppercase = true

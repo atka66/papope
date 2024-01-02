@@ -25,10 +25,10 @@ func calculateScore() -> void:
 		pointsText += "s"
 	var pointsLabel = Res.CustomLabelObject.instantiate()
 	pointsLabel.position = Vector2(85, 192)
-	#pointsLabel.text = pointsText
+	pointsLabel.text = pointsText
 	pointsLabel.fontSize = 3
-	#pointsLabel.alignment = Label.ALIGN_CENTER
-	#pointsLabel.animate = true
+	#pointsLabel.alignment = Label.ALIGN_CENTER TODO
+	#pointsLabel.animate = true TODO
 	pointsLabel.aliveTime = 2
 	add_child(pointsLabel)
 
@@ -43,9 +43,9 @@ func showAchievements() -> void:
 func showAchievement(y: int, achievement: Global.AchiEnum) -> void:
 	var nameLabel = Res.CustomLabelObject.instantiate()
 	nameLabel.position = Vector2(10, y)
-	#nameLabel.text = Global.ACHIEVEMENTS[achievement][0]
+	nameLabel.text = Global.ACHIEVEMENTS[achievement][0]
 	nameLabel.fontSize = 2
-	#nameLabel.outline = false
+	#nameLabel.outline = false TODO
 	#nameLabel.color = Color.black
 	#nameLabel.aliveTime = 0
 	#nameLabel.alignment = Label.ALIGN_LEFT
@@ -53,9 +53,9 @@ func showAchievement(y: int, achievement: Global.AchiEnum) -> void:
 	add_child(nameLabel)
 	var descriptionLabel = Res.CustomLabelObject.instantiate()
 	descriptionLabel.position = Vector2(14, y + 11)
-	#descriptionLabel.text = Global.ACHIEVEMENTS[achievement][1]
+	descriptionLabel.text = Global.ACHIEVEMENTS[achievement][1]
 	descriptionLabel.fontSize = 1
-	#descriptionLabel.outline = false
+	#descriptionLabel.outline = false TODO
 	#descriptionLabel.color = Color.black
 	#descriptionLabel.aliveTime = 0
 	#descriptionLabel.alignment = Label.ALIGN_LEFT
@@ -72,11 +72,11 @@ func finalizePoster(finalizingPlayerId: int) -> void:
 			var deadLabel = Res.CustomLabelObject.instantiate()
 			deadLabel.position = Vector2(85, 92)
 			deadLabel.fontSize = 3
-			#deadLabel.outline = true
+			#deadLabel.outline = true TODO
 			#deadLabel.aliveTime = 0
 			#deadLabel.alignment = Res.CustomLabelObject.ALIGNMENTS.CENTER
 			#deadLabel.color = Color.red
-			#deadLabel.text = 'dead'
+			deadLabel.text = 'dead'
 			#deadLabel.animate = false
 			add_child(deadLabel)
 			

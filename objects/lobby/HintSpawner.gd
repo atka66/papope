@@ -21,8 +21,9 @@ func createHintLabel() -> void:
 	
 	for i in randomHint.size():
 		var hintLabel = Res.CustomLabelObject.instantiate()
+		hintLabel.text = randomHint[i]
 		hintLabel.position = Vector2(0, i*16)
-		hintLabel.fontSize = 2
+		hintLabel.fontSize = 1
 		hintLabel.aliveTime = hintTimer
 		add_child(hintLabel)
 

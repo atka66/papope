@@ -21,6 +21,7 @@ func _ready():
 	Global.playersFrozen = true
 	
 	var mapLabel = Res.CustomLabelObject.instantiate()
+	mapLabel.text = Global.selectedMap
 	mapLabel.fontSize = 6
 	mapLabel.aliveTime = 2
 	$HudCanvas.add_child(mapLabel)
@@ -101,11 +102,20 @@ func endRound(aliveTeamId: int) -> void:
 func playGoSound() -> void:
 	$AudioRoundGo.play()
 
+func showCount(position: Vector2, cnt: String) -> void:
+	var label = Res.CustomLabelObject.instantiate()
+	label.position = position
+	label.text = cnt
+	label.fontSize = 2
+	label.alignment = Control.LayoutPreset.PRESET_CENTER
+	label.aliveTime = 1
+	add_child(label)
+
 func initGhostSpawn() -> void:
 	var spawnNode = get_parent().get_node('GhostPath/SpawnNode' + str(randi() % 2))
 	var respawnTime = ProjectSettings.get("papope/ghost_respawn_time")
 	for i in range(respawnTime):
-		# TODO showCount(spawnNode.position, str(respawnTime - i))
+		showCount(spawnNode.position, str(respawnTime - i))
 		await get_tree().create_timer(1).timeout
 	var ghost = Res.GhostObject.instantiate()
 	ghost.destNode = spawnNode

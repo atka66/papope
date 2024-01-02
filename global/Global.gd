@@ -203,7 +203,7 @@ func goToMap() -> void:
 			selectedMapIndex = optionsSelected['map']
 
 		# TODO selectedMap = options['map'][selectedMapIndex]
-		selectedMap = 'highway'
+		selectedMap = 'pacman'
 		
 		if selectedMap == 'hell': get_tree().change_scene_to_file("res://scenes/maps/MapHell.tscn")
 		if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")

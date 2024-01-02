@@ -41,10 +41,10 @@ modulate = Color(0, 0, 0, 1)
 script = ExtResource("1_i8rer")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-autoplay = "fade_in"
 libraries = {
 "": SubResource("AnimationLibrary_iknuv")
 }
+autoplay = "fade_in"
 
 [node name="MovingBackground" parent="." instance=ExtResource("2_pbfn1")]
 
@@ -70,22 +70,25 @@ position = Vector2(340, 336)
 rotation = 6.26638
 
 [node name="Anim" type="AnimationPlayer" parent="InitHolder"]
-autoplay = "wobble"
 libraries = {
 "": SubResource("AnimationLibrary_7a0rr")
 }
+autoplay = "wobble"
 
 [node name="WaitingLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
+text = "sample-text"
 fontSize = 2
-alignment = 1
+alignment = 5
 
 [node name="TeamLimitLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
+text = "sample-text"
 fontSize = 2
-alignment = 1
+alignment = 5
 
 [node name="StartLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
+text = "sample-text"
 fontSize = 2
-alignment = 1
+alignment = 5
 
 [node name="HintSpawner" parent="." instance=ExtResource("5_uy1dg")]
 position = Vector2(510, 144)
@@ -93,15 +96,19 @@ position = Vector2(510, 144)
 [node name="MenuCanvas" type="CanvasLayer" parent="."]
 
 [node name="VersionLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
-position = Vector2(4, 376)
-
-[node name="FullscreenLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
-position = Vector2(678, 376)
+position = Vector2(4, 382)
+text = "sample-text"
 alignment = 2
 
+[node name="FullscreenLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
+position = Vector2(678, 382)
+text = "f - toggle fullscreen"
+alignment = 3
+
 [node name="GodotLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
-position = Vector2(340, 376)
-alignment = 1
+position = Vector2(340, 382)
+text = "made with godot"
+alignment = 7
 
 [node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
 position = Vector2(340, 52)
@@ -110,7 +117,14 @@ position = Vector2(340, 52)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_307et")
 
+[node name="CustomLabel" parent="MenuCanvas/TitleHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(0, 24)
+text = "twin stick arena"
+fontSize = 2
+alignment = 8
+
 [node name="Subtitle" type="Sprite2D" parent="MenuCanvas/TitleHolder"]
+visible = false
 position = Vector2(0, 24)
 scale = Vector2(2, 2)
 texture = ExtResource("9_51yvq")
