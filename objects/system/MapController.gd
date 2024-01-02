@@ -8,6 +8,7 @@ func _ready():
 	determRandom.set_seed(123)
 	
 	$Dim.show()
+	$MapLabel.text = Global.selectedMap
 	Global.MapControllerNode = self
 	
 	$AudioRoundStart.play()
@@ -19,13 +20,7 @@ func _ready():
 			spawners.append(child)
 
 	Global.playersFrozen = true
-	
-	var mapLabel = Res.CustomLabelObject.instantiate()
-	mapLabel.text = Global.selectedMap
-	mapLabel.fontSize = 6
-	mapLabel.aliveTime = 2
-	$HudCanvas.add_child(mapLabel)
-	
+
 	# todo cards
 	await get_tree().create_timer(1.5).timeout
 	

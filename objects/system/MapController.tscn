@@ -1,17 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://3256wkq2cd6w"]
+[gd_scene load_steps=9 format=3 uid="uid://3256wkq2cd6w"]
 
 [ext_resource type="Script" path="res://objects/system/MapController.gd" id="1_478ud"]
 [ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="1_re0bo"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_lejj6"]
 [ext_resource type="AudioStream" uid="uid://dvr5wmkt3vyoe" path="res://audio/sfx/system/round_start.ogg" id="3_s1fne"]
 [ext_resource type="AudioStream" uid="uid://cqdf1k8tkujmt" path="res://audio/sfx/system/round_go.ogg" id="4_81ely"]
 [ext_resource type="AudioStream" uid="uid://blv4svyrnvrl3" path="res://audio/sfx/system/round_end.ogg" id="5_rykcw"]
 
 [sub_resource type="Animation" id="Animation_3drhq"]
 resource_name = "disappear"
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:color")
+tracks/0/path = NodePath("Dim:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -19,6 +21,42 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MapLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 2.8, 3),
+"transitions": PackedFloat32Array(0.5, 1, 2, 1),
+"update": 0,
+"values": [Vector2(0, 300), Vector2(64, 300), Vector2(128, 300), Vector2(192, 300)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MapLabel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MapLabel:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 2.8, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p3b64"]
@@ -36,6 +74,12 @@ layer = 90
 
 [node name="Camera" parent="." instance=ExtResource("1_re0bo")]
 
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_p3b64")
+}
+autoplay = "disappear"
+
 [node name="Dim" type="ColorRect" parent="."]
 visible = false
 z_index = 100
@@ -44,11 +88,12 @@ offset_right = 680.0
 offset_bottom = 384.0
 color = Color(0, 0, 0, 1)
 
-[node name="Anim" type="AnimationPlayer" parent="Dim"]
-libraries = {
-"": SubResource("AnimationLibrary_p3b64")
-}
-autoplay = "disappear"
+[node name="MapLabel" parent="." instance=ExtResource("3_lejj6")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, 300)
+fontSize = 4
+fontColor = Color(1, 1, 1, 1)
+alignment = 4
 
 [node name="AudioRoundStart" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_s1fne")

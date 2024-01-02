@@ -4,8 +4,8 @@ extends Node2D
 
 func _ready():
 	if aliveTeamId != -2:
-		#$Team.set_text(Global.TEAM_COLOR_STRINGS[aliveTeamId]) todo these
-		#$Team.set_color(Global.TEAM_COLORS[aliveTeamId])
+		$TeamLabel.text = Global.TEAM_COLOR_STRINGS[aliveTeamId]
+		$TeamLabel.fontColor = Global.TEAM_COLORS[aliveTeamId]
 		$Anim.play('wins')
 	else:
 		$Anim.play('draw')

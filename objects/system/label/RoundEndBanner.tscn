@@ -172,17 +172,21 @@ libraries = {
 [node name="TeamLabel" parent="." instance=ExtResource("3_ydum0")]
 visible = false
 modulate = Color(1, 1, 1, 0)
-position = Vector2(128, 128)
-fontSize = 6
+position = Vector2(288, 128)
+fontSize = 4
+fontColor = Color(1, 1, 1, 1)
 
 [node name="WinsLabel" parent="." instance=ExtResource("3_ydum0")]
 visible = false
 modulate = Color(1, 1, 1, 0)
-position = Vector2(412, 172)
-fontSize = 6
+position = Vector2(252, 172)
+text = "wins"
+fontSize = 4
+fontColor = Color(1, 1, 1, 1)
 
 [node name="DrawLabel" parent="." instance=ExtResource("3_ydum0")]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(160, 160)
-fontSize = 6
-alignment = 1
+text = "draw"
+fontSize = 4
+fontColor = Color(1, 1, 1, 1)
