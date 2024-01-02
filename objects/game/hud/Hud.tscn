@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://byt0mpq4frnq8"]
+[gd_scene load_steps=17 format=3 uid="uid://byt0mpq4frnq8"]
 
 [ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="1_k2qbb"]
 [ext_resource type="Script" path="res://objects/game/hud/Hud.gd" id="1_sv67i"]
 [ext_resource type="Texture2D" uid="uid://dkw2b0pnwpugk" path="res://sprites/game/hud/hud.png" id="2_05hp3"]
 [ext_resource type="Texture2D" uid="uid://u1ukb7vraab2" path="res://sprites/game/hud/hud_revolver_drum.png" id="4_jks62"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_u57dk"]
 [ext_resource type="Texture2D" uid="uid://drtx8a3qwxbd7" path="res://sprites/game/hud/hud_revolver_ammo.png" id="5_gprcb"]
 [ext_resource type="Texture2D" uid="uid://bqixonvrws2t6" path="res://sprites/game/hud/hud_ammo.png" id="6_8u23c"]
 
@@ -204,14 +205,20 @@ position = Vector2(17, 32)
 polygon = PackedVector2Array(0, 0, 94, 0, 94, 7, 0, 7)
 
 [node name="Anim" type="AnimationPlayer" parent="Container/ShakeContainer/HpBarFlicker"]
-autoplay = "flicker"
 libraries = {
 "": SubResource("AnimationLibrary_kd4l1")
 }
+autoplay = "flicker"
 
 [node name="Hud" type="Sprite2D" parent="Container/ShakeContainer"]
 texture = ExtResource("2_05hp3")
 centered = false
+
+[node name="ScoreLabel" parent="Container/ShakeContainer" instance=ExtResource("4_u57dk")]
+position = Vector2(8, 32)
+text = "0"
+fontColor = Color(1, 1, 1, 1)
+alignment = 8
 
 [node name="Inventory" type="Node2D" parent="Container/ShakeContainer"]
 position = Vector2(66, 14)

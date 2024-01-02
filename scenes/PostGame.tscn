@@ -59,17 +59,18 @@ script = ExtResource("1_irosb")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Dim")
-autoplay = "auto"
 libraries = {
 "": SubResource("AnimationLibrary_51s2y")
 }
+autoplay = "auto"
 
 [node name="MovingBackground" parent="." instance=ExtResource("2_5yc4x")]
 
 [node name="LobbyHint" parent="." instance=ExtResource("3_sy2d7")]
-position = Vector2(340, 8)
+position = Vector2(340, 12)
 fontSize = 2
-alignment = 1
+fontColor = Color(1, 1, 1, 1)
+alignment = 8
 
 [node name="PlayerSummary0" parent="." instance=ExtResource("4_cetg5")]
 

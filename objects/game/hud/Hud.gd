@@ -36,7 +36,7 @@ func _process(delta):
 	handleHpBar()
 	handleShake()
 	prevHp = player.hp
-	# todo score
+	$Container/ShakeContainer/ScoreLabel.text = str(Global.playersPoints[player.playerId])
 
 func setHudColor(color: Color):
 	playerColor = color

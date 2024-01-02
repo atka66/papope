@@ -82,10 +82,10 @@ width = 64
 script = ExtResource("1_3cgc4")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-autoplay = "anim"
 libraries = {
 "": SubResource("AnimationLibrary_bfyey")
 }
+autoplay = "anim"
 
 [node name="Container" type="Node2D" parent="."]
 
@@ -100,13 +100,18 @@ texture = ExtResource("1_jnuo6")
 centered = false
 
 [node name="WantedLabel" parent="Container" instance=ExtResource("2_xcrvs")]
-position = Vector2(85, 28)
-fontSize = 3
-alignment = 1
+position = Vector2(85, 34)
+text = "wanted"
+fontSize = 2
+fontColor = Color(0.501961, 0.25098, 0, 1)
+alignment = 8
 
 [node name="MoneyLabel" parent="Container" instance=ExtResource("2_xcrvs")]
-position = Vector2(48, 160)
-fontSize = 4
+position = Vector2(48, 168)
+text = "0"
+fontSize = 3
+fontColor = Color(1, 1, 1, 1)
+alignment = 4
 
 [node name="Face" type="Sprite2D" parent="Container"]
 material = SubResource("ShaderMaterial_1niiq")

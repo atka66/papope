@@ -6,13 +6,14 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_2p2t8"]
 font = ExtResource("3_8xr18")
-font_size = 20
-font_color = Color(0.996078, 0.788235, 0.321569, 1)
+font_size = 30
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
 
 [node name="CustomLabel" type="Node2D"]
+z_index = 101
+z_as_relative = false
 script = ExtResource("1_1kkh4")
 fontColor = null
 

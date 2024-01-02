@@ -5,7 +5,6 @@ var winner = false
 var score = 0
 var scoreCurr = 0
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	if not Global.playersJoined[playerId]:
 		queue_free()
@@ -26,8 +25,8 @@ func calculateScore() -> void:
 	var pointsLabel = Res.CustomLabelObject.instantiate()
 	pointsLabel.position = Vector2(85, 192)
 	pointsLabel.text = pointsText
-	pointsLabel.fontSize = 3
-	#pointsLabel.alignment = Label.ALIGN_CENTER TODO
+	pointsLabel.fontSize = 2
+	pointsLabel.alignment = Control.LayoutPreset.PRESET_CENTER_TOP
 	#pointsLabel.animate = true TODO
 	pointsLabel.aliveTime = 2
 	add_child(pointsLabel)
@@ -35,7 +34,6 @@ func calculateScore() -> void:
 	score += points * 1000
 
 func showAchievements() -> void:
-	print(Global.playersAchievements[playerId])
 	for i in len(Global.playersAchievements[playerId]):
 		showAchievement(192 + (i * 22), Global.playersAchievements[playerId][i])
 		await get_tree().create_timer(0.18).timeout
@@ -71,13 +69,11 @@ func finalizePoster(finalizingPlayerId: int) -> void:
 			modulate = Color(0.7, 0.7, 0.7)
 			var deadLabel = Res.CustomLabelObject.instantiate()
 			deadLabel.position = Vector2(85, 92)
-			deadLabel.fontSize = 3
-			#deadLabel.outline = true TODO
-			#deadLabel.aliveTime = 0
-			#deadLabel.alignment = Res.CustomLabelObject.ALIGNMENTS.CENTER
-			#deadLabel.color = Color.red
+			deadLabel.fontSize = 2
+			deadLabel.fontColor = Color.BROWN
+			deadLabel.alignment = Control.LayoutPreset.PRESET_CENTER_TOP
 			deadLabel.text = 'dead'
-			#deadLabel.animate = false
+			#deadLabel.animate = false TODO
 			add_child(deadLabel)
 			
 			var anim = Res.SpawnPlayerAnimObject.instantiate()
@@ -95,7 +91,7 @@ func distributeAchievements():
 		else:
 			Global.registerAchievement(playerId, Global.AchiEnum.UNDERDOG)
 	# check stat achievements
-	# var playerStats = Global.playersStats[playerId] todo uncomment
+	# var playerStats = Global.playersStats[playerId] TODO uncomment
 	var playerStats = {
 				Global.StatEnum.REV_USE: 0, Global.StatEnum.REV_HIT: 0,
 				Global.StatEnum.DYN_USE: 0, Global.StatEnum.DYN_DMG: 0,
@@ -134,7 +130,7 @@ func distributeAchievements():
 
 func _process(delta):
 	if scoreCurr < score:
-		scoreCurr += ceil((score - scoreCurr) / 3)
+		scoreCurr += ceil((score - scoreCurr) / 3.0)
 		if scoreCurr > score:
 			scoreCurr = score
 		$Container/MoneyLabel.setText(str(scoreCurr))
