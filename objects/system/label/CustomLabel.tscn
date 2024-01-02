@@ -4,13 +4,17 @@
 [ext_resource type="Texture2D" uid="uid://bcvmruf8ncm54" path="res://fonts/placeholder.png" id="2_5cwax"]
 [ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="3_8xr18"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_yts4u"]
+[sub_resource type="LabelSettings" id="LabelSettings_2p2t8"]
 font = ExtResource("3_8xr18")
 font_size = 20
+font_color = Color(0.996078, 0.788235, 0.321569, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
 
 [node name="CustomLabel" type="Node2D"]
 script = ExtResource("1_1kkh4")
-text = null
+fontColor = null
 
 [node name="PlaceholderSprite" type="Sprite2D" parent="."]
 visible = false
@@ -18,7 +22,8 @@ texture = ExtResource("2_5cwax")
 centered = false
 
 [node name="Label" type="Label" parent="."]
-offset_right = 1.0
-offset_bottom = 22.0
-label_settings = SubResource("LabelSettings_yts4u")
+offset_right = 86.0
+offset_bottom = 11.0
+text = "sample-text"
+label_settings = SubResource("LabelSettings_2p2t8")
 uppercase = true

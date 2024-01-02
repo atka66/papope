@@ -97,7 +97,7 @@ texture = ExtResource("1_2fm32")
 [node name="Label" parent="GodotHolder" instance=ExtResource("3_isgji")]
 position = Vector2(0, 300)
 text = "made with godot"
-fontSize = 2
+fontColor = Color(1, 1, 1, 1)
 alignment = 5
 
 [node name="Anim" type="AnimationPlayer" parent="."]

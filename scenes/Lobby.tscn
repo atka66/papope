@@ -76,18 +76,18 @@ libraries = {
 autoplay = "wobble"
 
 [node name="WaitingLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
-text = "sample-text"
 fontSize = 2
+fontColor = Color(1, 1, 1, 1)
 alignment = 5
 
 [node name="TeamLimitLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
-text = "sample-text"
 fontSize = 2
+fontColor = Color(1, 1, 1, 1)
 alignment = 5
 
 [node name="StartLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
-text = "sample-text"
 fontSize = 2
+fontColor = Color(1, 1, 1, 1)
 alignment = 5
 
 [node name="HintSpawner" parent="." instance=ExtResource("5_uy1dg")]
@@ -97,17 +97,19 @@ position = Vector2(510, 144)
 
 [node name="VersionLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(4, 382)
-text = "sample-text"
+fontColor = Color(1, 1, 1, 1)
 alignment = 2
 
 [node name="FullscreenLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(678, 382)
 text = "f - toggle fullscreen"
+fontColor = Color(1, 1, 1, 1)
 alignment = 3
 
 [node name="GodotLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(340, 382)
 text = "made with godot"
+fontColor = Color(1, 1, 1, 1)
 alignment = 7
 
 [node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
@@ -121,6 +123,7 @@ texture = ExtResource("8_307et")
 position = Vector2(0, 24)
 text = "twin stick arena"
 fontSize = 2
+fontColor = Color(0.996078, 0.788235, 0.321569, 1)
 alignment = 8
 
 [node name="Subtitle" type="Sprite2D" parent="MenuCanvas/TitleHolder"]
