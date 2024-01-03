@@ -8,7 +8,7 @@ uniform float speed = 7.0;
 
 void fragment()
 {
-	vec2 coord = UV;
+	vec2 coord = SCREEN_UV;
 	float sineNoise = sin(frequency * coord.y - TIME * speed);
 	float offset = sineNoise * strength;
 	coord.x += offset;
