@@ -1,10 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cgjwfivoc8wki"]
+[gd_scene load_steps=11 format=3 uid="uid://cgjwfivoc8wki"]
 
 [ext_resource type="Script" path="res://scenes/Lobby.gd" id="1_i8rer"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_pbfn1"]
 [ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="3_5jgbx"]
 [ext_resource type="PackedScene" uid="uid://co6dqvdhklpn5" path="res://objects/lobby/PlayerSlot.tscn" id="3_32tqe"]
-[ext_resource type="Animation" uid="uid://bcroi11mupex8" path="res://resources/anims/wobble.res" id="4_3g4sh"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_8wgdj"]
 [ext_resource type="PackedScene" uid="uid://bwaujkg3fwp0t" path="res://objects/lobby/HintSpawner.tscn" id="5_uy1dg"]
 [ext_resource type="Texture2D" uid="uid://c8v20op2i3bd4" path="res://sprites/lobby/title/title_hell.png" id="8_307et"]
@@ -29,11 +28,6 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iknuv"]
 _data = {
 "fade_in": SubResource("Animation_6qw7i")
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_7a0rr"]
-_data = {
-"wobble": ExtResource("4_3g4sh")
 }
 
 [node name="Lobby" type="Node2D"]
@@ -69,26 +63,23 @@ playerId = 3
 position = Vector2(340, 336)
 rotation = 6.26638
 
-[node name="Anim" type="AnimationPlayer" parent="InitHolder"]
-libraries = {
-"": SubResource("AnimationLibrary_7a0rr")
-}
-autoplay = "wobble"
-
 [node name="WaitingLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
+text = "waiting for more players..."
 fontSize = 2
-fontColor = Color(1, 1, 1, 1)
 alignment = 5
+animation = "wobble"
 
 [node name="TeamLimitLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
+text = "must have at least 2 teams!"
 fontSize = 2
-fontColor = Color(1, 1, 1, 1)
 alignment = 5
+animation = "wobble"
 
 [node name="StartLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
+text = "start"
 fontSize = 2
-fontColor = Color(1, 1, 1, 1)
 alignment = 5
+animation = "wobble"
 
 [node name="HintSpawner" parent="." instance=ExtResource("5_uy1dg")]
 position = Vector2(510, 144)
@@ -97,19 +88,16 @@ position = Vector2(510, 144)
 
 [node name="VersionLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(4, 382)
-fontColor = Color(1, 1, 1, 1)
 alignment = 2
 
 [node name="FullscreenLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(678, 382)
 text = "f - toggle fullscreen"
-fontColor = Color(1, 1, 1, 1)
 alignment = 3
 
 [node name="GodotLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(340, 382)
 text = "made with godot"
-fontColor = Color(1, 1, 1, 1)
 alignment = 7
 
 [node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
@@ -119,12 +107,13 @@ position = Vector2(340, 52)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_307et")
 
-[node name="CustomLabel" parent="MenuCanvas/TitleHolder" instance=ExtResource("4_8wgdj")]
+[node name="SubtitleLabel" parent="MenuCanvas/TitleHolder" instance=ExtResource("4_8wgdj")]
 position = Vector2(0, 24)
 text = "twin stick arena"
 fontSize = 2
 fontColor = Color(0.996078, 0.788235, 0.321569, 1)
 alignment = 8
+animation = "wobble"
 
 [node name="Subtitle" type="Sprite2D" parent="MenuCanvas/TitleHolder"]
 visible = false

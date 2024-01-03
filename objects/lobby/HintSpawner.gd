@@ -24,6 +24,7 @@ func createHintLabel() -> void:
 		hintLabel.text = randomHint[i]
 		hintLabel.position = Vector2(0, i*16)
 		hintLabel.fontSize = 1
+		hintLabel.alignment = Control.LayoutPreset.PRESET_CENTER_TOP
 		hintLabel.aliveTime = hintTimer
 		add_child(hintLabel)
 

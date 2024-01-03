@@ -1,12 +1,164 @@
-[gd_scene load_steps=5 format=3 uid="uid://bli02m5v875nl"]
+[gd_scene load_steps=9 format=3 uid="uid://bli02m5v875nl"]
 
 [ext_resource type="Script" path="res://objects/system/label/CustomLabel.gd" id="1_1kkh4"]
 [ext_resource type="Texture2D" uid="uid://bcvmruf8ncm54" path="res://fonts/placeholder.png" id="2_5cwax"]
 [ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="3_8xr18"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_2p2t8"]
+[sub_resource type="Animation" id="Animation_6obav"]
+resource_name = "float_in"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -16), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Container:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_rhxnh"]
+resource_name = "none"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Container:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Container:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Container:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_65ygq"]
+resource_name = "wobble"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.0349066, 0.0349066]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Container:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yst4f"]
+_data = {
+"float_in": SubResource("Animation_6obav"),
+"none": SubResource("Animation_rhxnh"),
+"wobble": SubResource("Animation_65ygq")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_b1w46"]
 font = ExtResource("3_8xr18")
-font_size = 40
+font_size = 20
+font_color = Color(0.996078, 0.788235, 0.321569, 1)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
@@ -15,16 +167,23 @@ shadow_size = 0
 z_index = 101
 z_as_relative = false
 script = ExtResource("1_1kkh4")
-fontColor = null
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yst4f")
+}
 
 [node name="PlaceholderSprite" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("2_5cwax")
 centered = false
 
-[node name="Label" type="Label" parent="."]
+[node name="Container" type="Node2D" parent="."]
+rotation = -0.0168069
+
+[node name="Label" type="Label" parent="Container"]
 offset_right = 86.0
 offset_bottom = 11.0
 text = "sample-text"
-label_settings = SubResource("LabelSettings_2p2t8")
+label_settings = SubResource("LabelSettings_b1w46")
 uppercase = true

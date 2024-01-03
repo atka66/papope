@@ -103,6 +103,7 @@ func showCount(position: Vector2, cnt: String) -> void:
 	label.text = cnt
 	label.fontSize = 2
 	label.alignment = Control.LayoutPreset.PRESET_CENTER
+	label.animation = 'float_in'
 	label.aliveTime = 1
 	add_child(label)
 

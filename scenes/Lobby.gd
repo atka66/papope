@@ -4,7 +4,24 @@ var countingDown: bool = false
 
 func _ready():
 	Global.MusicNode.play('menu')
+	$MenuCanvas/VersionLabel.setText(Global.VERSION)
 	initPlayers()
+
+func _process(delta):
+	var hasConnected = Global.playersJoined.has(true)
+	
+	$HintSpawner.visible = hasConnected
+	#$Options.visible = hasConnected TODO
+
+	$InitHolder/WaitingLabel.hide()
+	$InitHolder/TeamLimitLabel.hide()
+	$InitHolder/StartLabel.hide()
+	if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
+		$InitHolder/WaitingLabel.show()
+	elif Global.getNumberOfTeams() < 2:
+		$InitHolder/TeamLimitLabel.show()
+	elif !countingDown:
+		$InitHolder/StartLabel.show()
 
 func _input(event):
 	if event.is_action_pressed("quit") and !OS.has_feature("web"):

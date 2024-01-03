@@ -19,8 +19,14 @@ func handleHints() -> void:
 		var color = Color.WHITE
 		if Global.playersJoined[playerId]:
 			color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
+			if Lobby.countingDown:
+				$CancelLabel.show()
+			else:
+				$LeaveLabel.show()
 		else:
 			color.a = 0.5
+			if !Lobby.countingDown:
+				$JoinLabel.show()
 		$ControllerSprite.modulate = color
 		$ControllerSprite.show()
 

@@ -10,7 +10,7 @@ var MusicNode: Node
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 const DEBUG = true
 
-const VERSION = '1.3.5'
+const VERSION = '1.4.0 beta'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
@@ -242,6 +242,13 @@ func getWinnerTeamByScore() -> int:
 		if playersPoints[i] == options['rounds'][optionsSelected['rounds']]:
 			return playersTeam[i]
 	return -1
+
+func getNumberOfTeams():
+	var distinctTeams = []
+	for i in playersTeam.size():
+		if playersJoined[i] && !distinctTeams.has(playersTeam[i]):
+			distinctTeams.append(playersTeam[i])
+	return distinctTeams.size()
 
 func registerAchievement(playerId: int, achievement: AchiEnum):
 	if not (achievement in playersAchievements[playerId]):

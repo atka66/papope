@@ -28,15 +28,15 @@ texture = ExtResource("3_2whjo")
 
 [node name="JoinLabel" parent="." instance=ExtResource("4_vrrwg")]
 position = Vector2(0, 54)
-fontSize = 2
-alignment = 1
+text = "join"
+alignment = 8
 
 [node name="CancelLabel" parent="." instance=ExtResource("4_vrrwg")]
 position = Vector2(0, 54)
-fontSize = 2
-alignment = 1
+text = "cancel"
+alignment = 8
 
 [node name="LeaveLabel" parent="." instance=ExtResource("4_vrrwg")]
 position = Vector2(0, 54)
-fontSize = 2
-alignment = 1
+text = "leave"
+alignment = 8
