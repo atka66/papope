@@ -28,6 +28,11 @@ extends Node2D
 		animation = new_animation
 		setAnimation(new_animation)
 
+@export var tooltipFrames: SpriteFrames:
+	set(new_tooltipFrames):
+		tooltipFrames = new_tooltipFrames
+		setTooltipFrames(new_tooltipFrames)
+
 func _ready():
 	$Container.hide()
 	$Container/Label.label_settings = $Container/Label.label_settings.duplicate()
@@ -37,6 +42,7 @@ func _ready():
 	setAlignment(alignment)
 	setAliveTime(aliveTime)
 	setAnimation(animation)
+	setTooltipFrames(tooltipFrames)
 
 func setText(new_text):
 	$Container/Label.text = new_text
@@ -56,6 +62,11 @@ func setAliveTime(new_aliveTime):
 
 func setAnimation(new_animation):
 	$Anim.play(new_animation)
+
+func setTooltipFrames(new_tooltipFrames):
+	$AnimatedSprite.offset.x = $Container/Label.position.x - 16
+	$AnimatedSprite.sprite_frames = tooltipFrames
+	$AnimatedSprite.play()
 
 func timeDisappear(time) -> void:
 	await get_tree().create_timer(time).timeout

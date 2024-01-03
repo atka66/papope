@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://bli02m5v875nl"]
+[gd_scene load_steps=8 format=3 uid="uid://bli02m5v875nl"]
 
 [ext_resource type="Script" path="res://objects/system/label/CustomLabel.gd" id="1_1kkh4"]
-[ext_resource type="Texture2D" uid="uid://bcvmruf8ncm54" path="res://fonts/placeholder.png" id="2_5cwax"]
 [ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="3_8xr18"]
 
 [sub_resource type="Animation" id="Animation_6obav"]
@@ -158,7 +157,6 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_b1w46"]
 font = ExtResource("3_8xr18")
 font_size = 20
-font_color = Color(0.996078, 0.788235, 0.321569, 1)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
@@ -173,17 +171,14 @@ libraries = {
 "": SubResource("AnimationLibrary_yst4f")
 }
 
-[node name="PlaceholderSprite" type="Sprite2D" parent="."]
-visible = false
-texture = ExtResource("2_5cwax")
-centered = false
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 
 [node name="Container" type="Node2D" parent="."]
 rotation = -0.0168069
 
 [node name="Label" type="Label" parent="Container"]
-offset_right = 86.0
-offset_bottom = 11.0
+offset_right = 172.0
+offset_bottom = 22.0
 text = "sample-text"
 label_settings = SubResource("LabelSettings_b1w46")
 uppercase = true

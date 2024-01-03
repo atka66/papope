@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0cxgyxhm7ecc"]
+[gd_scene load_steps=8 format=3 uid="uid://c0cxgyxhm7ecc"]
 
 [ext_resource type="Script" path="res://scenes/PostGame.gd" id="1_irosb"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_5yc4x"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_sy2d7"]
+[ext_resource type="SpriteFrames" uid="uid://bjujoaaro01o3" path="res://resources/label/x.tres" id="4_7akrk"]
 [ext_resource type="PackedScene" uid="uid://bkf1p0bddiurc" path="res://objects/system/PlayerSummary.tscn" id="4_cetg5"]
 
 [sub_resource type="Animation" id="Animation_hqb4x"]
@@ -68,9 +69,10 @@ autoplay = "auto"
 
 [node name="LobbyHint" parent="." instance=ExtResource("3_sy2d7")]
 position = Vector2(340, 12)
+text = "back to lobby"
 fontSize = 2
-fontColor = Color(1, 1, 1, 1)
 alignment = 8
+tooltipFrames = ExtResource("4_7akrk")
 
 [node name="PlayerSummary0" parent="." instance=ExtResource("4_cetg5")]
 
