@@ -154,9 +154,9 @@ _data = {
 "wobble": SubResource("Animation_65ygq")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_b1w46"]
+[sub_resource type="LabelSettings" id="LabelSettings_qtevl"]
 font = ExtResource("3_8xr18")
-font_size = 20
+font_size = 10
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
@@ -172,13 +172,13 @@ libraries = {
 }
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+offset = Vector2(-16, 0)
 
 [node name="Container" type="Node2D" parent="."]
-rotation = -0.0168069
 
 [node name="Label" type="Label" parent="Container"]
-offset_right = 172.0
-offset_bottom = 22.0
+offset_right = 86.0
+offset_bottom = 11.0
 text = "sample-text"
-label_settings = SubResource("LabelSettings_b1w46")
+label_settings = SubResource("LabelSettings_qtevl")
 uppercase = true
