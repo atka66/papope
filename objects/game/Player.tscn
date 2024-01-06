@@ -134,7 +134,7 @@ texture = ExtResource("5_83h66")
 one_shot = true
 
 [node name="Crown" type="Sprite2D" parent="."]
-position = Vector2(0, -18)
+position = Vector2(0, -20)
 texture = ExtResource("4_ep5y4")
 
 [node name="Hurt" type="Node2D" parent="."]
