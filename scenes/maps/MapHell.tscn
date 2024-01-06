@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://du5e0np6hdr02"]
+[gd_scene load_steps=15 format=3 uid="uid://du5e0np6hdr02"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_y0jny"]
 [ext_resource type="Shader" path="res://shaders/playzone/heat.gdshader" id="2_egx1i"]
@@ -27,6 +27,18 @@ shader = SubResource("Shader_e1dlx")
 
 [sub_resource type="Gradient" id="Gradient_o0afo"]
 colors = PackedColorArray(1, 1, 0, 1, 1, 0.25098, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yo4li"]
+size = Vector2(1088, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kelwy"]
+size = Vector2(64, 576)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tirfy"]
+size = Vector2(960, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2iwoa"]
+size = Vector2(192, 320)
 
 [node name="MapHell" type="Node2D"]
 
@@ -109,3 +121,47 @@ z_index = -2
 z_as_relative = false
 position = Vector2(336, 192)
 texture = ExtResource("3_jjkqp")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="Walls"]
+position = Vector2(336, -128)
+shape = SubResource("RectangleShape2D_yo4li")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(336, 512)
+shape = SubResource("RectangleShape2D_yo4li")
+
+[node name="CollisionShape3" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-176, 192)
+shape = SubResource("RectangleShape2D_kelwy")
+
+[node name="CollisionShape4" type="CollisionShape2D" parent="Walls"]
+position = Vector2(848, 192)
+shape = SubResource("RectangleShape2D_kelwy")
+
+[node name="Lava" type="Area2D" parent="."]
+z_index = -2
+z_as_relative = false
+collision_layer = 0
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="Lava"]
+position = Vector2(336, -32)
+shape = SubResource("RectangleShape2D_tirfy")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="Lava"]
+position = Vector2(336, 416)
+shape = SubResource("RectangleShape2D_tirfy")
+
+[node name="CollisionShape3" type="CollisionShape2D" parent="Lava"]
+position = Vector2(-48, 192)
+shape = SubResource("RectangleShape2D_2iwoa")
+
+[node name="CollisionShape4" type="CollisionShape2D" parent="Lava"]
+position = Vector2(720, 192)
+shape = SubResource("RectangleShape2D_2iwoa")
+
+[connection signal="body_entered" from="Lava" to="MapController" method="_on_lava_body_entered"]
+[connection signal="body_exited" from="Lava" to="MapController" method="_on_lava_body_exited"]

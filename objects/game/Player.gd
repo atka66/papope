@@ -34,6 +34,7 @@ func _ready():
 		$Crown.hide()
 	$Lock.hide()
 	hideCrosshairs()
+	$SmokeParticles.emitting = false
 	
 	updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
 	
@@ -343,6 +344,15 @@ func hurtSound(sound: AudioStreamOggVorbis) -> void:
 func die(reason: Global.DeathEnum) -> void:
 	hp = 0
 	deathReason = reason
+
+func enteredLava() -> void:
+	contactsLava = true
+	$SmokeParticles.emitting = true
+	$AudioInLava.play()
+
+func exitedLava() -> void:
+	contactsLava = false
+	$SmokeParticles.emitting = false
 
 func _integrate_forces(state):
 	Global.pacmanWrap(state)

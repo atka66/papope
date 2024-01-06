@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://tlfkm8pk6hy7"]
+[gd_scene load_steps=29 format=3 uid="uid://tlfkm8pk6hy7"]
 
 [ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://chl7pwr2aquq0" path="res://audio/sfx/pwrup/shield_start.ogg" id="8_eksu2"]
 [ext_resource type="AudioStream" uid="uid://buth7w23vc0am" path="res://audio/sfx/pwrup/shield_end.ogg" id="9_0h1ux"]
 [ext_resource type="AudioStream" uid="uid://6g140bpk81ed" path="res://audio/sfx/player/hurt_fall.ogg" id="10_w13my"]
+[ext_resource type="AudioStream" uid="uid://b48v6e2sqs8lt" path="res://audio/sfx/player/lava_enter.ogg" id="11_oekyh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_po7vx"]
 friction = 0.0
@@ -80,6 +81,26 @@ resource_local_to_scene = true
 shader = ExtResource("7_gom1r")
 shader_parameter/line_thickness = 1.0
 shader_parameter/line_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_5726i"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f86wn"]
+gradient = SubResource("Gradient_5726i")
+width = 2
+
+[sub_resource type="Curve" id="Curve_rhgma"]
+min_value = -1.0
+_data = [Vector2(0, 0.0109891), 0.0, 0.0, 0, 0, Vector2(0.397196, 0.186813), 0.0, 0.0, 0, 0, Vector2(0.803738, -0.186813), 0.0, 0.0, 0, 0, Vector2(1, 0.296703), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_8vosl"]
+_data = [Vector2(0, 0.230769), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_0it2g"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="Player" type="RigidBody2D" groups=["players", "shootables", "trappables", "whippables", "zappables"]]
 z_as_relative = false
@@ -224,6 +245,30 @@ bus = &"sfx"
 [node name="AudioScared" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_w13my")
 bus = &"sfx"
+
+[node name="AudioInLava" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_oekyh")
+
+[node name="SmokeParticles" type="CPUParticles2D" parent="."]
+z_index = -1
+z_as_relative = false
+position = Vector2(0, 8)
+amount = 10
+lifetime = 0.4
+lifetime_randomness = 0.1
+texture = SubResource("GradientTexture1D_f86wn")
+direction = Vector2(0, -1)
+spread = 25.0
+gravity = Vector2(0, -200)
+initial_velocity_min = 150.0
+initial_velocity_max = 150.0
+orbit_velocity_min = 1.0
+orbit_velocity_max = 1.0
+orbit_velocity_curve = SubResource("Curve_rhgma")
+scale_amount_min = 20.0
+scale_amount_max = 25.0
+scale_amount_curve = SubResource("Curve_8vosl")
+color_ramp = SubResource("Gradient_0it2g")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Lock/Timer" to="." method="untrap"]

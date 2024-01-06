@@ -124,3 +124,11 @@ func _on_space_trigger_body_entered(body):
 func _on_space_trigger_body_exited(body):
 	if body.is_in_group("players"):
 		body.inSpace = false
+
+func _on_lava_body_entered(body):
+	if body.is_in_group("players"):
+		body.enteredLava()
+
+func _on_lava_body_exited(body):
+	if body.is_in_group("players"):
+		body.exitedLava()
