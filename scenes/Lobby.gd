@@ -11,6 +11,7 @@ func _process(delta):
 	var hasConnected = Global.playersJoined.has(true)
 	
 	$Settings.visible = hasConnected
+	$MenuCanvas/Hints.visible = hasConnected
 
 	$InitHolder/WaitingLabel.hide()
 	$InitHolder/TeamLimitLabel.hide()
@@ -74,8 +75,8 @@ func initPlayers() -> void:
 
 func startCountdown() -> void:
 	var countdown = Res.CountdownObject.instantiate()
-	countdown.position = Vector2(340, 112)
-	add_child(countdown)
+	countdown.position = Vector2(340, 128)
+	$MenuCanvas.add_child(countdown)
 	countdownNode = countdown
 
 func stopCountdown() -> void:

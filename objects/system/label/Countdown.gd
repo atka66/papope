@@ -7,6 +7,7 @@ func showCount(cnt: String, size: int, audio: Resource) -> void:
 	label.alignment = Control.LayoutPreset.PRESET_CENTER
 	label.aliveTime = 1
 	label.animation = 'float_in'
+	label.audio = audio
 	add_child(label)
 
 func _ready():
@@ -25,5 +26,5 @@ func _ready():
 					Global.playersMaxHp[i] = 100
 		Global.goToMap()
 	else:
-		showCount("go!", 6, Res.AudioRoundGo)
+		showCount("go!", 6, null)
 		Global.startRound()
