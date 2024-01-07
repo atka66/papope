@@ -154,7 +154,7 @@ _data = {
 "wobble": SubResource("Animation_65ygq")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_qtevl"]
+[sub_resource type="LabelSettings" id="LabelSettings_jhi8b"]
 font = ExtResource("3_8xr18")
 font_size = 10
 outline_size = 4
@@ -180,5 +180,5 @@ offset = Vector2(-16, 0)
 offset_right = 86.0
 offset_bottom = 11.0
 text = "sample-text"
-label_settings = SubResource("LabelSettings_qtevl")
+label_settings = SubResource("LabelSettings_jhi8b")
 uppercase = true

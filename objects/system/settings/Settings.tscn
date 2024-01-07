@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjptmb4cxuqkj"]
+
+[ext_resource type="Script" path="res://objects/system/settings/Settings.gd" id="1_1n5x8"]
+[ext_resource type="PackedScene" uid="uid://bovpg4jmn5nqu" path="res://objects/system/settings/Option.tscn" id="1_u4a6y"]
+[ext_resource type="AudioStream" uid="uid://bfnectokibmn7" path="res://audio/sfx/system/option.ogg" id="3_l4sr4"]
+
+[node name="Settings" type="Node2D"]
+z_index = 101
+z_as_relative = false
+script = ExtResource("1_1n5x8")
+
+[node name="ModeOption" parent="." instance=ExtResource("1_u4a6y")]
+position = Vector2(0, -24)
+
+[node name="MapOption" parent="." instance=ExtResource("1_u4a6y")]
+
+[node name="RoundsOption" parent="." instance=ExtResource("1_u4a6y")]
+position = Vector2(0, 24)
+
+[node name="AudioTick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_l4sr4")
+bus = &"sfx"

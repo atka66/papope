@@ -46,9 +46,11 @@ func _ready():
 
 func setText(new_text):
 	$Container/Label.text = new_text
+	setAlignment(alignment)
 	
 func setFontSize(new_fontSize):
 	$Container/Label.label_settings.font_size = new_fontSize * 10
+	setAlignment(alignment)
 
 func setFontColor(new_fontColor):
 	$Container/Label.label_settings.font_color = new_fontColor
@@ -64,9 +66,10 @@ func setAnimation(new_animation):
 	$Anim.play(new_animation)
 
 func setTooltipFrames(new_tooltipFrames):
-	$AnimatedSprite.offset.x = $Container/Label.position.x - 16
-	$AnimatedSprite.sprite_frames = tooltipFrames
-	$AnimatedSprite.play()
+	if new_tooltipFrames != null:
+		$AnimatedSprite.offset.x = $Container/Label.position.x - 16
+		$AnimatedSprite.sprite_frames = tooltipFrames
+		$AnimatedSprite.play()
 
 func timeDisappear(time) -> void:
 	await get_tree().create_timer(time).timeout

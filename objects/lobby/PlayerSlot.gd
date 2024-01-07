@@ -19,13 +19,13 @@ func handleHints() -> void:
 		var color = Color.WHITE
 		if Global.playersJoined[playerId]:
 			color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
-			if Lobby.countingDown:
+			if Lobby.countdownNode != null:
 				$CancelLabel.show()
 			else:
 				$LeaveLabel.show()
 		else:
 			color.a = 0.5
-			if !Lobby.countingDown:
+			if Lobby.countdownNode == null:
 				$JoinLabel.show()
 		$ControllerSprite.modulate = color
 		$ControllerSprite.show()
@@ -36,7 +36,7 @@ func _process(delta):
 
 func _input(event):
 	if Global.playersConnected[playerId] && event.device == playerId:
-		if event.is_action_pressed("accept") and !Lobby.countingDown:
+		if event.is_action_pressed("accept") and Lobby.countdownNode == null:
 			if !Global.playersJoined[playerId]:
 				Global.joinPlayer(playerId, false)
 			else:
@@ -48,7 +48,7 @@ func _input(event):
 					Lobby.startCountdown()
 		if event.is_action_pressed("cancel"):
 			if Global.playersJoined[playerId]:
-				if Lobby.countingDown:
+				if Lobby.countdownNode != null:
 					Lobby.stopCountdown()
 				else:
 					Global.playersCrowned[playerId] = false

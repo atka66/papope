@@ -118,9 +118,8 @@ var options = {
 var optionsSelected = {
 	'mode': ProjectSettings.get("papope/default_option_mode"),
 	'map': ProjectSettings.get("papope/default_option_map"),
-	'rounds': 0 #todo ProjectSettings.get("papope/default_option_rounds")
+	'rounds': ProjectSettings.get("papope/default_option_rounds")
 }
-var currentOption = options.keys()[0]
 
 var playersConnected = [false, false, false, false]
 var playersJoined = [false, false, false, false]
@@ -202,8 +201,7 @@ func goToMap() -> void:
 		else:
 			selectedMapIndex = optionsSelected['map']
 
-		# TODO selectedMap = options['map'][selectedMapIndex]
-		selectedMap = 'hell'
+		selectedMap = options['map'][selectedMapIndex]
 		
 		if selectedMap == 'hell': get_tree().change_scene_to_file("res://scenes/maps/MapHell.tscn")
 		if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")

@@ -1,6 +1,6 @@
 extends Node2D
 
-var countingDown: bool = false
+var countdownNode = null
 
 func _ready():
 	Global.MusicNode.play('menu')
@@ -11,7 +11,7 @@ func _process(delta):
 	var hasConnected = Global.playersJoined.has(true)
 	
 	$HintSpawner.visible = hasConnected
-	#$Options.visible = hasConnected TODO
+	$Settings.visible = hasConnected
 
 	$InitHolder/WaitingLabel.hide()
 	$InitHolder/TeamLimitLabel.hide()
@@ -20,7 +20,7 @@ func _process(delta):
 		$InitHolder/WaitingLabel.show()
 	elif Global.getNumberOfTeams() < 2:
 		$InitHolder/TeamLimitLabel.show()
-	elif !countingDown:
+	elif countdownNode == null:
 		$InitHolder/StartLabel.show()
 
 func _input(event):
@@ -74,15 +74,10 @@ func initPlayers() -> void:
 		)
 
 func startCountdown() -> void:
-	countingDown = true
 	var countdown = Res.CountdownObject.instantiate()
 	countdown.position = Vector2(340, 112)
 	add_child(countdown)
-	
-	#todo remove
-	Global.goToMap()
+	countdownNode = countdown
 
 func stopCountdown() -> void:
-	countingDown = false
-	for countdown in get_tree().get_nodes_in_group("countdown"):
-		countdown.queue_free()
+	countdownNode.queue_free()
