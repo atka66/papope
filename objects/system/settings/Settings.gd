@@ -1,39 +1,50 @@
 extends Node2D
 
 @onready var optionNodes = [$ModeOption, $MapOption, $RoundsOption]
+@onready var Lobby = get_node('/root/Lobby')
 
 var currentOption = 0
 
 func _ready():
 	initOptions()
 
+func _process(delta):
+	if Lobby.countdownNode != null:
+		$ModeOption.setFocus(false)
+		$MapOption.setFocus(false)
+		$RoundsOption.setFocus(false)
+	else:
+		updateCurrentOption()
+
 func _input(event):
-	if event.is_action_pressed("nav_down"):
-		currentOption = (currentOption + 1) % 3
-		updateCurrentOption()
-		$AudioTick.play()
-	if event.is_action_pressed("nav_up"):
-		currentOption = (currentOption + 5) % 3
-		updateCurrentOption()
-		$AudioTick.play()
-	if event.is_action_pressed("nav_right"):
-		var option = Global.options.keys()[currentOption]
-		Global.optionsSelected[option] = (Global.optionsSelected[option] + 1) % Global.options[option].size()
-		updateSelections()
-		optionNodes[currentOption].animateArrow(true)
-		$AudioTick.play()
-	if event.is_action_pressed("nav_left"):
-		var option = Global.options.keys()[currentOption]
-		Global.optionsSelected[option] = (Global.optionsSelected[option] + ((Global.options[option].size() * 2) - 1)) % Global.options[option].size()
-		updateSelections()
-		optionNodes[currentOption].animateArrow(false)
-		$AudioTick.play()
+	if Lobby.countdownNode == null && Global.playersJoined.has(true):
+		if event.is_action_pressed("nav_down"):
+			currentOption = (currentOption + 1) % 3
+			$AudioTick.play()
+		if event.is_action_pressed("nav_up"):
+			currentOption = (currentOption + 5) % 3
+			$AudioTick.play()
+		if event.is_action_pressed("nav_right"):
+			var option = Global.options.keys()[currentOption]
+			Global.optionsSelected[option] = (Global.optionsSelected[option] + 1) % Global.options[option].size()
+			updateSelections()
+			optionNodes[currentOption].animateArrow(true)
+			$AudioTick.play()
+			if currentOption == 1:
+				Lobby.restartMovingBackground()
+		if event.is_action_pressed("nav_left"):
+			var option = Global.options.keys()[currentOption]
+			Global.optionsSelected[option] = (Global.optionsSelected[option] + ((Global.options[option].size() * 2) - 1)) % Global.options[option].size()
+			updateSelections()
+			optionNodes[currentOption].animateArrow(false)
+			$AudioTick.play()
+			if currentOption == 1:
+				Lobby.restartMovingBackground()
 
 func initOptions() -> void:
 	$ModeOption.setOption('mode')
 	$MapOption.setOption('map')
 	$RoundsOption.setOption('rounds')
-	updateCurrentOption()
 	updateSelections()
 
 func updateCurrentOption() -> void:
@@ -44,5 +55,6 @@ func updateCurrentOption() -> void:
 func updateSelections() -> void:
 	$ModeOption.setSelection(Global.options['mode'][Global.optionsSelected['mode']])
 	$MapOption.setSelection(Global.options['map'][Global.optionsSelected['map']])
-	$RoundsOption.setSelection(str(Global.options['rounds'][Global.optionsSelected['rounds']]))
+	var rounds = Global.options['rounds'][Global.optionsSelected['rounds']]
+	$RoundsOption.setSelection(str(rounds) + ' win' + ('s' if rounds > 1 else ''))
 	

@@ -13,13 +13,10 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_fx2n7")
-}, {
-"duration": 1.0,
 "texture": ExtResource("2_nntt6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_ehb48")
+"texture": ExtResource("7_bd3fq")
 }, {
 "duration": 1.0,
 "texture": ExtResource("4_s8glx")
@@ -31,11 +28,14 @@ animations = [{
 "texture": ExtResource("6_t1d8a")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_bd3fq")
+"texture": ExtResource("3_ehb48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_fx2n7")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
-"speed": 5.0
+"speed": 0.0
 }]
 
 [sub_resource type="Animation" id="Animation_5mort"]
@@ -78,13 +78,14 @@ script = ExtResource("1_105ju")
 [node name="Backgrounds" type="AnimatedSprite2D" parent="."]
 z_index = -52
 z_as_relative = false
-position = Vector2(-195, -150)
+position = Vector2(-150, -150)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_yekfl")
+frame_progress = 0.531845
 centered = false
 
 [node name="BackgroundDim" type="Polygon2D" parent="."]
-modulate = Color(1, 1, 1, 0)
+modulate = Color(0, 0, 0, 1)
 z_index = -49
 z_as_relative = false
 color = Color(0, 0, 0, 1)

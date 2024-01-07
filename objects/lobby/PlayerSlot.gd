@@ -40,11 +40,7 @@ func _input(event):
 			if !Global.playersJoined[playerId]:
 				Global.joinPlayer(playerId, false)
 			else:
-				if Global.playersJoined.count(true) < 1: # TODO rewrite to 1
-					# todo growl
-					pass
-				# todo elif numberofteams
-				else:
+				if Global.getNumberOfTeams() > 1:
 					Lobby.startCountdown()
 		if event.is_action_pressed("cancel"):
 			if Global.playersJoined[playerId]:

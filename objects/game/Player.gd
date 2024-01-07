@@ -1,6 +1,8 @@
 extends RigidBody2D
 
 @export var playerId: int = 0
+@onready var Lobby = get_node('/root/Lobby')
+
 var hud: Node
 
 var silent: bool = false
@@ -88,16 +90,17 @@ func _input(event):
 
 	if event.device == playerId && !inputCd:
 		inputCd = true
-		if Global.MapControllerNode == null:
-			if event.is_action_pressed("skin_next"):
-				Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
-				$BodyParts/Face.frame = Global.playersSkin[playerId]
-			if ProjectSettings.get("papope/allow_players_set_options"):
-					if event.is_action_pressed("game_use"):
-						Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
-					if event.is_action_pressed("game_dash"):
-						Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
-					updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
+		if Lobby != null:
+			if Lobby.countdownNode == null:
+				if event.is_action_pressed("skin_next"):
+					Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
+					$BodyParts/Face.frame = Global.playersSkin[playerId]
+				if ProjectSettings.get("papope/allow_players_set_options"):
+						if event.is_action_pressed("game_use"):
+							Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
+						if event.is_action_pressed("game_dash"):
+							Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
+						updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
 		else:
 			if alive && !Global.playersFrozen && !fallWater:
 				if !trapped && linear_velocity.length() < 1000:

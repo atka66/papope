@@ -81,3 +81,6 @@ func startCountdown() -> void:
 
 func stopCountdown() -> void:
 	countdownNode.queue_free()
+
+func restartMovingBackground() -> void:
+	$MovingBackground.restartMovingBackground(null)
