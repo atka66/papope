@@ -53,8 +53,12 @@ func updateCurrentOption() -> void:
 	$RoundsOption.setFocus(currentOption == 2)
 
 func updateSelections() -> void:
-	$ModeOption.setSelection(Global.options['mode'][Global.optionsSelected['mode']])
+	var selectedMode = Global.options['mode'][Global.optionsSelected['mode']]
+	$ModeOption.setSelection(selectedMode)
+	$ModeInfoLabel1.setText(Global.optionInfo[selectedMode][0])
+	$ModeInfoLabel2.setText(Global.optionInfo[selectedMode][1])
+
 	$MapOption.setSelection(Global.options['map'][Global.optionsSelected['map']])
+
 	var rounds = Global.options['rounds'][Global.optionsSelected['rounds']]
 	$RoundsOption.setSelection(str(rounds) + ' win' + ('s' if rounds > 1 else ''))
-	

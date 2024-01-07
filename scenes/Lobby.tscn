@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://cgjwfivoc8wki"]
+[gd_scene load_steps=13 format=3 uid="uid://cgjwfivoc8wki"]
 
 [ext_resource type="Script" path="res://scenes/Lobby.gd" id="1_i8rer"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_pbfn1"]
 [ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="3_5jgbx"]
 [ext_resource type="PackedScene" uid="uid://co6dqvdhklpn5" path="res://objects/lobby/PlayerSlot.tscn" id="3_32tqe"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_8wgdj"]
-[ext_resource type="PackedScene" uid="uid://bwaujkg3fwp0t" path="res://objects/lobby/HintSpawner.tscn" id="5_uy1dg"]
 [ext_resource type="PackedScene" uid="uid://cjptmb4cxuqkj" path="res://objects/system/settings/Settings.tscn" id="5_v5p30"]
 [ext_resource type="SpriteFrames" uid="uid://bjujoaaro01o3" path="res://resources/label/x.tres" id="6_4v5vl"]
 [ext_resource type="Texture2D" uid="uid://c8v20op2i3bd4" path="res://sprites/lobby/title/title_hell.png" id="8_307et"]
@@ -107,9 +106,6 @@ fontSize = 2
 alignment = 8
 animation = "wobble"
 tooltipFrames = ExtResource("6_4v5vl")
-
-[node name="HintSpawner" parent="." instance=ExtResource("5_uy1dg")]
-position = Vector2(510, 144)
 
 [node name="MenuCanvas" type="CanvasLayer" parent="."]
 

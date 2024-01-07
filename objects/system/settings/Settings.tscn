@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjptmb4cxuqkj"]
+[gd_scene load_steps=5 format=3 uid="uid://cjptmb4cxuqkj"]
 
 [ext_resource type="Script" path="res://objects/system/settings/Settings.gd" id="1_1n5x8"]
 [ext_resource type="PackedScene" uid="uid://bovpg4jmn5nqu" path="res://objects/system/settings/Option.tscn" id="1_u4a6y"]
 [ext_resource type="AudioStream" uid="uid://bfnectokibmn7" path="res://audio/sfx/system/option.ogg" id="3_l4sr4"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_2dwp2"]
 
 [node name="Settings" type="Node2D"]
 z_index = 101
@@ -20,3 +21,11 @@ position = Vector2(0, 24)
 [node name="AudioTick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_l4sr4")
 bus = &"sfx"
+
+[node name="ModeInfoLabel1" parent="." instance=ExtResource("4_2dwp2")]
+position = Vector2(256, -8)
+alignment = 8
+
+[node name="ModeInfoLabel2" parent="." instance=ExtResource("4_2dwp2")]
+position = Vector2(256, 8)
+alignment = 8

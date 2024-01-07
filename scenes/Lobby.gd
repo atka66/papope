@@ -10,7 +10,6 @@ func _ready():
 func _process(delta):
 	var hasConnected = Global.playersJoined.has(true)
 	
-	$HintSpawner.visible = hasConnected
 	$Settings.visible = hasConnected
 
 	$InitHolder/WaitingLabel.hide()

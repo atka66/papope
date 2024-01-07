@@ -136,7 +136,6 @@ fullscreen={
 [papope]
 
 pwrup_respawn_time=1
-hint_timer=6
 disconnect_on_init=false
 ghost_respawn_time=5
 default_option_mode=0

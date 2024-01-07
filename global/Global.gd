@@ -114,6 +114,11 @@ var options = {
 	'map': ['random', 'hell', 'western', 'ship', 'space', 'highway', 'pacman'],
 	'rounds': [1, 3, 5, 9]
 }
+var optionInfo = {
+	'normal': ['regular rumble', 'the classic papope experience'],
+	'one-hit': ['taking any damage', 'kills you instantly'],
+	'cards': ['each round begins with', 'modifiers assigned to each player']
+}
 var optionsSelected = {
 	'mode': ProjectSettings.get("papope/default_option_mode"),
 	'map': ProjectSettings.get("papope/default_option_map"),
