@@ -11,7 +11,7 @@ func spawnCar() -> void:
 	var car = Res.CarObject.instantiate()
 	car.fromRight = fromRight
 	car.position = position
-	car.speed = randf_range(3, 5)
+	car.speed = randf_range(5, 7)
 	get_parent().add_child(car)
 
 	spawnCar()

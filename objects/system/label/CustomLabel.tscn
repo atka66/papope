@@ -154,10 +154,9 @@ _data = {
 "wobble": SubResource("Animation_65ygq")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_laylj"]
+[sub_resource type="LabelSettings" id="LabelSettings_4xfdv"]
 font = ExtResource("3_8xr18")
-font_size = 20
-font_color = Color(1, 0.752941, 0.12549, 1)
+font_size = 10
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
@@ -179,12 +178,13 @@ offset = Vector2(-16, 0)
 offset = Vector2(36, 0)
 
 [node name="Container" type="Node2D" parent="."]
+visible = false
 
 [node name="Label" type="Label" parent="Container"]
 offset_right = 86.0
 offset_bottom = 11.0
 text = "sample-text"
-label_settings = SubResource("LabelSettings_laylj")
+label_settings = SubResource("LabelSettings_4xfdv")
 uppercase = true
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]

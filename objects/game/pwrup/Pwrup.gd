@@ -15,16 +15,13 @@ func _ready():
 			$Sprite.animation = 'trap'
 		Global.PwrupEnum.WHIP:
 			$Sprite.animation = 'whip'
+	$Sprite.play()
 	spawnAnimation()
 
 func spawnAnimation():
 	var anim = Res.SpawnPwrupAnimObject.instantiate()
 	anim.position = global_position
 	Global.addToScene(anim)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func despawn():
 	spawnAnimation()

@@ -113,10 +113,10 @@ collision_layer = 0
 script = ExtResource("1_k4wcf")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-autoplay = "bob"
 libraries = {
 "": SubResource("AnimationLibrary_s7cdv")
 }
+autoplay = "bob"
 
 [node name="Shadow" type="Polygon2D" parent="."]
 scale = Vector2(0.6, 0.25)
