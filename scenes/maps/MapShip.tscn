@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1rmghffmmjbx"]
+
+[ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_dal3r"]
+
+[node name="MapShip" type="Node2D"]
+
+[node name="MapController" parent="." instance=ExtResource("1_dal3r")]
