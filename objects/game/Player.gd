@@ -130,7 +130,10 @@ func dash(axis: Vector2) -> void:
 	var impulse: Vector2 = linear_velocity.normalized() * speed * dashMultiplier
 	apply_central_impulse(impulse)
 	
-	# todo dash animation
+	var dashParticles = Res.DashParticlesObject.instantiate()
+	dashParticles.direction = -impulse
+	dashParticles.emitting = true
+	add_child(dashParticles)
 
 func _process(delta):
 	inputCd = false

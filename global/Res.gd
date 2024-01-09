@@ -19,6 +19,7 @@ extends Node
 @onready var GhostObject = preload("res://objects/game/entity/Ghost.tscn")
 @onready var DeadGhostObject = preload("res://objects/game/entity/DeadGhost.tscn")
 @onready var CarObject = preload("res://objects/game/entity/Car.tscn")
+@onready var DashParticlesObject = preload("res://objects/anim/DashParticles.tscn")
 
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
 
