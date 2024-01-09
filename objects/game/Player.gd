@@ -159,10 +159,13 @@ func _process(delta):
 				
 				if fallWater:
 					$AudioDeath.stream = Res.AudioPlayerDeathWater
+					fallWater = false
 				else:
 					$AudioDeath.stream = Res.AudioPlayerDeath
 				$AudioDeath.play()
+				Global.spawnFallingLabel(Global.getDeathMessage(deathReason), global_position, Color.DARK_GRAY, 2)
 				
+				# todo death reasons
 				# todo register no refunds
 				
 				hp = 0
@@ -221,20 +224,28 @@ func _on_remove(id):
 func pickup(pwrup : Global.PwrupEnum) -> void: 
 	item = pwrup
 	hideCrosshairs()
+	$AudioPickup.play()
+	var pwrupName = 'unknown'
 	match pwrup:
 		Global.PwrupEnum.DYNAMITE:
+			pwrupName = 'dynamite'
 			$Crosshairs/DynamiteCrosshair.show()
 			ammo = 1
 		Global.PwrupEnum.REVOLVER:
+			pwrupName = 'revolver'
 			$Crosshairs/RevolverCrosshair.show()
 			ammo = 6
 		Global.PwrupEnum.SHIELD:
+			pwrupName = 'shield'
 			ammo = 1
 		Global.PwrupEnum.TRAP:
+			pwrupName = 'trap'
 			ammo = 1
 		Global.PwrupEnum.WHIP:
+			pwrupName = 'whip'
 			$Crosshairs/WhipCrosshair.show()
 			ammo = 5
+	Global.spawnFallingLabel(pwrupName, global_position, Color.LIGHT_GREEN, 1)
 	hud.pickup(item, ammo)
 	# todo akimbo perk 
 
@@ -322,6 +333,7 @@ func directExplosion():
 
 func shield() -> void:
 	shielded = true
+	Global.spawnFallingLabel("shielded!", global_position, Color.LIGHT_BLUE, 1)
 	$Shield.show()
 	$AudioShieldStart.play()
 	$Shield/Anim.play('shielded')
@@ -341,11 +353,11 @@ func hurt(damage: int) -> void:
 	if Global.playersPerks[playerId].has(Global.PerkEnum.ARMORED):
 		actualDamage = int(ceil(float(damage) / 2))
 	if actualDamage > 0 && alive && !Global.playersFrozen:
+		var fallingMessageSize = int(actualDamage / 20) + 1
 		if shielded:
-			# todo falling text
-			pass
+			Global.spawnFallingLabel('0', global_position, Color.WHITE, fallingMessageSize)
 		else:
-			# todo falling text
+			Global.spawnFallingLabel(str(int(actualDamage)), global_position, Color.TOMATO, fallingMessageSize)
 			hp -= actualDamage
 			# todo feathers
 			$Hurt/Anim.stop()

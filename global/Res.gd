@@ -21,6 +21,8 @@ extends Node
 @onready var CarObject = preload("res://objects/game/entity/Car.tscn")
 @onready var DashParticlesObject = preload("res://objects/anim/DashParticles.tscn")
 
+@onready var FallingLabelObject = preload("res://objects/system/label/FallingLabel.tscn")
+
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
 
 @onready var AudioPlayerCollide = [

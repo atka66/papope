@@ -278,3 +278,14 @@ func pacmanWrap(state: PhysicsDirectBodyState2D) -> void:
 		var xform = state.transform
 		xform.origin.x = wrapf(xform.origin.x, -48, 728)
 		state.transform = xform
+
+func spawnFallingLabel(text: String, position: Vector2, color: Color, size: int) -> void:
+	var label = Res.FallingLabelObject.instantiate()
+	label.text = text
+	label.color = color
+	label.size = size
+	label.position = position
+	addToScene(label)
+
+func getDeathMessage(reason : DeathEnum):
+	return [DEATH_STRINGS[reason], DEATH_STRINGS[DeathEnum.DEFAULT]].pick_random().pick_random()
