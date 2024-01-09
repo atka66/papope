@@ -12,7 +12,6 @@ var hp: int = 1
 var item = null
 var ammo: int = 0
 var contactsLava: bool = false
-var outsideCd: int = Global.OUTSIDE_CD
 var timebombCd: int = Global.TIMEBOMB_CD
 var shielded: bool = false
 var trapped: bool = false
@@ -141,8 +140,6 @@ func _process(delta):
 		if alive:
 			if contactsLava && !shielded:
 				hurt(Global.DAMAGE_LAVA)
-			if outsideCd < 1:
-				die(Global.DeathEnum.DEFAULT)
 			if timebombCd < 1:
 				die(Global.DeathEnum.EXPLOSION)
 				var explosion = Res.ExplosionAnimObject.instantiate()
@@ -187,29 +184,6 @@ func _process(delta):
 				if Global.playersPerks[playerId].has(Global.PerkEnum.TIME_BOMB):
 					# todo timebomb display
 					timebombCd -= 1
-				if isOutside():
-					if outsideCd > 0:
-						updateOutsideLabel()
-						# todo show outside label
-						outsideCd -= 1
-				else:
-					# todo hide outside label
-					outsideCd = Global.OUTSIDE_CD
-		else:
-			# todo hide outside label
-			pass
-
-func isOutside() -> bool:
-	return (
-		global_position.x < Global.CameraNode.global_position.x 
-		|| global_position.x > Global.CameraNode.global_position.x + 680 
-		|| global_position.y < Global.CameraNode.global_position.y 
-		|| global_position.y > Global.CameraNode.global_position.y + 384
-	)
-
-func updateOutsideLabel() -> void:
-	# todo
-	pass
 
 func _physics_process(delta):
 	if !inSpace:

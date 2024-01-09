@@ -4,6 +4,8 @@
 [ext_resource type="Script" path="res://objects/game/entity/Rock.gd" id="1_yox4k"]
 
 [node name="Rock" type="Node2D"]
+z_index = -2
+z_as_relative = false
 script = ExtResource("1_yox4k")
 
 [node name="Sprite" type="Sprite2D" parent="."]

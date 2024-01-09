@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://3256wkq2cd6w"]
+[gd_scene load_steps=10 format=3 uid="uid://3256wkq2cd6w"]
 
 [ext_resource type="Script" path="res://objects/system/MapController.gd" id="1_478ud"]
 [ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="1_re0bo"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_lejj6"]
 [ext_resource type="AudioStream" uid="uid://dvr5wmkt3vyoe" path="res://audio/sfx/system/round_start.ogg" id="3_s1fne"]
 [ext_resource type="AudioStream" uid="uid://cqdf1k8tkujmt" path="res://audio/sfx/system/round_go.ogg" id="4_81ely"]
+[ext_resource type="PackedScene" uid="uid://cvmeomjuel1u2" path="res://objects/game/obstacle/MapBoundary.tscn" id="4_c1rtt"]
 [ext_resource type="AudioStream" uid="uid://blv4svyrnvrl3" path="res://audio/sfx/system/round_end.ogg" id="5_rykcw"]
 
 [sub_resource type="Animation" id="Animation_3drhq"]
@@ -92,8 +93,9 @@ color = Color(0, 0, 0, 1)
 modulate = Color(1, 1, 1, 0)
 position = Vector2(0, 300)
 fontSize = 4
-fontColor = Color(1, 1, 1, 1)
 alignment = 4
+
+[node name="MapBoundary" parent="." instance=ExtResource("4_c1rtt")]
 
 [node name="AudioRoundStart" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_s1fne")

@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://cboqk32j73d88" path="res://sprites/game/entity/rail.png" id="2_eq81a"]
 
 [node name="Railway" type="Node2D"]
+z_index = -2
+z_as_relative = false
 
 [node name="Tie1" type="Sprite2D" parent="."]
 position = Vector2(0, 9)
