@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://tlfkm8pk6hy7"]
+[gd_scene load_steps=31 format=3 uid="uid://tlfkm8pk6hy7"]
 
 [ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
@@ -52,6 +52,41 @@ _data = {
 shader = ExtResource("2_uodpr")
 shader_parameter/width = 0.45
 shader_parameter/border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_bm1mf"]
+resource_name = "shielded"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4, 4.25, 4.5, 4.75, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"unshield"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mps8w"]
+_data = {
+"shielded": SubResource("Animation_bm1mf")
+}
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_finae"]
 shader = ExtResource("2_uodpr")
@@ -153,9 +188,12 @@ offset_right = 16.0
 offset_bottom = 16.0
 
 [node name="Shield" type="Node2D" parent="."]
+visible = false
 
-[node name="Timer" type="Timer" parent="Shield"]
-one_shot = true
+[node name="Anim" type="AnimationPlayer" parent="Shield"]
+libraries = {
+"": SubResource("AnimationLibrary_mps8w")
+}
 
 [node name="Circle" type="ColorRect" parent="Shield"]
 material = SubResource("ShaderMaterial_finae")
@@ -272,4 +310,3 @@ color_ramp = SubResource("Gradient_0it2g")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Lock/Timer" to="." method="untrap"]
-[connection signal="timeout" from="Shield/Timer" to="." method="unshield"]

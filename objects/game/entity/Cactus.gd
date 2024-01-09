@@ -11,3 +11,7 @@ func getWhipped(playerId: int, normal: Vector2) -> void:
 
 func bounce():
 	$Anim.play('bounce')
+
+func pinch():
+	$AudioPinch.stream = Res.AudioHurtCactus.pick_random()
+	$AudioPinch.play()

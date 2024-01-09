@@ -30,10 +30,10 @@ var inputCd: bool = false
 func _ready():
 	hp = Global.playersMaxHp[playerId]
 	Global.playersKills[playerId] = 0
-	
-	$Shield.hide()
+
 	if !Global.playersCrowned[playerId]:
 		$Crown.hide()
+	$Shield.hide()
 	$Lock.hide()
 	hideCrosshairs()
 	$SmokeParticles.emitting = false
@@ -248,10 +248,7 @@ func useItem() -> void:
 			dynamite.throwForce = $LookVector.position.length() * 190
 			Global.addToScene(dynamite)
 		Global.PwrupEnum.SHIELD:
-			shielded = true
-			$Shield.show()
-			$AudioShieldStart.play()
-			$Shield/Timer.start(5.0)
+			shield()
 		Global.PwrupEnum.TRAP:
 			Global.incrementStat(playerId, Global.StatEnum.TRP_USE, 1)
 			var trap = Res.TrapObject.instantiate()
@@ -313,6 +310,12 @@ func untrap():
 
 func directExplosion():
 	hurtSound(Res.AudioHurtDynamite)
+
+func shield() -> void:
+	shielded = true
+	$Shield.show()
+	$AudioShieldStart.play()
+	$Shield/Anim.play('shielded')
 
 func unshield() -> void:
 	shielded = false
@@ -377,5 +380,6 @@ func _on_body_entered(body):
 		# todo chicken noises
 		hurt(Global.DAMAGE_CACTUS)
 		body.bounce()
+		body.pinch()
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 	# todo wall sound

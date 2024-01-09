@@ -49,3 +49,6 @@ hframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_8hv2b")
+
+[node name="AudioPinch" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
