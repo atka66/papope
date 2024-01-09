@@ -157,6 +157,12 @@ func _process(delta):
 				
 				# todo falling message
 				
+				if fallWater:
+					$AudioDeath.stream = Res.AudioPlayerDeathWater
+				else:
+					$AudioDeath.stream = Res.AudioPlayerDeath
+				$AudioDeath.play()
+				
 				# todo register no refunds
 				
 				hp = 0

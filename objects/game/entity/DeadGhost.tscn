@@ -56,7 +56,7 @@ texture = ExtResource("1_5wanf")
 hframes = 3
 frame = 2
 
-[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioDeath" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_3w3q1")
 autoplay = true
 bus = &"sfx"

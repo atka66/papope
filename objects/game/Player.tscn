@@ -287,6 +287,10 @@ bus = &"sfx"
 
 [node name="AudioInLava" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_oekyh")
+bus = &"sfx"
+
+[node name="AudioDeath" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
 
 [node name="SmokeParticles" type="CPUParticles2D" parent="."]
 z_index = -1
