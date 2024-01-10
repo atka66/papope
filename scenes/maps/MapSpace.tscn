@@ -1,24 +1,55 @@
-[gd_scene load_steps=18 format=3 uid="uid://j5rsgflce7ak"]
+[gd_scene load_steps=19 format=3 uid="uid://j5rsgflce7ak"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_h08s3"]
-[ext_resource type="Shader" path="res://shaders/nebula.gdshader" id="2_xkg21"]
-[ext_resource type="Script" path="res://scenes/maps/Background.gd" id="3_sm5x8"]
 [ext_resource type="TileSet" uid="uid://6i4o3v5nmj85" path="res://resources/tileset_space.tres" id="4_lq3qj"]
 [ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="5_rnulo"]
 [ext_resource type="PackedScene" uid="uid://bgden6gwe6aig" path="res://objects/game/obstacle/SpaceRay.tscn" id="5_xr6dn"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_u38ky"]
+[sub_resource type="Gradient" id="Gradient_ydlkk"]
+offsets = PackedFloat32Array(0, 0.3, 0.6, 0.8, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.0313726, 0, 0.12549, 1, 0.0627451, 0, 0.501961, 1, 0.501961, 0.0627451, 0.627451, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w5g4j"]
+frequency = 0.003
 fractal_type = 2
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s2y4v"]
-width = 170
-height = 96
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ntoef"]
+width = 680
+height = 384
 seamless = true
-noise = SubResource("FastNoiseLite_u38ky")
+seamless_blend_skirt = 1.0
+color_ramp = SubResource("Gradient_ydlkk")
+noise = SubResource("FastNoiseLite_w5g4j")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_j23ed"]
-shader = ExtResource("2_xkg21")
-shader_parameter/noise = SubResource("NoiseTexture2D_s2y4v")
+[sub_resource type="GDScript" id="GDScript_l2ya7"]
+script/source = "extends TextureRect
+
+func _ready():
+	texture.noise.seed = randi()
+"
+
+[sub_resource type="Animation" id="Animation_ifg7f"]
+resource_name = "movenebula"
+length = 120.0
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Nebula:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 120),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-680, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qjofv"]
+_data = {
+"movenebula": SubResource("Animation_ifg7f")
+}
 
 [sub_resource type="Gradient" id="Gradient_xc2mu"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
@@ -57,11 +88,19 @@ layer = -55
 z_index = -55
 z_as_relative = false
 
-[node name="Background" type="ColorRect" parent="BgCanvas/Container"]
-material = SubResource("ShaderMaterial_j23ed")
+[node name="Nebula" type="TextureRect" parent="BgCanvas/Container"]
+offset_left = -680.0
 offset_right = 680.0
 offset_bottom = 384.0
-script = ExtResource("3_sm5x8")
+texture = SubResource("NoiseTexture2D_ntoef")
+stretch_mode = 1
+script = SubResource("GDScript_l2ya7")
+
+[node name="Anim" type="AnimationPlayer" parent="BgCanvas/Container"]
+libraries = {
+"": SubResource("AnimationLibrary_qjofv")
+}
+autoplay = "movenebula"
 
 [node name="Stars" type="CPUParticles2D" parent="BgCanvas"]
 z_index = -54
