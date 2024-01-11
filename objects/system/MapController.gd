@@ -133,3 +133,8 @@ func _on_lava_body_entered(body):
 func _on_lava_body_exited(body):
 	if body.is_in_group("players"):
 		body.exitedLava()
+
+func _on_fall_trigger_body_entered(body):
+	if body.is_in_group("players"):
+		if !body.isFallingIntoWater:
+			body.fallIntoWater()

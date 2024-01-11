@@ -52,9 +52,6 @@ extends Node
 	preload("res://audio/sfx/player/dash_3.ogg")
 ]
 
-@onready var AudioPlayerDeath = preload("res://audio/sfx/player/death.ogg")
-@onready var AudioPlayerDeathWater = preload("res://audio/sfx/player/fall_water.ogg")
-
 @onready var AudioHurtRevolver = preload("res://audio/sfx/player/hurt_revolver.ogg")
 @onready var AudioHurtDynamite = preload("res://audio/sfx/player/hurt_dynamite.ogg")
 @onready var AudioHurtWhip = preload("res://audio/sfx/player/hurt_whip.ogg")

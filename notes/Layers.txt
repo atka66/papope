@@ -17,13 +17,13 @@ X -48     : [LookLine]
 -2     : {DestructibleParticle}, {PlayerSpawner}, {PwrupSpawner}, {Block}, {FallTrigger}, {SpaceTrigger}, {Lava}, {TrafficLane}, {Railway}, {Rock}
 -1     : {Dynamite}, {Trap}, {RevolverRay}, {PlayerSlot}, [FeatherPar], [DashPar], [SmokeParticles]
 X 0      : {Player}
-1      : {Tree}, {Mast}, {Cactus}, {Destructible}
+1      : {Tree}, [Mast], {Cactus}, {Destructible}
 2      : {Car}, {Pellet}
 X 3      : {Pwrup}, {Whiplash}
 X 4      : {Ghost}, {DeadGhost}
 X 5    : {SpawnPlayerAnim}, {SpawnPwrupAnim}, {CollisionAnim}, {ExplosionAnim}, {CrackAnim}, {RevolverRicochet}
 6      : [EmberParticles], {Spaceray}
-50     : [FgTiles1]
+50     : [FgTiles]
 80     : [ShaderNode], {_WorldEnvironment_}
 X 89     : [Crosshairs]
 X 90     : [HudCanvas]

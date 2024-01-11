@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://tlfkm8pk6hy7"]
+[gd_scene load_steps=36 format=3 uid="uid://tlfkm8pk6hy7"]
 
 [ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
@@ -12,7 +12,9 @@
 [ext_resource type="AudioStream" uid="uid://6g140bpk81ed" path="res://audio/sfx/player/hurt_fall.ogg" id="10_w13my"]
 [ext_resource type="AudioStream" uid="uid://b48v6e2sqs8lt" path="res://audio/sfx/player/lava_enter.ogg" id="11_oekyh"]
 [ext_resource type="PackedScene" uid="uid://g0uxiv3l3tk7" path="res://objects/anim/DashParticles.tscn" id="12_0t0bd"]
+[ext_resource type="AudioStream" uid="uid://dwujokto6bp1u" path="res://audio/sfx/player/death.ogg" id="12_720xj"]
 [ext_resource type="AudioStream" uid="uid://d0x3jq52qs0k7" path="res://audio/sfx/pwrup/pickup.ogg" id="12_nvt8g"]
+[ext_resource type="AudioStream" uid="uid://djn5guu82fssv" path="res://audio/sfx/player/fall_water.ogg" id="14_pp8ks"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_po7vx"]
 friction = 0.0
@@ -300,11 +302,16 @@ bus = &"sfx"
 stream = ExtResource("11_oekyh")
 bus = &"sfx"
 
-[node name="AudioDeath" type="AudioStreamPlayer2D" parent="."]
-bus = &"sfx"
-
 [node name="AudioPickup" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_nvt8g")
+bus = &"sfx"
+
+[node name="AudioDeath" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_720xj")
+bus = &"sfx"
+
+[node name="AudioFellInWater" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_pp8ks")
 bus = &"sfx"
 
 [node name="SmokeParticles" type="CPUParticles2D" parent="."]

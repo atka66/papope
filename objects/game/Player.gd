@@ -15,7 +15,7 @@ var contactsLava: bool = false
 var timebombCd: int = Global.TIMEBOMB_CD
 var shielded: bool = false
 var trapped: bool = false
-var fallWater: bool = false
+var isFallingIntoWater: bool = false
 var inSpace: bool = false
 var hit: bool = false
 
@@ -104,7 +104,7 @@ func _input(event):
 							Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
 						updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
 		else:
-			if alive && !Global.playersFrozen && !fallWater:
+			if alive && !Global.playersFrozen && !isFallingIntoWater:
 				if !trapped && linear_velocity.length() < 1000:
 					if event.is_action_pressed("game_dash"):
 						dash(lAxis)
@@ -160,12 +160,12 @@ func _process(delta):
 				
 				# todo falling message
 				
-				if fallWater:
-					$AudioDeath.stream = Res.AudioPlayerDeathWater
-					fallWater = false
+				if isFallingIntoWater:
+					# falling into water has it's own death sound
+					isFallingIntoWater = false
 				else:
-					$AudioDeath.stream = Res.AudioPlayerDeath
-				$AudioDeath.play()
+					$AudioDeath.play()
+				
 				Global.spawnFallingLabel(Global.getDeathMessage(deathReason), global_position, Color.DARK_GRAY, 2)
 				
 				# todo death reasons
@@ -186,13 +186,13 @@ func _process(delta):
 						Global.MapControllerNode.endRound(aliveTeamId)
 						pass
 
-			if !Global.playersFrozen and !fallWater:
+			if !Global.playersFrozen and !isFallingIntoWater:
 				if Global.playersPerks[playerId].has(Global.PerkEnum.TIME_BOMB):
 					# todo timebomb display
 					timebombCd -= 1
 
 func _physics_process(delta):
-	if !inSpace:
+	if !isFallingIntoWater && !inSpace:
 		apply_central_impulse(-linear_velocity * frictionCustom)
 		if alive && !Global.playersFrozen && !trapped:
 			apply_central_impulse(thrust)
@@ -316,6 +316,7 @@ func shield() -> void:
 	Global.spawnFallingLabel("shielded!", global_position, Color.LIGHT_BLUE, 1)
 	$Shield.show()
 	$AudioShieldStart.play()
+	$Shield/Anim.stop()
 	$Shield/Anim.play('shielded')
 
 func unshield() -> void:
@@ -347,6 +348,23 @@ func hurtSound(sound: AudioStreamOggVorbis) -> void:
 	if alive && !shielded:
 		$AudioHurt.stream = sound
 		$AudioHurt.play()
+
+func fallIntoWater() -> void:
+	$CollisionShape.set_deferred("disabled", true)
+	isFallingIntoWater = true
+	if alive:
+		$AudioScared.play()
+	gravity_scale = 5
+	var vector = -linear_velocity
+	var vel = Vector2(0.7, -1)
+	if global_position.x < 340:
+		vel.x *= -1
+	apply_central_impulse(vector + (vel * 500))
+	await get_tree().create_timer(0.6).timeout
+	$AudioFellInWater.play()
+	if !Global.playersFrozen:
+		die(Global.DeathEnum.WATER)
+	gravity_scale = 0
 
 func die(reason: Global.DeathEnum) -> void:
 	hp = 0

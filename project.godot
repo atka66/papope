@@ -132,7 +132,8 @@ fullscreen={
 2d_physics/layer_4="obstacle"
 2d_physics/layer_5="dynamite"
 2d_physics/layer_6="carghost"
-2d_physics/layer_7="boundary"
+2d_physics/layer_7="onlyplayer"
+2d_physics/layer_8="FREE"
 
 [papope]
 
