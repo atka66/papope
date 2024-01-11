@@ -2,6 +2,7 @@ extends Node2D
 
 @export var player: RigidBody2D
 @export var fromRight: bool = false
+@export var fromTop: bool = false
 
 var playerColor: Color
 var hudShakePwr: int = 0
@@ -86,6 +87,10 @@ func pickup(item: Global.PwrupEnum, ammo: int) -> void:
 			else:
 				$Container/ShakeContainer/Inventory/Container/Revolver/Anim.play("fire_1")
 	updateAmmo(item, ammo)
+	if fromTop:
+		$Container/ShakeContainer/Inventory/Anim.play("fromtop")
+	else:
+		$Container/ShakeContainer/Inventory/Anim.play("frombottom")
 
 func useItem(item: Global.PwrupEnum, ammo: int) -> void:
 	match item:

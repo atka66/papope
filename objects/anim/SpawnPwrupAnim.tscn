@@ -76,17 +76,20 @@ z_index = 5
 z_as_relative = false
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-autoplay = "anim"
 libraries = {
 "": SubResource("AnimationLibrary_w6xqc")
 }
+autoplay = "anim"
 
 [node name="Container" type="Node2D" parent="."]
 position = Vector2(0, -8)
 
 [node name="Sphere" type="Polygon2D" parent="Container"]
+visible = false
+scale = Vector2(2, 2)
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [node name="Line" type="Polygon2D" parent="Container"]
 visible = false
+scale = Vector2(2, 0.1)
 polygon = PackedVector2Array(-24, -1, 24, -1, 24, 1, -24, 1)

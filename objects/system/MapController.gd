@@ -68,7 +68,8 @@ func spawnPlayerHud(player : RigidBody2D) -> Object:
 	if player.playerId == 3: hud.position = Vector2(568, 324)
 	hud.name = 'Hud' + str(player.playerId)
 	hud.player = player
-	hud.fromRight = (player.playerId % 2 == 1)
+	hud.fromRight = player.playerId % 2 == 1
+	hud.fromTop = player.playerId < 2
 	$HudCanvas.add_child(hud)
 	return hud
 
