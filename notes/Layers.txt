@@ -13,6 +13,7 @@ X -53    : [Comets]
 X -52    : [Backgrounds (in MovingBackground.tscn)]
 X -50    : [BgTiles]
 X -49    : [BackgroundDim (in MovingBackground.tscn)]
+X -48     : [LookLine]
 -2     : {DestructibleParticle}, {PlayerSpawner}, {PwrupSpawner}, {Block}, {FallTrigger}, {SpaceTrigger}, {Lava}, {TrafficLane}, {Railway}, {Rock}
 -1     : {Dynamite}, {Trap}, {RevolverRay}, {PlayerSlot}, [FeatherPar], [DashPar], [SmokeParticles]
 X 0      : {Player}

@@ -142,6 +142,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_vu8wd"]
 resource_name = "fire_both"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -226,7 +227,6 @@ libraries = {
 }
 
 [node name="Drum1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver"]
-rotation = 0.959931
 texture = ExtResource("4_jks62")
 
 [node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum1"]
@@ -255,7 +255,6 @@ texture = ExtResource("5_gprcb")
 
 [node name="Drum2" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver"]
 position = Vector2(32, 0)
-rotation = 0.959931
 texture = ExtResource("4_jks62")
 
 [node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum2"]

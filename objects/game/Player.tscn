@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://tlfkm8pk6hy7"]
+[gd_scene load_steps=34 format=3 uid="uid://tlfkm8pk6hy7"]
 
 [ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
@@ -118,6 +118,9 @@ resource_local_to_scene = true
 shader = ExtResource("7_gom1r")
 shader_parameter/line_thickness = 1.0
 shader_parameter/line_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_xd6pn"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 0)
 
 [sub_resource type="Gradient" id="Gradient_5726i"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -265,6 +268,13 @@ polygon = PackedVector2Array(-9, 7.5, -7.5, 9, -3, 4.5, -4.5, 3)
 
 [node name="BottomRight" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
 polygon = PackedVector2Array(9, 7.5, 7.5, 9, 3, 4.5, 4.5, 3)
+
+[node name="LookLine" type="Line2D" parent="."]
+z_index = 88
+z_as_relative = false
+points = PackedVector2Array(0, 0, 0, 0)
+width = 3.0
+gradient = SubResource("Gradient_xd6pn")
 
 [node name="LookVector" type="Marker2D" parent="."]
 

@@ -77,13 +77,16 @@ func _input(event):
 		$Crosshairs.rotation = rAxis.angle()
 		$Crosshairs.position = rAxis
 		
+		var factor = 0
 		match item:
 			Global.PwrupEnum.REVOLVER:
-				$Crosshairs.position *= 200
+				factor = 200
 			Global.PwrupEnum.DYNAMITE:
-				$Crosshairs.position *= 200
+				factor = 200
 			Global.PwrupEnum.WHIP:
-				$Crosshairs.position *= 96
+				factor = 96
+		$Crosshairs.position *= factor
+		$LookLine.set_point_position(1, rAxis * factor)
 				
 		# todo perk long_arms
 
@@ -116,6 +119,9 @@ func updateColor(color: Color) -> void:
 	$Crosshairs/DynamiteCrosshair.material.set_shader_parameter("line_color", borderColor)
 	$Crosshairs/RevolverCrosshair.material.set_shader_parameter("line_color", borderColor)
 	$Crosshairs/WhipCrosshair.material.set_shader_parameter("line_color", borderColor)
+	$LookLine.gradient = $LookLine.gradient.duplicate()
+	$LookLine.gradient.colors[0] = color * Color(1.0, 1.0, 1.0, 0.5)
+	$LookLine.gradient.colors[1] = color * Color(1.0, 1.0, 1.0, 0.0)
 	if hud:
 		hud.setHudColor(color)
 
