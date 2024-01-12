@@ -9,8 +9,8 @@ var gravity = 0.4
 
 func _ready():
 	position = Vector2(
-		max(min(position.x, 1296), 64),
-		max(min(position.y, 736), 32)
+		max(min(position.x, 1360), 0),
+		max(min(position.y, 768), 0)
 	)
 	velocity = Vector2(randf_range(0.6, 2.5) * [-1, 1].pick_random(), randi_range(-7, -5))
 	
