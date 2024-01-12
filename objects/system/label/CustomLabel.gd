@@ -28,16 +28,6 @@ extends Node2D
 		animation = new_animation
 		setAnimation(new_animation)
 
-@export var tooltipFrames: SpriteFrames:
-	set(new_tooltipFrames):
-		tooltipFrames = new_tooltipFrames
-		setTooltipFrames(new_tooltipFrames)
-
-@export var tooltipFrames2: SpriteFrames:
-	set(new_tooltipFrames2):
-		tooltipFrames2 = new_tooltipFrames2
-		setTooltipFrames2(new_tooltipFrames2)
-
 @export var audio: AudioStream:
 	set(new_audio):
 		audio = new_audio
@@ -52,7 +42,6 @@ func _ready():
 	setAlignment(alignment)
 	setAliveTime(aliveTime)
 	setAnimation(animation)
-	setTooltipFrames(tooltipFrames)
 	setAudio(audio)
 	$Audio.play()
 
@@ -76,18 +65,6 @@ func setAliveTime(new_aliveTime):
 
 func setAnimation(new_animation):
 	$Anim.play(new_animation)
-
-func setTooltipFrames(new_tooltipFrames):
-	if new_tooltipFrames != null:
-		$AnimatedSprite.offset.x = $Container/Label.position.x - 16
-		$AnimatedSprite.sprite_frames = tooltipFrames
-		$AnimatedSprite.play()
-
-func setTooltipFrames2(new_tooltipFrames2):
-	if new_tooltipFrames2 != null:
-		$AnimatedSprite2.offset.x = $Container/Label.position.x - 36
-		$AnimatedSprite2.sprite_frames = tooltipFrames2
-		$AnimatedSprite2.play()
 
 func setAudio(new_audio):
 	if new_audio != null:

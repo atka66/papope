@@ -1,6 +1,6 @@
 extends Camera2D
 
-const center: Vector2 = Vector2(340, 192)
+const center: Vector2 = Vector2(680, 384)
 
 var shakePwr: int = 0
 

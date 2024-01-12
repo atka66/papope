@@ -70,22 +70,6 @@ _data = {
 "fromright": SubResource("Animation_wxcsu")
 }
 
-[sub_resource type="Animation" id="Animation_8p224"]
-resource_name = "fromtop"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Container:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.2, 1),
-"update": 0,
-"values": [Vector2(0, -64), Vector2(0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_wdwda"]
 resource_name = "frombottom"
 length = 0.2
@@ -100,6 +84,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(0.2, 1),
 "update": 0,
 "values": [Vector2(0, 64), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8p224"]
+resource_name = "fromtop"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Vector2(0, -64), Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3p57v"]

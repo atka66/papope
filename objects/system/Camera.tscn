@@ -4,10 +4,10 @@
 
 [node name="Camera" type="Camera2D"]
 anchor_mode = 0
-limit_left = -50
-limit_top = -50
-limit_right = 730
-limit_bottom = 434
+limit_left = -100
+limit_top = -100
+limit_right = 1460
+limit_bottom = 868
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 20.0

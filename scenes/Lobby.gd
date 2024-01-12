@@ -15,13 +15,13 @@ func _process(delta):
 
 	$InitHolder/WaitingLabel.hide()
 	$InitHolder/TeamLimitLabel.hide()
-	$InitHolder/StartLabel.hide()
+	$InitHolder/StartHolder.hide()
 	if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.show()
 	elif Global.getNumberOfTeams() < 2:
 		$InitHolder/TeamLimitLabel.show()
 	elif countdownNode == null:
-		$InitHolder/StartLabel.show()
+		$InitHolder/StartHolder.show()
 
 func _input(event):
 	if event.is_action_pressed("quit") and !OS.has_feature("web"):
@@ -73,9 +73,14 @@ func initPlayers() -> void:
 			}
 		)
 
+func warnCannotStart() -> void:
+	$InitHolder/Anim.stop()
+	$InitHolder/Anim.play('warn')
+	$InitHolder/AudioFail.play()
+
 func startCountdown() -> void:
 	var countdown = Res.CountdownObject.instantiate()
-	countdown.position = Vector2(340, 128)
+	countdown.position = Vector2(680, 256)
 	$MenuCanvas.add_child(countdown)
 	countdownNode = countdown
 

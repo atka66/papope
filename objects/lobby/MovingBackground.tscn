@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cop2o1vtkv1qt"]
+[gd_scene load_steps=17 format=3 uid="uid://cop2o1vtkv1qt"]
 
 [ext_resource type="Script" path="res://objects/lobby/MovingBackground.gd" id="1_105ju"]
 [ext_resource type="Texture2D" uid="uid://haoeer3guucd" path="res://sprites/lobby/bg_conveyor.png" id="1_fx2n7"]
@@ -8,6 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://bk1g5i1nqoopc" path="res://sprites/lobby/bg_space.png" id="5_uy7iw"]
 [ext_resource type="Texture2D" uid="uid://coveew6isvbc1" path="res://sprites/lobby/bg_traffic.png" id="6_t1d8a"]
 [ext_resource type="Texture2D" uid="uid://bmaw5qft2uudp" path="res://sprites/lobby/bg_western.png" id="7_bd3fq"]
+[ext_resource type="Texture2D" uid="uid://ee8qgahsw5i6" path="res://sprites/anim/static/static_1.png" id="9_e4jyb"]
+[ext_resource type="Texture2D" uid="uid://nyuytxsw40yd" path="res://sprites/anim/static/static_2.png" id="10_w6a5m"]
+[ext_resource type="Texture2D" uid="uid://mahj8knrlv25" path="res://sprites/anim/static/static_3.png" id="11_og3jc"]
+[ext_resource type="Texture2D" uid="uid://dyrdcjwnousnx" path="res://sprites/anim/static/static_4.png" id="12_oq82r"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yekfl"]
 animations = [{
@@ -38,21 +42,16 @@ animations = [{
 "speed": 0.0
 }]
 
-[sub_resource type="Shader" id="Shader_16hdn"]
-code = "shader_type canvas_item;
-
-void fragment() {
-	vec2 uv = UV*0.05;
-	float a = fract(sin(dot(SCREEN_UV, vec2(12.9898, 78.233) * TIME)) * 438.5453) * 1.9;
-	vec4 col = texture(TEXTURE, SCREEN_UV);
-	col.a *= a;
-	COLOR.r = col.a;
-	COLOR.g = col.a;
-	COLOR.b = col.a;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gymer"]
-shader = SubResource("Shader_16hdn")
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_dgqvs"]
+frames = 4
+speed_scale = 30.0
+frame_0/texture = ExtResource("9_e4jyb")
+frame_1/texture = ExtResource("10_w6a5m")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("11_og3jc")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("12_oq82r")
+frame_3/duration = 1.0
 
 [sub_resource type="Animation" id="Animation_5mort"]
 resource_name = "loop"
@@ -79,7 +78,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-150, -150), Vector2(-300, -150)]
+"values": [Vector2(-300, -300), Vector2(-600, -300)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_arf80"]
@@ -93,18 +92,21 @@ script = ExtResource("1_105ju")
 [node name="Backgrounds" type="AnimatedSprite2D" parent="."]
 z_index = -52
 z_as_relative = false
-position = Vector2(-171, -150)
-scale = Vector2(2, 2)
+position = Vector2(-300, -300)
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_yekfl")
 frame_progress = 0.531845
 centered = false
 
-[node name="BackgroundDim" type="Polygon2D" parent="."]
-modulate = Color(1, 1, 1, 0)
+[node name="BackgroundDim" type="TextureRect" parent="."]
 z_index = -49
 z_as_relative = false
-material = SubResource("ShaderMaterial_gymer")
-polygon = PackedVector2Array(-200, -200, 880, -200, 880, 584, -200, 584)
+offset_left = -300.0
+offset_top = -300.0
+offset_right = 1660.0
+offset_bottom = 1068.0
+texture = SubResource("AnimatedTexture_dgqvs")
+stretch_mode = 6
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {

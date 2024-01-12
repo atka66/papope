@@ -11,21 +11,23 @@ z_as_relative = false
 script = ExtResource("1_1n5x8")
 
 [node name="ModeOption" parent="." instance=ExtResource("1_u4a6y")]
-position = Vector2(0, -24)
+position = Vector2(0, -48)
 
 [node name="MapOption" parent="." instance=ExtResource("1_u4a6y")]
 
 [node name="RoundsOption" parent="." instance=ExtResource("1_u4a6y")]
-position = Vector2(0, 24)
+position = Vector2(0, 48)
 
 [node name="AudioTick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_l4sr4")
 bus = &"sfx"
 
 [node name="ModeInfoLabel1" parent="." instance=ExtResource("4_2dwp2")]
-position = Vector2(256, -8)
+position = Vector2(512, -16)
+fontSize = 2
 alignment = 8
 
 [node name="ModeInfoLabel2" parent="." instance=ExtResource("4_2dwp2")]
-position = Vector2(256, 8)
+position = Vector2(512, 16)
+fontSize = 2
 alignment = 8

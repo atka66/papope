@@ -12,7 +12,7 @@ func showCount(cnt: String, size: int, audio: Resource) -> void:
 
 func _ready():
 	for i in range(3):
-		showCount(str(3 - i), 4, Res.AudioPlayerDash.pick_random())
+		showCount(str(3 - i), 8, Res.AudioPlayerDash.pick_random())
 		await get_tree().create_timer(1.0).timeout
 	if (get_tree().get_current_scene().get_name() == 'Lobby'):
 		# assign max HPs and go to map
@@ -26,5 +26,5 @@ func _ready():
 					Global.playersMaxHp[i] = 100
 		Global.goToMap()
 	else:
-		showCount("go!", 6, null)
+		showCount("go!", 12, null)
 		Global.startRound()

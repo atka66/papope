@@ -19,29 +19,33 @@ script = ExtResource("1_e7ob8")
 
 [node name="Slot" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_o7vey")
-offset_left = -14.0
-offset_top = -14.0
-offset_right = 14.0
-offset_bottom = 14.0
+offset_left = -28.0
+offset_top = -28.0
+offset_right = 28.0
+offset_bottom = 28.0
 
 [node name="ControllerSprite" type="Sprite2D" parent="."]
-position = Vector2(0, 32)
+position = Vector2(0, 64)
+scale = Vector2(2, 2)
 texture = ExtResource("3_2whjo")
 
 [node name="JoinLabel" parent="." instance=ExtResource("4_vrrwg")]
-position = Vector2(0, 54)
+position = Vector2(0, 108)
 text = "join"
+fontSize = 2
 alignment = 8
 tooltipFrames = ExtResource("5_fxtnu")
 
 [node name="CancelLabel" parent="." instance=ExtResource("4_vrrwg")]
-position = Vector2(0, 54)
+position = Vector2(0, 108)
 text = "cancel"
+fontSize = 2
 alignment = 8
 tooltipFrames = ExtResource("6_vfeer")
 
 [node name="LeaveLabel" parent="." instance=ExtResource("4_vrrwg")]
-position = Vector2(0, 54)
+position = Vector2(0, 108)
 text = "leave"
+fontSize = 2
 alignment = 8
 tooltipFrames = ExtResource("6_vfeer")

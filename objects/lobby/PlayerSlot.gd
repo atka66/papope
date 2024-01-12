@@ -42,6 +42,8 @@ func _input(event):
 			else:
 				if Global.getNumberOfTeams() > 1:
 					Lobby.startCountdown()
+				else:
+					Lobby.warnCannotStart()
 		if event.is_action_pressed("cancel"):
 			if Global.playersJoined[playerId]:
 				if Lobby.countdownNode != null:

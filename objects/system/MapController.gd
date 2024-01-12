@@ -75,7 +75,7 @@ func spawnPlayerHud(player : RigidBody2D) -> Object:
 
 func initCountdown() -> void:
 	var countdown = Res.CountdownObject.instantiate()
-	countdown.position = Vector2(340, 64)
+	countdown.position = Vector2(680, 128)
 	$HudCanvas.add_child(countdown)
 
 func endRound(aliveTeamId: int) -> void:
@@ -102,7 +102,7 @@ func showCount(position: Vector2, cnt: String) -> void:
 	var label = Res.CustomLabelObject.instantiate()
 	label.position = position
 	label.text = cnt
-	label.fontSize = 2
+	label.fontSize = 4
 	label.alignment = Control.LayoutPreset.PRESET_CENTER
 	label.animation = 'float_in'
 	label.aliveTime = 1
