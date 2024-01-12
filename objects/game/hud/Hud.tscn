@@ -21,7 +21,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Vector2(-120, 0), Vector2(0, 0)]
+"values": [Vector2(-240, 0), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -49,7 +49,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Vector2(120, 0), Vector2(0, 0)]
+"values": [Vector2(240, 0), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -72,7 +72,7 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_wdwda"]
 resource_name = "frombottom"
-length = 0.2
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -80,15 +80,15 @@ tracks/0/path = NodePath("Container:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(0.2, 1),
 "update": 0,
-"values": [Vector2(0, 64), Vector2(0, 0)]
+"values": [Vector2(0, 128), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_8p224"]
 resource_name = "fromtop"
-length = 0.2
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -96,10 +96,10 @@ tracks/0/path = NodePath("Container:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(0.2, 1),
 "update": 0,
-"values": [Vector2(0, -64), Vector2(0, 0)]
+"values": [Vector2(0, -128), Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3p57v"]
@@ -210,7 +210,7 @@ libraries = {
 [node name="ShakeContainer" type="Node2D" parent="Container"]
 
 [node name="Inventory" type="Node2D" parent="Container/ShakeContainer"]
-position = Vector2(66, 14)
+position = Vector2(132, 28)
 
 [node name="Anim" type="AnimationPlayer" parent="Container/ShakeContainer/Inventory"]
 libraries = {
@@ -227,6 +227,7 @@ libraries = {
 }
 
 [node name="Drum1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver"]
+scale = Vector2(2, 2)
 texture = ExtResource("4_jks62")
 
 [node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum1"]
@@ -254,7 +255,8 @@ position = Vector2(-8, -5)
 texture = ExtResource("5_gprcb")
 
 [node name="Drum2" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver"]
-position = Vector2(32, 0)
+position = Vector2(64, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("4_jks62")
 
 [node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum2"]
@@ -284,23 +286,27 @@ texture = ExtResource("5_gprcb")
 [node name="Dynamite" type="Node2D" parent="Container/ShakeContainer/Inventory/Container"]
 
 [node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Dynamite"]
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 
 [node name="Ammo1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Dynamite"]
-position = Vector2(16, 0)
+position = Vector2(32, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 
 [node name="Shield" type="Node2D" parent="Container/ShakeContainer/Inventory/Container"]
 
 [node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Shield"]
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 1
 
 [node name="Ammo1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Shield"]
-position = Vector2(16, 0)
+position = Vector2(32, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 1
@@ -308,12 +314,14 @@ frame = 1
 [node name="Trap" type="Node2D" parent="Container/ShakeContainer/Inventory/Container"]
 
 [node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Trap"]
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 2
 
 [node name="Ammo1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Trap"]
-position = Vector2(16, 0)
+position = Vector2(32, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 2
@@ -321,97 +329,109 @@ frame = 2
 [node name="Whip" type="Node2D" parent="Container/ShakeContainer/Inventory/Container"]
 
 [node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
 [node name="Ammo1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
-position = Vector2(6, 0)
+position = Vector2(12, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
 [node name="Ammo2" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
-position = Vector2(12, 0)
+position = Vector2(24, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
 [node name="Ammo3" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
-position = Vector2(18, 0)
+position = Vector2(36, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
 [node name="Ammo4" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
-position = Vector2(24, 0)
+position = Vector2(48, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
 [node name="Ammo5" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
-position = Vector2(32, 0)
+position = Vector2(60, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
 [node name="Ammo6" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
-position = Vector2(40, 0)
+position = Vector2(72, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
 [node name="Ammo7" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
-position = Vector2(48, 0)
+position = Vector2(84, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
 [node name="Ammo8" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
-position = Vector2(56, 0)
+position = Vector2(96, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
 [node name="Ammo9" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
-position = Vector2(64, 0)
+position = Vector2(108, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
 [node name="FaceBg" type="Polygon2D" parent="Container/ShakeContainer"]
-polygon = PackedVector2Array(16, 0, 48, 0, 48, 32, 16, 32)
+position = Vector2(64, 32)
+polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 
 [node name="Face" type="Sprite2D" parent="Container/ShakeContainer"]
-position = Vector2(16, 0)
+position = Vector2(64, 32)
+scale = Vector2(2, 2)
 texture = ExtResource("1_k2qbb")
-centered = false
 hframes = 7
 
 [node name="HpBarBg" type="Polygon2D" parent="Container/ShakeContainer"]
+position = Vector2(34, 64)
 color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(17, 32, 111, 32, 111, 39, 17, 39)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 14, 0, 14)
 
 [node name="HpBarDelay" type="Polygon2D" parent="Container/ShakeContainer"]
-position = Vector2(17, 32)
-polygon = PackedVector2Array(0, 0, 94, 0, 94, 7, 0, 7)
+position = Vector2(34, 64)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 14, 0, 14)
 
 [node name="HpBar" type="Polygon2D" parent="Container/ShakeContainer"]
-position = Vector2(17, 32)
-polygon = PackedVector2Array(0, 0, 94, 0, 94, 7, 0, 7)
+position = Vector2(34, 64)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 14, 0, 14)
 
 [node name="HpBarDelay2" type="Polygon2D" parent="Container/ShakeContainer"]
-position = Vector2(17, 36)
-polygon = PackedVector2Array(0, 0, 94, 0, 94, 3, 0, 3)
+position = Vector2(34, 72)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 6, 0, 6)
 
 [node name="HpBar2" type="Polygon2D" parent="Container/ShakeContainer"]
-position = Vector2(17, 36)
-polygon = PackedVector2Array(0, 0, 94, 0, 94, 3, 0, 3)
+position = Vector2(34, 72)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 6, 0, 6)
 
 [node name="HpBarFlicker" type="Polygon2D" parent="Container/ShakeContainer"]
 visible = false
-position = Vector2(17, 32)
-polygon = PackedVector2Array(0, 0, 94, 0, 94, 7, 0, 7)
+position = Vector2(34, 64)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 14, 0, 14)
 
 [node name="Anim" type="AnimationPlayer" parent="Container/ShakeContainer/HpBarFlicker"]
 libraries = {
@@ -420,10 +440,12 @@ libraries = {
 autoplay = "flicker"
 
 [node name="Hud" type="Sprite2D" parent="Container/ShakeContainer"]
+scale = Vector2(2, 2)
 texture = ExtResource("2_05hp3")
 centered = false
 
 [node name="ScoreLabel" parent="Container/ShakeContainer" instance=ExtResource("4_u57dk")]
-position = Vector2(8, 32)
+position = Vector2(16, 62)
 text = "0"
+fontSize = 3
 alignment = 8

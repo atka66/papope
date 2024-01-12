@@ -16,7 +16,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [3.0, 0.0]
+"values": [6.0, 0.0]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -95,9 +95,9 @@ local_coords = true
 direction = Vector2(0.2, 1)
 spread = 10.0
 gravity = Vector2(0, 0)
-initial_velocity_max = 150.0
+initial_velocity_max = 300.0
 angle_max = 90.0
-scale_amount_max = 8.0
+scale_amount_max = 15.0
 
 [node name="MuzzleBottom" type="CPUParticles2D" parent="."]
 emitting = false
@@ -109,9 +109,9 @@ local_coords = true
 direction = Vector2(0.2, -1)
 spread = 10.0
 gravity = Vector2(0, 0)
-initial_velocity_max = 150.0
+initial_velocity_max = 300.0
 angle_max = 90.0
-scale_amount_max = 8.0
+scale_amount_max = 15.0
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_4crib")

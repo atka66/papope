@@ -16,10 +16,10 @@ func _ready():
 	if harmful:
 		for player in get_tree().get_nodes_in_group('players'):
 			var dist: float = position.distance_to(player.position)
-			if dist < 150.0:
-				var power: float = 150.0 - dist
+			if dist < 300.0:
+				var power: float = 300.0 - dist
 				player.apply_central_impulse(position.direction_to(player.position) * power * 10)
-				var dmg: float = power / 1.5
+				var dmg: float = power / 3.0
 				# todo righteousness
 				player.hurt(dmg)
 

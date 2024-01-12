@@ -74,7 +74,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xviia"]
-radius = 8.0
+radius = 16.0
 
 [node name="Dynamite" type="RigidBody2D" groups=["dynamites", "shootables", "trappables", "whippables", "zappables"]]
 z_index = -1
@@ -100,10 +100,11 @@ shape = SubResource("CircleShape2D_xviia")
 [node name="Container" type="Node2D" parent="."]
 
 [node name="Sprite" type="Sprite2D" parent="Container"]
+scale = Vector2(2, 2)
 texture = ExtResource("1_iorbu")
 
 [node name="Smoke" type="CPUParticles2D" parent="Container"]
-position = Vector2(10, 0)
+position = Vector2(20, 0)
 amount = 5
 lifetime = 0.2
 lifetime_randomness = 1.0
@@ -111,10 +112,9 @@ texture = ExtResource("3_6epn1")
 particle_flag_align_y = true
 spread = 120.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 100.0
-initial_velocity_max = 200.0
-scale_amount_min = 0.5
-scale_amount_max = 1.5
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+scale_amount_max = 3.0
 
 [node name="AudioThrow" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_hyiov")

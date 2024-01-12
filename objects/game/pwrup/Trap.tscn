@@ -118,7 +118,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kwslm"]
-radius = 6.0
+radius = 12.0
 
 [node name="Trap" type="Area2D"]
 z_index = -1
@@ -134,6 +134,7 @@ libraries = {
 autoplay = "arm"
 
 [node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
 texture = ExtResource("2_idjxi")
 hframes = 2
 
