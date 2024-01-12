@@ -62,10 +62,10 @@ func spawnPlayer(playerId : int) -> void:
 
 func spawnPlayerHud(player : RigidBody2D) -> Object:
 	var hud = Res.HudObject.instantiate()
-	if player.playerId == 0: hud.position = Vector2(0, 4)
-	if player.playerId == 1: hud.position = Vector2(568, 4)
-	if player.playerId == 2: hud.position = Vector2(0, 324)
-	if player.playerId == 3: hud.position = Vector2(568, 324)
+	if player.playerId == 0: hud.position = Vector2(0, 8)
+	if player.playerId == 1: hud.position = Vector2(1136, 8)
+	if player.playerId == 2: hud.position = Vector2(0, 648)
+	if player.playerId == 3: hud.position = Vector2(1136, 648)
 	hud.name = 'Hud' + str(player.playerId)
 	hud.player = player
 	hud.fromRight = player.playerId % 2 == 1

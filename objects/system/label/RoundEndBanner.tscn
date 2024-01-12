@@ -16,7 +16,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 3.3, 3.5),
 "transitions": PackedFloat32Array(0.5, 1, 2, 1),
 "update": 0,
-"values": [Vector2(160, 160), Vector2(244, 160), Vector2(276, 160), Vector2(340, 160)]
+"values": [Vector2(350, 320), Vector2(518, 320), Vector2(582, 320), Vector2(710, 320)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -80,7 +80,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 3.3, 3.5),
 "transitions": PackedFloat32Array(0.5, 1, 2, 1),
 "update": 0,
-"values": [Vector2(128, 128), Vector2(192, 128), Vector2(224, 128), Vector2(288, 128)]
+"values": [Vector2(256, 256), Vector2(384, 256), Vector2(448, 256), Vector2(576, 256)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -104,7 +104,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 3.5, 3.7),
 "transitions": PackedFloat32Array(1, 0.5, 1, 2, 1),
 "update": 0,
-"values": [Vector2(412, 172), Vector2(412, 172), Vector2(348, 172), Vector2(316, 172), Vector2(252, 172)]
+"values": [Vector2(824, 344), Vector2(824, 344), Vector2(696, 344), Vector2(632, 344), Vector2(504, 344)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -172,21 +172,18 @@ libraries = {
 [node name="TeamLabel" parent="." instance=ExtResource("3_ydum0")]
 visible = false
 modulate = Color(1, 1, 1, 0)
-position = Vector2(288, 128)
-fontSize = 4
-fontColor = Color(1, 1, 1, 1)
+position = Vector2(256, 256)
+fontSize = 8
 
 [node name="WinsLabel" parent="." instance=ExtResource("3_ydum0")]
 visible = false
 modulate = Color(1, 1, 1, 0)
-position = Vector2(252, 172)
+position = Vector2(824, 344)
 text = "wins"
-fontSize = 4
-fontColor = Color(1, 1, 1, 1)
+fontSize = 8
 
 [node name="DrawLabel" parent="." instance=ExtResource("3_ydum0")]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(160, 160)
+position = Vector2(350, 320)
 text = "draw"
-fontSize = 4
-fontColor = Color(1, 1, 1, 1)
+fontSize = 8

@@ -124,8 +124,6 @@ position = Vector2(344, 352)
 
 [node name="InitHolder" type="Node2D" parent="."]
 position = Vector2(680, 672)
-rotation = 0.0220463
-scale = Vector2(1.21053, 1.21053)
 
 [node name="Anim" type="AnimationPlayer" parent="InitHolder"]
 libraries = {

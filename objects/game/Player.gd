@@ -107,7 +107,7 @@ func _input(event):
 						updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
 		else:
 			if alive && !Global.playersFrozen && !isFallingIntoWater:
-				if !trapped && linear_velocity.length() < 1000:
+				if !trapped && linear_velocity.length() < 2000:
 					if event.is_action_pressed("game_dash"):
 						dash(lAxis)
 				if event.is_action_pressed("game_use"):
@@ -227,7 +227,7 @@ func pickup(pwrup : Global.PwrupEnum) -> void:
 			pwrupName = 'whip'
 			$Crosshairs/WhipCrosshair.show()
 			ammo = 5
-	Global.spawnFallingLabel(pwrupName, global_position, Color.LIGHT_GREEN, 2)
+	Global.spawnFallingLabel(pwrupName, global_position, Color.LIGHT_GREEN, 3)
 	hud.pickup(item, ammo)
 	# todo akimbo perk 
 
@@ -315,7 +315,7 @@ func directExplosion():
 
 func shield() -> void:
 	shielded = true
-	Global.spawnFallingLabel("shielded!", global_position, Color.LIGHT_BLUE, 2)
+	Global.spawnFallingLabel("shielded!", global_position, Color.LIGHT_BLUE, 3)
 	$Shield.show()
 	$AudioShieldStart.play()
 	$Shield/Anim.stop()
