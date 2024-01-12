@@ -5,16 +5,16 @@ extends Node2D
 @export var color: Color = Color.WHITE
 
 var velocity = Vector2.ZERO
-var gravity = 0.2
+var gravity = 0.4
 
 func _ready():
 	position = Vector2(
-		max(min(position.x, 648), 32),
-		max(min(position.y, 349), 29)
+		max(min(position.x, 1296), 64),
+		max(min(position.y, 736), 32)
 	)
-	velocity = Vector2(randf_range(0.3, 1.5) * [-1, 1].pick_random(), randi_range(-4, -3))
+	velocity = Vector2(randf_range(0.6, 2.5) * [-1, 1].pick_random(), randi_range(-7, -5))
 	
-	rotation = velocity.x / 5
+	rotation = velocity.x / 7
 	
 	$CustomLabel.setFontSize(size)
 	$CustomLabel.setText(text)

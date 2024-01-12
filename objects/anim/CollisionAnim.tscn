@@ -4,8 +4,8 @@
 
 [sub_resource type="Animation" id="Animation_m0uaa"]
 resource_name = "anim"
-length = 0.2
-step = 0.05
+length = 0.15
+step = 0.01
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -13,7 +13,7 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.2),
+"times": PackedFloat32Array(0.15),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -27,7 +27,7 @@ tracks/1/path = NodePath("Upper:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.2),
+"times": PackedFloat32Array(0, 0.01, 0.15),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, -64)]
@@ -39,7 +39,7 @@ tracks/2/path = NodePath("Upper:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.2),
+"times": PackedFloat32Array(0, 0.01, 0.15),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(2, 16), Vector2(1, 0)]
@@ -51,7 +51,7 @@ tracks/3/path = NodePath("Lower:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.2),
+"times": PackedFloat32Array(0, 0.01, 0.15),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 64)]
@@ -63,7 +63,7 @@ tracks/4/path = NodePath("Lower:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.2),
+"times": PackedFloat32Array(0, 0.01, 0.15),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(2, 16), Vector2(1, 0)]
@@ -80,20 +80,20 @@ z_as_relative = false
 script = ExtResource("1_8c7rb")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-autoplay = "anim"
 libraries = {
 "": SubResource("AnimationLibrary_ftssn")
 }
+autoplay = "anim"
 
 [node name="Upper" type="Polygon2D" parent="."]
 position = Vector2(0, -64)
 scale = Vector2(1, 1e-05)
-polygon = PackedVector2Array(-1, -2, 1, -2, 1, 0, -1, 0)
+polygon = PackedVector2Array(-2, -4, 2, -4, 2, 0, -2, 0)
 
 [node name="Lower" type="Polygon2D" parent="."]
 position = Vector2(0, 64)
 scale = Vector2(1, 1e-05)
-polygon = PackedVector2Array(-1, 2, 1, 2, 1, 0, -1, 0)
+polygon = PackedVector2Array(-2, 4, 2, 4, 2, 0, -2, 0)
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
 bus = &"sfx"

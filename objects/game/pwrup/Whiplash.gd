@@ -1,6 +1,6 @@
 extends Node2D
 
-const MAX_LENGTH: int = 96
+const MAX_LENGTH: int = 192
 @export var origin: Node2D
 @export var targetNorm: Vector2
 

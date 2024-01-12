@@ -277,7 +277,7 @@ polygon = PackedVector2Array(18, 15, 15, 18, 6, 9, 9, 6)
 z_index = 88
 z_as_relative = false
 points = PackedVector2Array(0, 0, 0, 0)
-width = 3.0
+width = 5.0
 gradient = SubResource("Gradient_xd6pn")
 
 [node name="LookVector" type="Marker2D" parent="."]

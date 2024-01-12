@@ -156,7 +156,7 @@ _data = {
 
 [sub_resource type="LabelSettings" id="LabelSettings_pmeb4"]
 font = ExtResource("3_8xr18")
-font_size = 40
+font_size = 80
 font_color = Color(1, 0.752941, 0.12549, 1)
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)

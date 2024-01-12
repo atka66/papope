@@ -20,7 +20,7 @@ var inSpace: bool = false
 var hit: bool = false
 
 var thrust: Vector2 = Vector2.ZERO
-var speed: int = 20
+var speed: int = 40
 var dashMultiplier: int = 30
 var frictionCustom: float = 0.1
 
@@ -80,11 +80,11 @@ func _input(event):
 		var factor = 0
 		match item:
 			Global.PwrupEnum.REVOLVER:
-				factor = 200
+				factor = 400
 			Global.PwrupEnum.DYNAMITE:
-				factor = 200
+				factor = 400
 			Global.PwrupEnum.WHIP:
-				factor = 96
+				factor = 192
 		$Crosshairs.position *= factor
 		$LookLine.set_point_position(1, rAxis * factor)
 				
@@ -99,6 +99,8 @@ func _input(event):
 					$BodyParts/Face.frame = Global.playersSkin[playerId]
 				if ProjectSettings.get("papope/allow_players_set_options"):
 						if event.is_action_pressed("game_use"):
+							if Global.DEBUG:
+								Global.spawnFallingLabel(Global.DEATH_STRINGS[Global.DeathEnum.DEFAULT].pick_random(), global_position, Color.LIGHT_GREEN, 3)
 							Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
 						if event.is_action_pressed("game_dash"):
 							Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
@@ -166,7 +168,7 @@ func _process(delta):
 				else:
 					$AudioDeath.play()
 				
-				Global.spawnFallingLabel(Global.getDeathMessage(deathReason), global_position, Color.DARK_GRAY, 2)
+				Global.spawnFallingLabel(Global.getDeathMessage(deathReason), global_position, Color.DARK_GRAY, 3)
 				
 				# todo death reasons
 				# todo register no refunds
@@ -225,7 +227,7 @@ func pickup(pwrup : Global.PwrupEnum) -> void:
 			pwrupName = 'whip'
 			$Crosshairs/WhipCrosshair.show()
 			ammo = 5
-	Global.spawnFallingLabel(pwrupName, global_position, Color.LIGHT_GREEN, 1)
+	Global.spawnFallingLabel(pwrupName, global_position, Color.LIGHT_GREEN, 2)
 	hud.pickup(item, ammo)
 	# todo akimbo perk 
 
@@ -233,7 +235,7 @@ func useItem() -> void:
 	match item:
 		Global.PwrupEnum.REVOLVER:
 			Global.incrementStat(playerId, Global.StatEnum.REV_USE, 1)
-			apply_central_impulse(-$LookVector.position.normalized() * 200)
+			apply_central_impulse(-$LookVector.position.normalized() * 400)
 			var revolverRay = Res.RevolverRayObject.instantiate()
 			revolverRay.position = position
 			revolverRay.origin = self
@@ -242,10 +244,10 @@ func useItem() -> void:
 		Global.PwrupEnum.DYNAMITE:
 			Global.incrementStat(playerId, Global.StatEnum.DYN_USE, 1)
 			var dynamite = Res.DynamiteObject.instantiate()
-			dynamite.position = position + ($LookVector.position.normalized()) * 20
+			dynamite.position = position + ($LookVector.position.normalized()) * 40
 			dynamite.origin = self
 			dynamite.targetNorm = $LookVector.position.normalized()
-			dynamite.throwForce = $LookVector.position.length() * 190
+			dynamite.throwForce = $LookVector.position.length() * 380
 			Global.addToScene(dynamite)
 		Global.PwrupEnum.SHIELD:
 			shield()
@@ -253,7 +255,7 @@ func useItem() -> void:
 			Global.incrementStat(playerId, Global.StatEnum.TRP_USE, 1)
 			var trap = Res.TrapObject.instantiate()
 			trap.position = position
-			trap.rotation_degrees += (randi() % 30) - 60
+			trap.rotation_degrees += randi_range(-30, 30)
 			trap.originPlayerId = playerId
 			Global.addToScene(trap)
 		Global.PwrupEnum.WHIP:
@@ -276,7 +278,7 @@ func getShot(playerId: int, normal: Vector2) -> void:
 	hurtSound(Res.AudioHurtRevolver)
 	hurt(Global.DAMAGE_REVOLVER)
 	#todo was just killed?
-	apply_central_impulse(normal * 100)
+	apply_central_impulse(normal * 400)
 
 func getTrapped(playerId: int) -> void:
 	hurtSound(Res.AudioHurtTrap)
@@ -291,7 +293,7 @@ func getWhipped(playerId: int, normal: Vector2) -> void:
 	hurtSound(Res.AudioHurtWhip)
 	hurt(Global.DAMAGE_WHIP)
 	# todo was just killed?
-	apply_central_impulse(normal * 1000)
+	apply_central_impulse(normal * 2000)
 
 func getZapped() -> void:
 	hurtSound(Res.AudioHurtCactus.pick_random()) #todo change?
@@ -300,9 +302,9 @@ func getZapped() -> void:
 	
 	var vector: Vector2 = Vector2(-linear_velocity.x, 0)
 	var vel = Vector2.RIGHT
-	if global_position.x < 336:
+	if global_position.x < 672:
 		vel.x *= -1
-	apply_central_impulse(vector + (vel * 800))
+	apply_central_impulse(vector + (vel * 1600))
 
 func untrap():
 	trapped = false
@@ -313,7 +315,7 @@ func directExplosion():
 
 func shield() -> void:
 	shielded = true
-	Global.spawnFallingLabel("shielded!", global_position, Color.LIGHT_BLUE, 1)
+	Global.spawnFallingLabel("shielded!", global_position, Color.LIGHT_BLUE, 2)
 	$Shield.show()
 	$AudioShieldStart.play()
 	$Shield/Anim.stop()
@@ -334,7 +336,7 @@ func hurt(damage: int) -> void:
 	if Global.playersPerks[playerId].has(Global.PerkEnum.ARMORED):
 		actualDamage = int(ceil(float(damage) / 2))
 	if actualDamage > 0 && alive && !Global.playersFrozen:
-		var fallingMessageSize = int(actualDamage / 20) + 1
+		var fallingMessageSize = int(actualDamage / 10) + 1
 		if shielded:
 			Global.spawnFallingLabel('0', global_position, Color.WHITE, fallingMessageSize)
 		else:
@@ -357,7 +359,7 @@ func fallIntoWater() -> void:
 	gravity_scale = 5
 	var vector = -linear_velocity
 	var vel = Vector2(0.7, -1)
-	if global_position.x < 340:
+	if global_position.x < 680:
 		vel.x *= -1
 	apply_central_impulse(vector + (vel * 500))
 	await get_tree().create_timer(0.6).timeout
@@ -387,7 +389,7 @@ func _on_body_entered(body):
 		if !hit:
 			body.hit = true
 			var collisionAnim = Res.CollisionAnimObject.instantiate()
-			var animScale = (thrust.length() + body.thrust.length()) / 30
+			var animScale = (thrust.length() + body.thrust.length()) / 60
 			collisionAnim.scale = Vector2(animScale, animScale)
 			collisionAnim.position = global_position - ((global_position - body.global_position) / 2)
 			collisionAnim.look_at(global_position)

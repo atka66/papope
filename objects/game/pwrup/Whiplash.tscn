@@ -54,11 +54,13 @@ script = ExtResource("1_pf6gi")
 [node name="Container" type="Node2D" parent="."]
 
 [node name="WhipSprite" type="AnimatedSprite2D" parent="Container"]
-position = Vector2(32, 0)
+position = Vector2(64, 0)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_rgyqd")
 autoplay = "default"
 
 [node name="HitScan" type="RayCast2D" parent="."]
+target_position = Vector2(0, 100)
 collision_mask = 59
 collide_with_areas = true
 

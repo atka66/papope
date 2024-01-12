@@ -33,7 +33,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2, 2.8, 3),
 "transitions": PackedFloat32Array(0.5, 1, 2, 1),
 "update": 0,
-"values": [Vector2(0, 300), Vector2(64, 300), Vector2(128, 300), Vector2(192, 300)]
+"values": [Vector2(0, 600), Vector2(128, 600), Vector2(256, 600), Vector2(384, 600)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -85,14 +85,14 @@ autoplay = "disappear"
 visible = false
 z_index = 100
 z_as_relative = false
-offset_right = 680.0
-offset_bottom = 384.0
+offset_right = 1360.0
+offset_bottom = 768.0
 color = Color(0, 0, 0, 1)
 
 [node name="MapLabel" parent="." instance=ExtResource("3_lejj6")]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(0, 300)
-fontSize = 4
+position = Vector2(0, 600)
+fontSize = 8
 alignment = 4
 
 [node name="MapBoundary" parent="." instance=ExtResource("4_c1rtt")]

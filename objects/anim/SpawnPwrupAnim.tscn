@@ -86,10 +86,8 @@ position = Vector2(0, -8)
 
 [node name="Sphere" type="Polygon2D" parent="Container"]
 visible = false
-scale = Vector2(2, 2)
-polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [node name="Line" type="Polygon2D" parent="Container"]
 visible = false
-scale = Vector2(2, 0.1)
-polygon = PackedVector2Array(-24, -1, 24, -1, 24, 1, -24, 1)
+polygon = PackedVector2Array(-48, -2, 48, -2, 48, 2, -48, 2)

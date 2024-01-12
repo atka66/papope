@@ -47,7 +47,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(18, 18.8),
 "transitions": PackedFloat32Array(0.193187, 1),
 "update": 0,
-"values": [Vector2(32, 512), Vector2(2, 512)]
+"values": [Vector2(32, 1024), Vector2(2, 1024)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -59,7 +59,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(18, 18.8),
 "transitions": PackedFloat32Array(0.2, 1),
 "update": 0,
-"values": [Vector2(-16, -256), Vector2(-1, -256)]
+"values": [Vector2(-16, -512), Vector2(-1, -512)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -221,7 +221,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d3b6n"]
-size = Vector2(64, 512)
+size = Vector2(128, 1024)
 
 [node name="SpaceRay" type="Node2D"]
 z_index = 6
@@ -237,9 +237,9 @@ autoplay = "loop"
 [node name="Phase1" type="ColorRect" parent="."]
 visible = false
 offset_left = 35.8536
-offset_top = -256.0
+offset_top = -512.0
 offset_right = 35.8536
-offset_bottom = 256.0
+offset_bottom = 512.0
 
 [node name="Phase2" type="Area2D" parent="."]
 visible = false
@@ -252,7 +252,7 @@ texture = SubResource("GradientTexture2D_ydxlq")
 texture_scale = 10.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Phase2"]
-scale = Vector2(5, 5)
+scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_8xqsn")
 autoplay = "default"
 
@@ -261,7 +261,7 @@ shape = SubResource("RectangleShape2D_d3b6n")
 disabled = true
 
 [node name="ParticlesBottom" type="CPUParticles2D" parent="."]
-position = Vector2(0, 256)
+position = Vector2(0, 512)
 emitting = false
 amount = 100
 lifetime = 0.3
@@ -269,17 +269,18 @@ lifetime_randomness = 1.0
 local_coords = true
 texture = ExtResource("3_uabs2")
 emission_shape = 3
-emission_rect_extents = Vector2(16, 1)
+emission_rect_extents = Vector2(32, 1)
 particle_flag_align_y = true
 direction = Vector2(0, -1)
 spread = 30.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 200.0
-initial_velocity_max = 1000.0
-scale_amount_max = 3.0
+initial_velocity_min = 500.0
+initial_velocity_max = 1500.0
+scale_amount_min = 2.0
+scale_amount_max = 6.0
 
 [node name="ParticlesTop" type="CPUParticles2D" parent="."]
-position = Vector2(0, -256)
+position = Vector2(0, -512)
 emitting = false
 amount = 100
 lifetime = 0.3
@@ -287,15 +288,16 @@ lifetime_randomness = 1.0
 local_coords = true
 texture = ExtResource("3_uabs2")
 emission_shape = 3
-emission_rect_extents = Vector2(16, 1)
+emission_rect_extents = Vector2(32, 1)
 particle_flag_align_y = true
 direction = Vector2(0, 1)
 spread = 30.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 200.0
-initial_velocity_max = 1000.0
+initial_velocity_min = 500.0
+initial_velocity_max = 1500.0
 angular_velocity_max = 1000.0
-scale_amount_max = 3.0
+scale_amount_min = 2.0
+scale_amount_max = 6.0
 
 [node name="AudioStart" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_4iva0")
