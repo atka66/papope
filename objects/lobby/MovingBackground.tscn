@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cop2o1vtkv1qt"]
+[gd_scene load_steps=19 format=3 uid="uid://cop2o1vtkv1qt"]
 
 [ext_resource type="Script" path="res://objects/lobby/MovingBackground.gd" id="1_105ju"]
 [ext_resource type="Texture2D" uid="uid://haoeer3guucd" path="res://sprites/lobby/bg_conveyor.png" id="1_fx2n7"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://nyuytxsw40yd" path="res://sprites/anim/static/static_2.png" id="10_w6a5m"]
 [ext_resource type="Texture2D" uid="uid://mahj8knrlv25" path="res://sprites/anim/static/static_3.png" id="11_og3jc"]
 [ext_resource type="Texture2D" uid="uid://dyrdcjwnousnx" path="res://sprites/anim/static/static_4.png" id="12_oq82r"]
+[ext_resource type="Texture2D" uid="uid://bj5a8sgansl4d" path="res://sprites/anim/static/static_5.png" id="13_m4boy"]
+[ext_resource type="Texture2D" uid="uid://dgt2jpdeiq34b" path="res://sprites/anim/static/static_6.png" id="14_lguuo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yekfl"]
 animations = [{
@@ -43,8 +45,8 @@ animations = [{
 }]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_dgqvs"]
-frames = 4
-speed_scale = 30.0
+frames = 6
+speed_scale = 50.0
 frame_0/texture = ExtResource("9_e4jyb")
 frame_1/texture = ExtResource("10_w6a5m")
 frame_1/duration = 1.0
@@ -52,6 +54,10 @@ frame_2/texture = ExtResource("11_og3jc")
 frame_2/duration = 1.0
 frame_3/texture = ExtResource("12_oq82r")
 frame_3/duration = 1.0
+frame_4/texture = ExtResource("13_m4boy")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("14_lguuo")
+frame_5/duration = 1.0
 
 [sub_resource type="Animation" id="Animation_5mort"]
 resource_name = "loop"
@@ -103,10 +109,11 @@ z_index = -49
 z_as_relative = false
 offset_left = -300.0
 offset_top = -300.0
-offset_right = 1660.0
-offset_bottom = 1068.0
+offset_right = 92.0
+offset_bottom = -26.0
+scale = Vector2(5, 5)
 texture = SubResource("AnimatedTexture_dgqvs")
-stretch_mode = 6
+stretch_mode = 1
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
