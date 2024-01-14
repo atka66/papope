@@ -8,25 +8,31 @@ z_index = -2
 z_as_relative = false
 
 [node name="Tie1" type="Sprite2D" parent="."]
-position = Vector2(0, 9)
+position = Vector2(0, 18)
+scale = Vector2(2, 2)
 texture = ExtResource("1_wh1vo")
 
 [node name="Tie2" type="Sprite2D" parent="."]
-position = Vector2(16, 17)
+position = Vector2(32, 34)
+scale = Vector2(2, 2)
 texture = ExtResource("1_wh1vo")
 
 [node name="Rail1" type="Sprite2D" parent="."]
-position = Vector2(6, 3)
+position = Vector2(12, 6)
+scale = Vector2(2, 2)
 texture = ExtResource("2_eq81a")
 
 [node name="Rail2" type="Sprite2D" parent="."]
-position = Vector2(22, 11)
+position = Vector2(44, 22)
+scale = Vector2(2, 2)
 texture = ExtResource("2_eq81a")
 
 [node name="Rail3" type="Sprite2D" parent="."]
-position = Vector2(-6, 14)
+position = Vector2(-12, 28)
+scale = Vector2(2, 2)
 texture = ExtResource("2_eq81a")
 
 [node name="Rail4" type="Sprite2D" parent="."]
-position = Vector2(10, 22)
+position = Vector2(20, 44)
+scale = Vector2(2, 2)
 texture = ExtResource("2_eq81a")
