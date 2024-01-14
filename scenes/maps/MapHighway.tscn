@@ -1,13 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cttlcwtl1i6xv"]
+[gd_scene load_steps=6 format=3 uid="uid://cttlcwtl1i6xv"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_ujwl2"]
 [ext_resource type="Texture2D" uid="uid://b6js5m6f5vb73" path="res://sprites/bg/highway.png" id="2_4r6xd"]
 [ext_resource type="AudioStream" uid="uid://caemyw7sjfl1u" path="res://audio/sfx/ambient/amb_highway.ogg" id="2_cicca"]
 [ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="3_eqpp7"]
 [ext_resource type="PackedScene" uid="uid://cvg2wxjxjxdfa" path="res://objects/game/entity/TrafficLane.tscn" id="4_8kf0b"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p3mkk"]
-size = Vector2(800, 64)
 
 [node name="MapHighway" type="Node2D"]
 
@@ -24,79 +21,72 @@ z_index = -55
 z_as_relative = false
 
 [node name="TextureRect" type="TextureRect" parent="BgNode"]
-offset_left = -128.0
-offset_top = -384.0
-offset_right = 808.0
-offset_bottom = 768.0
+offset_left = -256.0
+offset_top = -768.0
+offset_right = 680.0
+offset_bottom = 384.0
+scale = Vector2(2, 2)
 texture = ExtResource("2_4r6xd")
 stretch_mode = 1
 
 [node name="PlayerSpawner0" type="Marker2D" parent="."]
 z_index = -2
 z_as_relative = false
-position = Vector2(128, 32)
+position = Vector2(256, 64)
 
 [node name="PlayerSpawner1" type="Marker2D" parent="."]
 z_index = -2
 z_as_relative = false
-position = Vector2(544, 32)
+position = Vector2(1088, 64)
 
 [node name="PlayerSpawner2" type="Marker2D" parent="."]
 z_index = -2
 z_as_relative = false
-position = Vector2(128, 352)
+position = Vector2(256, 704)
 
 [node name="PlayerSpawner3" type="Marker2D" parent="."]
 z_index = -2
 z_as_relative = false
-position = Vector2(544, 352)
+position = Vector2(1088, 704)
 
 [node name="PwrupSpawner0" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
 z_index = -2
 z_as_relative = false
-position = Vector2(96, 192)
+position = Vector2(192, 384)
+scale = Vector2(2, 2)
 texture = ExtResource("3_eqpp7")
 
 [node name="PwrupSpawner1" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
 z_index = -2
 z_as_relative = false
-position = Vector2(256, 192)
+position = Vector2(512, 384)
+scale = Vector2(2, 2)
 texture = ExtResource("3_eqpp7")
 
 [node name="PwrupSpawner2" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
 z_index = -2
 z_as_relative = false
-position = Vector2(416, 192)
+position = Vector2(832, 384)
+scale = Vector2(2, 2)
 texture = ExtResource("3_eqpp7")
 
 [node name="PwrupSpawner3" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
 z_index = -2
 z_as_relative = false
-position = Vector2(576, 192)
+position = Vector2(1152, 384)
+scale = Vector2(2, 2)
 texture = ExtResource("3_eqpp7")
 
-[node name="Walls" type="StaticBody2D" parent="."]
-collision_layer = 2
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
-position = Vector2(336, -96)
-shape = SubResource("RectangleShape2D_p3mkk")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
-position = Vector2(336, 480)
-shape = SubResource("RectangleShape2D_p3mkk")
-
 [node name="TrafficLane0" parent="." instance=ExtResource("4_8kf0b")]
-position = Vector2(778, 98)
+position = Vector2(1556, 196)
 fromRight = true
 
 [node name="TrafficLane1" parent="." instance=ExtResource("4_8kf0b")]
-position = Vector2(778, 154)
+position = Vector2(1556, 308)
 fromRight = true
 
 [node name="TrafficLane2" parent="." instance=ExtResource("4_8kf0b")]
-position = Vector2(-94, 226)
+position = Vector2(-188, 452)
 
 [node name="TrafficLane3" parent="." instance=ExtResource("4_8kf0b")]
-position = Vector2(-94, 282)
+position = Vector2(-188, 564)
