@@ -275,7 +275,7 @@ func addToScene(object: Object) -> void:
 func pacmanWrap(state: PhysicsDirectBodyState2D) -> void:
 	if selectedMap == 'pacman':
 		var xform = state.transform
-		xform.origin.x = wrapf(xform.origin.x, -48, 728) # TODO rescale
+		xform.origin.x = wrapf(xform.origin.x, -96, 1456)
 		state.transform = xform
 
 func spawnFallingLabel(text: String, position: Vector2, color: Color, size: int) -> void:

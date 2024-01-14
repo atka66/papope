@@ -138,12 +138,12 @@ fullscreen={
 
 pwrup_respawn_time=1
 disconnect_on_init=false
-ghost_respawn_time=5
+ghost_respawn_time=1
 default_option_mode=0
 default_option_map=0
 default_option_rounds=1
 allow_players_set_options=true
-ghost_speed=2.0
+ghost_speed=4.0
 
 [rendering]
 

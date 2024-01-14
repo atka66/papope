@@ -1,0 +1,15 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://f6it3hyegjt4"]
+
+[ext_resource type="PackedScene" uid="uid://dg13tmnfpscdp" path="res://objects/game/entity/Cactus.tscn" id="1_3y7w0"]
+[ext_resource type="PackedScene" uid="uid://d3anmi1s170dl" path="res://objects/game/entity/Tree.tscn" id="2_fekmf"]
+[ext_resource type="PackedScene" uid="uid://b7vf6towmyv65" path="res://objects/game/entity/Railway.tscn" id="3_2x17x"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ra88y"]
+resource_name = "western"
+scenes/1/scene = ExtResource("1_3y7w0")
+scenes/2/scene = ExtResource("2_fekmf")
+scenes/3/scene = ExtResource("3_2x17x")
+
+[resource]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetScenesCollectionSource_ra88y")

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cgh17i3pkuu57" path="res://sprites/bg/desert.png" id="2_dr5n7"]
 [ext_resource type="TileSet" uid="uid://dic4xkv1t1ph5" path="res://resources/tileset_western.tres" id="3_80f2c"]
 [ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="3_wgx4m"]
-[ext_resource type="TileSet" uid="uid://f6it3hyegjt4" path="res://resources/entities.tres" id="4_g0qm8"]
+[ext_resource type="TileSet" uid="uid://f6it3hyegjt4" path="res://resources/entities_western.tres" id="4_g0qm8"]
 
 [node name="MapWestern" type="Node2D"]
 

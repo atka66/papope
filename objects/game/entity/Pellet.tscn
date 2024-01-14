@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://objects/game/entity/Pellet.gd" id="1_2qk1d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m4xtl"]
-radius = 2.0
+radius = 4.0
 
 [node name="Pellet" type="Area2D"]
 z_index = 2
@@ -16,7 +16,7 @@ script = ExtResource("1_2qk1d")
 shape = SubResource("CircleShape2D_m4xtl")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-2, -2, 2, -2, 2, 2, -2, 2)
+polygon = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 
 [node name="AudioPickup" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_1m0xn")

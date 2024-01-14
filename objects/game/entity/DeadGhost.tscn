@@ -51,7 +51,7 @@ libraries = {
 autoplay = "disappear"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(3, 3)
+scale = Vector2(6, 6)
 texture = ExtResource("1_5wanf")
 hframes = 3
 frame = 2
