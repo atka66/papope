@@ -106,19 +106,19 @@ radius = 32.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_417ft"]
 resource_local_to_scene = true
 shader = ExtResource("7_gom1r")
-shader_parameter/line_thickness = 1.0
+shader_parameter/line_thickness = 2.0
 shader_parameter/line_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r5u8j"]
 resource_local_to_scene = true
 shader = ExtResource("7_gom1r")
-shader_parameter/line_thickness = 1.0
+shader_parameter/line_thickness = 2.0
 shader_parameter/line_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w500e"]
 resource_local_to_scene = true
 shader = ExtResource("7_gom1r")
-shader_parameter/line_thickness = 1.0
+shader_parameter/line_thickness = 2.0
 shader_parameter/line_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_xd6pn"]
@@ -320,20 +320,19 @@ bus = &"sfx"
 z_index = -1
 z_as_relative = false
 position = Vector2(0, 8)
-amount = 10
 lifetime = 0.4
 lifetime_randomness = 0.1
 texture = SubResource("GradientTexture1D_f86wn")
 direction = Vector2(0, -1)
 spread = 25.0
 gravity = Vector2(0, -200)
-initial_velocity_min = 150.0
-initial_velocity_max = 150.0
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
 orbit_velocity_min = 1.0
 orbit_velocity_max = 1.0
 orbit_velocity_curve = SubResource("Curve_rhgma")
-scale_amount_min = 20.0
-scale_amount_max = 25.0
+scale_amount_min = 40.0
+scale_amount_max = 50.0
 scale_amount_curve = SubResource("Curve_8vosl")
 color_ramp = SubResource("Gradient_0it2g")
 

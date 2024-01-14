@@ -79,12 +79,12 @@ layer_0/tile_data = PackedInt32Array(-65538, 65536, 0, -65537, 65536, 0, -2, 655
 [node name="EmberParticles" type="CPUParticles2D" parent="."]
 z_index = 6
 z_as_relative = false
-position = Vector2(680, 384)
-amount = 100
+position = Vector2(340, 192)
+amount = 200
 lifetime = 5.0
 preprocess = 1.0
 emission_shape = 3
-emission_rect_extents = Vector2(1360, 768)
+emission_rect_extents = Vector2(1200, 576)
 direction = Vector2(1, 0.5)
 spread = 20.0
 gravity = Vector2(0, 0)
