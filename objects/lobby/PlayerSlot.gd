@@ -10,9 +10,9 @@ func handleSpawnSprite():
 		$Slot.hide()
 
 func handleHints() -> void:
-	$JoinLabel.hide()
-	$CancelLabel.hide()
-	$LeaveLabel.hide()
+	$JoinHolder.hide()
+	$CancelHolder.hide()
+	$LeaveHolder.hide()
 	$ControllerSprite.hide()
 	
 	if Global.playersConnected[playerId]:
@@ -20,13 +20,13 @@ func handleHints() -> void:
 		if Global.playersJoined[playerId]:
 			color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
 			if Lobby.countdownNode != null:
-				$CancelLabel.show()
+				$CancelHolder.show()
 			else:
-				$LeaveLabel.show()
+				$LeaveHolder.show()
 		else:
 			color.a = 0.5
 			if Lobby.countdownNode == null:
-				$JoinLabel.show()
+				$JoinHolder.show()
 		$ControllerSprite.modulate = color
 		$ControllerSprite.show()
 

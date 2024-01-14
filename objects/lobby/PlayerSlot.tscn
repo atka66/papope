@@ -29,23 +29,44 @@ position = Vector2(0, 64)
 scale = Vector2(2, 2)
 texture = ExtResource("3_2whjo")
 
-[node name="JoinLabel" parent="." instance=ExtResource("4_vrrwg")]
+[node name="JoinHolder" type="Node2D" parent="."]
 position = Vector2(0, 108)
+
+[node name="XSprite" type="AnimatedSprite2D" parent="JoinHolder"]
+position = Vector2(-52, 0)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("5_fxtnu")
+autoplay = "default"
+
+[node name="JoinLabel" parent="JoinHolder" instance=ExtResource("4_vrrwg")]
 text = "join"
 fontSize = 2
 alignment = 8
-tooltipFrames = ExtResource("5_fxtnu")
 
-[node name="CancelLabel" parent="." instance=ExtResource("4_vrrwg")]
+[node name="CancelHolder" type="Node2D" parent="."]
 position = Vector2(0, 108)
+
+[node name="OSprite" type="AnimatedSprite2D" parent="CancelHolder"]
+position = Vector2(-72, 0)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("6_vfeer")
+autoplay = "default"
+
+[node name="CancelLabel" parent="CancelHolder" instance=ExtResource("4_vrrwg")]
 text = "cancel"
 fontSize = 2
 alignment = 8
-tooltipFrames = ExtResource("6_vfeer")
 
-[node name="LeaveLabel" parent="." instance=ExtResource("4_vrrwg")]
+[node name="LeaveHolder" type="Node2D" parent="."]
 position = Vector2(0, 108)
+
+[node name="OSprite" type="AnimatedSprite2D" parent="LeaveHolder"]
+position = Vector2(-64, 0)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("6_vfeer")
+autoplay = "default"
+
+[node name="LeaveLabel" parent="LeaveHolder" instance=ExtResource("4_vrrwg")]
 text = "leave"
 fontSize = 2
 alignment = 8
-tooltipFrames = ExtResource("6_vfeer")
