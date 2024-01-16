@@ -8,7 +8,7 @@ func _ready():
 	determRandom.set_seed(123)
 	
 	$Dim.show()
-	$MapLabel.text = Global.selectedMap
+	$HudCanvas/MapLabel.text = Global.selectedMap
 	Global.MapControllerNode = self
 	
 	$AudioRoundStart.play()

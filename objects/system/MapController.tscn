@@ -10,7 +10,7 @@
 
 [sub_resource type="Animation" id="Animation_3drhq"]
 resource_name = "disappear"
-length = 3.0
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -26,11 +26,11 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MapLabel:position")
+tracks/1/path = NodePath("HudCanvas/MapLabel:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 2.8, 3),
+"times": PackedFloat32Array(0, 0.2, 1.8, 2),
 "transitions": PackedFloat32Array(0.5, 1, 2, 1),
 "update": 0,
 "values": [Vector2(0, 600), Vector2(128, 600), Vector2(256, 600), Vector2(384, 600)]
@@ -38,11 +38,11 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("MapLabel:visible")
+tracks/2/path = NodePath("HudCanvas/MapLabel:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 3),
+"times": PackedFloat32Array(0, 2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -50,11 +50,11 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("MapLabel:modulate")
+tracks/3/path = NodePath("HudCanvas/MapLabel:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.2, 2.8, 3),
+"times": PackedFloat32Array(0, 0.2, 1.8, 2),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -73,13 +73,20 @@ script = ExtResource("1_478ud")
 [node name="HudCanvas" type="CanvasLayer" parent="."]
 layer = 90
 
-[node name="Camera" parent="." instance=ExtResource("1_re0bo")]
+[node name="MapLabel" parent="HudCanvas" instance=ExtResource("3_lejj6")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, 600)
+fontSize = 10
+alignment = 4
 
-[node name="Anim" type="AnimationPlayer" parent="."]
+[node name="Anim" type="AnimationPlayer" parent="HudCanvas"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_p3b64")
 }
 autoplay = "disappear"
+
+[node name="Camera" parent="." instance=ExtResource("1_re0bo")]
 
 [node name="Dim" type="ColorRect" parent="."]
 visible = false
@@ -88,13 +95,6 @@ z_as_relative = false
 offset_right = 1360.0
 offset_bottom = 768.0
 color = Color(0, 0, 0, 1)
-
-[node name="MapLabel" parent="." instance=ExtResource("3_lejj6")]
-modulate = Color(1, 1, 1, 0)
-top_level = true
-position = Vector2(0, 600)
-fontSize = 8
-alignment = 4
 
 [node name="MapBoundary" parent="." instance=ExtResource("4_c1rtt")]
 
