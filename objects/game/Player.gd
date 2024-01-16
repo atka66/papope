@@ -212,10 +212,12 @@ func pickup(pwrup : Global.PwrupEnum) -> void:
 		Global.PwrupEnum.DYNAMITE:
 			pwrupName = 'dynamite'
 			$Crosshairs/DynamiteCrosshair.show()
+			$LookLine.show()
 			ammo = 1
 		Global.PwrupEnum.REVOLVER:
 			pwrupName = 'revolver'
 			$Crosshairs/RevolverCrosshair.show()
+			$LookLine.show()
 			ammo = 6
 		Global.PwrupEnum.SHIELD:
 			pwrupName = 'shield'
@@ -226,6 +228,7 @@ func pickup(pwrup : Global.PwrupEnum) -> void:
 		Global.PwrupEnum.WHIP:
 			pwrupName = 'whip'
 			$Crosshairs/WhipCrosshair.show()
+			$LookLine.show()
 			ammo = 5
 	Global.spawnFallingLabel(pwrupName, global_position, Color.LIGHT_GREEN, 3)
 	hud.pickup(item, ammo)
@@ -330,6 +333,7 @@ func hideCrosshairs() -> void:
 	$Crosshairs/DynamiteCrosshair.hide()
 	$Crosshairs/RevolverCrosshair.hide()
 	$Crosshairs/WhipCrosshair.hide()
+	$LookLine.hide()
 
 func hurt(damage: int) -> void:
 	var actualDamage: int = damage
@@ -356,12 +360,12 @@ func fallIntoWater() -> void:
 	isFallingIntoWater = true
 	if alive:
 		$AudioScared.play()
-	gravity_scale = 5
+	gravity_scale = 10
 	var vector = -linear_velocity
-	var vel = Vector2(0.7, -1)
+	var vel = Vector2(0.7, -1.0)
 	if global_position.x < 680:
 		vel.x *= -1
-	apply_central_impulse(vector + (vel * 500))
+	apply_central_impulse(vector + (vel * 1000))
 	await get_tree().create_timer(0.6).timeout
 	$AudioFellInWater.play()
 	if !Global.playersFrozen:

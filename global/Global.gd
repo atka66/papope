@@ -32,7 +32,7 @@ const DEATH_STRINGS = {
 }
 enum AchiEnum {
 	UNDERDOG, DEMOLITION_MAN, GUNSLINGER, HUTS_HUTS, DAREDEVIL,
-	GUERRILLA, CARELESS, TRAITOR, NO_REFUNDS, JATSZUNK_MAST, 
+	GUERRILLA, CARELESS, TRAITOR, NO_REFUNDS, 
 	WAKA_WAKA, GHOSTBUSTER, SPOOKED, TRIPLE_KILL, AINT_GON_FIT, CHICKEN_DINNER
 }
 const ACHIEVEMENTS = {
@@ -45,7 +45,6 @@ const ACHIEVEMENTS = {
 	AchiEnum.CARELESS : ['careless', 'stepped in his own trap'], # sprung his own trap
 	AchiEnum.TRAITOR : ['traitor', 'killed his own teammate'], # killed his own teammate with revolver, dynamite or whip
 	AchiEnum.NO_REFUNDS : ['no refunds', 'shield on, still died'], # die while having active shield
-	AchiEnum.JATSZUNK_MAST : ['jatszunk mast', 'be underdog with bazsi skin'], # be underdog with bazsi skin (0)
 	AchiEnum.WAKA_WAKA : ['waka waka', 'ate a lot of pellets'], # ate a lot of pellets
 	AchiEnum.GHOSTBUSTER : ['ghostbuster', 'killed a lot of ghosts'], # killed 5 ghosts
 	AchiEnum.SPOOKED : ['spooked', 'scared of ghosts'], # killed by a ghost
@@ -136,7 +135,7 @@ var playersMaxHp = [100, 100, 100, 100]
 var playersCrowned = [false, false, false, false]
 var playersFrozen = false
 var playersAchievements = [[], [], [], []]
-#var playersAchievements = [[AchiEnum.UNDERDOG, AchiEnum.JATSZUNK_MAST, AchiEnum.NO_REFUNDS, AchiEnum.GUNSLINGER, AchiEnum.DAREDEVIL, AchiEnum.TRIPLE_KILL, AchiEnum.JATSZUNK_MAST], [AchiEnum.TRIPLE_KILL, AchiEnum.TRIPLE_KILL], [], []]
+#var playersAchievements = [[AchiEnum.UNDERDOG, AchiEnum.NO_REFUNDS, AchiEnum.GUNSLINGER, AchiEnum.DAREDEVIL, AchiEnum.TRIPLE_KILL], [AchiEnum.TRIPLE_KILL, AchiEnum.TRIPLE_KILL], [], []]
 enum StatEnum {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT, PELLETS, GHOST_KILL}
 var playersStats = []
 var playersPerks = [[], [], [], []]
@@ -155,6 +154,14 @@ func _ready():
 				disconnectPlayer(i)
 		if !playersConnected[i] && connectedControllers.has(i):
 			connectPlayer(i)
+	
+	if DEBUG && false: # for testing postgame easily
+		playersConnected = [true, true, true, true]
+		playersJoined = [true, true, true, true]
+		playersTeam = [0, 1, 2, 1]
+		playersPoints = [0, 3, 2, 3]
+		playersAchievements = [[AchiEnum.UNDERDOG, AchiEnum.NO_REFUNDS, AchiEnum.GUNSLINGER, AchiEnum.DAREDEVIL, AchiEnum.TRIPLE_KILL], [AchiEnum.TRIPLE_KILL, AchiEnum.TRIPLE_KILL], [], []]
+		playersPerks = [[PerkEnum.HEALTHY], [PerkEnum.UNHEALTHY], [], []]
 
 func _joy_connection_changed(id: int, connected: bool) -> void:
 	if id < 4:

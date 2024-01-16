@@ -28,6 +28,8 @@ extends Node2D
 		animation = new_animation
 		setAnimation(new_animation)
 
+@export var animation_out: String = 'none'
+
 @export var audio: AudioStream:
 	set(new_audio):
 		audio = new_audio
@@ -72,4 +74,6 @@ func setAudio(new_audio):
 
 func timeDisappear(time) -> void:
 	await get_tree().create_timer(time).timeout
+	$Anim.play(animation_out)
+	await $Anim.animation_finished
 	queue_free()

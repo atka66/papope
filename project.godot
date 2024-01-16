@@ -138,7 +138,7 @@ fullscreen={
 
 pwrup_respawn_time=1
 disconnect_on_init=false
-ghost_respawn_time=1
+ghost_respawn_time=5
 default_option_mode=0
 default_option_map=0
 default_option_rounds=1

@@ -154,7 +154,8 @@ colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ydxlq"]
 gradient = SubResource("Gradient_4cad6")
-height = 35
+width = 128
+height = 70
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wvmgf"]
 atlas = ExtResource("2_yl0nb")

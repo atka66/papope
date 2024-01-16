@@ -51,7 +51,7 @@ func initPlayers() -> void:
 	Global.playersPoints = [0, 0, 0, 0]
 	Global.playersAchievements = [[], [], [], []]
 	# for debugging purposes
-	#Global.playersAchievements = [[Global.AchiEnum.UNDERDOG, Global.AchiEnum.JATSZUNK_MAST, Global.AchiEnum.NO_REFUNDS, Global.AchiEnum.GUNSLINGER, Global.AchiEnum.DAREDEVIL, Global.AchiEnum.TRIPLE_KILL, Global.AchiEnum.JATSZUNK_MAST], [Global.AchiEnum.TRIPLE_KILL, Global.AchiEnum.TRIPLE_KILL], [], []]
+	#Global.playersAchievements = [[Global.AchiEnum.UNDERDOG, Global.AchiEnum.NO_REFUNDS, Global.AchiEnum.GUNSLINGER, Global.AchiEnum.DAREDEVIL, Global.AchiEnum.TRIPLE_KILL], [Global.AchiEnum.TRIPLE_KILL, Global.AchiEnum.TRIPLE_KILL], [], []]
 	Global.playersPerks = [[], [], [], []]
 	
 	for i in range(4):

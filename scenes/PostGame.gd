@@ -2,10 +2,9 @@ extends Node2D
 
 @export var canProceed: bool = false
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.MusicNode.play('postgame')
-	$LobbyHint.hide()
+	$HintHolder.hide()
 	var winnerTeam: int = Global.getWinnerTeamByScore()
 	for i in range(4):
 		if Global.playersJoined[i]:
@@ -16,7 +15,7 @@ func _ready():
 
 func animationFinished() -> void:
 	canProceed = true
-	$LobbyHint.show()
+	$HintHolder.show()
 
 func _input(event):
 	if event.is_action_pressed('quit') or (event.is_action_pressed('accept') and canProceed):

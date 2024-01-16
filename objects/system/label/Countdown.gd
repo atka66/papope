@@ -7,6 +7,7 @@ func showCount(cnt: String, size: int, audio: Resource) -> void:
 	label.alignment = Control.LayoutPreset.PRESET_CENTER
 	label.aliveTime = 1
 	label.animation = 'float_in'
+	label.animation_out = 'float_out'
 	label.audio = audio
 	add_child(label)
 

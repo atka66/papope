@@ -28,4 +28,4 @@ X 5    : {SpawnPlayerAnim}, {SpawnPwrupAnim}, {CollisionAnim}, {ExplosionAnim}, 
 X 89     : [Crosshairs]
 X 90     : [HudCanvas]
 100    : [Dim (in MapController.tscn)], {PerkOverlay}
-101    : {CustomLabel}, [SpawnSelectedFlashing], [LeftArrow], [RightArrow]
+101    : {CustomLabel}, [SpawnSelectedFlashing], [LeftArrow], [RightArrow], [HintHolder]

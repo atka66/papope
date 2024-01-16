@@ -95,34 +95,43 @@ libraries = {
 }
 
 [node name="Poster" type="Sprite2D" parent="Container"]
-scale = Vector2(2, 2)
+scale = Vector2(4, 4)
 texture = ExtResource("1_jnuo6")
 centered = false
 
 [node name="WantedLabel" parent="Container" instance=ExtResource("2_xcrvs")]
-position = Vector2(85, 34)
+position = Vector2(170, 68)
 text = "wanted"
-fontSize = 2
+fontSize = 4
 fontColor = Color(0.501961, 0.25098, 0, 1)
 alignment = 8
+animation_out = "none"
+
+[node name="DollarLabel" parent="Container" instance=ExtResource("2_xcrvs")]
+position = Vector2(64, 336)
+text = "$"
+fontSize = 5
+fontColor = Color(0, 0.501961, 0, 1)
+alignment = 8
+animation_out = "none"
 
 [node name="MoneyLabel" parent="Container" instance=ExtResource("2_xcrvs")]
-position = Vector2(48, 168)
+position = Vector2(96, 336)
 text = "0"
-fontSize = 3
-fontColor = Color(1, 1, 1, 1)
+fontSize = 5
 alignment = 4
+animation_out = "none"
 
 [node name="Face" type="Sprite2D" parent="Container"]
 material = SubResource("ShaderMaterial_1niiq")
-position = Vector2(85, 97)
-scale = Vector2(3, 3)
+position = Vector2(170, 194)
+scale = Vector2(6, 6)
 texture = ExtResource("3_5kh11")
 hframes = 7
 
 [node name="TeamBanner" type="TextureRect" parent="Container"]
-offset_left = 36.0
-offset_top = 145.0
-offset_right = 132.0
-offset_bottom = 153.0
+offset_left = 72.0
+offset_top = 290.0
+offset_right = 264.0
+offset_bottom = 306.0
 texture = SubResource("GradientTexture1D_htyuy")

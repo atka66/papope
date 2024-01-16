@@ -23,11 +23,12 @@ func calculateScore() -> void:
 	if points != 1:
 		pointsText += "s"
 	var pointsLabel = Res.CustomLabelObject.instantiate()
-	pointsLabel.position = Vector2(85, 192)
+	pointsLabel.position = Vector2(170, 384)
 	pointsLabel.text = pointsText
-	pointsLabel.fontSize = 2
-	pointsLabel.alignment = Control.LayoutPreset.PRESET_CENTER_TOP
-	#pointsLabel.animate = true TODO
+	pointsLabel.fontSize = 4
+	pointsLabel.alignment = Control.LayoutPreset.PRESET_CENTER
+	pointsLabel.animation = 'float_in'
+	pointsLabel.animation_out = 'float_out'
 	pointsLabel.aliveTime = 2
 	add_child(pointsLabel)
 
@@ -35,29 +36,25 @@ func calculateScore() -> void:
 
 func showAchievements() -> void:
 	for i in len(Global.playersAchievements[playerId]):
-		showAchievement(192 + (i * 22), Global.playersAchievements[playerId][i])
+		showAchievement(376 + (i * 44), Global.playersAchievements[playerId][i])
 		await get_tree().create_timer(0.18).timeout
 
 func showAchievement(y: int, achievement: Global.AchiEnum) -> void:
 	var nameLabel = Res.CustomLabelObject.instantiate()
-	nameLabel.position = Vector2(10, y)
+	nameLabel.position = Vector2(32, y)
 	nameLabel.text = Global.ACHIEVEMENTS[achievement][0]
 	nameLabel.fontSize = 2
-	#nameLabel.outline = false TODO
 	#nameLabel.color = Color.black
 	#nameLabel.aliveTime = 0
-	#nameLabel.alignment = Label.ALIGN_LEFT
-	#nameLabel.audio = Res.AudioPlayerDash.pick_random()
-	add_child(nameLabel)
+	nameLabel.audio = Res.AudioPlayerDash.pick_random()
+	$Container.add_child(nameLabel)
 	var descriptionLabel = Res.CustomLabelObject.instantiate()
-	descriptionLabel.position = Vector2(14, y + 11)
+	descriptionLabel.position = Vector2(44, y + 24)
 	descriptionLabel.text = Global.ACHIEVEMENTS[achievement][1]
 	descriptionLabel.fontSize = 1
-	#descriptionLabel.outline = false TODO
 	#descriptionLabel.color = Color.black
 	#descriptionLabel.aliveTime = 0
-	#descriptionLabel.alignment = Label.ALIGN_LEFT
-	add_child(descriptionLabel)
+	$Container.add_child(descriptionLabel)
 	score += 100
 
 
@@ -68,13 +65,13 @@ func finalizePoster(finalizingPlayerId: int) -> void:
 		else:
 			modulate = Color(0.7, 0.7, 0.7)
 			var deadLabel = Res.CustomLabelObject.instantiate()
-			deadLabel.position = Vector2(85, 92)
-			deadLabel.fontSize = 2
+			deadLabel.position = Vector2(170, 200)
+			deadLabel.fontSize = 7
 			deadLabel.fontColor = Color.BROWN
-			deadLabel.alignment = Control.LayoutPreset.PRESET_CENTER_TOP
+			deadLabel.alignment = Control.LayoutPreset.PRESET_CENTER
 			deadLabel.text = 'dead'
-			#deadLabel.animate = false TODO
-			add_child(deadLabel)
+			deadLabel.rotation = 0.15
+			$Container.add_child(deadLabel)
 			
 			var anim = Res.SpawnPlayerAnimObject.instantiate()
 			anim.position = $Container/Face.global_position
@@ -86,10 +83,7 @@ func distributeAchievements():
 	# check underdog/jatszunkmast achievement
 	var optionPoints = Global.options['rounds'][Global.optionsSelected['rounds']]
 	if optionPoints >= 3 and Global.playersPoints[playerId] <= optionPoints / 4:
-		if Global.playersSkin[playerId] == 0:
-			Global.registerAchievement(playerId, Global.AchiEnum.JATSZUNK_MAST)
-		else:
-			Global.registerAchievement(playerId, Global.AchiEnum.UNDERDOG)
+		Global.registerAchievement(playerId, Global.AchiEnum.UNDERDOG)
 	# check stat achievements
 	# var playerStats = Global.playersStats[playerId] TODO uncomment
 	var playerStats = {

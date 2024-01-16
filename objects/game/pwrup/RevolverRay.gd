@@ -28,9 +28,9 @@ func _ready():
 		else:
 			spawnRicochet(hitPosition, hitAngle)
 		# todo further coll detection
+		$Ray.add_point(hitPosition - global_position)
 	else:
-		hitPosition = $HitScan.target_position
-	$Ray.add_point(hitPosition - global_position)
+		$Ray.add_point($HitScan.target_position)
 
 	await $Audio.finished
 	queue_free()

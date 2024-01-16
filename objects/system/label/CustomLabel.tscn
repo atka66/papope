@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bli02m5v875nl"]
+[gd_scene load_steps=9 format=3 uid="uid://bli02m5v875nl"]
 
 [ext_resource type="Script" path="res://objects/system/label/CustomLabel.gd" id="1_1kkh4"]
 [ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="3_8xr18"]
@@ -43,8 +43,49 @@ tracks/2/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_num1l"]
+resource_name = "float_out"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 16)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Container:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_rhxnh"]
 resource_name = "none"
+length = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -150,14 +191,14 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yst4f"]
 _data = {
 "float_in": SubResource("Animation_6obav"),
+"float_out": SubResource("Animation_num1l"),
 "none": SubResource("Animation_rhxnh"),
 "wobble": SubResource("Animation_65ygq")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_pmeb4"]
+[sub_resource type="LabelSettings" id="LabelSettings_gtmy1"]
 font = ExtResource("3_8xr18")
-font_size = 80
-font_color = Color(1, 0.752941, 0.12549, 1)
+font_size = 10
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
@@ -175,10 +216,11 @@ libraries = {
 [node name="Container" type="Node2D" parent="."]
 
 [node name="Label" type="Label" parent="Container"]
+texture_filter = 2
 offset_right = 86.0
 offset_bottom = 11.0
 text = "sample-text"
-label_settings = SubResource("LabelSettings_pmeb4")
+label_settings = SubResource("LabelSettings_gtmy1")
 uppercase = true
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
