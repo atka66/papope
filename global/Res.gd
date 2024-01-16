@@ -20,11 +20,13 @@ extends Node
 @onready var DeadGhostObject = preload("res://objects/game/entity/DeadGhost.tscn")
 @onready var CarObject = preload("res://objects/game/entity/Car.tscn")
 @onready var DashParticlesObject = preload("res://objects/anim/DashParticles.tscn")
-
 @onready var FallingLabelObject = preload("res://objects/system/label/FallingLabel.tscn")
 
-@onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
+@onready var PerkOverlayObject = preload("res://objects/system/perk/PerkOverlay.tscn")
+@onready var PerkSlotObject = preload("res://objects/system/perk/PerkSlot.tscn")
+#@onready var PerkOverlayObject = preload("res://objects/system/perk/PerkOverlay.tscn")
 
+@onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
 @onready var AudioPlayerCollide = [
 	preload("res://audio/sfx/player/collide_1.ogg"),
 	preload("res://audio/sfx/player/collide_2.ogg"),

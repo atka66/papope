@@ -91,6 +91,7 @@ color = Color(0, 0, 0, 1)
 
 [node name="MapLabel" parent="." instance=ExtResource("3_lejj6")]
 modulate = Color(1, 1, 1, 0)
+top_level = true
 position = Vector2(0, 600)
 fontSize = 8
 alignment = 4

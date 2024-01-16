@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3q2j1q3mdnfd"]
+
+[ext_resource type="Script" path="res://objects/system/perk/PerkOverlay.gd" id="1_hiy6o"]
+[ext_resource type="PackedScene" uid="uid://bvywd7jxq2005" path="res://objects/system/perk/PlayerPerks.tscn" id="2_ieyju"]
+
+[sub_resource type="Animation" id="Animation_pu4tu"]
+resource_name = "appear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wglx5"]
+_data = {
+"appear": SubResource("Animation_pu4tu")
+}
+
+[node name="PerkOverlay" type="Node2D"]
+modulate = Color(1, 1, 1, 0)
+z_index = 100
+z_as_relative = false
+script = ExtResource("1_hiy6o")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wglx5")
+}
+
+[node name="Dim" type="ColorRect" parent="."]
+z_index = 102
+z_as_relative = false
+offset_right = 1360.0
+offset_bottom = 768.0
+color = Color(0, 0, 0, 0.752941)
+
+[node name="PlayerPerks0" parent="." instance=ExtResource("2_ieyju")]
+
+[node name="PlayerPerks1" parent="." instance=ExtResource("2_ieyju")]
+position = Vector2(340, 0)
+playerId = 1
+
+[node name="PlayerPerks2" parent="." instance=ExtResource("2_ieyju")]
+position = Vector2(680, 0)
+playerId = 2
+
+[node name="PlayerPerks3" parent="." instance=ExtResource("2_ieyju")]
+position = Vector2(1020, 0)
+playerId = 3

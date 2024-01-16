@@ -21,8 +21,12 @@ func _ready():
 
 	Global.playersFrozen = true
 
-	# todo cards
-	await get_tree().create_timer(1.5).timeout
+	if Global.options['mode'][Global.optionsSelected['mode']] == 'cards':
+		var perkOverlay = Res.PerkOverlayObject.instantiate()
+		add_child(perkOverlay)
+		await perkOverlay.finished
+	else:
+		await get_tree().create_timer(1.5).timeout
 	
 	pwrupSpawnLoop()
 	initCountdown()
