@@ -25,7 +25,7 @@ func dispose():
 	rot = 30 - (randi() % 30)
 	falling = true
 	await get_tree().create_timer(1.0).timeout
-	var explosionAnim = Res.ExplosionAnim.instance()
+	var explosionAnim = Res.ExplosionAnimObject.instantiate()
 	explosionAnim.position = global_position + $Sprite.position
 	explosionAnim.harmful = false
 	explosionAnim.shakePwr = 10

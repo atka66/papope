@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://c1n4hoe86van5"]
+
+[ext_resource type="Script" path="res://objects/system/perk/PerkCard.gd" id="1_hk05b"]
+[ext_resource type="Texture2D" uid="uid://dvarr8hta8q25" path="res://sprites/perk/cardbase.png" id="2_s0gup"]
+[ext_resource type="Texture2D" uid="uid://b458ln7prqp1y" path="res://sprites/perk/perks.png" id="3_3jac5"]
+
+[sub_resource type="Animation" id="Animation_wpi06"]
+resource_name = "reveal"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardSprite:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [2.0, 0.0, 2.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CardSprite/PerkSprite")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CardSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q1v4a"]
+_data = {
+"reveal": SubResource("Animation_wpi06")
+}
+
+[node name="PerkCard" type="Node2D"]
+script = ExtResource("1_hk05b")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q1v4a")
+}
+
+[node name="CardSprite" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_s0gup")
+hframes = 2
+
+[node name="PerkSprite" type="Sprite2D" parent="CardSprite"]
+texture = ExtResource("3_3jac5")
+
+[node name="AudioFlip" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"

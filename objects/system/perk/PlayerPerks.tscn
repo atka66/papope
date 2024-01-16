@@ -33,13 +33,15 @@ texture = SubResource("GradientTexture1D_qpee0")
 position = Vector2(170, 448)
 
 [node name="XSprite" type="AnimatedSprite2D" parent="RevealHolder"]
-position = Vector2(-96, 0)
+position = Vector2(-80, 0)
 scale = Vector2(2, 2)
 sprite_frames = ExtResource("3_j8ar2")
+autoplay = "default"
+frame_progress = 0.939125
 
 [node name="RevealLabel" parent="RevealHolder" instance=ExtResource("3_xew0l")]
 text = "reveal"
-fontSize = 3
+fontSize = 2
 alignment = 8
 
 [node name="SwapHolder" type="Node2D" parent="."]

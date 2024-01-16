@@ -24,7 +24,7 @@ extends Node
 
 @onready var PerkOverlayObject = preload("res://objects/system/perk/PerkOverlay.tscn")
 @onready var PerkSlotObject = preload("res://objects/system/perk/PerkSlot.tscn")
-#@onready var PerkOverlayObject = preload("res://objects/system/perk/PerkOverlay.tscn")
+@onready var PerkCardObject = preload("res://objects/system/perk/PerkCard.tscn")
 
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
 @onready var AudioPlayerCollide = [
@@ -77,6 +77,11 @@ extends Node
 	preload("res://audio/sfx/entity/car_1.ogg"),
 	preload("res://audio/sfx/entity/car_2.ogg"),
 	preload("res://audio/sfx/entity/car_3.ogg")
+]
+@onready var AudioCardFlip = [
+	preload("res://audio/sfx/system/perk/flip_1.ogg"),
+	preload("res://audio/sfx/system/perk/flip_2.ogg"),
+	preload("res://audio/sfx/system/perk/flip_3.ogg")
 ]
 
 @onready var AudioMusicDefault = preload("res://audio/music/default.ogg")
