@@ -29,3 +29,4 @@ X 89     : [Crosshairs]
 X 90     : [HudCanvas]
 100    : [Dim (in MapController.tscn)], {PerkOverlay}
 101    : {CustomLabel}, [SpawnSelectedFlashing], [LeftArrow], [RightArrow], [HintHolder]
+102    : [DIM (in PostGame.tscn)]

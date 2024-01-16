@@ -103,6 +103,8 @@ stream = ExtResource("6_7vljf")
 bus = &"sfx"
 
 [node name="Dim" type="ColorRect" parent="."]
+z_index = 102
+z_as_relative = false
 offset_right = 1360.0
 offset_bottom = 768.0
 color = Color(0, 0, 0, 1)
