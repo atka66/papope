@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://tlfkm8pk6hy7"]
+[gd_scene load_steps=35 format=3 uid="uid://tlfkm8pk6hy7"]
 
 [ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
@@ -11,7 +11,6 @@
 [ext_resource type="AudioStream" uid="uid://buth7w23vc0am" path="res://audio/sfx/pwrup/shield_end.ogg" id="9_0h1ux"]
 [ext_resource type="AudioStream" uid="uid://6g140bpk81ed" path="res://audio/sfx/player/hurt_fall.ogg" id="10_w13my"]
 [ext_resource type="AudioStream" uid="uid://b48v6e2sqs8lt" path="res://audio/sfx/player/lava_enter.ogg" id="11_oekyh"]
-[ext_resource type="PackedScene" uid="uid://g0uxiv3l3tk7" path="res://objects/anim/DashParticles.tscn" id="12_0t0bd"]
 [ext_resource type="AudioStream" uid="uid://dwujokto6bp1u" path="res://audio/sfx/player/death.ogg" id="12_720xj"]
 [ext_resource type="AudioStream" uid="uid://d0x3jq52qs0k7" path="res://audio/sfx/pwrup/pickup.ogg" id="12_nvt8g"]
 [ext_resource type="AudioStream" uid="uid://djn5guu82fssv" path="res://audio/sfx/player/fall_water.ogg" id="14_pp8ks"]
@@ -335,8 +334,6 @@ scale_amount_min = 40.0
 scale_amount_max = 50.0
 scale_amount_curve = SubResource("Curve_8vosl")
 color_ramp = SubResource("Gradient_0it2g")
-
-[node name="DashParticles" parent="." instance=ExtResource("12_0t0bd")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Lock/Timer" to="." method="untrap"]

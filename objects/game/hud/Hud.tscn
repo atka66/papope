@@ -227,6 +227,7 @@ libraries = {
 }
 
 [node name="Drum1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver"]
+rotation = 0.959931
 scale = Vector2(2, 2)
 texture = ExtResource("4_jks62")
 

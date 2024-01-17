@@ -291,8 +291,10 @@ libraries = {
 }
 
 [node name="Dim" type="ColorRect" parent="."]
-offset_right = 1360.0
-offset_bottom = 768.0
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 1488.0
+offset_bottom = 896.0
 color = Color(0, 0, 0, 0.752941)
 
 [node name="PlayerPerks0" parent="." instance=ExtResource("2_ieyju")]
@@ -316,7 +318,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("3_w2j7h")
 hframes = 2
 
-[node name="AudioToss" type="AudioStreamPlayer2D" parent="Card3"]
+[node name="AudioToss" type="AudioStreamPlayer" parent="Card3"]
 bus = &"sfx"
 
 [node name="Card2" type="Sprite2D" parent="."]
@@ -326,7 +328,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("3_w2j7h")
 hframes = 2
 
-[node name="AudioToss" type="AudioStreamPlayer2D" parent="Card2"]
+[node name="AudioToss" type="AudioStreamPlayer" parent="Card2"]
 bus = &"sfx"
 
 [node name="Card1" type="Sprite2D" parent="."]
@@ -336,7 +338,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("3_w2j7h")
 hframes = 2
 
-[node name="AudioToss" type="AudioStreamPlayer2D" parent="Card1"]
+[node name="AudioToss" type="AudioStreamPlayer" parent="Card1"]
 bus = &"sfx"
 
 [node name="Card0" type="Sprite2D" parent="."]
@@ -346,10 +348,10 @@ scale = Vector2(2, 2)
 texture = ExtResource("3_w2j7h")
 hframes = 2
 
-[node name="AudioToss" type="AudioStreamPlayer2D" parent="Card0"]
+[node name="AudioToss" type="AudioStreamPlayer" parent="Card0"]
 bus = &"sfx"
 
-[node name="AudioDeckAppear" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioDeckAppear" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_sk5df")
 bus = &"sfx"
 

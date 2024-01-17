@@ -28,6 +28,6 @@ func dispose():
 	var explosionAnim = Res.ExplosionAnimObject.instantiate()
 	explosionAnim.position = global_position + $Sprite.position
 	explosionAnim.harmful = false
-	explosionAnim.shakePwr = 10
+	explosionAnim.shakePwr = 20
 	get_tree().get_current_scene().add_child(explosionAnim)
 	queue_free()

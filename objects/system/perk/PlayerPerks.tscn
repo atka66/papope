@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvywd7jxq2005"]
+[gd_scene load_steps=10 format=3 uid="uid://bvywd7jxq2005"]
 
 [ext_resource type="Script" path="res://objects/system/perk/PlayerPerks.gd" id="1_h1gey"]
 [ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="3_8c5hv"]
 [ext_resource type="SpriteFrames" uid="uid://bjujoaaro01o3" path="res://resources/label/x.tres" id="3_j8ar2"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_xew0l"]
+[ext_resource type="SpriteFrames" uid="uid://batkp1hq01vmw" path="res://resources/label/t.tres" id="5_jj8vs"]
 
 [sub_resource type="Gradient" id="Gradient_qdyyl"]
 offsets = PackedFloat32Array(0, 0.5, 1)
@@ -12,6 +13,28 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_qpee0"]
 gradient = SubResource("Gradient_qdyyl")
 width = 64
+
+[sub_resource type="Animation" id="Animation_giu23"]
+resource_name = "flash"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c7sdl"]
+_data = {
+"flash": SubResource("Animation_giu23")
+}
 
 [node name="PlayerPerks" type="Node2D"]
 script = ExtResource("1_h1gey")
@@ -47,3 +70,42 @@ alignment = 8
 [node name="SwapHolder" type="Node2D" parent="."]
 
 [node name="SwapLabelHolder" type="Node2D" parent="SwapHolder"]
+position = Vector2(170, 24)
+
+[node name="TriSprite" type="AnimatedSprite2D" parent="SwapHolder/SwapLabelHolder"]
+position = Vector2(-96, 0)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("5_jj8vs")
+autoplay = "default"
+
+[node name="SwapLabel" parent="SwapHolder/SwapLabelHolder" instance=ExtResource("3_xew0l")]
+text = "swap with"
+fontSize = 2
+alignment = 8
+
+[node name="SwappedPerkLabel" parent="SwapHolder" instance=ExtResource("3_xew0l")]
+position = Vector2(172, 64)
+fontSize = 3
+alignment = 8
+
+[node name="SwappedPerkDescriptionLabel" parent="SwapHolder" instance=ExtResource("3_xew0l")]
+position = Vector2(170, 184)
+fontSize = 2
+alignment = 8
+
+[node name="SelectedFlashing" type="Node2D" parent="SwapHolder"]
+z_index = 101
+z_as_relative = false
+
+[node name="ColorRect" type="ColorRect" parent="SwapHolder/SelectedFlashing"]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(0, 0, 0, 1)
+
+[node name="Anim" type="AnimationPlayer" parent="SwapHolder/SelectedFlashing/ColorRect"]
+libraries = {
+"": SubResource("AnimationLibrary_c7sdl")
+}
+autoplay = "flash"

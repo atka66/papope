@@ -60,25 +60,25 @@ enum PerkEnum {
 }
 
 const PERKS : Dictionary = {
-	PerkEnum.AKIMBO: ['akimbo', 'all pickups are doubled', 1],
+	PerkEnum.AKIMBO: ['akimbo', 'pickups are doubled', 1],
 	PerkEnum.ARMORED: ['armored', 'incoming damage halved', 2], 
 	PerkEnum.FAST: ['fast', 'doubled movement speed', 3],
-	PerkEnum.SPIKY: ['spiky', 'touching players hurts them', 4],
-	PerkEnum.CUDDLES: ['cuddles', 'touching players heals self', 5],
+	PerkEnum.SPIKY: ['spiky', 'damaging touch', 4],
+	PerkEnum.CUDDLES: ['cuddles', 'healing touch', 5],
 	PerkEnum.REVERSE: ['reverse', 'inverted movement', 6],
 	PerkEnum.BACKFIRE: ['backfire', 'inverted aim', 7],
 	PerkEnum.SLOW: ['slow', 'halved movement speed', 8],
 	PerkEnum.NO_LEGS: ['no legs', 'can only dash', 9],
 	PerkEnum.TIME_BOMB: ['time bomb', 'explodes after 1 minute', 10],
-	PerkEnum.RESET: ['reset', 'previous cards removed', 11],
-	PerkEnum.RIGHT: ['right', 'because i cannot look left', 12],
+	PerkEnum.RESET: ['reset', 'current cards removed', 11],
+	PerkEnum.RIGHT: ['right', 'cannot aim to the left', 12],
 	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 13],
 	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 14],
 	PerkEnum.HEALTHY: ['healthy', 'doubled max health', 15],
 	PerkEnum.UNHEALTHY: ['unhealthy', 'halved max health', 16],
-	PerkEnum.REGENERATION: ['regeneration', 'regenerates health', 17],
+	PerkEnum.REGENERATION: ['regen', 'heals over time', 17],
 	PerkEnum.VAMPIRE: ['vampire', 'dealing damage heals', 18],
-	PerkEnum.PREPARED: ['prepared', 'starts with random powerup', 19]
+	PerkEnum.PREPARED: ['prepared', 'starts with random item', 19]
 }
 
 enum PwrupEnum { REVOLVER, DYNAMITE, SHIELD, TRAP, WHIP }

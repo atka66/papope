@@ -19,31 +19,31 @@ tracks/0/keys = {
 "update": 0,
 "values": [2.0, 0.0, 2.0]
 }
-tracks/1/type = "method"
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CardSprite/PerkSprite")
+tracks/1/path = NodePath("CardSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"show"
-}]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CardSprite:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"showAll"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_q1v4a"]
@@ -65,7 +65,8 @@ texture = ExtResource("2_s0gup")
 hframes = 2
 
 [node name="PerkSprite" type="Sprite2D" parent="CardSprite"]
+scale = Vector2(2, 2)
 texture = ExtResource("3_3jac5")
 
-[node name="AudioFlip" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioFlip" type="AudioStreamPlayer" parent="."]
 bus = &"sfx"

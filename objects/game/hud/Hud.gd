@@ -26,7 +26,7 @@ func _ready():
 	delayedHp = maxHp
 	setHudColor(Global.TEAM_COLORS[Global.playersTeam[player.playerId]])
 	
-	# todo perks
+	spawnPerkIcons()
 	
 	if Global.playersPerks[player.playerId].has(Global.PerkEnum.CHICKEN):
 		$Container/ShakeContainer/Face.frame = 6
@@ -154,3 +154,16 @@ func hideItems() -> void:
 	$Container/ShakeContainer/Inventory/Container/Whip/Ammo7.hide()
 	$Container/ShakeContainer/Inventory/Container/Whip/Ammo8.hide()
 	$Container/ShakeContainer/Inventory/Container/Whip/Ammo9.hide()
+
+func spawnPerkIcons() -> void:
+	var perks = Global.playersPerks[player.playerId]
+	for i in range(len(perks)):
+		var icon = Sprite2D.new()
+		icon.texture = Res.TexturePerks
+		icon.hframes = len(Global.PerkEnum) + 1
+		icon.frame = Global.PERKS[perks[i]][2]
+		icon.scale = Vector2(2, 2)
+		icon.centered = false
+		var x = 2 + (i * 34)
+		icon.position = Vector2(x, 82)
+		$Container/ShakeContainer.add_child(icon)
