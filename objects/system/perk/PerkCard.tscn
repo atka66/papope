@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1n4hoe86van5"]
+[gd_scene load_steps=7 format=3 uid="uid://c1n4hoe86van5"]
 
 [ext_resource type="Script" path="res://objects/system/perk/PerkCard.gd" id="1_hk05b"]
+[ext_resource type="Texture2D" uid="uid://bpcdoonpygx7q" path="res://sprites/anim/shard.png" id="2_jo33t"]
 [ext_resource type="Texture2D" uid="uid://dvarr8hta8q25" path="res://sprites/perk/cardbase.png" id="2_s0gup"]
 [ext_resource type="Texture2D" uid="uid://b458ln7prqp1y" path="res://sprites/perk/perks.png" id="3_3jac5"]
 
@@ -58,6 +59,18 @@ script = ExtResource("1_hk05b")
 libraries = {
 "": SubResource("AnimationLibrary_q1v4a")
 }
+
+[node name="Shine" type="CPUParticles2D" parent="."]
+amount = 15
+lifetime = 0.3
+texture = ExtResource("2_jo33t")
+particle_flag_align_y = true
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 500.0
+scale_amount_max = 5.0
 
 [node name="CardSprite" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)

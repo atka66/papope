@@ -6,6 +6,7 @@ var perkData
 
 func _ready():
 	perkData = Global.PERKS[perk]
+	$Shine.hide()
 	$CardSprite/PerkSprite.hframes = len(Global.PerkEnum) + 1
 	$CardSprite/PerkSprite.frame = perkData[2]
 	$CardSprite/PerkSprite.hide()
@@ -17,6 +18,7 @@ func reveal():
 	$AudioFlip.play()
 
 func showAll():
+	$Shine.show()
 	$CardSprite/PerkSprite.show()
 	await get_tree().create_timer(0.3).timeout
 	var nameLabel = Res.CustomLabelObject.instantiate()
