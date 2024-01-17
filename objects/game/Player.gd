@@ -106,6 +106,7 @@ func _input(event):
 		if Global.playersPerks[playerId].has(Global.PerkEnum.LONG_ARMS):
 			factor *= 2
 		$Crosshairs.position *= factor
+		$LookVector.position *= factor
 		$LookLine.set_point_position(1, rAxis * factor)
 
 	if event.device == playerId && !inputCd:
@@ -269,7 +270,7 @@ func useItem() -> void:
 			dynamite.position = position + ($LookVector.position.normalized()) * 40
 			dynamite.origin = self
 			dynamite.targetNorm = $LookVector.position.normalized()
-			dynamite.throwForce = $LookVector.position.length() * 380
+			dynamite.throwForce = $LookVector.position.length() - 20
 			Global.addToScene(dynamite)
 		Global.PwrupEnum.SHIELD:
 			shield()

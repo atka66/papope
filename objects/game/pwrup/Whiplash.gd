@@ -1,15 +1,19 @@
 extends Node2D
 
-const MAX_LENGTH: int = 192
+var maxLength: int = 192
 @export var origin: Node2D
 @export var targetNorm: Vector2
 
 func _ready():
+	if Global.playersPerks[origin.playerId].has(Global.PerkEnum.LONG_ARMS):
+		maxLength *= 2
+		$Container/WhipSprite.scale *= 2
+	
 	$HitScan.add_exception(origin)
 	$Container.rotate(targetNorm.angle())
 	
 	var hitPosition: Vector2
-	$HitScan.target_position = Global.extendVectorTo(targetNorm, MAX_LENGTH)
+	$HitScan.target_position = Global.extendVectorTo(targetNorm, maxLength)
 	$HitScan.force_raycast_update()
 	if $HitScan.is_colliding():
 		hitPosition = $HitScan.get_collision_point()
