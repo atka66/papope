@@ -126,7 +126,7 @@ func _input(event):
 						updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
 		else:
 			if alive && !Global.playersFrozen && !isFallingIntoWater:
-				if !trapped && linear_velocity.length() < 2000:
+				if !trapped && linear_velocity.length() < 2000 && lAxis.length() > 0:
 					if event.is_action_pressed("game_dash"):
 						dash(lAxis)
 				if event.is_action_pressed("game_use"):
@@ -151,9 +151,12 @@ func dash(axis: Vector2) -> void:
 	$AudioDash.play()
 	
 	# todo chicken
-	# todo no legs
 	
-	var impulse: Vector2 = linear_velocity.normalized() * speed * dashMultiplier
+	var impulse = speed * dashMultiplier
+	if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS) && !inSpace:
+		impulse *= axis.normalized()
+	else:
+		impulse *= linear_velocity.normalized()
 	apply_central_impulse(impulse)
 	
 	var dashParticles = Res.DashParticlesObject.instantiate()

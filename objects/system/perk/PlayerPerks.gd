@@ -67,7 +67,7 @@ func finishAnimation():
 
 func spawnPerkSlot(slot: int, silent: bool):
 	var existingPerk = get_node("PerkSlot" + str(slot))
-	if existingPerk:
+	if existingPerk && existingPerk.frame != 0:
 		existingPerk.dispose()
 	var perkSlot = Res.PerkSlotObject.instantiate()
 	perkSlot.name = "PerkSlot" + str(slot)
@@ -81,11 +81,14 @@ func spawnPerkSlot(slot: int, silent: bool):
 		perkSlot.bump()
 
 func dealt():
-	var randomPerk = randi() % len(Global.PerkEnum)
+	var randomPerk = getRandomPerk()
 	while Global.playersPerks[playerId].has(randomPerk):
-		randomPerk = randi() % len(Global.PerkEnum)
+		randomPerk = getRandomPerk()
 	var perkCard = Res.PerkCardObject.instantiate()
 	perkCard.position = Vector2(170, 320)
 	perkCard.perk = randomPerk
 	add_child(perkCard)
 	$RevealHolder.show()
+
+func getRandomPerk():
+	return randi() % len(Global.PerkEnum)

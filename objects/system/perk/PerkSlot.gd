@@ -21,7 +21,7 @@ func bump() -> void:
 	$Anim.play("bump")
 
 func dispose():
-	velocity = Vector2(2.0 - (randf() * 4.0), -2.0 - (randf() * 2.0))
+	velocity = Vector2(randf_range(-4.0, 4.0), randf_range(-13.0, -10.0))
 	rot = 30 - (randi() % 30)
 	falling = true
 	await get_tree().create_timer(1.0).timeout
