@@ -44,10 +44,21 @@ func _ready():
 		anim.position = global_position
 		Global.addToScene(anim)
 	
+	if Global.playersPerks[playerId].has(Global.PerkEnum.FAST):
+		speed *= 2
+	if Global.playersPerks[playerId].has(Global.PerkEnum.SLOW):
+		speed *= 0.5
 	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
 		$BodyParts/Face.frame = 6
 	else:
 		$BodyParts/Face.frame = Global.playersSkin[playerId]
+	if Global.playersPerks[playerId].has(Global.PerkEnum.HEALTHY):
+		hp *= 2
+	if Global.playersPerks[playerId].has(Global.PerkEnum.UNHEALTHY):
+		hp /= 2
+	if Global.playersPerks[playerId].has(Global.PerkEnum.PREPARED):
+		await get_tree().create_timer(0.2).timeout
+		pickup(Global.getRandomPwrup())
 
 func _input(event):
 	var lhAxis: float = Input.get_joy_axis(playerId, JOY_AXIS_LEFT_X)
@@ -59,8 +70,12 @@ func _input(event):
 
 	var lAxis: Vector2 = Vector2(lhAxis, lvAxis)
 
-	# todo no legs + reverse
-	thrust = lAxis * speed
+	if Global.playersPerks[playerId].has(Global.PerkEnum.REVERSE):
+		lAxis *= -1
+	if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS):
+		thrust = Vector2.ZERO
+	else:
+		thrust = lAxis * speed
 
 	if alive:
 		var rAxis: Vector2 = Vector2(
@@ -71,7 +86,10 @@ func _input(event):
 		if rAxis.x == 0.0 && rAxis.y == 0.0:
 			rAxis.x = 0.001
 		
-		# todo perks: backfire + right
+		if Global.playersPerks[playerId].has(Global.PerkEnum.BACKFIRE):
+			rAxis *= -1
+		if Global.playersPerks[playerId].has(Global.PerkEnum.RIGHT):
+			rAxis.x = max(0, rAxis.x)
 		
 		$LookVector.position = rAxis
 		$Crosshairs.rotation = rAxis.angle()
@@ -85,10 +103,10 @@ func _input(event):
 				factor = 400
 			Global.PwrupEnum.WHIP:
 				factor = 192
+		if Global.playersPerks[playerId].has(Global.PerkEnum.LONG_ARMS):
+			factor *= 2
 		$Crosshairs.position *= factor
 		$LookLine.set_point_position(1, rAxis * factor)
-				
-		# todo perk long_arms
 
 	if event.device == playerId && !inputCd:
 		inputCd = true
@@ -203,7 +221,7 @@ func _on_remove(id):
 	if playerId == id:
 		queue_free()
 
-func pickup(pwrup : Global.PwrupEnum) -> void: 
+func pickup(pwrup : Global.PwrupEnum) -> void:
 	item = pwrup
 	hideCrosshairs()
 	$AudioPickup.play()
@@ -231,8 +249,9 @@ func pickup(pwrup : Global.PwrupEnum) -> void:
 			$LookLine.show()
 			ammo = 5
 	Global.spawnFallingLabel(pwrupName, global_position, Color.LIGHT_GREEN, 3)
+	if Global.playersPerks[playerId].has(Global.PerkEnum.AKIMBO):
+		ammo *= 2
 	hud.pickup(item, ammo)
-	# todo akimbo perk 
 
 func useItem() -> void:
 	match item:
@@ -398,7 +417,11 @@ func _on_body_entered(body):
 			collisionAnim.position = global_position - ((global_position - body.global_position) / 2)
 			collisionAnim.look_at(global_position)
 			Global.addToScene(collisionAnim)
-		# todo spiky, vampire, cuddles perks
+		if body.alive:
+			if Global.playersPerks[playerId].has(Global.PerkEnum.SPIKY):
+				body.hurt(Global.DAMAGE_SPIKY)
+				# TODO vampire perk
+			# TODO cuddles perk
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):

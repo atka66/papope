@@ -295,3 +295,6 @@ func spawnFallingLabel(text: String, position: Vector2, color: Color, size: int)
 
 func getDeathMessage(reason : DeathEnum):
 	return [DEATH_STRINGS[reason], DEATH_STRINGS[DeathEnum.DEFAULT]].pick_random().pick_random()
+
+func getRandomPwrup() -> PwrupEnum:
+	return [PwrupEnum.REVOLVER, PwrupEnum.DYNAMITE, PwrupEnum.SHIELD, PwrupEnum.TRAP, PwrupEnum.WHIP].pick_random()
