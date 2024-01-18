@@ -82,7 +82,8 @@ func spawnPerkSlot(slot: int, silent: bool):
 
 func dealt():
 	var randomPerk = getRandomPerk()
-	while Global.playersPerks[playerId].has(randomPerk):
+	while (Global.playersPerks[playerId].has(randomPerk) || 
+			(randomPerk == Global.PerkEnum.RESET && Global.playersPerks[playerId].size() == 0)):
 		randomPerk = getRandomPerk()
 	var perkCard = Res.PerkCardObject.instantiate()
 	perkCard.position = Vector2(170, 320)

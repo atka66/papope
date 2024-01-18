@@ -435,11 +435,6 @@ func _on_body_entered(body):
 			collisionAnim.position = global_position - ((global_position - body.global_position) / 2)
 			collisionAnim.look_at(global_position)
 			Global.addToScene(collisionAnim)
-		if body.alive:
-			if Global.playersPerks[playerId].has(Global.PerkEnum.SPIKY):
-				body.hurt(Global.DAMAGE_SPIKY)
-				# TODO vampire perk
-			# TODO cuddles perk
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):
