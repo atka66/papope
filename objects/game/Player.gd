@@ -176,7 +176,7 @@ func _process(delta):
 	if Global.MapControllerNode != null:
 		if alive:
 			if contactsLava && !shielded:
-				hurt(Global.DAMAGE_LAVA)
+				hurt(Global.DAMAGE_LAVA, null)
 			if timebombCd < 1:
 				die(Global.DeathEnum.EXPLOSION)
 				var explosion = Res.ExplosionAnimObject.instantiate()
@@ -309,13 +309,13 @@ func useItem() -> void:
 
 func getShot(playerId: int, normal: Vector2) -> void:
 	hurtSound(Res.AudioHurtRevolver)
-	hurt(Global.DAMAGE_REVOLVER)
+	hurt(Global.DAMAGE_REVOLVER, playerId)
 	#todo was just killed?
 	apply_central_impulse(normal * 400)
 
 func getTrapped(playerId: int) -> void:
 	hurtSound(Res.AudioHurtTrap)
-	hurt(Global.DAMAGE_TRAP)
+	hurt(Global.DAMAGE_TRAP, playerId)
 	# todo was just killed?
 	#TODO stepped in his own trap?
 	trapped = true
@@ -324,13 +324,13 @@ func getTrapped(playerId: int) -> void:
 
 func getWhipped(playerId: int, normal: Vector2) -> void:
 	hurtSound(Res.AudioHurtWhip)
-	hurt(Global.DAMAGE_WHIP)
+	hurt(Global.DAMAGE_WHIP, playerId)
 	# todo was just killed?
 	apply_central_impulse(normal * 2000)
 
 func getZapped() -> void:
 	hurtSound(Res.AudioHurtCactus.pick_random()) #todo change?
-	hurt(Global.DAMAGE_SPACERAY)
+	hurt(Global.DAMAGE_SPACERAY, null)
 	#todo was just killed?
 	
 	var vector: Vector2 = Vector2(-linear_velocity.x, 0)
@@ -365,7 +365,7 @@ func hideCrosshairs() -> void:
 	$Crosshairs/WhipCrosshair.hide()
 	$LookLine.hide()
 
-func hurt(damage: int) -> void:
+func hurt(damage: int, inflictorPlayerId) -> void:
 	var actualDamage: int = damage
 	if Global.playersPerks[playerId].has(Global.PerkEnum.ARMORED):
 		actualDamage = int(ceil(float(damage) / 2))
@@ -376,6 +376,8 @@ func hurt(damage: int) -> void:
 		else:
 			Global.spawnFallingLabel(str(int(actualDamage)), global_position, Color.TOMATO, fallingMessageSize)
 			hp -= actualDamage
+			if inflictorPlayerId != null && Global.playersPerks[inflictorPlayerId].has(Global.PerkEnum.VAMPIRE):
+				Global.getPlayer(inflictorPlayerId).heal(actualDamage)
 			# todo feathers
 			$Hurt/Anim.stop()
 			$Hurt/Anim.play("hurt")
@@ -439,7 +441,7 @@ func _on_body_entered(body):
 		hit = false
 	if body.is_in_group('cacti'):
 		# todo chicken noises
-		hurt(Global.DAMAGE_CACTUS)
+		hurt(Global.DAMAGE_CACTUS, null)
 		body.bounce()
 		body.pinch()
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)

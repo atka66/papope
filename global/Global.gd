@@ -227,6 +227,12 @@ func startRound() -> void:
 func initGhostSpawn():
 	MapControllerNode.initGhostSpawn()
 
+func getPlayer(playerId: int) -> Object:
+	for player in get_tree().get_nodes_in_group('players'):
+		if player.playerId == playerId:
+			return player
+	return null
+
 func getWinnerTeam() -> int:
 	var aliveTeams: Array[int] = []
 	for player in get_tree().get_nodes_in_group('players'):

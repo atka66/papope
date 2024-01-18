@@ -21,7 +21,7 @@ func _ready():
 				player.apply_central_impulse(position.direction_to(player.position) * power * 10)
 				var dmg: float = power / 3.0
 				# todo righteousness
-				player.hurt(dmg)
+				player.hurt(dmg, originPlayerId)
 
 func _process(delta):
 	if !$BigBoom.emitting && !$Smoke.emitting && !$Shards.emitting:

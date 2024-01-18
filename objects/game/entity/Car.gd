@@ -22,7 +22,7 @@ func _on_body_entered(body):
 	if body.is_in_group('players'):
 		$AudioCollision.stream = Res.AudioCollisionCar.pick_random()
 		$AudioCollision.play()
-		body.hurt(Global.DAMAGE_CAR)
+		body.hurt(Global.DAMAGE_CAR, null)
 		var vector = -body.linear_velocity
 		var vel = Vector2(1, randf_range(0.5, 1.0))
 		if fromRight:

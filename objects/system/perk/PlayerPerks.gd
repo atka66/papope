@@ -22,6 +22,24 @@ func _ready():
 		spawnPerkSlot(i, true)
 
 func _input(event):
+	if Global.DEBUG && Input.is_action_just_pressed("test3"):
+		var cardNode = get_node("PerkCard")
+		if cardNode && !donePerking && !cardNode.revealed:
+			cardNode.reveal()
+			$RevealHolder.hide()
+			if cardNode.perk == Global.PerkEnum.RESET:
+				var perkCount = Global.playersPerks[playerId].size()
+				Global.playersPerks[playerId] = []
+				for i in range(perkCount):
+					spawnPerkSlot(i, false)
+				finishAnimation()
+			elif Global.playersPerks[playerId].size() < 3:
+				Global.playersPerks[playerId].append(cardNode.perk)
+				spawnPerkSlot(Global.playersPerks[playerId].size() - 1, false)
+				finishAnimation()
+			else:
+				$SwapHolder.show()
+				updateSwapSelected()
 	if event.device == playerId:
 		var cardNode = get_node("PerkCard")
 		if cardNode && !donePerking:
