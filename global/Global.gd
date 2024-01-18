@@ -56,7 +56,7 @@ enum PerkEnum {
 	AKIMBO, ARMORED, FAST, SPIKY, CUDDLES, REVERSE,
 	BACKFIRE, SLOW, NO_LEGS, TIME_BOMB,
 	RESET, RIGHT, LONG_ARMS, CHICKEN,
-	HEALTHY, UNHEALTHY, REGENERATION, VAMPIRE, PREPARED
+	HEALTHY, UNHEALTHY, REGEN, VAMPIRE, PREPARED
 }
 
 const PERKS : Dictionary = {
@@ -76,7 +76,7 @@ const PERKS : Dictionary = {
 	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 14],
 	PerkEnum.HEALTHY: ['healthy', 'doubled max health', 15],
 	PerkEnum.UNHEALTHY: ['unhealthy', 'halved max health', 16],
-	PerkEnum.REGENERATION: ['regen', 'heals over time', 17],
+	PerkEnum.REGEN: ['regen', 'heals over time', 17],
 	PerkEnum.VAMPIRE: ['vampire', 'dealing damage heals', 18],
 	PerkEnum.PREPARED: ['prepared', 'starts with random item', 19]
 }
@@ -92,7 +92,7 @@ const DAMAGE_TRAP = 35
 const DAMAGE_CACTUS = 10
 const DAMAGE_SPIKY = 5
 const HEAL_CUDDLES = 5
-const HEAL_REGENERATION = 2
+const HEAL_REGEN = 2
 
 const SKIN_COUNT = 6
 const TEAM_COLOR_STRINGS = {

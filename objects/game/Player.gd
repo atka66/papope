@@ -52,6 +52,8 @@ func _ready():
 		$BodyParts/Face.frame = 6
 	else:
 		$BodyParts/Face.frame = Global.playersSkin[playerId]
+	if Global.playersPerks[playerId].has(Global.PerkEnum.REGEN):
+		regenLoop()
 	if Global.playersPerks[playerId].has(Global.PerkEnum.HEALTHY):
 		hp *= 2
 	if Global.playersPerks[playerId].has(Global.PerkEnum.UNHEALTHY):
@@ -131,6 +133,11 @@ func _input(event):
 						dash(lAxis)
 				if event.is_action_pressed("game_use"):
 					useItem()
+
+func regenLoop() -> void:
+	await get_tree().create_timer(1.0).timeout
+	heal(Global.HEAL_REGEN)
+	regenLoop()
 
 func updateColor(color: Color) -> void:
 	var borderColor: Color = color.darkened(0.8)
@@ -372,6 +379,13 @@ func hurt(damage: int) -> void:
 			# todo feathers
 			$Hurt/Anim.stop()
 			$Hurt/Anim.play("hurt")
+
+func heal(amount) -> void:
+	if amount > 0 && alive && !Global.playersFrozen:
+		Global.spawnFallingLabel(str(int(amount)), global_position, Color.LIGHT_GREEN, int(amount / 10) + 1)
+		hp = min(hp + amount, Global.playersMaxHp[playerId])
+		$Hurt/Anim.stop()
+		$Hurt/Anim.play("heal")
 
 func hurtSound(sound: AudioStreamOggVorbis) -> void:
 	if alive && !shielded:

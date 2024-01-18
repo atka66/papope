@@ -25,9 +25,6 @@ shader = ExtResource("2_uodpr")
 shader_parameter/width = 0.45
 shader_parameter/border_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Animation" id="Animation_724w8"]
-resource_name = "heal"
-
 [sub_resource type="Animation" id="Animation_qf4hf"]
 resource_name = "hurt"
 length = 0.2
@@ -44,10 +41,51 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Circle:material:shader_parameter/border_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xuqdy"]
+resource_name = "heal"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Circle:material:shader_parameter/border_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(0, 1, 0, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vn70s"]
 _data = {
-"heal": SubResource("Animation_724w8"),
+"heal": SubResource("Animation_xuqdy"),
 "hurt": SubResource("Animation_qf4hf")
 }
 
