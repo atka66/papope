@@ -20,6 +20,7 @@ extends Node
 @onready var DeadGhostObject = preload("res://objects/game/entity/DeadGhost.tscn")
 @onready var CarObject = preload("res://objects/game/entity/Car.tscn")
 @onready var DashParticlesObject = preload("res://objects/anim/DashParticles.tscn")
+@onready var FeatherParticlesObject = preload("res://objects/anim/FeatherParticles.tscn")
 @onready var FallingLabelObject = preload("res://objects/system/label/FallingLabel.tscn")
 
 @onready var PerkOverlayObject = preload("res://objects/system/perk/PerkOverlay.tscn")
@@ -54,6 +55,8 @@ extends Node
 	preload("res://audio/sfx/player/dash_3.ogg")
 ]
 
+
+
 @onready var AudioHurtRevolver = preload("res://audio/sfx/player/hurt_revolver.ogg")
 @onready var AudioHurtDynamite = preload("res://audio/sfx/player/hurt_dynamite.ogg")
 @onready var AudioHurtWhip = preload("res://audio/sfx/player/hurt_whip.ogg")
@@ -82,6 +85,16 @@ extends Node
 	preload("res://audio/sfx/system/perk/flip_1.ogg"),
 	preload("res://audio/sfx/system/perk/flip_2.ogg"),
 	preload("res://audio/sfx/system/perk/flip_3.ogg")
+]
+@onready var AudioChickenIdle = [
+	preload("res://audio/sfx/player/chicken/idle_1.ogg"),
+	preload("res://audio/sfx/player/chicken/idle_2.ogg"),
+	preload("res://audio/sfx/player/chicken/idle_3.ogg")
+]
+@onready var AudioChickenHurt = [
+	preload("res://audio/sfx/player/chicken/hurt_1.ogg"),
+	preload("res://audio/sfx/player/chicken/hurt_2.ogg"),
+	preload("res://audio/sfx/player/chicken/hurt_3.ogg")
 ]
 
 @onready var AudioMusicDefault = preload("res://audio/music/default.ogg")

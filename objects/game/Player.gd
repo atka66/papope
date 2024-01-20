@@ -50,6 +50,9 @@ func _ready():
 		speed *= 0.5
 	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
 		$BodyParts/Face.frame = 6
+		$AudioScared.stream = Res.AudioChickenHurt.pick_random()
+		chickenIdleSoundLoop()
+		emitFeathers(10)
 	else:
 		$BodyParts/Face.frame = Global.playersSkin[playerId]
 	if Global.playersPerks[playerId].has(Global.PerkEnum.REGEN):
@@ -139,6 +142,19 @@ func regenLoop() -> void:
 	heal(Global.HEAL_REGEN)
 	regenLoop()
 
+func chickenIdleSoundLoop() -> void:
+	await get_tree().create_timer(randf_range(2.0, 5.0)).timeout
+	if alive && !isFallingIntoWater:
+		$AudioChickenIdle.stream = Res.AudioChickenIdle.pick_random()
+		$AudioChickenIdle.play()
+		chickenIdleSoundLoop()
+
+func emitFeathers(amount: int) -> void:
+	var featherParticles = Res.FeatherParticlesObject.instantiate()
+	featherParticles.emitting = true
+	featherParticles.amount = min(amount, 30)
+	add_child(featherParticles)
+
 func updateColor(color: Color) -> void:
 	var borderColor: Color = color.darkened(0.8)
 	$BodyParts/Body.color = color
@@ -157,7 +173,8 @@ func dash(axis: Vector2) -> void:
 	$AudioDash.stream = Res.AudioPlayerDash.pick_random()
 	$AudioDash.play()
 	
-	# todo chicken
+	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+		emitFeathers(5)
 	
 	var impulse = speed * dashMultiplier
 	if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS) && !inSpace:
@@ -187,9 +204,7 @@ func _process(delta):
 			if hp < 1:
 				updateColor(Global.TEAM_COLORS[4])
 				alive = false
-				# todo no chicken idle sound
-				
-				# todo falling message
+				$AudioChickenIdle.stop()
 				
 				if isFallingIntoWater:
 					# falling into water has it's own death sound
@@ -215,7 +230,6 @@ func _process(delta):
 					var aliveTeamId: int = Global.getWinnerTeam()
 					if aliveTeamId != -1:
 						Global.MapControllerNode.endRound(aliveTeamId)
-						pass
 
 			if !Global.playersFrozen and !isFallingIntoWater:
 				if Global.playersPerks[playerId].has(Global.PerkEnum.TIME_BOMB):
@@ -378,7 +392,8 @@ func hurt(damage: int, inflictorPlayerId) -> void:
 			hp -= actualDamage
 			if inflictorPlayerId != null && Global.playersPerks[inflictorPlayerId].has(Global.PerkEnum.VAMPIRE):
 				Global.getPlayer(inflictorPlayerId).heal(actualDamage)
-			# todo feathers
+			if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN) && actualDamage > 5:
+				emitFeathers(actualDamage)
 			$Hurt/Anim.stop()
 			$Hurt/Anim.play("hurt")
 
@@ -391,7 +406,10 @@ func heal(amount) -> void:
 
 func hurtSound(sound: AudioStreamOggVorbis) -> void:
 	if alive && !shielded:
-		$AudioHurt.stream = sound
+		if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+			$AudioHurt.stream = Res.AudioChickenHurt.pick_random()
+		else:
+			$AudioHurt.stream = sound
 		$AudioHurt.play()
 
 func fallIntoWater() -> void:
