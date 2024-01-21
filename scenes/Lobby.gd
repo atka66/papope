@@ -53,6 +53,7 @@ func initPlayers() -> void:
 	# for debugging purposes
 	#Global.playersAchievements = [[Global.AchiEnum.UNDERDOG, Global.AchiEnum.NO_REFUNDS, Global.AchiEnum.GUNSLINGER, Global.AchiEnum.DAREDEVIL, Global.AchiEnum.TRIPLE_KILL], [Global.AchiEnum.TRIPLE_KILL, Global.AchiEnum.TRIPLE_KILL], [], []]
 	Global.playersPerks = [[], [], [], []]
+	Global.initPlayerStats()
 	
 	for i in range(4):
 		if ProjectSettings.get("papope/disconnect_on_init"):
@@ -60,18 +61,6 @@ func initPlayers() -> void:
 		else:
 			if Global.playersConnected[i] && Global.playersJoined[i]:
 				Global.joinPlayer(i, true)
-	
-	Global.playersStats = []
-	for i in range(4):
-		Global.playersStats.append(
-			{
-				Global.StatEnum.REV_USE: 0, Global.StatEnum.REV_HIT: 0,
-				Global.StatEnum.DYN_USE: 0, Global.StatEnum.DYN_DMG: 0,
-				Global.StatEnum.WHP_USE: 0, Global.StatEnum.WHP_HIT: 0,
-				Global.StatEnum.TRP_USE: 0, Global.StatEnum.TRP_HIT: 0,
-				Global.StatEnum.PELLETS: 0, Global.StatEnum.GHOST_KILL: 0
-			}
-		)
 
 func warnCannotStart() -> void:
 	$InitHolder/Anim.stop()

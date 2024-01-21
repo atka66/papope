@@ -46,9 +46,11 @@ func _process(delta):
 func _input(event):
 	if Global.DEBUG:
 		if Input.is_action_just_pressed("test3"):
-			die()
+			die(null)
 
-func die():
+func die(inflictorId):
+	if inflictorId != null:
+		Global.incrementStat(inflictorId, Global.StatEnum.GHOST_KILL, 1)
 	var deadGhost = Res.DeadGhostObject.instantiate()
 	deadGhost.position = global_position
 	get_parent().add_child(deadGhost)
@@ -56,22 +58,20 @@ func die():
 	queue_free()
 
 func getShot(playerId: int, normal: Vector2) -> void:
-	die()
+	die(playerId)
 
 func getTrapped(playerId: int) -> void:
-	#TODO ghost kill achievement?
-	die()
+	die(playerId)
 
 func getWhipped(playerId: int, normal: Vector2) -> void:
-	die()
+	die(playerId)
 
 
 func _on_body_entered(body):
 	if body.is_in_group('players') && body.alive && !Global.playersFrozen:
 		body.get_node('AudioScared').play()
 		body.die(Global.DeathEnum.GHOST)
-		# TODO Global.registerAchievement(body.playerId, Global.AchiEnum.SPOOKED)
+		Global.registerAchievement(body.playerId, Global.AchiEnum.SPOOKED)
 	if body.is_in_group('dynamites'):
 		body.explode()
-		# TODO Global.incrementStat(body.originPlayerId, Global.StatEnum.GHOST_KILL, 1)
-		die()
+		die(body.origin.playerId)

@@ -206,9 +206,9 @@ func _process(delta):
 				
 				Global.spawnFallingLabel(Global.getDeathMessage(deathReason), global_position, Color.DARK_GRAY, 3)
 				
-				# todo death reasons
-				# todo register no refunds
-				
+				if shielded:
+					Global.registerAchievement(playerId, Global.AchiEnum.NO_REFUNDS)
+
 				hp = 0
 				ammo = 0
 				hud.hideItems()

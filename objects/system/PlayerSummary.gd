@@ -1,5 +1,7 @@
 extends Node2D
 
+const MAX_ACHIEVEMENTS = 8
+
 @export var playerId: int = 0
 var winner = false
 var score = 0
@@ -29,31 +31,31 @@ func calculateScore() -> void:
 	pointsLabel.alignment = Control.LayoutPreset.PRESET_CENTER
 	pointsLabel.animation = 'float_in'
 	pointsLabel.animation_out = 'float_out'
-	pointsLabel.aliveTime = 2
+	pointsLabel.aliveTime = 1.5
 	add_child(pointsLabel)
 
 	score += points * 1000
 
 func showAchievements() -> void:
-	for i in len(Global.playersAchievements[playerId]):
-		showAchievement(376 + (i * 44), Global.playersAchievements[playerId][i])
+	for i in min(len(Global.playersAchievements[playerId]), MAX_ACHIEVEMENTS):
+		showAchievement(384 + (i * 44), Global.playersAchievements[playerId][i])
 		await get_tree().create_timer(0.18).timeout
 
 func showAchievement(y: int, achievement: Global.AchiEnum) -> void:
 	var nameLabel = Res.CustomLabelObject.instantiate()
-	nameLabel.position = Vector2(32, y)
+	nameLabel.position = Vector2(170, y)
 	nameLabel.text = Global.ACHIEVEMENTS[achievement][0]
 	nameLabel.fontSize = 2
-	#nameLabel.color = Color.black
-	#nameLabel.aliveTime = 0
+	nameLabel.alignment = Control.LayoutPreset.PRESET_CENTER
+	nameLabel.animation = 'boom_in'
 	nameLabel.audio = Res.AudioPlayerDash.pick_random()
 	$Container.add_child(nameLabel)
 	var descriptionLabel = Res.CustomLabelObject.instantiate()
-	descriptionLabel.position = Vector2(44, y + 24)
+	descriptionLabel.position = Vector2(170, y + 18)
 	descriptionLabel.text = Global.ACHIEVEMENTS[achievement][1]
 	descriptionLabel.fontSize = 1
-	#descriptionLabel.color = Color.black
-	#descriptionLabel.aliveTime = 0
+	descriptionLabel.alignment = Control.LayoutPreset.PRESET_CENTER
+	descriptionLabel.animation = 'boom_in'
 	$Container.add_child(descriptionLabel)
 	score += 100
 
@@ -112,8 +114,8 @@ func distributeAchievements():
 	if winner && Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
 		Global.registerAchievement(playerId, Global.AchiEnum.CHICKEN_DINNER)
 
-	if len(Global.playersAchievements[playerId]) > 6:
-		Global.playersAchievements[playerId].insert(7, Global.AchiEnum.AINT_GON_FIT)
+	if len(Global.playersAchievements[playerId]) >= MAX_ACHIEVEMENTS:
+		Global.playersAchievements[playerId].insert(MAX_ACHIEVEMENTS - 1, Global.AchiEnum.AINT_GON_FIT)
 
 func _process(delta):
 	if scoreCurr < score:

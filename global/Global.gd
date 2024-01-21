@@ -151,8 +151,9 @@ func _ready():
 		playersJoined = [true, true, true, true]
 		playersTeam = [0, 1, 2, 1]
 		playersPoints = [0, 3, 2, 3]
-		playersAchievements = [[AchiEnum.UNDERDOG, AchiEnum.NO_REFUNDS, AchiEnum.GUNSLINGER, AchiEnum.DAREDEVIL, AchiEnum.TRIPLE_KILL], [AchiEnum.TRIPLE_KILL, AchiEnum.TRIPLE_KILL], [], []]
+		playersAchievements = [[AchiEnum.UNDERDOG, AchiEnum.UNDERDOG, AchiEnum.NO_REFUNDS, AchiEnum.GUNSLINGER,AchiEnum.UNDERDOG, AchiEnum.NO_REFUNDS, AchiEnum.GUNSLINGER, AchiEnum.DAREDEVIL], [AchiEnum.TRIPLE_KILL, AchiEnum.TRIPLE_KILL], [], []]
 		playersPerks = [[PerkEnum.HEALTHY], [PerkEnum.UNHEALTHY], [], []]
+		Global.initPlayerStats()
 
 func _joy_connection_changed(id: int, connected: bool) -> void:
 	if id < 4:
@@ -193,6 +194,19 @@ func joinPlayer(id: int, silent: bool) -> void:
 func leavePlayer(id: int) -> void:
 	playersJoined[id] = false
 	emit_signal("player_remove", id)
+
+func initPlayerStats() -> void:
+	Global.playersStats = []
+	for i in range(4):
+		Global.playersStats.append(
+			{
+				Global.StatEnum.REV_USE: 0, Global.StatEnum.REV_HIT: 0,
+				Global.StatEnum.DYN_USE: 0, Global.StatEnum.DYN_DMG: 0,
+				Global.StatEnum.WHP_USE: 0, Global.StatEnum.WHP_HIT: 0,
+				Global.StatEnum.TRP_USE: 0, Global.StatEnum.TRP_HIT: 0,
+				Global.StatEnum.PELLETS: 0, Global.StatEnum.GHOST_KILL: 0
+			}
+		)
 
 func goToMap() -> void:
 	if getWinnerTeamByScore() < 0:
