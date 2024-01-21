@@ -37,7 +37,7 @@ enum AchiEnum {
 }
 const ACHIEVEMENTS = {
 	AchiEnum.UNDERDOG : ['underdog', 'low overall score'], # has <= 1/4 of the needed score at the end (score limit min 3)
-	AchiEnum.DEMOLITION_MAN : ['demo man', 'great dynamite damage'], # dynamite dmg / thrown dynamites > 75
+	AchiEnum.DEMOLITION_MAN : ['boomer', 'great dynamite damage'], # dynamite dmg / thrown dynamites > 70
 	AchiEnum.GUNSLINGER : ['gunslinger', 'accurate with the revolver'], # revolver accuracy over 75%
 	AchiEnum.HUTS_HUTS : ['huts-huts', 'accurate with the whip'], # whip accuracy over 75%
 	AchiEnum.DAREDEVIL : ['daredevil', 'won a round with low health'], # win a round with <= 10% of health
@@ -49,7 +49,7 @@ const ACHIEVEMENTS = {
 	AchiEnum.GHOSTBUSTER : ['ghostbuster', 'killed a lot of ghosts'], # killed 5 ghosts
 	AchiEnum.SPOOKED : ['spooked', 'scared of ghosts'], # killed by a ghost
 	AchiEnum.TRIPLE_KILL : ['triple kill', 'killed 3 enemies in a round'], # 3 enemies killed in 1 round
-	AchiEnum.AINT_GON_FIT : ['aint gon fit', 'too many achievements!'], # has at least 7 achievements
+	AchiEnum.AINT_GON_FIT : ['ain\'t gon fit', 'too many achievements!'], # has at least 7 achievements
 	AchiEnum.CHICKEN_DINNER : ['chicken dinner', 'i am a chicken']
 }
 enum PerkEnum {
@@ -260,7 +260,7 @@ func registerAchievement(playerId: int, achievement: AchiEnum):
 	if not (achievement in playersAchievements[playerId]):
 		playersAchievements[playerId].append(achievement)
 
-func incrementStat(playerId : int, stat : StatEnum, i: int) -> void:
+func incrementStat(playerId : int, stat : StatEnum, i) -> void:
 	if playersStats:
 		playersStats[playerId][stat] += i
 

@@ -310,7 +310,8 @@ func useItem() -> void:
 func getShot(playerId: int, normal: Vector2) -> void:
 	#hurtSound(Res.AudioHurtRevolver) TODO maybe some time
 	hurt(Global.DAMAGE_REVOLVER, playerId)
-	#todo was just killed?
+	if isRighteouslyHitBy(playerId):
+		Global.incrementStat(playerId, Global.StatEnum.REV_HIT, 1)
 	apply_central_impulse(normal * 400)
 
 func getTrapped(playerId: int) -> void:
@@ -452,3 +453,9 @@ func _on_body_entered(body):
 		body.pinch()
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 	# todo wall sound
+
+func isTeammate(otherPlayerId) -> bool:
+	return Global.playersTeam[otherPlayerId] == Global.playersTeam[playerId]
+
+func isRighteouslyHitBy(inflictorId) -> bool:
+	return alive && !shielded && !isTeammate(inflictorId)

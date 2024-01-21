@@ -14,14 +14,17 @@ func _ready():
 	$Audio.play()
 	
 	if harmful:
+		var accountableDmg = 0
 		for player in get_tree().get_nodes_in_group('players'):
 			var dist: float = position.distance_to(player.position)
 			if dist < 300.0:
 				var power: float = 300.0 - dist
 				player.apply_central_impulse(position.direction_to(player.position) * power * 10)
 				var dmg: float = power / 3.0
-				# todo righteousness
+				if player.isRighteouslyHitBy(originPlayerId):
+					accountableDmg += dmg
 				player.hurt(dmg, originPlayerId)
+		Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, accountableDmg)
 
 func _process(delta):
 	if !$BigBoom.emitting && !$Smoke.emitting && !$Shards.emitting:

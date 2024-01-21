@@ -85,14 +85,7 @@ func distributeAchievements():
 	if optionPoints >= 3 and Global.playersPoints[playerId] <= optionPoints / 4:
 		Global.registerAchievement(playerId, Global.AchiEnum.UNDERDOG)
 	# check stat achievements
-	# var playerStats = Global.playersStats[playerId] TODO uncomment
-	var playerStats = {
-				Global.StatEnum.REV_USE: 0, Global.StatEnum.REV_HIT: 0,
-				Global.StatEnum.DYN_USE: 0, Global.StatEnum.DYN_DMG: 0,
-				Global.StatEnum.WHP_USE: 0, Global.StatEnum.WHP_HIT: 0,
-				Global.StatEnum.TRP_USE: 0, Global.StatEnum.TRP_HIT: 0,
-				Global.StatEnum.PELLETS: 0, Global.StatEnum.GHOST_KILL: 0
-			}
+	var playerStats = Global.playersStats[playerId]
 	var dyn_use = playerStats[Global.StatEnum.DYN_USE]
 	var dyn_dmg = playerStats[Global.StatEnum.DYN_DMG]
 	var rev_use = playerStats[Global.StatEnum.REV_USE]
@@ -103,7 +96,7 @@ func distributeAchievements():
 	var trp_hit = playerStats[Global.StatEnum.TRP_HIT]
 	var pellets = playerStats[Global.StatEnum.PELLETS]
 	var ghost_kill = playerStats[Global.StatEnum.GHOST_KILL]
-	if dyn_use > 3 && float(dyn_dmg) / dyn_use > 75:
+	if dyn_use > 3 && float(dyn_dmg) / dyn_use > 70:
 		Global.registerAchievement(playerId, Global.AchiEnum.DEMOLITION_MAN)
 	if rev_use > 3 && float(rev_hit) / rev_use > 0.75:
 		Global.registerAchievement(playerId, Global.AchiEnum.GUNSLINGER)
