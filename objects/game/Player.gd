@@ -12,7 +12,6 @@ var hp: int = 1
 var item = null
 var ammo: int = 0
 var contactsLava: bool = false
-var timebombCd: int = Global.TIMEBOMB_CD
 var shielded: bool = false
 var trapped: bool = false
 var isFallingIntoWater: bool = false
@@ -194,13 +193,6 @@ func _process(delta):
 		if alive:
 			if contactsLava && !shielded:
 				hurt(Global.DAMAGE_LAVA, null)
-			if timebombCd < 1:
-				die(Global.DeathEnum.EXPLOSION)
-				var explosion = Res.ExplosionAnimObject.instantiate()
-				explosion.position = position
-				explosion.originPlayerId = playerId
-				explosion.shakePwr = 15
-				Global.addToScene(explosion)
 			if hp < 1:
 				updateColor(Global.TEAM_COLORS[4])
 				alive = false
@@ -222,7 +214,6 @@ func _process(delta):
 				hud.hideItems()
 				item = null
 				hideCrosshairs()
-				# todo hide timebomb
 				
 				Global.shakeScreen(10)
 				
@@ -230,11 +221,6 @@ func _process(delta):
 					var aliveTeamId: int = Global.getWinnerTeam()
 					if aliveTeamId != -1:
 						Global.MapControllerNode.endRound(aliveTeamId)
-
-			if !Global.playersFrozen and !isFallingIntoWater:
-				if Global.playersPerks[playerId].has(Global.PerkEnum.TIME_BOMB):
-					# todo timebomb display
-					timebombCd -= 1
 
 func _physics_process(delta):
 	if !isFallingIntoWater && !inSpace:

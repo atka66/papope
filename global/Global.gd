@@ -53,8 +53,8 @@ const ACHIEVEMENTS = {
 	AchiEnum.CHICKEN_DINNER : ['chicken dinner', 'i am a chicken']
 }
 enum PerkEnum {
-	AKIMBO, ARMORED, FAST, REVERSE, BACKFIRE, SLOW, NO_LEGS, TIME_BOMB,
-	RESET, RIGHT, LONG_ARMS, CHICKEN, HEALTHY, UNHEALTHY, REGEN, VAMPIRE, PREPARED
+	AKIMBO, ARMORED, FAST, REVERSE, BACKFIRE, SLOW, NO_LEGS, RESET, RIGHT, 
+	LONG_ARMS, CHICKEN, HEALTHY, UNHEALTHY, REGEN, VAMPIRE, PREPARED
 }
 
 const PERKS : Dictionary = {
@@ -65,16 +65,15 @@ const PERKS : Dictionary = {
 	PerkEnum.BACKFIRE: ['backfire', 'inverted aim', 5],
 	PerkEnum.SLOW: ['slow', 'halved movement speed', 6],
 	PerkEnum.NO_LEGS: ['no legs', 'can only dash', 7],
-	PerkEnum.TIME_BOMB: ['time bomb', 'explodes after 1 minute', 8],
-	PerkEnum.RESET: ['reset', 'current cards removed', 9],
-	PerkEnum.RIGHT: ['right', 'cannot aim to the left', 10],
-	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 11],
-	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 12],
-	PerkEnum.HEALTHY: ['healthy', 'doubled max health', 13],
-	PerkEnum.UNHEALTHY: ['unhealthy', 'halved max health', 14],
-	PerkEnum.REGEN: ['regen', 'heals over time', 15],
-	PerkEnum.VAMPIRE: ['vampire', 'dealing damage heals', 16],
-	PerkEnum.PREPARED: ['prepared', 'starts with random item', 17]
+	PerkEnum.RESET: ['reset', 'current cards removed', 8],
+	PerkEnum.RIGHT: ['right', 'cannot aim to the left', 9],
+	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 10],
+	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 11],
+	PerkEnum.HEALTHY: ['healthy', 'doubled max health', 12],
+	PerkEnum.UNHEALTHY: ['unhealthy', 'halved max health', 13],
+	PerkEnum.REGEN: ['regen', 'heals over time', 14],
+	PerkEnum.VAMPIRE: ['vampire', 'dealing damage heals', 15],
+	PerkEnum.PREPARED: ['prepared', 'starts with random item', 16]
 }
 
 enum PwrupEnum { REVOLVER, DYNAMITE, SHIELD, TRAP, WHIP }
@@ -98,8 +97,6 @@ const TEAM_COLOR_STRINGS = {
 
 const CONVEYOR_VEL_AREA = 0.68
 const CONVEYOR_VEL_RIGID = Vector2(-200.0, 0)
-
-const TIMEBOMB_CD: int = 60 * 60
 
 var options = {
 	'mode': ['normal', 'one-hit', 'cards'],
