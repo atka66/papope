@@ -313,6 +313,7 @@ func getShot(originPlayerId: int, normal: Vector2) -> void:
 	if isRighteouslyHitBy(originPlayerId):
 		Global.incrementStat(originPlayerId, Global.StatEnum.REV_HIT, 1)
 	if isJustKilled():
+		die(Global.DeathEnum.REVOLVER)
 		if isTeammate(originPlayerId):
 			Global.registerAchievement(originPlayerId, Global.AchiEnum.TRAITOR)
 		else:
@@ -325,6 +326,7 @@ func getTrapped(originPlayerId: int) -> void:
 	if isRighteouslyHitBy(originPlayerId):
 		Global.incrementStat(originPlayerId, Global.StatEnum.TRP_HIT, 1)
 	if isJustKilled():
+		die(Global.DeathEnum.TRAP)
 		if isTeammate(originPlayerId):
 			Global.registerAchievement(originPlayerId, Global.AchiEnum.TRAITOR)
 		else:
@@ -341,6 +343,7 @@ func getWhipped(originPlayerId: int, normal: Vector2) -> void:
 	if isRighteouslyHitBy(originPlayerId):
 		Global.incrementStat(originPlayerId, Global.StatEnum.WHP_HIT, 1)
 	if isJustKilled():
+		die(Global.DeathEnum.WHIP)
 		if isTeammate(originPlayerId):
 			Global.registerAchievement(originPlayerId, Global.AchiEnum.TRAITOR)
 		else:
@@ -350,6 +353,8 @@ func getWhipped(originPlayerId: int, normal: Vector2) -> void:
 func getZapped() -> void:
 	hurtSound(Res.AudioContactCactus.pick_random()) # TODO maybe something else
 	hurt(Global.DAMAGE_SPACERAY, null)
+	if isJustKilled():
+		die(Global.DeathEnum.LASER)
 
 	var vector: Vector2 = Vector2(-linear_velocity.x, 0)
 	var vel = Vector2.RIGHT

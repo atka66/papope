@@ -24,6 +24,8 @@ func _ready():
 				if player.isRighteouslyHitBy(originPlayerId):
 					accountableDmg += dmg
 				player.hurt(dmg, originPlayerId)
+				if player.isJustKilled():
+					player.die(Global.DeathEnum.EXPLOSION)
 		Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, accountableDmg)
 
 func _process(delta):
