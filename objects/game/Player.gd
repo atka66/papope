@@ -307,33 +307,50 @@ func useItem() -> void:
 				item = null
 				hideCrosshairs()
 
-func getShot(playerId: int, normal: Vector2) -> void:
+func getShot(originPlayerId: int, normal: Vector2) -> void:
 	#hurtSound(Res.AudioHurtRevolver) TODO maybe some time
-	hurt(Global.DAMAGE_REVOLVER, playerId)
-	if isRighteouslyHitBy(playerId):
-		Global.incrementStat(playerId, Global.StatEnum.REV_HIT, 1)
+	hurt(Global.DAMAGE_REVOLVER, originPlayerId)
+	if isRighteouslyHitBy(originPlayerId):
+		Global.incrementStat(originPlayerId, Global.StatEnum.REV_HIT, 1)
+	if isJustKilled():
+		if isTeammate(originPlayerId):
+			Global.registerAchievement(originPlayerId, Global.AchiEnum.TRAITOR)
+		else:
+			Global.addKill(originPlayerId)
 	apply_central_impulse(normal * 400)
 
-func getTrapped(playerId: int) -> void:
+func getTrapped(originPlayerId: int) -> void:
 	hurtSound(Res.AudioHurtTrap)
-	hurt(Global.DAMAGE_TRAP, playerId)
-	# todo was just killed?
-	#TODO stepped in his own trap?
+	hurt(Global.DAMAGE_TRAP, originPlayerId)
+	if isRighteouslyHitBy(originPlayerId):
+		Global.incrementStat(originPlayerId, Global.StatEnum.TRP_HIT, 1)
+	if isJustKilled():
+		if isTeammate(originPlayerId):
+			Global.registerAchievement(originPlayerId, Global.AchiEnum.TRAITOR)
+		else:
+			Global.addKill(originPlayerId)
+	if alive && playerId == originPlayerId:
+		Global.registerAchievement(playerId, Global.AchiEnum.CARELESS)
 	trapped = true
 	$Lock.show()
 	$Lock/Timer.start(2.0)
 
-func getWhipped(playerId: int, normal: Vector2) -> void:
+func getWhipped(originPlayerId: int, normal: Vector2) -> void:
 	hurtSound(Res.AudioHurtWhip)
-	hurt(Global.DAMAGE_WHIP, playerId)
-	# todo was just killed?
+	hurt(Global.DAMAGE_WHIP, originPlayerId)
+	if isRighteouslyHitBy(originPlayerId):
+		Global.incrementStat(originPlayerId, Global.StatEnum.WHP_HIT, 1)
+	if isJustKilled():
+		if isTeammate(originPlayerId):
+			Global.registerAchievement(originPlayerId, Global.AchiEnum.TRAITOR)
+		else:
+			Global.addKill(originPlayerId)
 	apply_central_impulse(normal * 2000)
 
 func getZapped() -> void:
 	hurtSound(Res.AudioContactCactus.pick_random()) # TODO maybe something else
 	hurt(Global.DAMAGE_SPACERAY, null)
-	#todo was just killed?
-	
+
 	var vector: Vector2 = Vector2(-linear_velocity.x, 0)
 	var vel = Vector2.RIGHT
 	if global_position.x < 672:
@@ -459,3 +476,6 @@ func isTeammate(otherPlayerId) -> bool:
 
 func isRighteouslyHitBy(inflictorId) -> bool:
 	return alive && !shielded && !isTeammate(inflictorId)
+
+func isJustKilled() -> bool:
+	return alive && hp <= 0

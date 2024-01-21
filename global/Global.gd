@@ -295,3 +295,8 @@ func getDeathMessage(reason : DeathEnum):
 
 func getRandomPwrup() -> PwrupEnum:
 	return [PwrupEnum.REVOLVER, PwrupEnum.DYNAMITE, PwrupEnum.SHIELD, PwrupEnum.TRAP, PwrupEnum.WHIP].pick_random()
+
+func addKill(playerId) -> void:
+	playersKills[playerId] += 1
+	if playersKills[playerId] == 3:
+		registerAchievement(playerId, Global.AchiEnum.TRIPLE_KILL)
