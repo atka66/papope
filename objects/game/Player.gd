@@ -322,7 +322,7 @@ func useItem() -> void:
 				hideCrosshairs()
 
 func getShot(playerId: int, normal: Vector2) -> void:
-	hurtSound(Res.AudioHurtRevolver)
+	#hurtSound(Res.AudioHurtRevolver) TODO maybe some time
 	hurt(Global.DAMAGE_REVOLVER, playerId)
 	#todo was just killed?
 	apply_central_impulse(normal * 400)
@@ -343,7 +343,7 @@ func getWhipped(playerId: int, normal: Vector2) -> void:
 	apply_central_impulse(normal * 2000)
 
 func getZapped() -> void:
-	hurtSound(Res.AudioHurtCactus.pick_random()) #todo change?
+	hurtSound(Res.AudioContactCactus.pick_random()) # TODO maybe something else
 	hurt(Global.DAMAGE_SPACERAY, null)
 	#todo was just killed?
 	
@@ -458,7 +458,9 @@ func _on_body_entered(body):
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):
-		# todo chicken noises
+		# todo maybe hurt sound for the non-chicken as well?
+		if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+			hurtSound(Res.AudioChickenHurt.pick_random())
 		hurt(Global.DAMAGE_CACTUS, null)
 		body.bounce()
 		body.pinch()

@@ -13,5 +13,5 @@ func bounce():
 	$Anim.play('bounce')
 
 func pinch():
-	$AudioPinch.stream = Res.AudioHurtCactus.pick_random()
+	$AudioPinch.stream = Res.AudioContactCactus.pick_random()
 	$AudioPinch.play()

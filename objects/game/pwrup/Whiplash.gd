@@ -15,15 +15,19 @@ func _ready():
 	var hitPosition: Vector2
 	$HitScan.target_position = Global.extendVectorTo(targetNorm, maxLength)
 	$HitScan.force_raycast_update()
+	var playerHit = false
 	if $HitScan.is_colliding():
 		hitPosition = $HitScan.get_collision_point()
 		var collider = $HitScan.get_collider()
 		if collider.is_in_group('whippables'):
 			collider.getWhipped(origin.playerId, $HitScan.target_position.normalized())
+			if collider.is_in_group('players'):
+				playerHit = true
 	else:
 		hitPosition = $HitScan.target_position + global_position
 	var crack = Res.CrackAnimObject.instantiate()
 	crack.position = hitPosition
+	crack.playerHit = playerHit
 	Global.addToScene(crack)
 
 func _process(delta):

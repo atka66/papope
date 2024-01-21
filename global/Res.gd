@@ -28,11 +28,7 @@ extends Node
 @onready var PerkCardObject = preload("res://objects/system/perk/PerkCard.tscn")
 
 @onready var AudioRoundGo = preload("res://audio/sfx/system/round_go.ogg")
-@onready var AudioPlayerCollide = [
-	preload("res://audio/sfx/player/collide_1.ogg"),
-	preload("res://audio/sfx/player/collide_2.ogg"),
-	preload("res://audio/sfx/player/collide_3.ogg")
-]
+
 @onready var AudioRevolverFire = preload("res://audio/sfx/pwrup/rev_fire.ogg")
 @onready var AudioRevolverRicochet = [
 	preload("res://audio/sfx/pwrup/rev_ricochet_1.ogg"),
@@ -55,18 +51,26 @@ extends Node
 	preload("res://audio/sfx/player/dash_3.ogg")
 ]
 
+@onready var AudioHurtDynamite = preload("res://audio/sfx/player/hurt/hurt_dynamite.ogg")
+@onready var AudioHurtTrap = preload("res://audio/sfx/player/hurt/hurt_trap.ogg")
+@onready var AudioHurtWhip = preload("res://audio/sfx/player/hurt/hurt_whip.ogg")
+@onready var AudioHurtScare = preload("res://audio/sfx/player/hurt/hurt_scare.ogg")
 
-
-@onready var AudioHurtRevolver = preload("res://audio/sfx/player/hurt_revolver.ogg")
-@onready var AudioHurtDynamite = preload("res://audio/sfx/player/hurt_dynamite.ogg")
-@onready var AudioHurtWhip = preload("res://audio/sfx/player/hurt_whip.ogg")
-@onready var AudioHurtTrap = preload("res://audio/sfx/player/hurt_trap.ogg")
-@onready var AudioHurtFall = preload("res://audio/sfx/player/hurt_fall.ogg")
-@onready var AudioHurtCactus = [
-	preload("res://audio/sfx/player/hurt_cactus_1.ogg"),
-	preload("res://audio/sfx/player/hurt_cactus_2.ogg")
+@onready var AudioContactPlayer = [
+	preload("res://audio/sfx/contact/player_collide_1.ogg"),
+	preload("res://audio/sfx/contact/player_collide_2.ogg"),
+	preload("res://audio/sfx/contact/player_collide_3.ogg")
+]
+@onready var AudioContactCactus = [
+	preload("res://audio/sfx/contact/cactus_contact_1.ogg"),
+	preload("res://audio/sfx/contact/cactus_contact_2.ogg")
 ]
 
+@onready var AudioContactCar = [
+	preload("res://audio/sfx/entity/car_1.ogg"),
+	preload("res://audio/sfx/entity/car_2.ogg"),
+	preload("res://audio/sfx/entity/car_3.ogg")
+]
 @onready var AudioCarHorn = [
 	preload("res://audio/sfx/entity/car_horn_1.ogg"),
 	preload("res://audio/sfx/entity/car_horn_2.ogg"),
@@ -76,25 +80,20 @@ extends Node
 	preload("res://audio/sfx/entity/car_horn_6.ogg")
 ]
 
-@onready var AudioCollisionCar = [
-	preload("res://audio/sfx/entity/car_1.ogg"),
-	preload("res://audio/sfx/entity/car_2.ogg"),
-	preload("res://audio/sfx/entity/car_3.ogg")
-]
 @onready var AudioCardFlip = [
 	preload("res://audio/sfx/system/perk/flip_1.ogg"),
 	preload("res://audio/sfx/system/perk/flip_2.ogg"),
 	preload("res://audio/sfx/system/perk/flip_3.ogg")
 ]
 @onready var AudioChickenIdle = [
-	preload("res://audio/sfx/player/chicken/idle_1.ogg"),
-	preload("res://audio/sfx/player/chicken/idle_2.ogg"),
-	preload("res://audio/sfx/player/chicken/idle_3.ogg")
+	preload("res://audio/sfx/player/chicken_idle_1.ogg"),
+	preload("res://audio/sfx/player/chicken_idle_2.ogg"),
+	preload("res://audio/sfx/player/chicken_idle_3.ogg")
 ]
 @onready var AudioChickenHurt = [
-	preload("res://audio/sfx/player/chicken/hurt_1.ogg"),
-	preload("res://audio/sfx/player/chicken/hurt_2.ogg"),
-	preload("res://audio/sfx/player/chicken/hurt_3.ogg")
+	preload("res://audio/sfx/player/hurt/chicken_hurt_1.ogg"),
+	preload("res://audio/sfx/player/hurt/chicken_hurt_2.ogg"),
+	preload("res://audio/sfx/player/hurt/chicken_hurt_3.ogg")
 ]
 
 @onready var AudioMusicDefault = preload("res://audio/music/default.ogg")

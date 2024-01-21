@@ -20,7 +20,7 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if body.is_in_group('players'):
-		$AudioCollision.stream = Res.AudioCollisionCar.pick_random()
+		$AudioCollision.stream = Res.AudioContactCar.pick_random()
 		$AudioCollision.play()
 		body.hurt(Global.DAMAGE_CAR, null)
 		var vector = -body.linear_velocity
@@ -34,13 +34,13 @@ func _on_body_entered(body):
 			$AudioHorn.play()
 	if body.is_in_group('dynamites'):
 		body.explode()
-		$AudioCollision.stream = Res.AudioCollisionCar.pick_random()
+		$AudioCollision.stream = Res.AudioContactCar.pick_random()
 		$AudioCollision.play()
 
 func getShot(playerId: int, normal: Vector2) -> void:
-	$AudioCollision.stream = Res.AudioCollisionCar.pick_random()
+	$AudioCollision.stream = Res.AudioContactCar.pick_random()
 	$AudioCollision.play()
 
 func getWhipped(playerId: int, normal: Vector2) -> void:
-	$AudioCollision.stream = Res.AudioCollisionCar.pick_random()
+	$AudioCollision.stream = Res.AudioContactCar.pick_random()
 	$AudioCollision.play()

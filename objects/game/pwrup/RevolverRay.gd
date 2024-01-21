@@ -23,6 +23,8 @@ func _ready():
 		var collider = $HitScan.get_collider()
 		if collider.is_in_group('shootables'):
 			collider.getShot(origin.playerId, $HitScan.target_position.normalized())
+			if collider.is_in_group('players'):
+				$AudioPlayerHit.play()
 			if collider.is_in_group('car'):
 				spawnRicochet(hitPosition, hitAngle)
 		else:

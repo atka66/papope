@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://poecvtp05qww"]
+[gd_scene load_steps=6 format=3 uid="uid://poecvtp05qww"]
 
 [ext_resource type="Script" path="res://objects/game/pwrup/RevolverRay.gd" id="1_c0kx1"]
 [ext_resource type="AudioStream" uid="uid://lb15sa17enki" path="res://audio/sfx/pwrup/rev_fire.ogg" id="2_4crib"]
+[ext_resource type="AudioStream" uid="uid://cn7iqp0v80dvw" path="res://audio/sfx/contact/revolver_contact.ogg" id="3_vddyr"]
 
 [sub_resource type="Animation" id="Animation_4c5nn"]
 resource_name = "ray"
@@ -115,4 +116,8 @@ scale_amount_max = 15.0
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_4crib")
+bus = &"sfx"
+
+[node name="AudioPlayerHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_vddyr")
 bus = &"sfx"

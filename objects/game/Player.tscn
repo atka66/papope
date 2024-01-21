@@ -9,7 +9,7 @@
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="7_gom1r"]
 [ext_resource type="AudioStream" uid="uid://chl7pwr2aquq0" path="res://audio/sfx/pwrup/shield_start.ogg" id="8_eksu2"]
 [ext_resource type="AudioStream" uid="uid://buth7w23vc0am" path="res://audio/sfx/pwrup/shield_end.ogg" id="9_0h1ux"]
-[ext_resource type="AudioStream" uid="uid://6g140bpk81ed" path="res://audio/sfx/player/hurt_fall.ogg" id="10_w13my"]
+[ext_resource type="AudioStream" uid="uid://6g140bpk81ed" path="res://audio/sfx/player/hurt/hurt_scare.ogg" id="10_38n2i"]
 [ext_resource type="AudioStream" uid="uid://b48v6e2sqs8lt" path="res://audio/sfx/player/lava_enter.ogg" id="11_oekyh"]
 [ext_resource type="AudioStream" uid="uid://dwujokto6bp1u" path="res://audio/sfx/player/death.ogg" id="12_720xj"]
 [ext_resource type="AudioStream" uid="uid://d0x3jq52qs0k7" path="res://audio/sfx/pwrup/pickup.ogg" id="12_nvt8g"]
@@ -334,7 +334,7 @@ bus = &"sfx"
 bus = &"sfx"
 
 [node name="AudioScared" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_w13my")
+stream = ExtResource("10_38n2i")
 bus = &"sfx"
 
 [node name="AudioInLava" type="AudioStreamPlayer2D" parent="."]
