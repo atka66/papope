@@ -116,18 +116,17 @@ func _input(event):
 	if event.device == playerId && !inputCd:
 		inputCd = true
 		if Lobby != null:
-			if Lobby.countdownNode == null:
+			if Lobby.countdownNode == null && !ProjectSettings.get("papope/hosted_mode"):
 				if event.is_action_pressed("skin_next"):
 					Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
 					$BodyParts/Face.frame = Global.playersSkin[playerId]
-				if ProjectSettings.get("papope/allow_players_set_options"):
-						if event.is_action_pressed("game_use"):
-							if Global.DEBUG:
-								Global.spawnFallingLabel(Global.DEATH_STRINGS[Global.DeathEnum.DEFAULT].pick_random(), global_position, Color.LIGHT_GREEN, 3)
-							Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
-						if event.is_action_pressed("game_dash"):
-							Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
-						updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
+				if event.is_action_pressed("game_use"):
+					if Global.DEBUG:
+						Global.spawnFallingLabel(Global.DEATH_STRINGS[Global.DeathEnum.DEFAULT].pick_random(), global_position, Color.LIGHT_GREEN, 3)
+					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
+				if event.is_action_pressed("game_dash"):
+					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
+				updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
 		else:
 			if alive && !Global.playersFrozen && !isFallingIntoWater:
 				if !trapped && linear_velocity.length() < 2000 && lAxis.length() > 0:

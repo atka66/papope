@@ -5,13 +5,15 @@ var countdownNode = null
 func _ready():
 	Global.MusicNode.play('menu')
 	$MenuCanvas/VersionLabel.setText(Global.VERSION)
+	if ProjectSettings.get("papope/hosted_mode"):
+		$MenuCanvas/FullscreenLabel.setText('atka66.itch.io/papope')
 	initPlayers()
 
 func _process(delta):
 	var hasConnected = Global.playersJoined.has(true)
 	
 	$Settings.visible = hasConnected
-	$MenuCanvas/Hints.visible = hasConnected
+	$MenuCanvas/Hints.visible = !ProjectSettings.get("papope/hosted_mode") && hasConnected
 
 	$InitHolder/WaitingLabel.hide()
 	$InitHolder/TeamLimitLabel.hide()
@@ -56,7 +58,7 @@ func initPlayers() -> void:
 	Global.initPlayerStats()
 	
 	for i in range(4):
-		if ProjectSettings.get("papope/disconnect_on_init"):
+		if ProjectSettings.get("papope/hosted_mode"):
 			Global.playersJoined[i] = false
 		else:
 			if Global.playersConnected[i] && Global.playersJoined[i]:

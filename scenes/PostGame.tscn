@@ -9,7 +9,8 @@
 
 [sub_resource type="Animation" id="Animation_hqb4x"]
 resource_name = "auto"
-length = 7.0
+length = 60.0
+step = 1.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -34,6 +35,23 @@ tracks/1/keys = {
 "values": [{
 "args": [0.0],
 "method": &"play"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(8, 60),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"allowProceed"
+}, {
+"args": [],
+"method": &"toLobby"
 }]
 }
 
@@ -94,5 +112,3 @@ z_as_relative = false
 offset_right = 1360.0
 offset_bottom = 768.0
 color = Color(0, 0, 0, 1)
-
-[connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]

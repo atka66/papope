@@ -9,7 +9,7 @@ var MusicNode: Node
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 const DEBUG = true
 
-const VERSION = '1.4.0 beta'
+const VERSION = '1.4.0 unreleased beta'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
@@ -100,7 +100,7 @@ const CONVEYOR_VEL_RIGID = Vector2(-200.0, 0)
 
 var options = {
 	'mode': ['normal', 'one-hit', 'cards'],
-	'map': ['random', 'hell', 'western', 'ship', 'space', 'highway', 'pacman'],
+	'map': ['random', 'hell', 'western', 'ship', 'space', 'highway', 'pacman', 'conveyor'],
 	'rounds': [1, 3, 5, 9]
 }
 var optionInfo = {

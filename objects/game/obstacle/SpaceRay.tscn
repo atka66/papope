@@ -157,64 +157,64 @@ gradient = SubResource("Gradient_4cad6")
 width = 128
 height = 70
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wvmgf"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gywd"]
 atlas = ExtResource("2_yl0nb")
-region = Rect2(0, 0, 32, 96)
+region = Rect2(0, 0, 64, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fnogb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nber"]
 atlas = ExtResource("2_yl0nb")
-region = Rect2(32, 0, 32, 96)
+region = Rect2(64, 0, 64, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e8vo0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ym3f7"]
 atlas = ExtResource("2_yl0nb")
-region = Rect2(64, 0, 32, 96)
+region = Rect2(128, 0, 64, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gsp1q"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jelv4"]
 atlas = ExtResource("2_yl0nb")
-region = Rect2(96, 0, 32, 96)
+region = Rect2(192, 0, 64, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6fry4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjnbe"]
 atlas = ExtResource("2_yl0nb")
-region = Rect2(128, 0, 32, 96)
+region = Rect2(256, 0, 64, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r5opb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_crs5g"]
 atlas = ExtResource("2_yl0nb")
-region = Rect2(160, 0, 32, 96)
+region = Rect2(320, 0, 64, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hmd3i"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_0u0fs"]
 atlas = ExtResource("2_yl0nb")
-region = Rect2(192, 0, 32, 96)
+region = Rect2(384, 0, 64, 192)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5wix0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqk55"]
 atlas = ExtResource("2_yl0nb")
-region = Rect2(224, 0, 32, 96)
+region = Rect2(448, 0, 64, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8xqsn"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wvmgf")
+"texture": SubResource("AtlasTexture_4gywd")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fnogb")
+"texture": SubResource("AtlasTexture_1nber")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_e8vo0")
+"texture": SubResource("AtlasTexture_ym3f7")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gsp1q")
+"texture": SubResource("AtlasTexture_jelv4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6fry4")
+"texture": SubResource("AtlasTexture_hjnbe")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r5opb")
+"texture": SubResource("AtlasTexture_crs5g")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hmd3i")
+"texture": SubResource("AtlasTexture_0u0fs")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5wix0")
+"texture": SubResource("AtlasTexture_aqk55")
 }],
 "loop": true,
 "name": &"default",
@@ -243,7 +243,6 @@ offset_right = 35.8536
 offset_bottom = 512.0
 
 [node name="Phase2" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 17
 
@@ -253,7 +252,7 @@ texture = SubResource("GradientTexture2D_ydxlq")
 texture_scale = 10.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Phase2"]
-scale = Vector2(10, 10)
+scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_8xqsn")
 autoplay = "default"
 

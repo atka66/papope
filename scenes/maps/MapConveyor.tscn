@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dco2r6kg23rq3"]
+
+[ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_qv5dl"]
+[ext_resource type="AudioStream" uid="uid://b2bwgllix1e8s" path="res://audio/sfx/ambient/amb_ember.ogg" id="2_75ihl"]
+
+[node name="MapConveyor" type="Node2D"]
+
+[node name="MapController" parent="." instance=ExtResource("1_qv5dl")]
+
+[node name="Ambient" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_75ihl")
+autoplay = true
+bus = &"sfx"

@@ -17,7 +17,7 @@ func _process(delta):
 		updateCurrentOption()
 
 func _input(event):
-	if Lobby.countdownNode == null && Global.playersJoined.has(true):
+	if Lobby.countdownNode == null && Global.playersJoined.has(true) && !ProjectSettings.get("papope/hosted_mode"):
 		if event.is_action_pressed("nav_down"):
 			currentOption = (currentOption + 1) % 3
 			$AudioTick.play()

@@ -22,7 +22,6 @@ func restartMovingBackground(anim_name) -> void:
 			resultFrame = 6
 	$Backgrounds.frame = resultFrame
 	#TODO redo images
-	#TODO remove conveyor image
 	
 	$Anim.seek(0)
 	$Anim.play("loop")
