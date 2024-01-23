@@ -142,3 +142,16 @@ func _on_fall_trigger_body_entered(body):
 	if body.is_in_group("players"):
 		if !body.isFallingIntoWater:
 			body.fallIntoWater()
+
+
+func _on_conveyor_belt_body_entered(body):
+	if body.is_in_group("players"):
+		#body.convey() TODO
+		pass
+
+
+func _on_conveyor_belt_body_exited(body):
+	if body.is_in_group("players"):
+		if !body.isFallingIntoWater:
+			#body.fallIntoWater() TODO
+			pass

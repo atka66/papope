@@ -483,3 +483,6 @@ func isRighteouslyHitBy(inflictorId) -> bool:
 
 func isJustKilled() -> bool:
 	return alive && hp <= 0
+
+func convey() -> void:
+	add_constant_central_force(Global.CONVEYOR_VEL_RIGID)

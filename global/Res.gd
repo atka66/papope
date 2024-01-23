@@ -103,6 +103,6 @@ extends Node
 @onready var AudioMusicHell = preload("res://audio/music/hell.ogg")
 @onready var AudioMusicWestern = preload("res://audio/music/western.ogg")
 @onready var AudioMusicSpace = preload("res://audio/music/space.ogg")
-@onready var AudioMusicConveyor = preload("res://audio/music/conveyor.ogg")
+@onready var AudioMusicIndustrial = preload("res://audio/music/industrial.ogg")
 
 @onready var TexturePerks = preload("res://sprites/perk/perks.png")

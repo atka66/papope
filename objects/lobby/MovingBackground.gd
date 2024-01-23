@@ -18,7 +18,7 @@ func restartMovingBackground(anim_name) -> void:
 			resultFrame = 4
 		'pacman':
 			resultFrame = 5
-		'conveyor':
+		'industrial':
 			resultFrame = 6
 	$Backgrounds.frame = resultFrame
 	#TODO redo images

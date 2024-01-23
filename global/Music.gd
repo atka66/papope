@@ -18,8 +18,8 @@ func play(stage: String) -> void:
 			audioStream = Res.AudioMusicWestern
 		'space':
 			audioStream = Res.AudioMusicSpace
-		'conveyor':
-			audioStream = Res.AudioMusicConveyor
+		'industrial':
+			audioStream = Res.AudioMusicIndustrial
 	if $Audio.stream != audioStream:
 		$Audio.stream = audioStream
 		$Audio.play()

@@ -100,7 +100,7 @@ const CONVEYOR_VEL_RIGID = Vector2(-200.0, 0)
 
 var options = {
 	'mode': ['normal', 'one-hit', 'cards'],
-	'map': ['random', 'hell', 'western', 'ship', 'space', 'highway', 'pacman', 'conveyor'],
+	'map': ['random', 'hell', 'western', 'ship', 'space', 'highway', 'pacman', 'industrial'],
 	'rounds': [1, 3, 5, 9]
 }
 var optionInfo = {
@@ -224,8 +224,7 @@ func goToMap() -> void:
 		if selectedMap == 'space': get_tree().change_scene_to_file("res://scenes/maps/MapSpace.tscn")
 		if selectedMap == 'highway': get_tree().change_scene_to_file("res://scenes/maps/MapHighway.tscn")
 		if selectedMap == 'pacman': get_tree().change_scene_to_file("res://scenes/maps/MapPacman.tscn")
-		# TODO remove
-		if selectedMap == 'conveyor': get_tree().change_scene_to_file("res://scenes/maps/MapConveyor.tscn")
+		if selectedMap == 'industrial': get_tree().change_scene_to_file("res://scenes/maps/MapIndustrial.tscn")
 	else:
 		get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
 
