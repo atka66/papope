@@ -420,7 +420,7 @@ func hurtSound(sound: AudioStreamOggVorbis) -> void:
 			$AudioHurt.stream = sound
 		$AudioHurt.play()
 
-func fallIntoWater() -> void:
+func fallDown(isLava: bool) -> void:
 	$CollisionShape.set_deferred("disabled", true)
 	isFallingIntoWater = true
 	if alive:
@@ -432,7 +432,9 @@ func fallIntoWater() -> void:
 		vel.x *= -1
 	apply_central_impulse(vector + (vel * 1000))
 	await get_tree().create_timer(0.6).timeout
-	$AudioFellInWater.play()
+	if isLava:
+		$AudioHitBottom.stream = Res.AudioLava
+	$AudioHitBottom.play()
 	if !Global.playersFrozen:
 		die(Global.DeathEnum.WATER)
 	gravity_scale = 0

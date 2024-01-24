@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dco2r6kg23rq3"]
+[gd_scene load_steps=21 format=3 uid="uid://dco2r6kg23rq3"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_kx6i1"]
 [ext_resource type="AudioStream" uid="uid://b2bwgllix1e8s" path="res://audio/sfx/ambient/amb_ember.ogg" id="2_lohn0"]
@@ -8,6 +8,7 @@
 [ext_resource type="Shader" path="res://shaders/hot.gdshader" id="4_jcxm7"]
 [ext_resource type="Texture2D" uid="uid://u537re4d14xw" path="res://sprites/bg/cranehook.png" id="4_wiml6"]
 [ext_resource type="Texture2D" uid="uid://lm4njnche2ra" path="res://sprites/game/entity/conveyorbelt/conveyorbelt_gear.png" id="5_6g0iv"]
+[ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="9_jlm4g"]
 
 [sub_resource type="Animation" id="Animation_mu4ov"]
 resource_name = "dangle"
@@ -216,7 +217,13 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bd6pr"]
-size = Vector2(1024, 640)
+size = Vector2(1280, 768)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bphac"]
+size = Vector2(1280, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5cit"]
+size = Vector2(1280, 128)
 
 [node name="MapIndustrial" type="Node2D"]
 
@@ -255,8 +262,10 @@ libraries = {
 autoplay = "dangle"
 
 [node name="CraneHook" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+z_index = -51
+z_as_relative = false
 position = Vector2(200, -900)
-rotation = -0.0869486
+rotation = 0.0872665
 scale = Vector2(2, 2)
 texture = ExtResource("4_wiml6")
 offset = Vector2(0, 450)
@@ -320,31 +329,12 @@ tile_set = ExtResource("3_sarp2")
 format = 2
 layer_0/tile_data = PackedInt32Array(589830, 65536, 0, 589831, 65536, 0, 589832, 65536, 0, 589833, 65536, 0, 589834, 65536, 0, 589835, 65536, 0, 589836, 65536, 0, 589837, 65536, 0, 589838, 65536, 0, 589839, 65536, 0, 589840, 65536, 0, 589841, 65536, 0, 589842, 65536, 0, 589843, 65536, 0, 589844, 65536, 0, 589845, 65536, 0, 589846, 65536, 0, 589847, 65536, 0, 589848, 65536, 0, 589849, 65536, 0, 524294, 131072, 0, 524295, 131072, 0, 524296, 131072, 0, 524297, 131072, 0, 524298, 131072, 0, 524299, 131072, 0, 524300, 131072, 0, 524301, 131072, 0, 524302, 131072, 0, 524303, 131072, 0, 524304, 131072, 0, 524305, 131072, 0, 524306, 131072, 0, 524307, 131072, 0, 524308, 131072, 0, 524309, 131072, 0, 524310, 131072, 0, 524311, 131072, 0, 524312, 131072, 0, 524313, 131072, 0, 655366, 65536, 1, 655367, 65536, 1, 655368, 65536, 1, 655369, 65536, 1, 655371, 0, 2, 655372, 131072, 1, 655373, 65536, 1, 655374, 65536, 1, 655383, 65536, 1, 655384, 65536, 1, 655385, 65536, 1, 720921, 65536, 1, 786457, 65536, 1, 786456, 65536, 1, 786455, 65536, 1, 786454, 65536, 1, 786453, 65536, 1, 786452, 65536, 1, 786451, 65536, 1, 786450, 65536, 1, 786449, 65536, 1, 786448, 65536, 1, 786447, 65536, 1, 786446, 65536, 1, 786445, 65536, 1, 786444, 65536, 1, 786443, 65536, 1, 786442, 65536, 1, 786441, 65536, 1, 786440, 65536, 1, 786439, 65536, 1, 786438, 65536, 1, 720902, 65536, 1, 720903, 65536, 1, 720904, 65536, 1, 720905, 65536, 1, 720906, 65536, 1, 720907, 65536, 1, 720908, 65536, 1, 720909, 65536, 1, 720910, 65536, 1, 720911, 65536, 1, 720912, 65536, 1, 720913, 65536, 1, 720914, 65536, 1, 720915, 65536, 1, 720916, 65536, 1, 720917, 65536, 1, 720918, 65536, 1, 720919, 65536, 1, 720920, 65536, 1, 655382, 65536, 1, 655381, 65536, 1, 655380, 65536, 1, 655379, 65536, 1, 655378, 131072, 1, 655377, 0, 2, 655376, 131072, 1, 655375, 65536, 1, 655370, 131072, 1)
 
-[node name="PlayerSpawner0" type="Marker2D" parent="."]
-z_index = -2
-z_as_relative = false
-position = Vector2(258, 192)
-
-[node name="PlayerSpawner1" type="Marker2D" parent="."]
-z_index = -2
-z_as_relative = false
-position = Vector2(1104, 192)
-
-[node name="PlayerSpawner2" type="Marker2D" parent="."]
-z_index = -2
-z_as_relative = false
-position = Vector2(256, 576)
-
-[node name="PlayerSpawner3" type="Marker2D" parent="."]
-z_index = -2
-z_as_relative = false
-position = Vector2(1104, 576)
-
 [node name="ConveyorBelt" type="Area2D" parent="."]
 z_index = -40
 z_as_relative = false
 position = Vector2(384, 64)
 collision_layer = 0
+collision_mask = 385
 
 [node name="Anim" type="AnimationPlayer" parent="ConveyorBelt"]
 libraries = {
@@ -353,7 +343,7 @@ libraries = {
 autoplay = "move"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConveyorBelt"]
-position = Vector2(512, 320)
+position = Vector2(640, 320)
 shape = SubResource("RectangleShape2D_bd6pr")
 
 [node name="BeltB3" type="TextureRect" parent="ConveyorBelt"]
@@ -461,5 +451,88 @@ rotation = 1.03099
 scale = Vector2(2, 2)
 texture = ExtResource("5_6g0iv")
 
+[node name="PlayerSpawner0" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1280, 128)
+
+[node name="PlayerSpawner1" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1256, 512)
+
+[node name="PlayerSpawner2" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1232, 256)
+
+[node name="PlayerSpawner3" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1208, 384)
+
+[node name="PwrupSpawner0" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 128)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner1" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 192)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner2" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 256)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner3" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 320)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner4" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 384)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner5" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 448)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner6" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 512)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="Walls"]
+position = Vector2(896, -16)
+shape = SubResource("RectangleShape2D_bphac")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(896, 672)
+shape = SubResource("RectangleShape2D_m5cit")
+
+[connection signal="area_entered" from="ConveyorBelt" to="MapController" method="_on_conveyor_belt_area_entered"]
+[connection signal="area_exited" from="ConveyorBelt" to="MapController" method="_on_conveyor_belt_area_exited"]
 [connection signal="body_entered" from="ConveyorBelt" to="MapController" method="_on_conveyor_belt_body_entered"]
 [connection signal="body_exited" from="ConveyorBelt" to="MapController" method="_on_conveyor_belt_body_exited"]

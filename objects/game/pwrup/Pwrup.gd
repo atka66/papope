@@ -1,22 +1,27 @@
 extends Area2D
 
 @export var type: Global.PwrupEnum = Global.PwrupEnum.DYNAMITE
+var conveyed: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	match type:
 		Global.PwrupEnum.DYNAMITE:
-			$Sprite.animation = 'dynamite'
+			$Container/Sprite.animation = 'dynamite'
 		Global.PwrupEnum.REVOLVER:
-			$Sprite.animation = 'revolver'
+			$Container/Sprite.animation = 'revolver'
 		Global.PwrupEnum.SHIELD:
-			$Sprite.animation = 'shield'
+			$Container/Sprite.animation = 'shield'
 		Global.PwrupEnum.TRAP:
-			$Sprite.animation = 'trap'
+			$Container/Sprite.animation = 'trap'
 		Global.PwrupEnum.WHIP:
-			$Sprite.animation = 'whip'
-	$Sprite.play()
+			$Container/Sprite.animation = 'whip'
+	$Container/Sprite.play()
 	spawnAnimation()
+
+func _process(delta):
+	if conveyed:
+		position.x -= Global.CONVEYOR_VEL_AREA
 
 func spawnAnimation():
 	var anim = Res.SpawnPwrupAnimObject.instantiate()
@@ -32,3 +37,10 @@ func _on_body_entered(body):
 		if body.alive && !Global.playersFrozen:
 			body.pickup(type)
 			despawn()
+
+func convey() -> void:
+	conveyed = true
+
+func fallDown() -> void:
+	conveyed = false
+	$Anim.play('fall')

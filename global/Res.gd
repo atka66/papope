@@ -56,6 +56,8 @@ extends Node
 @onready var AudioHurtWhip = preload("res://audio/sfx/player/hurt/hurt_whip.ogg")
 @onready var AudioHurtScare = preload("res://audio/sfx/player/hurt/hurt_scare.ogg")
 
+@onready var AudioLava = preload("res://audio/sfx/player/lava_enter.ogg")
+
 @onready var AudioContactPlayer = [
 	preload("res://audio/sfx/contact/player_collide_1.ogg"),
 	preload("res://audio/sfx/contact/player_collide_2.ogg"),

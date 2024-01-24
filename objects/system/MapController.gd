@@ -141,17 +141,21 @@ func _on_lava_body_exited(body):
 func _on_fall_trigger_body_entered(body):
 	if body.is_in_group("players"):
 		if !body.isFallingIntoWater:
-			body.fallIntoWater()
-
+			body.fallDown(false)
 
 func _on_conveyor_belt_body_entered(body):
 	if body.is_in_group("players"):
-		#body.convey() TODO
-		pass
-
+		body.convey()
 
 func _on_conveyor_belt_body_exited(body):
 	if body.is_in_group("players"):
 		if !body.isFallingIntoWater:
-			#body.fallIntoWater() TODO
-			pass
+			body.fallDown(true)
+
+func _on_conveyor_belt_area_entered(area):
+	if area.is_in_group("conveyables"):
+		area.convey()
+
+func _on_conveyor_belt_area_exited(area):
+	if area.is_in_group("conveyables"):
+		area.fallDown()

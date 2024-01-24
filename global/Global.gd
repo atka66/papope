@@ -95,8 +95,8 @@ const TEAM_COLOR_STRINGS = {
 	3: "YELLOW"
 }
 
-const CONVEYOR_VEL_AREA = 0.68
-const CONVEYOR_VEL_RIGID = Vector2(-200.0, 0)
+const CONVEYOR_VEL_AREA = 1.3
+const CONVEYOR_VEL_RIGID = Vector2(-480.0, 0)
 
 var options = {
 	'mode': ['normal', 'one-hit', 'cards'],

@@ -349,7 +349,7 @@ bus = &"sfx"
 stream = ExtResource("12_720xj")
 bus = &"sfx"
 
-[node name="AudioFellInWater" type="AudioStreamPlayer" parent="."]
+[node name="AudioHitBottom" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_pp8ks")
 bus = &"sfx"
 

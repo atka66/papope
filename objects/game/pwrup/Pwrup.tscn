@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cmd1xjk7m7n8s"]
+[gd_scene load_steps=17 format=3 uid="uid://cmd1xjk7m7n8s"]
 
 [ext_resource type="Script" path="res://objects/game/pwrup/Pwrup.gd" id="1_k4wcf"]
 [ext_resource type="Texture2D" uid="uid://bl8r7atennx4f" path="res://sprites/game/pwrup/pickup/pwrup_dynamite_1.png" id="2_kmxir"]
@@ -20,7 +20,7 @@ step = 0.25
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:position:x")
+tracks/0/path = NodePath("Container/Sprite:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -31,7 +31,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite:position:y")
+tracks/1/path = NodePath("Container/Sprite:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -40,9 +40,64 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.75, 1.5)
 }
 
+[sub_resource type="Animation" id="Animation_c7m7s"]
+resource_name = "fall"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 1),
+"transitions": PackedFloat32Array(0.5, 1, 2, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-64, -64), Vector2(-64, -64), Vector2(-64, 1024)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shadow:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.01),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Container/Sprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 1),
+"transitions": PackedFloat32Array(0.5, 1, 1, 1),
+"update": 0,
+"values": [6.28319, 0.0, 0.0, -1.5708]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_s7cdv"]
 _data = {
-"bob": SubResource("Animation_g4ap6")
+"bob": SubResource("Animation_g4ap6"),
+"fall": SubResource("Animation_c7m7s")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yi3rf"]
@@ -106,10 +161,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_dq78r"]
 radius = 8.0
 
-[node name="Pwrup" type="Area2D" groups=["pwrups"]]
+[node name="Pwrup" type="Area2D" groups=["conveyables", "pwrups"]]
 z_index = 3
 z_as_relative = false
-collision_layer = 0
+collision_layer = 128
 script = ExtResource("1_k4wcf")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
@@ -123,8 +178,11 @@ scale = Vector2(0.6, 0.25)
 color = Color(0, 0, 0, 0.501961)
 polygon = PackedVector2Array(16, 0, 11.314, 11.314, 0, 16, -11.314, 11.314, -16, 0, -11.314, -11.314, 0, -16, 11.314, -11.314)
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Container" type="Node2D" parent="."]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Container"]
 position = Vector2(0, -16)
+rotation = 6.28319
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_yi3rf")
 animation = &"dynamite"
