@@ -137,7 +137,7 @@ fullscreen={
 
 [papope]
 
-pwrup_respawn_time=6
+pwrup_respawn_time=1
 ghost_respawn_time=5
 default_option_mode=0
 default_option_map=0

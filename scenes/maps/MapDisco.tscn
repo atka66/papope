@@ -1,0 +1,113 @@
+[gd_scene load_steps=6 format=3 uid="uid://difmpy8tkv4t0"]
+
+[ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_wuc2i"]
+[ext_resource type="Texture2D" uid="uid://cgh17i3pkuu57" path="res://sprites/bg/desert.png" id="2_56ast"]
+[ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="3_gaucf"]
+
+[sub_resource type="Animation" id="Animation_1turc"]
+resource_name = "spin"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Polygon2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 20),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rjdsi"]
+_data = {
+"spin": SubResource("Animation_1turc")
+}
+
+[node name="MapDisco" type="Node2D"]
+
+[node name="MapController" parent="." instance=ExtResource("1_wuc2i")]
+
+[node name="BgNode" type="Node2D" parent="."]
+z_index = -55
+z_as_relative = false
+
+[node name="TextureRect" type="TextureRect" parent="BgNode"]
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 704.0
+offset_bottom = 394.0
+scale = Vector2(2, 2)
+texture = ExtResource("2_56ast")
+stretch_mode = 1
+
+[node name="PlayerSpawner0" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(160, 96)
+
+[node name="PlayerSpawner1" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1184, 96)
+
+[node name="PlayerSpawner2" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(160, 672)
+
+[node name="PlayerSpawner3" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1184, 672)
+
+[node name="PwrupSpawner0" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+modulate = Color(0, 0, 0, 1)
+z_index = -2
+z_as_relative = false
+position = Vector2(192, 384)
+scale = Vector2(2, 2)
+texture = ExtResource("3_gaucf")
+
+[node name="PwrupSpawner1" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+modulate = Color(0, 0, 0, 1)
+z_index = -2
+z_as_relative = false
+position = Vector2(512, 384)
+scale = Vector2(2, 2)
+texture = ExtResource("3_gaucf")
+
+[node name="PwrupSpawner2" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+modulate = Color(0, 0, 0, 1)
+z_index = -2
+z_as_relative = false
+position = Vector2(832, 384)
+scale = Vector2(2, 2)
+texture = ExtResource("3_gaucf")
+
+[node name="PwrupSpawner3" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+modulate = Color(0, 0, 0, 1)
+z_index = -2
+z_as_relative = false
+position = Vector2(1152, 384)
+scale = Vector2(2, 2)
+texture = ExtResource("3_gaucf")
+
+[node name="DiscoShadow" type="Node2D" parent="."]
+z_index = 10
+z_as_relative = false
+
+[node name="ShadowLeft" type="Node2D" parent="DiscoShadow"]
+position = Vector2(300, 300)
+
+[node name="Anim" type="AnimationPlayer" parent="DiscoShadow/ShadowLeft"]
+libraries = {
+"": SubResource("AnimationLibrary_rjdsi")
+}
+autoplay = "spin"
+
+[node name="Polygon2D" type="Polygon2D" parent="DiscoShadow/ShadowLeft"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 500, -300, 500, 300)

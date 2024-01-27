@@ -5,6 +5,8 @@ var conveyed: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if Global.MapControllerNode.isDisco:
+		$Container/Sprite.modulate = Color.BLACK
 	match type:
 		Global.PwrupEnum.DYNAMITE:
 			$Container/Sprite.animation = 'dynamite'

@@ -4,6 +4,10 @@ extends Area2D
 @export var armed: bool = false
 var conveyed: bool = false
 
+func _ready():
+	if Global.MapControllerNode.isDisco:
+		$Sprite.modulate = Color.BLACK
+
 func _process(delta):
 	if conveyed:
 		position.x -= Global.CONVEYOR_VEL_AREA

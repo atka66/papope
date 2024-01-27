@@ -5,6 +5,8 @@ extends RigidBody2D
 @export var throwForce: float
 
 func _ready():
+	if Global.MapControllerNode.isDisco:
+		$Container/Sprite.modulate = Color.BLACK
 	add_collision_exception_with(origin)
 	apply_central_impulse(targetNorm * throwForce)
 

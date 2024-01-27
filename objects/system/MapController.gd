@@ -3,6 +3,8 @@ extends Node2D
 var spawners: Array[Node2D]
 var determRandom: RandomNumberGenerator
 
+var isDisco: bool = false
+
 func _ready():
 	determRandom = RandomNumberGenerator.new()
 	determRandom.set_seed(123)
@@ -14,6 +16,8 @@ func _ready():
 	$AudioRoundStart.play()
 	
 	Global.MusicNode.play(Global.selectedMap)
+	
+	isDisco = Global.selectedMap == 'disco'
 	
 	for child in get_parent().get_children():
 		if child.is_in_group("pwrupSpawners"):

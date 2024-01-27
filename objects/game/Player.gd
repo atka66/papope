@@ -26,6 +26,9 @@ var frictionCustom: float = 0.1
 var inputCd: bool = false
 
 func _ready():
+	if !Lobby && Global.MapControllerNode.isDisco:
+		$BodyParts/Face.modulate = Color.BLACK
+	
 	hp = Global.playersMaxHp[playerId]
 	Global.playersKills[playerId] = 0
 

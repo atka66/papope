@@ -26,6 +26,7 @@ X 3      : {Pwrup}, {Whiplash}
 X 4      : {Ghost}, {DeadGhost}
 X 5    : {SpawnPlayerAnim}, {SpawnPwrupAnim}, {CollisionAnim}, {ExplosionAnim}, {CrackAnim}, {RevolverRicochet}
 6      : [EmberParticles], {Spaceray}
+10     : [DiscoShadow]
 50     : [FgTiles]
 80     : [ShaderNode], {_WorldEnvironment_}
 X 88     : [LookLine]
@@ -33,4 +34,27 @@ X 89     : [Crosshairs]
 X 90     : [HudCanvas]
 100    : [Dim (in MapController.tscn)], {PerkOverlay}
 101    : {CustomLabel}, [SpawnSelectedFlashing], [LeftArrow], [RightArrow], [HintHolder]
-102    : [DIM (in PostGame.tscn)]
+102    : [Dim (in PostGame.tscn)]
+
+Disco: 
+	overlaying:
+		RevolverRay
+		SpawnPlayerAnim
+		SpawnPwrupAnim
+		CollisionAnim
+		ExplosionAnim
+		CrackAnim
+		RevolverRicochet
+		Dynamite smoke
+	overlayed:
+		Player lookLine
+		Player crosshairs
+	masked:
+X		Player skin sprite
+X		Player featherPar
+		Player dashPar
+X		Dynamite
+X		Trap
+X		Pwrup
+X		Whiplash
+X		PwrupSpawner

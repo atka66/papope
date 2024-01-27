@@ -1,5 +1,8 @@
 extends CPUParticles2D
 
-func _process(delta):
-	if !emitting:
-		queue_free()
+func _ready():
+	if Global.MapControllerNode.isDisco:
+		$DashParticles.modulate = Color.BLACK
+
+func _on_finished():
+	queue_free()
