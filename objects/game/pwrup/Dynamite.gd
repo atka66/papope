@@ -7,6 +7,8 @@ extends RigidBody2D
 func _ready():
 	if Global.MapControllerNode.isDisco:
 		$Container/Sprite.modulate = Color.BLACK
+		$Container/Smoke.z_as_relative = false
+		$Container/Smoke.z_index = 5
 	add_collision_exception_with(origin)
 	apply_central_impulse(targetNorm * throwForce)
 

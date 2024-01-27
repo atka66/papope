@@ -28,6 +28,10 @@ var inputCd: bool = false
 func _ready():
 	if !Lobby && Global.MapControllerNode.isDisco:
 		$BodyParts/Face.modulate = Color.BLACK
+		$LookLine.z_as_relative = false
+		$LookLine.z_index = 3
+		$Crosshairs.z_as_relative = false
+		$Crosshairs.z_index = 3
 	
 	hp = Global.playersMaxHp[playerId]
 	Global.playersKills[playerId] = 0

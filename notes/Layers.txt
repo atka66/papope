@@ -23,10 +23,9 @@ X 0      : {Player}
 1      : {Tree}, [Mast], {Cactus}, {Destructible}
 2      : {Car}, {Pellet}
 X 3      : {Pwrup}, {Whiplash}
-X 4      : {Ghost}, {DeadGhost}
+X 4      : {Ghost}, {DeadGhost}, [DiscoShadow]
 X 5    : {SpawnPlayerAnim}, {SpawnPwrupAnim}, {CollisionAnim}, {ExplosionAnim}, {CrackAnim}, {RevolverRicochet}
 6      : [EmberParticles], {Spaceray}
-10     : [DiscoShadow]
 50     : [FgTiles]
 80     : [ShaderNode], {_WorldEnvironment_}
 X 88     : [LookLine]
@@ -37,22 +36,16 @@ X 90     : [HudCanvas]
 102    : [Dim (in PostGame.tscn)]
 
 Disco: 
-	overlaying:
-		RevolverRay
-		SpawnPlayerAnim
-		SpawnPwrupAnim
-		CollisionAnim
-		ExplosionAnim
-		CrackAnim
-		RevolverRicochet
-		Dynamite smoke
-	overlayed:
+	overlaying (to layer 5):
+X		RevolverRay
+X		Dynamite smoke
+	overlayed (to layer 3):
 		Player lookLine
 		Player crosshairs
 	masked:
 X		Player skin sprite
 X		Player featherPar
-		Player dashPar
+X		Player dashPar
 X		Dynamite
 X		Trap
 X		Pwrup

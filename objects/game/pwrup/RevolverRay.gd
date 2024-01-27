@@ -5,6 +5,10 @@ const MAX_LENGTH: int = 5000
 @export var targetNorm: Vector2
 
 func _ready():
+	if Global.MapControllerNode.isDisco:
+		z_as_relative = false
+		z_index = 5
+
 	$HitScan.add_exception(origin)
 
 	var originPoint: Vector2 = targetNorm * 28
