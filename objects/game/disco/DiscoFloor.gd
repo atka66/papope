@@ -15,15 +15,86 @@ func getTile(row: int, col: int) -> Object:
 	return get_node('DiscoTile' + str(row) + str(col))
 
 func playRandomAnim():
-	await [brazilWave, brazilWaveDiagonal, colorAllRandomSync, sparkleRandom, scanLine].pick_random().call()
+	await [square, diamond, brazilWave, brazilWaveDiagonal, colorAllRandomSync, sparkleRandom, scanLine].pick_random().call()
+	for i in range(1, 6):
+		for j in range(1, 6):
+			getTile(i, j).off()
 	playRandomAnim()
 
 # animations
 
+func square(): # done
+	var waitTime = 0.2
+	for n in range(8):
+		var color = orCols.pick_random()
+		getTile(3, 3).anim_pulse(color)
+		await get_tree().create_timer(waitTime).timeout
+		getTile(2, 2).anim_pulse(color)
+		getTile(2, 3).anim_pulse(color)
+		getTile(2, 4).anim_pulse(color)
+		getTile(3, 2).anim_pulse(color)
+		getTile(3, 4).anim_pulse(color)
+		getTile(4, 2).anim_pulse(color)
+		getTile(4, 3).anim_pulse(color)
+		getTile(4, 4).anim_pulse(color)
+		await get_tree().create_timer(waitTime).timeout
+		getTile(1, 1).anim_pulse(color)
+		getTile(1, 2).anim_pulse(color)
+		getTile(1, 3).anim_pulse(color)
+		getTile(1, 4).anim_pulse(color)
+		getTile(1, 5).anim_pulse(color)
+		getTile(2, 1).anim_pulse(color)
+		getTile(2, 5).anim_pulse(color)
+		getTile(3, 1).anim_pulse(color)
+		getTile(3, 5).anim_pulse(color)
+		getTile(4, 1).anim_pulse(color)
+		getTile(4, 5).anim_pulse(color)
+		getTile(5, 1).anim_pulse(color)
+		getTile(5, 2).anim_pulse(color)
+		getTile(5, 3).anim_pulse(color)
+		getTile(5, 4).anim_pulse(color)
+		getTile(5, 5).anim_pulse(color)
+		await get_tree().create_timer(waitTime).timeout
+
+func diamond(): # done
+	var waitTime = 0.1
+	for n in range(9):
+		var color = orCols.pick_random()
+		getTile(3, 3).anim_pulse(color)
+		await get_tree().create_timer(waitTime).timeout
+		getTile(2, 3).anim_pulse(color)
+		getTile(3, 2).anim_pulse(color)
+		getTile(3, 4).anim_pulse(color)
+		getTile(4, 3).anim_pulse(color)
+		await get_tree().create_timer(waitTime).timeout
+		getTile(1, 3).anim_pulse(color)
+		getTile(2, 2).anim_pulse(color)
+		getTile(2, 4).anim_pulse(color)
+		getTile(3, 1).anim_pulse(color)
+		getTile(3, 5).anim_pulse(color)
+		getTile(4, 2).anim_pulse(color)
+		getTile(4, 4).anim_pulse(color)
+		getTile(5, 3).anim_pulse(color)
+		await get_tree().create_timer(waitTime).timeout
+		getTile(1, 2).anim_pulse(color)
+		getTile(1, 4).anim_pulse(color)
+		getTile(2, 1).anim_pulse(color)
+		getTile(2, 5).anim_pulse(color)
+		getTile(4, 1).anim_pulse(color)
+		getTile(4, 5).anim_pulse(color)
+		getTile(5, 2).anim_pulse(color)
+		getTile(5, 4).anim_pulse(color)
+		await get_tree().create_timer(waitTime).timeout
+		getTile(1, 1).anim_pulse(color)
+		getTile(1, 5).anim_pulse(color)
+		getTile(5, 1).anim_pulse(color)
+		getTile(5, 5).anim_pulse(color)
+		await get_tree().create_timer(waitTime).timeout
+
 func brazilWave(): # done
 	var inverted = randi() % 2 == 0
 	var vertical = randi() % 2 == 0
-	for n in range(5):
+	for n in range(8):
 		var color = orCols.pick_random()
 		for i in range(1, 6):
 			for j in range(1, 6):
@@ -81,20 +152,20 @@ func brazilWaveDiagonal(): # done
 		await get_tree().create_timer(waitTime).timeout
 
 func colorAllRandomSync(): # done
-	for n in range(10):
+	for n in range(8):
 		for i in range(1, 6):
 			for j in range(1, 6):
 				getTile(i, j).on(orCols.pick_random())
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.6).timeout
 
 func sparkleRandom(): #done
-	for n in range(100):
+	for n in range(75):
 		getTile(randi_range(1, 5), randi_range(1, 5)).anim_pulse(orCols.pick_random())
 		await get_tree().create_timer(0.05).timeout
 
 func scanLine(): # done
 	var rainbowLine = randi() % 2 == 0
-	for n in range(5):
+	for n in range(6):
 		var color = orCols.pick_random()
 		for i in range(1, 6):
 			if rainbowLine:

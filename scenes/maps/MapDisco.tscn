@@ -121,40 +121,6 @@ texture = ExtResource("3_gaucf")
 z_index = 4
 z_as_relative = false
 
-[node name="ShadowLeft" type="Node2D" parent="DiscoShadow"]
-visible = false
-position = Vector2(-256, -256)
-rotation = -0.174533
-
-[node name="Anim" type="AnimationPlayer" parent="DiscoShadow/ShadowLeft"]
-libraries = {
-"": SubResource("AnimationLibrary_rjdsi")
-}
-autoplay = "spin"
-
-[node name="Shadow1" type="Polygon2D" parent="DiscoShadow/ShadowLeft"]
-color = Color(0, 0, 0, 1)
-antialiased = true
-polygon = PackedVector2Array(0, 0, 3000, -500, 3000, 500)
-
-[node name="Shadow2" type="Polygon2D" parent="DiscoShadow/ShadowLeft"]
-rotation = 0.523599
-color = Color(0, 0, 0, 1)
-antialiased = true
-polygon = PackedVector2Array(0, 0, 3000, -500, 3000, 500)
-
-[node name="Shadow3" type="Polygon2D" parent="DiscoShadow/ShadowLeft"]
-rotation = 1.0472
-color = Color(0, 0, 0, 1)
-antialiased = true
-polygon = PackedVector2Array(0, 0, 3000, -500, 3000, 500)
-
-[node name="Shadow4" type="Polygon2D" parent="DiscoShadow/ShadowLeft"]
-rotation = 1.5708
-color = Color(0, 0, 0, 1)
-antialiased = true
-polygon = PackedVector2Array(0, 0, 3000, -500, 3000, 500)
-
 [node name="PolygonOutside" type="Polygon2D" parent="DiscoShadow"]
 color = Color(0, 0, 0, 1)
 invert_enabled = true
@@ -182,3 +148,34 @@ position = Vector2(1024, 0)
 color = Color(0, 0, 0, 1)
 invert_border = 512.0
 polygon = PackedVector2Array(104, 192, 232, 192, 232, 576, 104, 576)
+
+[node name="ShadowLeft" type="Node2D" parent="DiscoShadow"]
+visible = false
+position = Vector2(-256, -256)
+rotation = -0.174533
+scale = Vector2(1, 1)
+
+[node name="Anim" type="AnimationPlayer" parent="DiscoShadow/ShadowLeft"]
+libraries = {
+"": SubResource("AnimationLibrary_rjdsi")
+}
+autoplay = "spin"
+
+[node name="Shadow1" type="Polygon2D" parent="DiscoShadow/ShadowLeft"]
+antialiased = true
+polygon = PackedVector2Array(0, 0, 3000, -100, 3000, 100)
+
+[node name="Shadow2" type="Polygon2D" parent="DiscoShadow/ShadowLeft"]
+rotation = 0.523599
+antialiased = true
+polygon = PackedVector2Array(0, 0, 3000, -100, 3000, 100)
+
+[node name="Shadow3" type="Polygon2D" parent="DiscoShadow/ShadowLeft"]
+rotation = 1.0472
+antialiased = true
+polygon = PackedVector2Array(0, 0, 3000, -100, 3000, 100)
+
+[node name="Shadow4" type="Polygon2D" parent="DiscoShadow/ShadowLeft"]
+rotation = 1.5708
+antialiased = true
+polygon = PackedVector2Array(0, 0, 3000, -100, 3000, 100)

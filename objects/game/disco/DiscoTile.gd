@@ -6,10 +6,12 @@ func _ready():
 	off()
 
 func on(col: Color):
+	$Anim.stop(true)
 	modulate = col
 	$DiscoShadow.modulate = Color.TRANSPARENT
 
 func off():
+	$Anim.stop(true)
 	$DiscoShadow.modulate = Color.WHITE
 
 func anim_in(col: Color):
