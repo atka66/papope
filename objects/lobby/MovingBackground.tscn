@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cop2o1vtkv1qt"]
+[gd_scene load_steps=20 format=3 uid="uid://cop2o1vtkv1qt"]
 
 [ext_resource type="Script" path="res://objects/lobby/MovingBackground.gd" id="1_105ju"]
 [ext_resource type="Texture2D" uid="uid://haoeer3guucd" path="res://sprites/lobby/bg_industrial.png" id="1_fx2n7"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bk1g5i1nqoopc" path="res://sprites/lobby/bg_space.png" id="5_uy7iw"]
 [ext_resource type="Texture2D" uid="uid://coveew6isvbc1" path="res://sprites/lobby/bg_traffic.png" id="6_t1d8a"]
 [ext_resource type="Texture2D" uid="uid://bmaw5qft2uudp" path="res://sprites/lobby/bg_western.png" id="7_bd3fq"]
+[ext_resource type="Texture2D" uid="uid://clenad3mfe6l1" path="res://sprites/lobby/bg_nightclub.png" id="9_4aslh"]
 [ext_resource type="Texture2D" uid="uid://ee8qgahsw5i6" path="res://sprites/anim/static/static_1.png" id="9_e4jyb"]
 [ext_resource type="Texture2D" uid="uid://nyuytxsw40yd" path="res://sprites/anim/static/static_2.png" id="10_w6a5m"]
 [ext_resource type="Texture2D" uid="uid://mahj8knrlv25" path="res://sprites/anim/static/static_3.png" id="11_og3jc"]
@@ -40,7 +41,7 @@ animations = [{
 "texture": ExtResource("1_fx2n7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_fx2n7")
+"texture": ExtResource("9_4aslh")
 }],
 "loop": false,
 "name": &"default",

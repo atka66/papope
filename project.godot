@@ -137,11 +137,11 @@ fullscreen={
 
 [papope]
 
-pwrup_respawn_time=1
+pwrup_respawn_time=6
 ghost_respawn_time=5
 default_option_mode=0
 default_option_map=0
-default_option_rounds=0
+default_option_rounds=1
 ghost_speed=4.0
 hosted_mode=false
 

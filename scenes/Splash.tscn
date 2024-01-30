@@ -91,12 +91,12 @@ modulate = Color(1, 1, 1, 0)
 position = Vector2(680, 0)
 
 [node name="Logo" type="Sprite2D" parent="GodotHolder"]
-position = Vector2(0, 360)
+position = Vector2(0, 200)
 scale = Vector2(2, 2)
 texture = ExtResource("1_2fm32")
 
 [node name="Label" parent="GodotHolder" instance=ExtResource("3_isgji")]
-position = Vector2(0, 440)
+position = Vector2(0, 600)
 text = "made with godot"
 fontSize = 2
 alignment = 5

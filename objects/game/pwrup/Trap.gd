@@ -15,7 +15,6 @@ func _process(delta):
 func spring(entity: Node2D) -> void:
 	if armed:
 		if entity.is_in_group('trappables'):
-			# todo dmg
 			entity.getTrapped(originPlayerId)
 			$Anim.play("spring")
 			var crack = Res.CrackAnimObject.instantiate()

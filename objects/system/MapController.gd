@@ -17,7 +17,7 @@ func _ready():
 	
 	Global.MusicNode.play(Global.selectedMap)
 	
-	isDisco = Global.selectedMap == 'disco'
+	isDisco = Global.selectedMap == 'nightclub'
 	
 	for child in get_parent().get_children():
 		if child.is_in_group("pwrupSpawners"):

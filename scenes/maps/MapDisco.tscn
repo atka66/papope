@@ -153,7 +153,6 @@ polygon = PackedVector2Array(104, 192, 232, 192, 232, 576, 104, 576)
 visible = false
 position = Vector2(-256, -256)
 rotation = -0.174533
-scale = Vector2(1, 1)
 
 [node name="Anim" type="AnimationPlayer" parent="DiscoShadow/ShadowLeft"]
 libraries = {

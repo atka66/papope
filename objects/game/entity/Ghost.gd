@@ -1,7 +1,5 @@
 extends Area2D
 
-# TODO kill the player on contact
-
 const GHOST_COLORS = [Color.RED, Color.PINK, Color.AQUA, Color.CORAL]
 
 var speed: float = ProjectSettings.get("papope/ghost_speed")

@@ -6,7 +6,6 @@ func _ready():
 	$Anim.play("splash")
 
 func _input(event):
-	# todo maybe add some controller presses to skip to lobby
 	if event.is_action_pressed("skip"):
 		toLobby()
 

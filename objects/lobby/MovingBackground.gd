@@ -20,10 +20,9 @@ func restartMovingBackground(anim_name) -> void:
 			resultFrame = 5
 		'industrial':
 			resultFrame = 6
-		'disco':
+		'nightclub':
 			resultFrame = 7
 	$Backgrounds.frame = resultFrame
-	#TODO redo images
 	
 	$Anim.seek(0)
 	$Anim.play("loop")

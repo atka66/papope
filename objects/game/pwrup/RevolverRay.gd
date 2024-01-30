@@ -33,7 +33,6 @@ func _ready():
 				spawnRicochet(hitPosition, hitAngle)
 		else:
 			spawnRicochet(hitPosition, hitAngle)
-		# todo further coll detection
 		$Ray.add_point(hitPosition - global_position)
 	else:
 		$Ray.add_point($HitScan.target_position)
