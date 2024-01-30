@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=3 uid="uid://dao4ayv03v6y"]
+
+[ext_resource type="PackedScene" uid="uid://cjgyrppvjtkm2" path="res://objects/game/disco/DiscoTile.tscn" id="1_d4gac"]
+[ext_resource type="Script" path="res://objects/game/disco/DiscoFloor.gd" id="1_hsyyo"]
+
+[node name="DiscoFloor" type="Node2D"]
+script = ExtResource("1_hsyyo")
+
+[node name="DiscoTile01" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-512, -256)
+
+[node name="DiscoTile02" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(512, -256)
+
+[node name="DiscoTile03" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-512, 256)
+
+[node name="DiscoTile04" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(512, 256)
+
+[node name="DiscoTile11" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-256, -256)
+
+[node name="DiscoTile12" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-128, -256)
+
+[node name="DiscoTile13" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(0, -256)
+
+[node name="DiscoTile14" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(128, -256)
+
+[node name="DiscoTile15" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(256, -256)
+
+[node name="DiscoTile21" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-256, -128)
+
+[node name="DiscoTile22" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-128, -128)
+
+[node name="DiscoTile23" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(0, -128)
+
+[node name="DiscoTile24" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(128, -128)
+
+[node name="DiscoTile25" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(256, -128)
+
+[node name="DiscoTile31" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-256, 0)
+
+[node name="DiscoTile32" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-128, 0)
+
+[node name="DiscoTile33" parent="." instance=ExtResource("1_d4gac")]
+
+[node name="DiscoTile34" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(128, 0)
+
+[node name="DiscoTile35" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(256, 0)
+
+[node name="DiscoTile41" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-256, 128)
+
+[node name="DiscoTile42" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-128, 128)
+
+[node name="DiscoTile43" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(0, 128)
+
+[node name="DiscoTile44" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(128, 128)
+
+[node name="DiscoTile45" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(256, 128)
+
+[node name="DiscoTile51" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-256, 256)
+
+[node name="DiscoTile52" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-128, 256)
+
+[node name="DiscoTile53" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(0, 256)
+
+[node name="DiscoTile54" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(128, 256)
+
+[node name="DiscoTile55" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(256, 256)

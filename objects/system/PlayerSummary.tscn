@@ -1,82 +1,134 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=3 uid="uid://bkf1p0bddiurc"]
 
-[ext_resource path="res://objects/system/PlayerSummary.gd" type="Script" id=1]
-[ext_resource path="res://sprites/hud/hud_players.png" type="Texture" id=2]
-[ext_resource path="res://sprites/wantedposter.png" type="Texture" id=3]
-[ext_resource path="res://objects/system/label/CustomLabel.tscn" type="PackedScene" id=4]
+[ext_resource type="Script" path="res://objects/system/PlayerSummary.gd" id="1_3cgc4"]
+[ext_resource type="Texture2D" uid="uid://fxafi38bmclt" path="res://sprites/post/wantedposter.png" id="1_jnuo6"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="2_xcrvs"]
+[ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="3_5kh11"]
+[ext_resource type="Shader" path="res://shaders/poster.gdshader" id="3_yaemd"]
 
-[sub_resource type="Gradient" id=1]
-offsets = PoolRealArray( 0, 0.5, 1 )
-colors = PoolColorArray( 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
+[sub_resource type="Animation" id="Animation_qefva"]
+resource_name = "anim"
+length = 8.0
+step = 0.05
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2, 4, 6, 6.15, 6.3, 6.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"calculateScore"
+}, {
+"args": [],
+"method": &"showAchievements"
+}, {
+"args": [0],
+"method": &"finalizePoster"
+}, {
+"args": [1],
+"method": &"finalizePoster"
+}, {
+"args": [2],
+"method": &"finalizePoster"
+}, {
+"args": [3],
+"method": &"finalizePoster"
+}]
+}
 
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
-width = 32
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bfyey"]
+_data = {
+"anim": SubResource("Animation_qefva")
+}
 
-[sub_resource type="Shader" id=3]
-code = "shader_type canvas_item;
-
-void fragment(){
-  vec4 maincolor = vec4(0.5, 0.3, 0.1, 1.0);
-  vec4 col = texture(TEXTURE, UV);
-  COLOR = col.a * maincolor * (1.0 - col.g);
-}"
-
-[sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 3 )
-
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id="Animation_v4l8c"]
 resource_name = "shake"
 length = 0.35
 step = 0.05
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35),
+"transitions": PackedFloat32Array(10, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [ 0.0, -8.0, 8.0, -4.0, 4.0, -2.0, 2.0, 0.0 ]
+"values": [Vector2(0, 0), Vector2(0, -24), Vector2(0, 20), Vector2(0, -16), Vector2(0, 12), Vector2(0, -8), Vector2(0, 4), Vector2(0, 0)]
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x21bq"]
+_data = {
+"shake": SubResource("Animation_v4l8c")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1niiq"]
+shader = ExtResource("3_yaemd")
+
+[sub_resource type="Gradient" id="Gradient_qdyyl"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_htyuy"]
+gradient = SubResource("Gradient_qdyyl")
+width = 64
+
 [node name="PlayerSummary" type="Node2D"]
-script = ExtResource( 1 )
-
-[node name="Poster" type="Sprite" parent="."]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 3 )
-centered = false
-
-[node name="WantedLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 85, 28 )
-text = "wanted"
-fontSize = 3
-alignment = 1
-color = Color( 0, 0, 0, 1 )
-
-[node name="MoneyLabel" parent="." instance=ExtResource( 4 )]
-position = Vector2( 48, 160 )
-text = "0"
-fontSize = 4
-color = Color( 0, 0, 0, 1 )
-animate = false
-
-[node name="Team" type="Polygon2D" parent="."]
-position = Vector2( 85, 145 )
-scale = Vector2( 3, 2 )
-texture = SubResource( 2 )
-texture_offset = Vector2( 16, 0 )
-polygon = PoolVector2Array( -16, 0, 16, 0, 16, 4, -16, 4 )
-
-[node name="Face" type="Sprite" parent="."]
-material = SubResource( 4 )
-position = Vector2( 85, 97 )
-scale = Vector2( 3, 3 )
-texture = ExtResource( 2 )
-hframes = 7
+script = ExtResource("1_3cgc4")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-anims/shake = SubResource( 5 )
+libraries = {
+"": SubResource("AnimationLibrary_bfyey")
+}
+autoplay = "anim"
+
+[node name="Container" type="Node2D" parent="."]
+
+[node name="Anim" type="AnimationPlayer" parent="Container"]
+libraries = {
+"": SubResource("AnimationLibrary_x21bq")
+}
+
+[node name="Poster" type="Sprite2D" parent="Container"]
+scale = Vector2(4, 4)
+texture = ExtResource("1_jnuo6")
+centered = false
+
+[node name="WantedLabel" parent="Container" instance=ExtResource("2_xcrvs")]
+position = Vector2(170, 68)
+text = "wanted"
+fontSize = 4
+fontColor = Color(0.501961, 0.25098, 0, 1)
+alignment = 8
+
+[node name="DollarLabel" parent="Container" instance=ExtResource("2_xcrvs")]
+position = Vector2(64, 336)
+text = "$"
+fontSize = 5
+fontColor = Color(0, 0.501961, 0, 1)
+alignment = 8
+
+[node name="MoneyLabel" parent="Container" instance=ExtResource("2_xcrvs")]
+position = Vector2(96, 336)
+text = "0"
+fontSize = 5
+alignment = 4
+
+[node name="Face" type="Sprite2D" parent="Container"]
+material = SubResource("ShaderMaterial_1niiq")
+position = Vector2(170, 194)
+scale = Vector2(6, 6)
+texture = ExtResource("3_5kh11")
+hframes = 7
+
+[node name="TeamBanner" type="TextureRect" parent="Container"]
+offset_left = 72.0
+offset_top = 290.0
+offset_right = 264.0
+offset_bottom = 306.0
+texture = SubResource("GradientTexture1D_htyuy")

@@ -1,0 +1,127 @@
+[gd_scene load_steps=20 format=3 uid="uid://cop2o1vtkv1qt"]
+
+[ext_resource type="Script" path="res://objects/lobby/MovingBackground.gd" id="1_105ju"]
+[ext_resource type="Texture2D" uid="uid://haoeer3guucd" path="res://sprites/lobby/bg_industrial.png" id="1_fx2n7"]
+[ext_resource type="Texture2D" uid="uid://bsmp3oggmsgx7" path="res://sprites/lobby/bg_hell.png" id="2_nntt6"]
+[ext_resource type="Texture2D" uid="uid://bvxd4o8wayq1v" path="res://sprites/lobby/bg_pacman.png" id="3_ehb48"]
+[ext_resource type="Texture2D" uid="uid://ysilat3cndgw" path="res://sprites/lobby/bg_ship.png" id="4_s8glx"]
+[ext_resource type="Texture2D" uid="uid://bk1g5i1nqoopc" path="res://sprites/lobby/bg_space.png" id="5_uy7iw"]
+[ext_resource type="Texture2D" uid="uid://coveew6isvbc1" path="res://sprites/lobby/bg_traffic.png" id="6_t1d8a"]
+[ext_resource type="Texture2D" uid="uid://bmaw5qft2uudp" path="res://sprites/lobby/bg_western.png" id="7_bd3fq"]
+[ext_resource type="Texture2D" uid="uid://clenad3mfe6l1" path="res://sprites/lobby/bg_nightclub.png" id="9_4aslh"]
+[ext_resource type="Texture2D" uid="uid://ee8qgahsw5i6" path="res://sprites/anim/static/static_1.png" id="9_e4jyb"]
+[ext_resource type="Texture2D" uid="uid://nyuytxsw40yd" path="res://sprites/anim/static/static_2.png" id="10_w6a5m"]
+[ext_resource type="Texture2D" uid="uid://mahj8knrlv25" path="res://sprites/anim/static/static_3.png" id="11_og3jc"]
+[ext_resource type="Texture2D" uid="uid://dyrdcjwnousnx" path="res://sprites/anim/static/static_4.png" id="12_oq82r"]
+[ext_resource type="Texture2D" uid="uid://bj5a8sgansl4d" path="res://sprites/anim/static/static_5.png" id="13_m4boy"]
+[ext_resource type="Texture2D" uid="uid://dgt2jpdeiq34b" path="res://sprites/anim/static/static_6.png" id="14_lguuo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yekfl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_nntt6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bd3fq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_s8glx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_uy7iw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_t1d8a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ehb48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_fx2n7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_4aslh")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_dgqvs"]
+frames = 6
+speed_scale = 50.0
+frame_0/texture = ExtResource("9_e4jyb")
+frame_1/texture = ExtResource("10_w6a5m")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("11_og3jc")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("12_oq82r")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("13_m4boy")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("14_lguuo")
+frame_5/duration = 1.0
+
+[sub_resource type="Animation" id="Animation_5mort"]
+resource_name = "loop"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BackgroundDim:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Backgrounds:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-300, -300), Vector2(-600, -300)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_arf80"]
+_data = {
+"loop": SubResource("Animation_5mort")
+}
+
+[node name="MovingBackground" type="Node2D"]
+script = ExtResource("1_105ju")
+
+[node name="Backgrounds" type="AnimatedSprite2D" parent="."]
+z_index = -52
+z_as_relative = false
+position = Vector2(-300, -300)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_yekfl")
+frame_progress = 0.531845
+centered = false
+
+[node name="BackgroundDim" type="TextureRect" parent="."]
+z_index = -49
+z_as_relative = false
+offset_left = -300.0
+offset_top = -300.0
+offset_right = 92.0
+offset_bottom = -26.0
+scale = Vector2(5, 5)
+texture = SubResource("AnimatedTexture_dgqvs")
+stretch_mode = 1
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_arf80")
+}
+
+[connection signal="animation_finished" from="Anim" to="." method="restartMovingBackground"]

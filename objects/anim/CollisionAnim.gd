@@ -1,11 +1,6 @@
-extends AnimatedSprite
+extends Node2D
 
 func _ready():
-	$Audio.stream = Res.AudioCollisionPlayer[randi() % len(Res.AudioCollisionPlayer)]
+	$Audio.stream = Res.AudioContactPlayer.pick_random()
 	$Audio.play()
-	play()
 
-func _on_CollisionAnim_animation_finished():
-	hide()
-	yield($Audio, "finished")
-	queue_free()

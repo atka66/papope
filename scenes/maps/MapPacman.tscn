@@ -1,0 +1,360 @@
+[gd_scene load_steps=17 format=3 uid="uid://cg33eqlqg7etu"]
+
+[ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_8hv21"]
+[ext_resource type="TileSet" uid="uid://dlf7hk4u3ysmn" path="res://resources/tileset_pacman.tres" id="2_0nuug"]
+[ext_resource type="Shader" path="res://shaders/playzone/crt.gdshader" id="2_lk66l"]
+[ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="2_w0d2i"]
+[ext_resource type="TileSet" uid="uid://d115pvwqnl4xn" path="res://resources/entities_pacman.tres" id="6_s2osx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gml0l"]
+shader = ExtResource("2_lk66l")
+shader_parameter/screen_width = 1360.0
+shader_parameter/screen_height = 768.0
+shader_parameter/color_bleeding = 1.2
+shader_parameter/bleeding_range_x = 1.0
+shader_parameter/bleeding_range_y = 1.0
+shader_parameter/lines_distance = 8.0
+shader_parameter/scan_size = 4.0
+shader_parameter/scanline_alpha = 0.6
+shader_parameter/lines_velocity = 50.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fti5q"]
+size = Vector2(1120, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b5a0k"]
+size = Vector2(384, 352)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6u4dr"]
+size = Vector2(384, 352)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ky78b"]
+size = Vector2(384, 352)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ivd1"]
+size = Vector2(384, 352)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8jcaj"]
+size = Vector2(1120, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i82gv"]
+size = Vector2(160, 224)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w23f0"]
+size = Vector2(160, 224)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_meicl"]
+size = Vector2(32, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4skoe"]
+size = Vector2(160, 32)
+
+[node name="MapPacman" type="Node2D"]
+
+[node name="MapController" parent="." instance=ExtResource("1_8hv21")]
+
+[node name="ShaderCanvas" type="CanvasLayer" parent="."]
+layer = 80
+
+[node name="ShaderRect" type="ColorRect" parent="ShaderCanvas"]
+material = SubResource("ShaderMaterial_gml0l")
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 1488.0
+offset_bottom = 896.0
+
+[node name="BgTiles" type="TileMap" parent="."]
+z_index = -51
+z_as_relative = false
+scale = Vector2(2, 2)
+tile_set = ExtResource("2_0nuug")
+format = 2
+layer_0/tile_data = PackedInt32Array(1, 65537, 2, 2, 131073, 0, 3, 131073, 0, 4, 131073, 0, 5, 131073, 0, 6, 131073, 0, 7, 131073, 3, 8, 131073, 0, 9, 131073, 0, 10, 131073, 0, 11, 131073, 0, 12, 131073, 0, 13, 131073, 3, 14, 131073, 0, 15, 131073, 0, 16, 131073, 0, 17, 131073, 0, 18, 131073, 0, 720898, 131073, 0, 720899, 131073, 0, 720900, 131073, 0, 720901, 131073, 0, 720904, 131073, 0, 720903, 1, 3, 720902, 131073, 0, 720905, 131073, 0, 720906, 131073, 0, 720907, 131073, 0, 720908, 131073, 0, 720909, 1, 3, 720910, 131073, 0, 720911, 131073, 0, 720912, 131073, 0, 720913, 131073, 0, 720914, 131073, 0, 720915, 196609, 2, 262145, 196609, 2, 262163, 1, 2, 720897, 1, 2, 458771, 65537, 2, 458753, 131073, 2, 19, 131073, 2, 65555, 65537, 0, 131091, 65537, 0, 196627, 65537, 0, 524307, 65537, 0, 589843, 65537, 0, 655379, 65537, 0, 655361, 65537, 0, 589825, 65537, 0, 524289, 65537, 0, 196609, 65537, 0, 131073, 65537, 0, 65537, 65537, 0, 262144, 131073, 0, 327679, 131073, 0, 327678, 131073, 0, 458752, 131073, 0, 524287, 131073, 0, 524286, 131073, 0, 524285, 131073, 0, 327677, 131073, 0, 262164, 131073, 0, 262165, 131073, 0, 262166, 131073, 0, 262167, 131073, 0, 458772, 131073, 0, 458773, 131073, 0, 458774, 131073, 0, 458775, 131073, 0, 327687, 1, 1, 327693, 1, 1, 393223, 131073, 1, 393229, 131073, 1, 458757, 1, 2, 458765, 1, 2, 262149, 65537, 2, 262157, 65537, 2, 458767, 196609, 2, 458759, 196609, 2, 262159, 131073, 2, 262151, 131073, 2, 262150, 131073, 0, 458758, 131073, 0, 458766, 131073, 0, 262158, 131073, 0, 327695, 65537, 0, 393231, 65537, 0, 327685, 65537, 0, 393221, 65537, 0, 65543, 65537, 0, 65549, 65537, 0, 655367, 65537, 0, 655373, 65537, 0, 524291, 65537, 0, 524305, 65537, 0, 196625, 65537, 0, 196611, 65537, 0, 262147, 1, 1, 262161, 1, 1, 131079, 1, 1, 131085, 1, 1, 262153, 1, 1, 262155, 1, 1, 589839, 65537, 1, 131087, 65537, 1, 589827, 1, 2, 589833, 1, 2, 458761, 131073, 1, 458763, 131073, 1, 131083, 131073, 2, 131089, 131073, 2, 131077, 196609, 1, 589829, 196609, 1, 589831, 131073, 1, 589837, 131073, 1, 131075, 65537, 2, 589841, 196609, 2, 589840, 131073, 0, 131088, 131073, 0, 131076, 131073, 0, 589828, 131073, 0, 589834, 131073, 0, 131082, 131073, 0, 131081, 65537, 2, 196617, 65537, 0, 196619, 65537, 0, 524299, 65537, 0, 524297, 65537, 0, 458755, 131073, 1, 589835, 196609, 2, 458769, 131073, 1)
+
+[node name="PlayerSpawner0" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(160, 96)
+
+[node name="PlayerSpawner1" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1184, 96)
+
+[node name="PlayerSpawner2" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(160, 672)
+
+[node name="PlayerSpawner3" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1184, 672)
+
+[node name="PwrupSpawner0" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(672, 224)
+scale = Vector2(2, 2)
+texture = ExtResource("2_w0d2i")
+
+[node name="PwrupSpawner1" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(672, 544)
+scale = Vector2(2, 2)
+texture = ExtResource("2_w0d2i")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(672, 0)
+shape = SubResource("RectangleShape2D_fti5q")
+
+[node name="CollisionShape3" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-80, 128)
+shape = SubResource("RectangleShape2D_b5a0k")
+
+[node name="CollisionShape4" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-80, 640)
+shape = SubResource("RectangleShape2D_6u4dr")
+
+[node name="CollisionShape5" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1424, 128)
+shape = SubResource("RectangleShape2D_ky78b")
+
+[node name="CollisionShape6" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1424, 640)
+shape = SubResource("RectangleShape2D_5ivd1")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(672, 768)
+shape = SubResource("RectangleShape2D_8jcaj")
+
+[node name="CollisionShape7" type="CollisionShape2D" parent="Walls"]
+position = Vector2(416, 384)
+shape = SubResource("RectangleShape2D_i82gv")
+
+[node name="CollisionShape8" type="CollisionShape2D" parent="Walls"]
+position = Vector2(928, 384)
+shape = SubResource("RectangleShape2D_w23f0")
+
+[node name="CollisionShape9" type="CollisionShape2D" parent="Walls"]
+position = Vector2(480, 112)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape10" type="CollisionShape2D" parent="Walls"]
+position = Vector2(864, 112)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape11" type="CollisionShape2D" parent="Walls"]
+position = Vector2(480, 656)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape19" type="CollisionShape2D" parent="Walls"]
+position = Vector2(224, 240)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape20" type="CollisionShape2D" parent="Walls"]
+position = Vector2(608, 240)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape21" type="CollisionShape2D" parent="Walls"]
+position = Vector2(736, 240)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape22" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1120, 240)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape23" type="CollisionShape2D" parent="Walls"]
+position = Vector2(224, 528)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape24" type="CollisionShape2D" parent="Walls"]
+position = Vector2(608, 528)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape25" type="CollisionShape2D" parent="Walls"]
+position = Vector2(736, 528)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape26" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1120, 528)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape12" type="CollisionShape2D" parent="Walls"]
+position = Vector2(864, 656)
+shape = SubResource("RectangleShape2D_meicl")
+
+[node name="CollisionShape13" type="CollisionShape2D" parent="Walls"]
+position = Vector2(288, 160)
+shape = SubResource("RectangleShape2D_4skoe")
+
+[node name="CollisionShape14" type="CollisionShape2D" parent="Walls"]
+position = Vector2(672, 160)
+shape = SubResource("RectangleShape2D_4skoe")
+
+[node name="CollisionShape15" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1056, 160)
+shape = SubResource("RectangleShape2D_4skoe")
+
+[node name="CollisionShape16" type="CollisionShape2D" parent="Walls"]
+position = Vector2(288, 608)
+shape = SubResource("RectangleShape2D_4skoe")
+
+[node name="CollisionShape17" type="CollisionShape2D" parent="Walls"]
+position = Vector2(672, 608)
+shape = SubResource("RectangleShape2D_4skoe")
+
+[node name="CollisionShape18" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1056, 608)
+shape = SubResource("RectangleShape2D_4skoe")
+
+[node name="Pellets" type="TileMap" parent="."]
+tile_set = ExtResource("6_s2osx")
+format = 2
+layer_0/tile_data = PackedInt32Array(65539, 0, 65536, 65540, 0, 65536, 65541, 0, 65536, 65542, 0, 65536, 131078, 0, 65536, 196614, 0, 65536, 196613, 0, 65536, 196612, 0, 65536, 131074, 0, 65536, 196610, 0, 65536, 262146, 0, 65536, 327682, 0, 65536, 393218, 0, 65536, 458754, 0, 65536, 524290, 0, 65536, 589826, 0, 65536, 655363, 0, 65536, 655364, 0, 65536, 655365, 0, 65536, 655366, 0, 65536, 589830, 0, 65536, 524294, 0, 65536, 524292, 0, 65536, 524293, 0, 65536, 524295, 0, 65536, 524296, 0, 65536, 196615, 0, 65536, 196616, 0, 65536, 131080, 0, 65536, 65544, 0, 65536, 65545, 0, 65536, 65546, 0, 65536, 65547, 0, 65536, 65548, 0, 65536, 131084, 0, 65536, 196620, 0, 65536, 589832, 0, 65536, 655368, 0, 65536, 655369, 0, 65536, 655370, 0, 65536, 655371, 0, 65536, 655372, 0, 65536, 589836, 0, 65536, 524300, 0, 65536, 524301, 0, 65536, 524302, 0, 65536, 524303, 0, 65536, 524304, 0, 65536, 589838, 0, 65536, 655374, 0, 65536, 655375, 0, 65536, 655376, 0, 65536, 655377, 0, 65536, 589842, 0, 65536, 524306, 0, 65536, 458770, 0, 65536, 393234, 0, 65536, 327698, 0, 65536, 262162, 0, 65536, 196626, 0, 65536, 131090, 0, 65536, 65553, 0, 65536, 65552, 0, 65536, 65551, 0, 65536, 65550, 0, 65536, 131086, 0, 65536, 196622, 0, 65536, 196621, 0, 65536, 196623, 0, 65536, 196624, 0, 65536)
+
+[node name="GhostPath" type="Node" parent="."]
+
+[node name="SpawnNode0" type="Marker2D" parent="GhostPath"]
+position = Vector2(416, 384)
+metadata/neighbors = [0]
+
+[node name="SpawnNode1" type="Marker2D" parent="GhostPath"]
+position = Vector2(928, 384)
+metadata/neighbors = [13]
+
+[node name="Node0" type="Marker2D" parent="GhostPath"]
+position = Vector2(544, 384)
+metadata/neighbors = [1, 7, 30]
+
+[node name="Node1" type="Marker2D" parent="GhostPath"]
+position = Vector2(544, 224)
+metadata/neighbors = [0, 2, 26]
+
+[node name="Node2" type="Marker2D" parent="GhostPath"]
+position = Vector2(416, 224)
+metadata/neighbors = [1, 3, 8]
+
+[node name="Node3" type="Marker2D" parent="GhostPath"]
+position = Vector2(288, 224)
+metadata/neighbors = [2, 4]
+
+[node name="Node4" type="Marker2D" parent="GhostPath"]
+position = Vector2(288, 384)
+metadata/neighbors = [3, 5, 10]
+
+[node name="Node5" type="Marker2D" parent="GhostPath"]
+position = Vector2(288, 544)
+metadata/neighbors = [4, 6]
+
+[node name="Node6" type="Marker2D" parent="GhostPath"]
+position = Vector2(416, 544)
+metadata/neighbors = [5, 7, 12]
+
+[node name="Node7" type="Marker2D" parent="GhostPath"]
+position = Vector2(544, 544)
+metadata/neighbors = [0, 6, 29]
+
+[node name="Node8" type="Marker2D" parent="GhostPath"]
+position = Vector2(416, 96)
+metadata/neighbors = [2, 9]
+
+[node name="Node9" type="Marker2D" parent="GhostPath"]
+position = Vector2(160, 96)
+metadata/neighbors = [8, 10]
+
+[node name="Node10" type="Marker2D" parent="GhostPath"]
+position = Vector2(160, 384)
+metadata/neighbors = [4, 9, 11]
+
+[node name="Node11" type="Marker2D" parent="GhostPath"]
+position = Vector2(160, 672)
+metadata/neighbors = [10, 12]
+
+[node name="Node12" type="Marker2D" parent="GhostPath"]
+position = Vector2(416, 672)
+metadata/neighbors = [6, 11]
+
+[node name="Node13" type="Marker2D" parent="GhostPath"]
+position = Vector2(800, 384)
+metadata/neighbors = [14, 20, 30]
+
+[node name="Node14" type="Marker2D" parent="GhostPath"]
+position = Vector2(800, 224)
+metadata/neighbors = [13, 15, 27]
+
+[node name="Node15" type="Marker2D" parent="GhostPath"]
+position = Vector2(928, 224)
+metadata/neighbors = [14, 16, 21]
+
+[node name="Node16" type="Marker2D" parent="GhostPath"]
+position = Vector2(1056, 224)
+metadata/neighbors = [15, 17]
+
+[node name="Node17" type="Marker2D" parent="GhostPath"]
+position = Vector2(1056, 384)
+metadata/neighbors = [16, 18, 23]
+
+[node name="Node18" type="Marker2D" parent="GhostPath"]
+position = Vector2(1056, 544)
+metadata/neighbors = [17, 19]
+
+[node name="Node19" type="Marker2D" parent="GhostPath"]
+position = Vector2(928, 544)
+metadata/neighbors = [18, 20, 25]
+
+[node name="Node20" type="Marker2D" parent="GhostPath"]
+position = Vector2(800, 544)
+metadata/neighbors = [13, 19, 28]
+
+[node name="Node21" type="Marker2D" parent="GhostPath"]
+position = Vector2(928, 96)
+metadata/neighbors = [15, 22]
+
+[node name="Node22" type="Marker2D" parent="GhostPath"]
+position = Vector2(1184, 96)
+metadata/neighbors = [21, 23]
+
+[node name="Node23" type="Marker2D" parent="GhostPath"]
+position = Vector2(1184, 384)
+metadata/neighbors = [17, 22, 24]
+
+[node name="Node24" type="Marker2D" parent="GhostPath"]
+position = Vector2(1184, 672)
+metadata/neighbors = [23, 25]
+
+[node name="Node25" type="Marker2D" parent="GhostPath"]
+position = Vector2(928, 672)
+metadata/neighbors = [19, 24]
+
+[node name="Node26" type="Marker2D" parent="GhostPath"]
+position = Vector2(544, 96)
+metadata/neighbors = [1, 27]
+
+[node name="Node27" type="Marker2D" parent="GhostPath"]
+position = Vector2(800, 96)
+metadata/neighbors = [14, 26]
+
+[node name="Node28" type="Marker2D" parent="GhostPath"]
+position = Vector2(800, 672)
+metadata/neighbors = [20, 29]
+
+[node name="Node29" type="Marker2D" parent="GhostPath"]
+position = Vector2(544, 672)
+metadata/neighbors = [7, 28]
+
+[node name="Node30" type="Marker2D" parent="GhostPath"]
+position = Vector2(672, 384)
+metadata/neighbors = [0, 13, 31, 32]
+
+[node name="Node31" type="Marker2D" parent="GhostPath"]
+position = Vector2(672, 224)
+metadata/neighbors = [30]
+
+[node name="Node32" type="Marker2D" parent="GhostPath"]
+position = Vector2(672, 544)
+metadata/neighbors = [30]

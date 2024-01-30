@@ -1,122 +1,189 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://dstk6ry83wltw"]
 
-[ext_resource path="res://objects/system/label/CustomLabel.tscn" type="PackedScene" id=1]
-[ext_resource path="res://objects/system/label/RoundEndBanner.gd" type="Script" id=2]
-[ext_resource path="res://sounds/system/round_end.ogg" type="AudioStream" id=3]
+[ext_resource type="Script" path="res://objects/system/label/RoundEndBanner.gd" id="1_kbdjs"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_ydum0"]
 
-[sub_resource type="Animation" id=1]
-resource_name = "draw"
+[sub_resource type="Animation" id="Animation_ylcnl"]
+resource_name = "drwa"
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Draw:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
+tracks/0/path = NodePath("DrawLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 3.3, 3.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 3.3, 3.5),
+"transitions": PackedFloat32Array(0.5, 1, 2, 1),
 "update": 0,
-"values": [ Vector2( 160, 160 ), Vector2( 244, 160 ), Vector2( 276, 160 ), Vector2( 340, 160 ) ]
+"values": [Vector2(350, 320), Vector2(518, 320), Vector2(582, 320), Vector2(710, 320)]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Draw:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
+tracks/1/path = NodePath("DrawLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 3.3, 3.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 3.3, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TeamLabel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WinsLabel:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DrawLabel:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="Animation_okx8e"]
 resource_name = "wins"
 length = 4.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Team:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
+tracks/0/path = NodePath("TeamLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 3.3, 3.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 3.3, 3.5),
+"transitions": PackedFloat32Array(0.5, 1, 2, 1),
 "update": 0,
-"values": [ Vector2( 128, 128 ), Vector2( 192, 128 ), Vector2( 224, 128 ), Vector2( 288, 128 ) ]
+"values": [Vector2(256, 256), Vector2(384, 256), Vector2(448, 256), Vector2(576, 256)]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Team:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
+tracks/1/path = NodePath("TeamLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 3.3, 3.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 3.3, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Wins:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
+tracks/2/path = NodePath("WinsLabel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 3.5, 3.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 0.4, 3.5, 3.7),
+"transitions": PackedFloat32Array(1, 0.5, 1, 2, 1),
 "update": 0,
-"values": [ Vector2( 412, 172 ), Vector2( 412, 172 ), Vector2( 348, 172 ), Vector2( 316, 172 ), Vector2( 252, 172 ) ]
+"values": [Vector2(824, 344), Vector2(824, 344), Vector2(696, 344), Vector2(632, 344), Vector2(504, 344)]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Wins:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
+tracks/3/path = NodePath("WinsLabel:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 3.5, 3.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 0.4, 3.5, 3.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DrawLabel:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("TeamLabel:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("WinsLabel:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a1ktr"]
+_data = {
+"draw": SubResource("Animation_ylcnl"),
+"wins": SubResource("Animation_okx8e")
 }
 
 [node name="RoundEndBanner" type="Node2D"]
-script = ExtResource( 2 )
-
-[node name="Team" parent="." instance=ExtResource( 1 )]
-modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 128, 128 )
-fontSize = 6
-outline = true
-animate = false
-
-[node name="Wins" parent="." instance=ExtResource( 1 )]
-modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 412, 172 )
-text = "wins"
-fontSize = 6
-outline = true
-animate = false
-
-[node name="Draw" parent="." instance=ExtResource( 1 )]
-modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 160, 160 )
-text = "draw"
-fontSize = 6
-alignment = 1
-outline = true
-animate = false
+script = ExtResource("1_kbdjs")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-anims/draw = SubResource( 1 )
-anims/wins = SubResource( 2 )
+libraries = {
+"": SubResource("AnimationLibrary_a1ktr")
+}
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
-autoplay = true
+[node name="TeamLabel" parent="." instance=ExtResource("3_ydum0")]
+visible = false
+modulate = Color(1, 1, 1, 0)
+position = Vector2(256, 256)
+fontSize = 8
 
-[connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]
+[node name="WinsLabel" parent="." instance=ExtResource("3_ydum0")]
+visible = false
+modulate = Color(1, 1, 1, 0)
+position = Vector2(824, 344)
+text = "wins"
+fontSize = 8
+
+[node name="DrawLabel" parent="." instance=ExtResource("3_ydum0")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(350, 320)
+text = "draw"
+fontSize = 8

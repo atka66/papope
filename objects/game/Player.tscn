@@ -1,0 +1,380 @@
+[gd_scene load_steps=35 format=3 uid="uid://tlfkm8pk6hy7"]
+
+[ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
+[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
+[ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="3_gq6vx"]
+[ext_resource type="Texture2D" uid="uid://m1y325q5dmor" path="res://sprites/game/player/crown.png" id="4_ep5y4"]
+[ext_resource type="Texture2D" uid="uid://c3u5ie7th23lt" path="res://sprites/game/player/lock.png" id="5_83h66"]
+[ext_resource type="Shader" path="res://shaders/shine.gdshader" id="6_ii0ia"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="7_gom1r"]
+[ext_resource type="AudioStream" uid="uid://chl7pwr2aquq0" path="res://audio/sfx/pwrup/shield_start.ogg" id="8_eksu2"]
+[ext_resource type="AudioStream" uid="uid://buth7w23vc0am" path="res://audio/sfx/pwrup/shield_end.ogg" id="9_0h1ux"]
+[ext_resource type="AudioStream" uid="uid://6g140bpk81ed" path="res://audio/sfx/player/hurt/hurt_scare.ogg" id="10_38n2i"]
+[ext_resource type="AudioStream" uid="uid://b48v6e2sqs8lt" path="res://audio/sfx/player/lava_enter.ogg" id="11_oekyh"]
+[ext_resource type="AudioStream" uid="uid://dwujokto6bp1u" path="res://audio/sfx/player/death.ogg" id="12_720xj"]
+[ext_resource type="AudioStream" uid="uid://d0x3jq52qs0k7" path="res://audio/sfx/pwrup/pickup.ogg" id="12_nvt8g"]
+[ext_resource type="AudioStream" uid="uid://djn5guu82fssv" path="res://audio/sfx/player/fall_water.ogg" id="14_pp8ks"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_po7vx"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qd1a5"]
+resource_local_to_scene = true
+shader = ExtResource("2_uodpr")
+shader_parameter/width = 0.45
+shader_parameter/border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_xuqdy"]
+resource_name = "heal"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Circle:material:shader_parameter/border_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(0, 1, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qf4hf"]
+resource_name = "hurt"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Circle:material:shader_parameter/border_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vn70s"]
+_data = {
+"heal": SubResource("Animation_xuqdy"),
+"hurt": SubResource("Animation_qf4hf")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d0ghp"]
+shader = ExtResource("2_uodpr")
+shader_parameter/width = 0.45
+shader_parameter/border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_bm1mf"]
+resource_name = "shielded"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4, 4.25, 4.5, 4.75, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"unshield"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mps8w"]
+_data = {
+"shielded": SubResource("Animation_bm1mf")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_finae"]
+shader = ExtResource("2_uodpr")
+shader_parameter/width = 0.43
+shader_parameter/border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1xui3"]
+shader = ExtResource("6_ii0ia")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bxsms"]
+radius = 32.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_417ft"]
+resource_local_to_scene = true
+shader = ExtResource("7_gom1r")
+shader_parameter/line_thickness = 2.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r5u8j"]
+resource_local_to_scene = true
+shader = ExtResource("7_gom1r")
+shader_parameter/line_thickness = 2.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w500e"]
+resource_local_to_scene = true
+shader = ExtResource("7_gom1r")
+shader_parameter/line_thickness = 2.0
+shader_parameter/line_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_xd6pn"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_5726i"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f86wn"]
+gradient = SubResource("Gradient_5726i")
+width = 2
+
+[sub_resource type="Curve" id="Curve_rhgma"]
+min_value = -1.0
+_data = [Vector2(0, 0.0109891), 0.0, 0.0, 0, 0, Vector2(0.397196, 0.186813), 0.0, 0.0, 0, 0, Vector2(0.803738, -0.186813), 0.0, 0.0, 0, 0, Vector2(1, 0.296703), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_8vosl"]
+_data = [Vector2(0, 0.230769), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_0it2g"]
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Player" type="RigidBody2D" groups=["players", "shootables", "trappables", "whippables", "zappables"]]
+z_as_relative = false
+collision_mask = 75
+physics_material_override = SubResource("PhysicsMaterial_po7vx")
+gravity_scale = 0.0
+lock_rotation = true
+max_contacts_reported = 2
+contact_monitor = true
+script = ExtResource("1_srq66")
+
+[node name="BodyParts" type="CanvasGroup" parent="."]
+material = SubResource("ShaderMaterial_qd1a5")
+fit_margin = 0.0
+clear_margin = 0.0
+
+[node name="Body" type="ColorRect" parent="BodyParts"]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="Face" type="Sprite2D" parent="BodyParts"]
+scale = Vector2(2, 2)
+texture = ExtResource("3_gq6vx")
+hframes = 7
+
+[node name="Lock" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("5_83h66")
+
+[node name="Timer" type="Timer" parent="Lock"]
+one_shot = true
+
+[node name="Hurt" type="Node2D" parent="."]
+
+[node name="Anim" type="AnimationPlayer" parent="Hurt"]
+libraries = {
+"": SubResource("AnimationLibrary_vn70s")
+}
+autoplay = "hurt"
+
+[node name="Circle" type="ColorRect" parent="Hurt"]
+material = SubResource("ShaderMaterial_d0ghp")
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="Shield" type="Node2D" parent="."]
+
+[node name="Anim" type="AnimationPlayer" parent="Shield"]
+libraries = {
+"": SubResource("AnimationLibrary_mps8w")
+}
+
+[node name="Circle" type="ColorRect" parent="Shield"]
+material = SubResource("ShaderMaterial_finae")
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="Shine" type="ColorRect" parent="Shield"]
+material = SubResource("ShaderMaterial_1xui3")
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="Crown" type="Sprite2D" parent="."]
+position = Vector2(0, -40)
+scale = Vector2(2, 2)
+texture = ExtResource("4_ep5y4")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bxsms")
+
+[node name="Crosshairs" type="Node2D" parent="."]
+z_index = 89
+z_as_relative = false
+
+[node name="DynamiteCrosshair" type="CanvasGroup" parent="Crosshairs"]
+material = SubResource("ShaderMaterial_417ft")
+
+[node name="Center" type="Polygon2D" parent="Crosshairs/DynamiteCrosshair"]
+polygon = PackedVector2Array(-2, -2, 2, -2, 2, 2, -2, 2)
+
+[node name="Top" type="Polygon2D" parent="Crosshairs/DynamiteCrosshair"]
+polygon = PackedVector2Array(-2, -24, 2, -24, 2, -8, -2, -8)
+
+[node name="Bottom" type="Polygon2D" parent="Crosshairs/DynamiteCrosshair"]
+polygon = PackedVector2Array(-2, 8, 2, 8, 2, 24, -2, 24)
+
+[node name="RevolverCrosshair" type="CanvasGroup" parent="Crosshairs"]
+material = SubResource("ShaderMaterial_r5u8j")
+
+[node name="Circle" type="Polygon2D" parent="Crosshairs/RevolverCrosshair"]
+polygon = PackedVector2Array(20, 0, 18.02, 8.678, 12.47, 15.636, 4.45, 19.498, -4.45, 19.498, -12.47, 15.636, -18.02, 8.678, -20, 0, -18.02, -8.678, -12.47, -15.636, -4.45, -19.498, 4.45, -19.498, 12.47, -15.636, 18.02, -8.678, 20, 0, 16, 0, 14.416, -6.942, 9.976, -12.51, 3.56, -15.598, -3.56, -15.598, -9.976, -12.51, -14.416, -6.942, -16, 0, -14.416, 6.942, -9.976, 12.51, -3.56, 15.598, 3.56, 15.598, 9.976, 12.51, 14.416, 6.942, 16, 0)
+
+[node name="Top" type="Polygon2D" parent="Crosshairs/RevolverCrosshair"]
+polygon = PackedVector2Array(-2, -24, 2, -24, 2, -10, -2, -10)
+
+[node name="Bottom" type="Polygon2D" parent="Crosshairs/RevolverCrosshair"]
+polygon = PackedVector2Array(-2, 24, 2, 24, 2, 10, -2, 10)
+
+[node name="Left" type="Polygon2D" parent="Crosshairs/RevolverCrosshair"]
+polygon = PackedVector2Array(-24, 2, -10, 2, -10, -2, -24, -2)
+
+[node name="Right" type="Polygon2D" parent="Crosshairs/RevolverCrosshair"]
+polygon = PackedVector2Array(24, 2, 10, 2, 10, -2, 24, -2)
+
+[node name="WhipCrosshair" type="CanvasGroup" parent="Crosshairs"]
+material = SubResource("ShaderMaterial_w500e")
+
+[node name="Center" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
+polygon = PackedVector2Array(-2, -2, 2, -2, 2, 2, -2, 2)
+
+[node name="TopLeft" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
+polygon = PackedVector2Array(-18, -15, -15, -18, -6, -9, -9, -6)
+
+[node name="TopRight" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
+polygon = PackedVector2Array(18, -15, 15, -18, 6, -9, 9, -6)
+
+[node name="BottomLeft" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
+polygon = PackedVector2Array(-18, 15, -15, 18, -6, 9, -9, 6)
+
+[node name="BottomRight" type="Polygon2D" parent="Crosshairs/WhipCrosshair"]
+polygon = PackedVector2Array(18, 15, 15, 18, 6, 9, 9, 6)
+
+[node name="LookLine" type="Line2D" parent="."]
+z_index = 88
+z_as_relative = false
+points = PackedVector2Array(0, 0, 0, 0)
+width = 5.0
+gradient = SubResource("Gradient_xd6pn")
+
+[node name="LookVector" type="Marker2D" parent="."]
+
+[node name="AudioDash" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
+
+[node name="AudioShieldStart" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_eksu2")
+bus = &"sfx"
+
+[node name="AudioShieldEnd" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_0h1ux")
+bus = &"sfx"
+
+[node name="AudioHurt" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
+
+[node name="AudioScared" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_38n2i")
+bus = &"sfx"
+
+[node name="AudioInLava" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_oekyh")
+bus = &"sfx"
+
+[node name="AudioPickup" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_nvt8g")
+bus = &"sfx"
+
+[node name="AudioDeath" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_720xj")
+bus = &"sfx"
+
+[node name="AudioHitBottom" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_pp8ks")
+bus = &"sfx"
+
+[node name="AudioChickenIdle" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
+
+[node name="SmokeParticles" type="CPUParticles2D" parent="."]
+z_index = -1
+z_as_relative = false
+position = Vector2(0, 8)
+lifetime = 0.4
+lifetime_randomness = 0.1
+texture = SubResource("GradientTexture1D_f86wn")
+direction = Vector2(0, -1)
+spread = 25.0
+gravity = Vector2(0, -200)
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
+orbit_velocity_min = 1.0
+orbit_velocity_max = 1.0
+orbit_velocity_curve = SubResource("Curve_rhgma")
+scale_amount_min = 40.0
+scale_amount_max = 50.0
+scale_amount_curve = SubResource("Curve_8vosl")
+color_ramp = SubResource("Gradient_0it2g")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Lock/Timer" to="." method="untrap"]

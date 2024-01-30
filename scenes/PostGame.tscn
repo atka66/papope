@@ -1,0 +1,114 @@
+[gd_scene load_steps=9 format=3 uid="uid://c0cxgyxhm7ecc"]
+
+[ext_resource type="Script" path="res://scenes/PostGame.gd" id="1_irosb"]
+[ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_5yc4x"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_sy2d7"]
+[ext_resource type="SpriteFrames" uid="uid://bjujoaaro01o3" path="res://resources/label/x.tres" id="4_7akrk"]
+[ext_resource type="PackedScene" uid="uid://bkf1p0bddiurc" path="res://objects/system/PlayerSummary.tscn" id="4_cetg5"]
+[ext_resource type="AudioStream" uid="uid://rd7id7m2tdou" path="res://audio/sfx/system/cash.ogg" id="6_7vljf"]
+
+[sub_resource type="Animation" id="Animation_hqb4x"]
+resource_name = "auto"
+length = 60.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AudioCash")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(8, 60),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"allowProceed"
+}, {
+"args": [],
+"method": &"toLobby"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_51s2y"]
+_data = {
+"auto": SubResource("Animation_hqb4x")
+}
+
+[node name="PostGame" type="Node2D"]
+script = ExtResource("1_irosb")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Dim")
+libraries = {
+"": SubResource("AnimationLibrary_51s2y")
+}
+autoplay = "auto"
+
+[node name="MovingBackground" parent="." instance=ExtResource("2_5yc4x")]
+
+[node name="HintHolder" type="Node2D" parent="."]
+z_index = 101
+z_as_relative = false
+position = Vector2(680, 24)
+
+[node name="OSprite" type="AnimatedSprite2D" parent="HintHolder"]
+position = Vector2(-178, 4)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("4_7akrk")
+autoplay = "default"
+
+[node name="LobbyHint" parent="HintHolder" instance=ExtResource("3_sy2d7")]
+text = "back to lobby"
+fontSize = 3
+alignment = 8
+
+[node name="PlayerSummary0" parent="." instance=ExtResource("4_cetg5")]
+
+[node name="PlayerSummary1" parent="." instance=ExtResource("4_cetg5")]
+position = Vector2(340, 0)
+playerId = 1
+
+[node name="PlayerSummary2" parent="." instance=ExtResource("4_cetg5")]
+position = Vector2(680, 0)
+playerId = 2
+
+[node name="PlayerSummary3" parent="." instance=ExtResource("4_cetg5")]
+position = Vector2(1020, 0)
+playerId = 3
+
+[node name="AudioCash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_7vljf")
+bus = &"sfx"
+
+[node name="Dim" type="ColorRect" parent="."]
+z_index = 102
+z_as_relative = false
+offset_right = 1360.0
+offset_bottom = 768.0
+color = Color(0, 0, 0, 1)

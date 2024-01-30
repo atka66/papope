@@ -1,0 +1,452 @@
+[gd_scene load_steps=20 format=3 uid="uid://byt0mpq4frnq8"]
+
+[ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="1_k2qbb"]
+[ext_resource type="Script" path="res://objects/game/hud/Hud.gd" id="1_sv67i"]
+[ext_resource type="Texture2D" uid="uid://dkw2b0pnwpugk" path="res://sprites/game/hud/hud.png" id="2_05hp3"]
+[ext_resource type="Texture2D" uid="uid://u1ukb7vraab2" path="res://sprites/game/hud/hud_revolver_drum.png" id="4_jks62"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_u57dk"]
+[ext_resource type="Texture2D" uid="uid://drtx8a3qwxbd7" path="res://sprites/game/hud/hud_revolver_ammo.png" id="5_gprcb"]
+[ext_resource type="Texture2D" uid="uid://bqixonvrws2t6" path="res://sprites/game/hud/hud_ammo.png" id="6_8u23c"]
+
+[sub_resource type="Animation" id="Animation_8p6r6"]
+resource_name = "fromleft"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(-240, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_wxcsu"]
+resource_name = "fromright"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector2(240, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r51xx"]
+_data = {
+"fromleft": SubResource("Animation_8p6r6"),
+"fromright": SubResource("Animation_wxcsu")
+}
+
+[sub_resource type="Animation" id="Animation_wdwda"]
+resource_name = "frombottom"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Vector2(0, 128), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8p224"]
+resource_name = "fromtop"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.2, 1),
+"update": 0,
+"values": [Vector2(0, -128), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3p57v"]
+_data = {
+"frombottom": SubResource("Animation_wdwda"),
+"fromtop": SubResource("Animation_8p224")
+}
+
+[sub_resource type="Animation" id="Animation_4e3tr"]
+resource_name = "fire"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Drum1:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.959931, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_3oshu"]
+resource_name = "fire_2"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Drum2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.959931, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vu8wd"]
+resource_name = "fire_both"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Drum1:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.959931, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Drum2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.959931, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o3ipx"]
+_data = {
+"fire_1": SubResource("Animation_4e3tr"),
+"fire_2": SubResource("Animation_3oshu"),
+"fire_both": SubResource("Animation_vu8wd")
+}
+
+[sub_resource type="Animation" id="Animation_h2fdj"]
+resource_name = "flicker"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kd4l1"]
+_data = {
+"flicker": SubResource("Animation_h2fdj")
+}
+
+[node name="Hud" type="Node2D"]
+script = ExtResource("1_sv67i")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_r51xx")
+}
+
+[node name="Container" type="Node2D" parent="."]
+
+[node name="ShakeContainer" type="Node2D" parent="Container"]
+
+[node name="Inventory" type="Node2D" parent="Container/ShakeContainer"]
+position = Vector2(132, 28)
+
+[node name="Anim" type="AnimationPlayer" parent="Container/ShakeContainer/Inventory"]
+libraries = {
+"": SubResource("AnimationLibrary_3p57v")
+}
+
+[node name="Container" type="Node2D" parent="Container/ShakeContainer/Inventory"]
+
+[node name="Revolver" type="Node2D" parent="Container/ShakeContainer/Inventory/Container"]
+
+[node name="Anim" type="AnimationPlayer" parent="Container/ShakeContainer/Inventory/Container/Revolver"]
+libraries = {
+"": SubResource("AnimationLibrary_o3ipx")
+}
+
+[node name="Drum1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver"]
+rotation = 0.959931
+scale = Vector2(2, 2)
+texture = ExtResource("4_jks62")
+
+[node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum1"]
+position = Vector2(0, -10)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum1"]
+position = Vector2(8, -5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo2" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum1"]
+position = Vector2(8, 5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo3" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum1"]
+position = Vector2(0, 10)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo4" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum1"]
+position = Vector2(-8, 5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo5" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum1"]
+position = Vector2(-8, -5)
+texture = ExtResource("5_gprcb")
+
+[node name="Drum2" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver"]
+position = Vector2(64, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("4_jks62")
+
+[node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum2"]
+position = Vector2(0, -10)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum2"]
+position = Vector2(8, -5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo2" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum2"]
+position = Vector2(8, 5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo3" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum2"]
+position = Vector2(0, 10)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo4" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum2"]
+position = Vector2(-8, 5)
+texture = ExtResource("5_gprcb")
+
+[node name="Ammo5" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver/Drum2"]
+position = Vector2(-8, -5)
+texture = ExtResource("5_gprcb")
+
+[node name="Dynamite" type="Node2D" parent="Container/ShakeContainer/Inventory/Container"]
+
+[node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Dynamite"]
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+
+[node name="Ammo1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Dynamite"]
+position = Vector2(32, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+
+[node name="Shield" type="Node2D" parent="Container/ShakeContainer/Inventory/Container"]
+
+[node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Shield"]
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 1
+
+[node name="Ammo1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Shield"]
+position = Vector2(32, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 1
+
+[node name="Trap" type="Node2D" parent="Container/ShakeContainer/Inventory/Container"]
+
+[node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Trap"]
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 2
+
+[node name="Ammo1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Trap"]
+position = Vector2(32, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 2
+
+[node name="Whip" type="Node2D" parent="Container/ShakeContainer/Inventory/Container"]
+
+[node name="Ammo0" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 3
+
+[node name="Ammo1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+position = Vector2(12, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 3
+
+[node name="Ammo2" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+position = Vector2(24, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 3
+
+[node name="Ammo3" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+position = Vector2(36, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 3
+
+[node name="Ammo4" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+position = Vector2(48, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 3
+
+[node name="Ammo5" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+position = Vector2(60, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 3
+
+[node name="Ammo6" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+position = Vector2(72, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 3
+
+[node name="Ammo7" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+position = Vector2(84, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 3
+
+[node name="Ammo8" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+position = Vector2(96, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 3
+
+[node name="Ammo9" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Whip"]
+position = Vector2(108, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("6_8u23c")
+hframes = 4
+frame = 3
+
+[node name="FaceBg" type="Polygon2D" parent="Container/ShakeContainer"]
+position = Vector2(64, 32)
+polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[node name="Face" type="Sprite2D" parent="Container/ShakeContainer"]
+position = Vector2(64, 32)
+scale = Vector2(2, 2)
+texture = ExtResource("1_k2qbb")
+hframes = 7
+
+[node name="HpBarBg" type="Polygon2D" parent="Container/ShakeContainer"]
+position = Vector2(34, 64)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 14, 0, 14)
+
+[node name="HpBarDelay" type="Polygon2D" parent="Container/ShakeContainer"]
+position = Vector2(34, 64)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 14, 0, 14)
+
+[node name="HpBar" type="Polygon2D" parent="Container/ShakeContainer"]
+position = Vector2(34, 64)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 14, 0, 14)
+
+[node name="HpBarDelay2" type="Polygon2D" parent="Container/ShakeContainer"]
+position = Vector2(34, 72)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 6, 0, 6)
+
+[node name="HpBar2" type="Polygon2D" parent="Container/ShakeContainer"]
+position = Vector2(34, 72)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 6, 0, 6)
+
+[node name="HpBarFlicker" type="Polygon2D" parent="Container/ShakeContainer"]
+visible = false
+position = Vector2(34, 64)
+polygon = PackedVector2Array(0, 0, 188, 0, 188, 14, 0, 14)
+
+[node name="Anim" type="AnimationPlayer" parent="Container/ShakeContainer/HpBarFlicker"]
+libraries = {
+"": SubResource("AnimationLibrary_kd4l1")
+}
+autoplay = "flicker"
+
+[node name="Hud" type="Sprite2D" parent="Container/ShakeContainer"]
+scale = Vector2(2, 2)
+texture = ExtResource("2_05hp3")
+centered = false
+
+[node name="ScoreLabel" parent="Container/ShakeContainer" instance=ExtResource("4_u57dk")]
+position = Vector2(16, 62)
+text = "0"
+fontSize = 3
+alignment = 8

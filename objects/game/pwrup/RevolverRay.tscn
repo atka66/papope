@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=3 uid="uid://poecvtp05qww"]
+
+[ext_resource type="Script" path="res://objects/game/pwrup/RevolverRay.gd" id="1_c0kx1"]
+[ext_resource type="AudioStream" uid="uid://lb15sa17enki" path="res://audio/sfx/pwrup/rev_fire.ogg" id="2_4crib"]
+[ext_resource type="AudioStream" uid="uid://cn7iqp0v80dvw" path="res://audio/sfx/contact/revolver_contact.ogg" id="3_vddyr"]
+
+[sub_resource type="Animation" id="Animation_4c5nn"]
+resource_name = "ray"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ray:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [6.0, 0.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MuzzleTop")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MuzzleBottom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Audio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h6b1y"]
+_data = {
+"ray": SubResource("Animation_4c5nn")
+}
+
+[node name="RevolverRay" type="Node2D"]
+z_index = -1
+z_as_relative = false
+script = ExtResource("1_c0kx1")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_h6b1y")
+}
+autoplay = "ray"
+
+[node name="Ray" type="Line2D" parent="."]
+width = 3.0
+
+[node name="HitScan" type="RayCast2D" parent="."]
+exclude_parent = false
+collision_mask = 59
+collide_with_areas = true
+
+[node name="MuzzleTop" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.5
+local_coords = true
+direction = Vector2(0.2, 1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 300.0
+angle_max = 90.0
+scale_amount_max = 15.0
+
+[node name="MuzzleBottom" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 1.0
+local_coords = true
+direction = Vector2(0.2, -1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 300.0
+angle_max = 90.0
+scale_amount_max = 15.0
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_4crib")
+bus = &"sfx"
+
+[node name="AudioPlayerHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_vddyr")
+bus = &"sfx"

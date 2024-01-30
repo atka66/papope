@@ -1,21 +1,111 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=10 format=3 uid="uid://3256wkq2cd6w"]
 
-[ext_resource path="res://objects/system/MapController.gd" type="Script" id=1]
-[ext_resource path="res://sounds/player/fellwater.ogg" type="AudioStream" id=2]
-[ext_resource path="res://objects/system/Camera.tscn" type="PackedScene" id=3]
+[ext_resource type="Script" path="res://objects/system/MapController.gd" id="1_478ud"]
+[ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="1_re0bo"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_lejj6"]
+[ext_resource type="AudioStream" uid="uid://dvr5wmkt3vyoe" path="res://audio/sfx/system/round_start.ogg" id="3_s1fne"]
+[ext_resource type="AudioStream" uid="uid://cqdf1k8tkujmt" path="res://audio/sfx/system/round_go.ogg" id="4_81ely"]
+[ext_resource type="PackedScene" uid="uid://cvmeomjuel1u2" path="res://objects/game/obstacle/MapBoundary.tscn" id="4_c1rtt"]
+[ext_resource type="AudioStream" uid="uid://blv4svyrnvrl3" path="res://audio/sfx/system/round_end.ogg" id="5_rykcw"]
 
-[node name="MapController" type="Node2D" groups=[
-"controllers",
-]]
+[sub_resource type="Animation" id="Animation_3drhq"]
+resource_name = "disappear"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dim:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HudCanvas/MapLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.8, 2),
+"transitions": PackedFloat32Array(0.5, 1, 2, 1),
+"update": 0,
+"values": [Vector2(0, 600), Vector2(128, 600), Vector2(192, 600), Vector2(320, 600)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HudCanvas/MapLabel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HudCanvas/MapLabel:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.8, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p3b64"]
+_data = {
+"disappear": SubResource("Animation_3drhq")
+}
+
+[node name="MapController" type="Node2D"]
 z_index = -103
 z_as_relative = false
-script = ExtResource( 1 )
+script = ExtResource("1_478ud")
 
 [node name="HudCanvas" type="CanvasLayer" parent="."]
+layer = 90
 
-[node name="Camera" parent="." instance=ExtResource( 3 )]
+[node name="MapLabel" parent="HudCanvas" instance=ExtResource("3_lejj6")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, 600)
+fontSize = 10
+alignment = 4
 
-[node name="AudioDestructibleDestroy" type="AudioStreamPlayer2D" parent="."]
+[node name="Anim" type="AnimationPlayer" parent="HudCanvas"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_p3b64")
+}
+autoplay = "disappear"
 
-[node name="AudioFallenPwrups" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 2 )
+[node name="Camera" parent="." instance=ExtResource("1_re0bo")]
+
+[node name="Dim" type="ColorRect" parent="."]
+visible = false
+z_index = 100
+z_as_relative = false
+offset_right = 1360.0
+offset_bottom = 768.0
+color = Color(0, 0, 0, 1)
+
+[node name="MapBoundary" parent="." instance=ExtResource("4_c1rtt")]
+
+[node name="AudioRoundStart" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_s1fne")
+bus = &"sfx"
+
+[node name="AudioRoundGo" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_81ely")
+bus = &"sfx"
+
+[node name="AudioRoundEnd" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_rykcw")
+bus = &"sfx"

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqaebfuyvpwuc"]
+
+[ext_resource type="Texture2D" uid="uid://cidj8ca8t6cnk" path="res://sprites/game/entity/car.png" id="1_n2evb"]
+[ext_resource type="Script" path="res://objects/game/entity/Car.gd" id="1_otrtk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8pimu"]
+size = Vector2(240, 80)
+
+[node name="Car" type="Area2D" groups=["car", "shootables", "whippables"]]
+z_index = 2
+z_as_relative = false
+collision_layer = 32
+collision_mask = 17
+script = ExtResource("1_otrtk")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_n2evb")
+offset = Vector2(0, -24)
+vframes = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8pimu")
+
+[node name="AudioCollision" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AudioHorn" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

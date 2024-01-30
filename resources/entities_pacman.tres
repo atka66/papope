@@ -1,0 +1,11 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://d115pvwqnl4xn"]
+
+[ext_resource type="PackedScene" uid="uid://ciy5hryn8y8fi" path="res://objects/game/entity/Pellet.tscn" id="1_li21m"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_urviq"]
+resource_name = "pacman"
+scenes/1/scene = ExtResource("1_li21m")
+
+[resource]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetScenesCollectionSource_urviq")

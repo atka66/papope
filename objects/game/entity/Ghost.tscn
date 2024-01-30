@@ -1,0 +1,158 @@
+[gd_scene load_steps=12 format=3 uid="uid://b2fltiiwvmchi"]
+
+[ext_resource type="Script" path="res://objects/game/entity/Ghost.gd" id="1_bgrbh"]
+[ext_resource type="Texture2D" uid="uid://c0ci7blq5byxi" path="res://sprites/game/entity/ghost.png" id="1_cp1oc"]
+[ext_resource type="Texture2D" uid="uid://dcu3nx3ol3uvb" path="res://sprites/game/entity/ghost_eyes.png" id="1_sy0tg"]
+[ext_resource type="AudioStream" uid="uid://doss6vo4x7m8f" path="res://audio/sfx/entity/ghost_appear.ogg" id="3_w344s"]
+[ext_resource type="AudioStream" uid="uid://5ohy16wgwotl" path="res://audio/sfx/entity/ghost_walk.ogg" id="4_yodip"]
+
+[sub_resource type="Animation" id="Animation_vbt0q"]
+resource_name = "appear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 32), Vector2(0, -16), Vector2(0, -16), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [8.37758, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Container:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:moving")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AudioAppear")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AudioWalk")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f2h26"]
+_data = {
+"appear": SubResource("Animation_vbt0q")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tcnjk"]
+radius = 42.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yb5yo"]
+atlas = ExtResource("1_cp1oc")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ql7yc"]
+atlas = ExtResource("1_cp1oc")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_160js"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yb5yo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ql7yc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Ghost" type="Area2D" groups=["shootables", "trappables", "whippables"]]
+z_index = 4
+z_as_relative = false
+collision_layer = 32
+collision_mask = 17
+script = ExtResource("1_bgrbh")
+moving = true
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_f2h26")
+}
+autoplay = "appear"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tcnjk")
+
+[node name="Container" type="Node2D" parent="."]
+
+[node name="Body" type="AnimatedSprite2D" parent="Container"]
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_160js")
+autoplay = "default"
+frame_progress = 0.554823
+
+[node name="Eyes" type="Sprite2D" parent="Container"]
+scale = Vector2(6, 6)
+texture = ExtResource("1_sy0tg")
+offset = Vector2(0, -2)
+hframes = 4
+
+[node name="AudioAppear" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_w344s")
+bus = &"sfx"
+
+[node name="AudioWalk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_yodip")
+bus = &"sfx"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

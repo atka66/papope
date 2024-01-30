@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://cihn4lk47y3rj"]
+
+[ext_resource type="Script" path="res://objects/anim/RevolverRicochet.gd" id="1_co880"]
+[ext_resource type="Texture2D" uid="uid://bpcdoonpygx7q" path="res://sprites/anim/shard.png" id="2_v25om"]
+
+[node name="RevolverRicochet" type="Node2D"]
+z_index = 5
+z_as_relative = false
+script = ExtResource("1_co880")
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.5
+texture = ExtResource("2_v25om")
+particle_flag_align_y = true
+gravity = Vector2(0, 0)
+initial_velocity_min = 300.0
+initial_velocity_max = 600.0
+scale_amount_max = 5.0

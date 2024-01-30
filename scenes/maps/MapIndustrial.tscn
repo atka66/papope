@@ -1,0 +1,538 @@
+[gd_scene load_steps=21 format=3 uid="uid://dco2r6kg23rq3"]
+
+[ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_kx6i1"]
+[ext_resource type="AudioStream" uid="uid://b2bwgllix1e8s" path="res://audio/sfx/ambient/amb_ember.ogg" id="2_lohn0"]
+[ext_resource type="Texture2D" uid="uid://bpfc8nfgqyk8d" path="res://sprites/bg/industrial.png" id="3_0jskg"]
+[ext_resource type="TileSet" uid="uid://bulnhddosfhds" path="res://resources/tileset_industrial.tres" id="3_sarp2"]
+[ext_resource type="Texture2D" uid="uid://ceh31hhdn0g41" path="res://sprites/game/entity/conveyorbelt/conveyorbelt_tile.png" id="4_7getm"]
+[ext_resource type="Shader" path="res://shaders/hot.gdshader" id="4_jcxm7"]
+[ext_resource type="Texture2D" uid="uid://u537re4d14xw" path="res://sprites/bg/cranehook.png" id="4_wiml6"]
+[ext_resource type="Texture2D" uid="uid://lm4njnche2ra" path="res://sprites/game/entity/conveyorbelt/conveyorbelt_gear.png" id="5_6g0iv"]
+[ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="9_jlm4g"]
+
+[sub_resource type="Animation" id="Animation_mu4ov"]
+resource_name = "dangle"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CraneHook:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0872665, -0.0872665]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lfjii"]
+_data = {
+"dangle": SubResource("Animation_mu4ov")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q363s"]
+shader = ExtResource("4_jcxm7")
+shader_parameter/val = 2.0
+shader_parameter/speed = 5.0
+
+[sub_resource type="Gradient" id="Gradient_djjfx"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 0.376471, 0, 0.0784314)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_r1fm7"]
+gradient = SubResource("Gradient_djjfx")
+
+[sub_resource type="Curve" id="Curve_a20ab"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_b5bxm"]
+resource_name = "move"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BeltBelow:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 32), Vector2(16, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BeltAbove:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(16, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BeltA1:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-6, 2), Vector2(-10, 6)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BeltA2:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-6, 2), Vector2(-10, 6), Vector2(-12, 12)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BeltA3:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-10, 6), Vector2(-12, 12), Vector2(-12, 20)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BeltB1:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-12, 12), Vector2(-12, 20), Vector2(-10, 26)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("BeltB2:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-12, 20), Vector2(-10, 26), Vector2(-6, 32)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("BeltB3:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-10, 26), Vector2(-6, 32), Vector2(0, 32)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Gear1:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5708, 0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Gear2:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.785398, 2.35619]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Gear3:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5708, 0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Gear4:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.785398, 2.35619]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Gear5:rotation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5708, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ielqh"]
+_data = {
+"move": SubResource("Animation_b5bxm")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bd6pr"]
+size = Vector2(1280, 768)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bphac"]
+size = Vector2(1280, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5cit"]
+size = Vector2(1280, 128)
+
+[node name="MapIndustrial" type="Node2D"]
+
+[node name="MapController" parent="." instance=ExtResource("1_kx6i1")]
+
+[node name="Ambient" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_lohn0")
+autoplay = true
+bus = &"sfx"
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="BgNode" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
+z_index = -55
+z_as_relative = false
+scale = Vector2(2, 2)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer/BgNode"]
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 896.0
+offset_bottom = 586.0
+texture = ExtResource("3_0jskg")
+stretch_mode = 1
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="Anim" type="AnimationPlayer" parent="ParallaxBackground/ParallaxLayer2"]
+libraries = {
+"": SubResource("AnimationLibrary_lfjii")
+}
+autoplay = "dangle"
+
+[node name="CraneHook" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+z_index = -51
+z_as_relative = false
+position = Vector2(200, -900)
+rotation = 0.0872665
+scale = Vector2(2, 2)
+texture = ExtResource("4_wiml6")
+offset = Vector2(0, 450)
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.7, 0.7)
+
+[node name="BgTiles" type="TileMap" parent="ParallaxBackground/ParallaxLayer3"]
+modulate = Color(0.501961, 0.501961, 0.501961, 1)
+z_index = -50
+z_as_relative = false
+position = Vector2(32, 0)
+scale = Vector2(2, 2)
+tile_set = ExtResource("3_sarp2")
+format = 2
+layer_0/tile_data = PackedInt32Array(589829, 0, 1, 655365, 131072, 1, 720901, 65536, 1, 786437, 131072, 1, 655358, 0, 1, 720894, 131072, 1, 786430, 65536, 1, 851966, 131072, 1, 851967, 131072, 1, 786432, 131072, 1, 786433, 131072, 1, 786434, 131072, 1, 786435, 131072, 1, 786436, 131072, 1, 786438, 65536, 1, 720900, 65536, 1, 655364, 131072, 1, 589828, 0, 1, 589827, 0, 1, 655363, 131072, 1, 720899, 65536, 1, 720898, 65536, 1, 720897, 65536, 1, 720896, 65536, 1, 786431, 65536, 1, 720895, 131072, 1, 655359, 0, 1, 589826, 0, 1, 655362, 131072, 1, 655361, 131072, 1, 589825, 0, 1, 589824, 0, 1, 655360, 131072, 1, 655357, 0, 1, 720893, 131072, 1, 786429, 65536, 1, 851965, 131072, 1, 917501, 65536, 1, 917502, 65536, 1, 917503, 65536, 1, 851968, 65536, 1, 851969, 65536, 1, 851970, 65536, 1, 851971, 65536, 1, 851972, 65536, 1, 851973, 65536, 1, 589821, 131072, 0, 589822, 131072, 0, 589823, 131072, 0, 524288, 131072, 0, 524289, 131072, 0, 524290, 131072, 0, 524291, 131072, 0, 524292, 131072, 0, 524293, 131072, 0)
+
+[node name="PitLight" type="TextureRect" parent="ParallaxBackground/ParallaxLayer3"]
+z_index = -48
+z_as_relative = false
+material = SubResource("ShaderMaterial_q363s")
+offset_left = -160.0
+offset_top = 576.0
+offset_right = 416.0
+offset_bottom = 896.0
+texture = SubResource("GradientTexture1D_r1fm7")
+
+[node name="BgTiles2" type="TileMap" parent="."]
+z_index = -50
+z_as_relative = false
+scale = Vector2(2, 2)
+tile_set = ExtResource("3_sarp2")
+format = 2
+layer_0/tile_data = PackedInt32Array(6, 0, 1, 7, 0, 1, 8, 0, 1, 9, 0, 1, 10, 0, 1, 11, 0, 1, 12, 0, 1, 13, 0, 1, 14, 0, 1, 15, 0, 1, 16, 0, 1, 17, 0, 1, 18, 0, 1, 19, 0, 1, 20, 0, 1, 21, 0, 1, 22, 0, 1, 23, 0, 1, 24, 0, 1, 25, 0, 1, -65530, 131072, 0, -65529, 131072, 0, -65528, 131072, 0, -65527, 131072, 0, -65526, 131072, 0, -65525, 131072, 0, -65524, 131072, 0, -65523, 131072, 0, -65522, 131072, 0, -65521, 131072, 0, -65520, 131072, 0, -65519, 131072, 0, -65518, 131072, 0, -65517, 131072, 0, -65516, 131072, 0, -65515, 131072, 0, -65514, 131072, 0, -65513, 131072, 0, -65512, 131072, 0, -65511, 131072, 0, 65542, 65536, 1, 65543, 65536, 1, 65544, 65536, 1, 65545, 65536, 1, 65546, 65536, 1, 65547, 65536, 1, 65548, 65536, 1, 65549, 65536, 1, 65550, 65536, 1, 65551, 65536, 1, 65552, 65536, 1, 65553, 65536, 1, 65554, 65536, 1, 65555, 65536, 1, 65556, 65536, 1, 65557, 65536, 1, 65558, 65536, 1, 65559, 65536, 1, 65560, 65536, 1, 65561, 65536, 1)
+
+[node name="PitParticles" type="CPUParticles2D" parent="."]
+position = Vector2(128, 896)
+amount = 10
+lifetime = 2.0
+randomness = 1.0
+lifetime_randomness = 0.5
+emission_shape = 3
+emission_rect_extents = Vector2(256, 1)
+direction = Vector2(0, -1)
+spread = 20.0
+gravity = Vector2(0, 500)
+initial_velocity_min = 400.0
+initial_velocity_max = 600.0
+angle_max = 90.0
+angle_curve = SubResource("Curve_a20ab")
+scale_amount_min = 2.0
+scale_amount_max = 10.0
+color = Color(0.854902, 0.341176, 0, 1)
+
+[node name="FgTiles" type="TileMap" parent="."]
+z_index = 50
+z_as_relative = false
+position = Vector2(0, 32)
+scale = Vector2(2, 2)
+tile_set = ExtResource("3_sarp2")
+format = 2
+layer_0/tile_data = PackedInt32Array(589830, 65536, 0, 589831, 65536, 0, 589832, 65536, 0, 589833, 65536, 0, 589834, 65536, 0, 589835, 65536, 0, 589836, 65536, 0, 589837, 65536, 0, 589838, 65536, 0, 589839, 65536, 0, 589840, 65536, 0, 589841, 65536, 0, 589842, 65536, 0, 589843, 65536, 0, 589844, 65536, 0, 589845, 65536, 0, 589846, 65536, 0, 589847, 65536, 0, 589848, 65536, 0, 589849, 65536, 0, 524294, 131072, 0, 524295, 131072, 0, 524296, 131072, 0, 524297, 131072, 0, 524298, 131072, 0, 524299, 131072, 0, 524300, 131072, 0, 524301, 131072, 0, 524302, 131072, 0, 524303, 131072, 0, 524304, 131072, 0, 524305, 131072, 0, 524306, 131072, 0, 524307, 131072, 0, 524308, 131072, 0, 524309, 131072, 0, 524310, 131072, 0, 524311, 131072, 0, 524312, 131072, 0, 524313, 131072, 0, 655366, 65536, 1, 655367, 65536, 1, 655368, 65536, 1, 655369, 65536, 1, 655371, 0, 2, 655372, 131072, 1, 655373, 65536, 1, 655374, 65536, 1, 655383, 65536, 1, 655384, 65536, 1, 655385, 65536, 1, 720921, 65536, 1, 786457, 65536, 1, 786456, 65536, 1, 786455, 65536, 1, 786454, 65536, 1, 786453, 65536, 1, 786452, 65536, 1, 786451, 65536, 1, 786450, 65536, 1, 786449, 65536, 1, 786448, 65536, 1, 786447, 65536, 1, 786446, 65536, 1, 786445, 65536, 1, 786444, 65536, 1, 786443, 65536, 1, 786442, 65536, 1, 786441, 65536, 1, 786440, 65536, 1, 786439, 65536, 1, 786438, 65536, 1, 720902, 65536, 1, 720903, 65536, 1, 720904, 65536, 1, 720905, 65536, 1, 720906, 65536, 1, 720907, 65536, 1, 720908, 65536, 1, 720909, 65536, 1, 720910, 65536, 1, 720911, 65536, 1, 720912, 65536, 1, 720913, 65536, 1, 720914, 65536, 1, 720915, 65536, 1, 720916, 65536, 1, 720917, 65536, 1, 720918, 65536, 1, 720919, 65536, 1, 720920, 65536, 1, 655382, 65536, 1, 655381, 65536, 1, 655380, 65536, 1, 655379, 65536, 1, 655378, 131072, 1, 655377, 0, 2, 655376, 131072, 1, 655375, 65536, 1, 655370, 131072, 1, 851974, 65536, 1, 851975, 65536, 1, 851976, 65536, 1, 851977, 65536, 1, 851978, 65536, 1, 851979, 65536, 1, 851980, 65536, 1, 851981, 65536, 1, 851982, 65536, 1, 851983, 65536, 1, 851984, 65536, 1, 851985, 65536, 1, 851986, 65536, 1, 851987, 65536, 1, 851988, 65536, 1, 851989, 65536, 1, 851990, 65536, 1, 851991, 65536, 1, 851992, 65536, 1, 851993, 65536, 1)
+
+[node name="ConveyorBelt" type="Area2D" parent="."]
+z_index = -40
+z_as_relative = false
+position = Vector2(384, 64)
+collision_layer = 0
+collision_mask = 385
+
+[node name="Anim" type="AnimationPlayer" parent="ConveyorBelt"]
+libraries = {
+"": SubResource("AnimationLibrary_ielqh")
+}
+autoplay = "move"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConveyorBelt"]
+position = Vector2(640, 320)
+shape = SubResource("RectangleShape2D_bd6pr")
+
+[node name="BeltB3" type="TextureRect" parent="ConveyorBelt"]
+modulate = Color(0.501961, 0.501961, 0.501961, 1)
+offset_left = -7.25078
+offset_top = 30.1238
+offset_right = 0.749216
+offset_bottom = 334.124
+scale = Vector2(2, 2)
+texture = ExtResource("4_7getm")
+stretch_mode = 1
+
+[node name="BeltB2" type="TextureRect" parent="ConveyorBelt"]
+modulate = Color(0.501961, 0.501961, 0.501961, 1)
+offset_left = -10.6254
+offset_top = 24.1238
+offset_right = -2.62539
+offset_bottom = 328.124
+scale = Vector2(2, 2)
+texture = ExtResource("4_7getm")
+stretch_mode = 1
+
+[node name="BeltB1" type="TextureRect" parent="ConveyorBelt"]
+modulate = Color(0.501961, 0.501961, 0.501961, 1)
+offset_left = -12.0
+offset_top = 17.4984
+offset_right = -4.0
+offset_bottom = 321.498
+scale = Vector2(2, 2)
+texture = ExtResource("4_7getm")
+stretch_mode = 1
+
+[node name="BeltBelow" type="TextureRect" parent="ConveyorBelt"]
+modulate = Color(0.501961, 0.501961, 0.501961, 1)
+offset_left = 5.49843
+offset_top = 32.0
+offset_right = 645.498
+offset_bottom = 336.0
+scale = Vector2(2, 2)
+texture = ExtResource("4_7getm")
+stretch_mode = 1
+
+[node name="BeltA3" type="TextureRect" parent="ConveyorBelt"]
+offset_left = -11.3746
+offset_top = 10.1238
+offset_right = -3.37461
+offset_bottom = 314.124
+scale = Vector2(2, 2)
+texture = ExtResource("4_7getm")
+stretch_mode = 1
+
+[node name="BeltA2" type="TextureRect" parent="ConveyorBelt"]
+offset_left = -8.74922
+offset_top = 4.74922
+offset_right = -0.749216
+offset_bottom = 308.749
+scale = Vector2(2, 2)
+texture = ExtResource("4_7getm")
+stretch_mode = 1
+
+[node name="BeltA1" type="TextureRect" parent="ConveyorBelt"]
+offset_left = -4.12382
+offset_top = 1.37461
+offset_right = 3.87618
+offset_bottom = 305.375
+scale = Vector2(2, 2)
+texture = ExtResource("4_7getm")
+stretch_mode = 1
+
+[node name="BeltAbove" type="TextureRect" parent="ConveyorBelt"]
+offset_left = 10.5016
+offset_right = 650.502
+offset_bottom = 304.0
+scale = Vector2(2, 2)
+texture = ExtResource("4_7getm")
+stretch_mode = 1
+
+[node name="Gear1" type="Sprite2D" parent="ConveyorBelt"]
+position = Vector2(4, 624)
+rotation = 1.03099
+scale = Vector2(2, 2)
+texture = ExtResource("5_6g0iv")
+
+[node name="Gear2" type="Sprite2D" parent="ConveyorBelt"]
+position = Vector2(336, 624)
+rotation = 1.32521
+scale = Vector2(2, 2)
+texture = ExtResource("5_6g0iv")
+
+[node name="Gear3" type="Sprite2D" parent="ConveyorBelt"]
+position = Vector2(368, 624)
+rotation = 1.03099
+scale = Vector2(2, 2)
+texture = ExtResource("5_6g0iv")
+
+[node name="Gear4" type="Sprite2D" parent="ConveyorBelt"]
+position = Vector2(720, 624)
+rotation = 1.32521
+scale = Vector2(2, 2)
+texture = ExtResource("5_6g0iv")
+
+[node name="Gear5" type="Sprite2D" parent="ConveyorBelt"]
+position = Vector2(752, 624)
+rotation = 1.03099
+scale = Vector2(2, 2)
+texture = ExtResource("5_6g0iv")
+
+[node name="PlayerSpawner0" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1280, 128)
+
+[node name="PlayerSpawner1" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1256, 512)
+
+[node name="PlayerSpawner2" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1232, 256)
+
+[node name="PlayerSpawner3" type="Marker2D" parent="."]
+z_index = -2
+z_as_relative = false
+position = Vector2(1208, 384)
+
+[node name="PwrupSpawner0" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 128)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner1" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 192)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner2" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 256)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner3" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 320)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner4" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 384)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner5" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 448)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="PwrupSpawner6" type="Sprite2D" parent="." groups=["pwrupSpawners"]]
+z_index = -2
+z_as_relative = false
+position = Vector2(1600, 512)
+scale = Vector2(2, 2)
+texture = ExtResource("9_jlm4g")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape1" type="CollisionShape2D" parent="Walls"]
+position = Vector2(896, -16)
+shape = SubResource("RectangleShape2D_bphac")
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(896, 672)
+shape = SubResource("RectangleShape2D_m5cit")
+
+[connection signal="area_entered" from="ConveyorBelt" to="MapController" method="_on_conveyor_belt_area_entered"]
+[connection signal="area_exited" from="ConveyorBelt" to="MapController" method="_on_conveyor_belt_area_exited"]
+[connection signal="body_entered" from="ConveyorBelt" to="MapController" method="_on_conveyor_belt_body_entered"]
+[connection signal="body_exited" from="ConveyorBelt" to="MapController" method="_on_conveyor_belt_body_exited"]

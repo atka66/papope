@@ -1,46 +1,32 @@
 extends Node2D
 
-export(bool) var harmful = true
-export(int) var shakePwr = 0
-var originPlayerId
+@export var harmful: bool = true
+@export var shakePwr: int = 0
+@export var originPlayerId: int = 0
 
+# Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.shakeScreen(shakePwr)
-	$BigBoom.emitting = true
-	$Smoke.emitting = true
-	$Shards.emitting = true
-	if harmful:
-		var fullDmg = 0
-		for player in get_tree().get_nodes_in_group('players'):
-			var dist = position.distance_to(player.position)
-			if dist < 150:
-				var power = 150 - dist;
-				player.apply_central_impulse(position.direction_to(player.position) * power * 10)
-				var dmg = power / 1.5
-				if player.wouldRighteouslyBeHitBy(originPlayerId):
-					fullDmg += dmg
-				player.hurt(dmg)
-				if player.playerId != originPlayerId && Global.playersPerks[originPlayerId].has(Global.PerkEnum.VAMPIRE):
-					Global.getPlayerNode(originPlayerId).heal(dmg)
-				if player.wasJustKilled(player):
-					player.die(Global.DeathEnum.EXPLOSION)
-					if !player.isTeammate(originPlayerId):
-						Global.addKill(originPlayerId)
-		Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, fullDmg)
-		for destructible in get_tree().get_nodes_in_group('destructible'):
-			var dist = position.distance_to(destructible.global_position)
-			if dist < 150:
-				destructible.destroyWithParticles(position.direction_to(destructible.global_position) * 30)
-		for particle in get_tree().get_nodes_in_group('destructionparticle'):
-			var dist = position.distance_to(particle.global_position)
-			if dist < 150:
-				particle.impulse(position.direction_to(particle.global_position) * 150)
-		for cactus in get_tree().get_nodes_in_group('cacti'):
-			var dist = position.distance_to(cactus.position)
-			if dist < 150:
-				cactus.get_node('Anim').play('hit')
-	$Audio.stream = Res.AudioExplode[randi() % len(Res.AudioExplode)]
+	$Smoke.restart()
+	$BigBoom.restart()
+	$Shards.restart()
+	$Audio.stream = Res.AudioExplosion.pick_random()
 	$Audio.play()
+	
+	if harmful:
+		var accountableDmg = 0
+		for player in get_tree().get_nodes_in_group('players'):
+			var dist: float = position.distance_to(player.position)
+			if dist < 300.0:
+				var power: float = 300.0 - dist
+				player.apply_central_impulse(position.direction_to(player.position) * power * 10)
+				var dmg: float = power / 3.0
+				if player.isRighteouslyHitBy(originPlayerId):
+					accountableDmg += dmg
+				player.hurt(dmg, originPlayerId)
+				if player.isJustKilled():
+					player.die(Global.DeathEnum.EXPLOSION)
+		Global.incrementStat(originPlayerId, Global.StatEnum.DYN_DMG, accountableDmg)
 
 func _process(delta):
 	if !$BigBoom.emitting && !$Smoke.emitting && !$Shards.emitting:
