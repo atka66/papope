@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="1_k2qbb"]
 [ext_resource type="Script" path="res://objects/game/hud/Hud.gd" id="1_sv67i"]
-[ext_resource type="Texture2D" uid="uid://dkw2b0pnwpugk" path="res://sprites/game/hud/hud.png" id="2_05hp3"]
 [ext_resource type="Texture2D" uid="uid://u1ukb7vraab2" path="res://sprites/game/hud/hud_revolver_drum.png" id="4_jks62"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_u57dk"]
 [ext_resource type="Texture2D" uid="uid://drtx8a3qwxbd7" path="res://sprites/game/hud/hud_revolver_ammo.png" id="5_gprcb"]
@@ -64,8 +63,25 @@ tracks/1/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_eqjci"]
+resource_name = "die"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container/ShakeContainer/HudPolygon:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.02, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r51xx"]
 _data = {
+"die": SubResource("Animation_eqjci"),
 "fromleft": SubResource("Animation_8p6r6"),
 "fromright": SubResource("Animation_wxcsu")
 }
@@ -398,16 +414,6 @@ texture = ExtResource("6_8u23c")
 hframes = 4
 frame = 3
 
-[node name="FaceBg" type="Polygon2D" parent="Container/ShakeContainer"]
-position = Vector2(64, 32)
-polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
-
-[node name="Face" type="Sprite2D" parent="Container/ShakeContainer"]
-position = Vector2(64, 32)
-scale = Vector2(2, 2)
-texture = ExtResource("1_k2qbb")
-hframes = 7
-
 [node name="HpBarBg" type="Polygon2D" parent="Container/ShakeContainer"]
 position = Vector2(34, 64)
 color = Color(0, 0, 0, 1)
@@ -440,10 +446,19 @@ libraries = {
 }
 autoplay = "flicker"
 
-[node name="Hud" type="Sprite2D" parent="Container/ShakeContainer"]
+[node name="FaceBg" type="Polygon2D" parent="Container/ShakeContainer"]
+position = Vector2(64, 32)
+polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[node name="Face" type="Sprite2D" parent="Container/ShakeContainer"]
+position = Vector2(64, 32)
 scale = Vector2(2, 2)
-texture = ExtResource("2_05hp3")
-centered = false
+texture = ExtResource("1_k2qbb")
+hframes = 7
+
+[node name="HudPolygon" type="Polygon2D" parent="Container/ShakeContainer"]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 80, 0, 48, 32, 16, 32, 0, 96, 0, 96, 62, 94, 62, 94, 2, 34, 2, 34, 62, 96, 62, 96, 64, 48, 64, 34, 78, 208, 78, 222, 64, 96, 64, 96, 62, 224, 62, 224, 80)
 
 [node name="ScoreLabel" parent="Container/ShakeContainer" instance=ExtResource("4_u57dk")]
 position = Vector2(16, 62)

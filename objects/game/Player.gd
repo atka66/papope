@@ -203,6 +203,8 @@ func _process(delta):
 			if hp < 1:
 				updateColor(Global.TEAM_COLORS[4])
 				alive = false
+				if hud:
+					hud.die()
 				$AudioChickenIdle.stop()
 				
 				if isFallingIntoWater:

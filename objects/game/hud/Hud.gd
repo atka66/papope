@@ -167,3 +167,6 @@ func spawnPerkIcons() -> void:
 		var x = 2 + (i * 34)
 		icon.position = Vector2(x, 82)
 		$Container/ShakeContainer.add_child(icon)
+
+func die() -> void:
+	$Anim.play('die')
