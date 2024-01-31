@@ -9,7 +9,7 @@ var MusicNode: Node
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 @export var DEBUG = OS.is_debug_build()
 
-const VERSION = '1.4.1 beta'
+const VERSION = '1.4.1'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
@@ -180,7 +180,7 @@ func disconnectPlayer(id: int) -> void:
 	playersConnected[id] = false
 	leavePlayer(id)
 	if get_tree().get_current_scene().get_name() != 'Lobby':
-		get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
+		goToLobby()
 
 func joinPlayer(id: int, silent: bool) -> void:
 	playersJoined[id] = true
@@ -207,6 +207,9 @@ func initPlayerStats() -> void:
 				Global.StatEnum.PELLETS: 0, Global.StatEnum.GHOST_KILL: 0
 			}
 		)
+
+func goToLobby() -> void:
+	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
 
 func goToMap() -> void:
 	if getWinnerTeamByScore() < 0:

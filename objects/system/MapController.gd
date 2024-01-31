@@ -42,7 +42,7 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("quit"):
-		get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
+		Global.goToLobby()
 	if Global.DEBUG:
 		if Input.is_action_just_pressed("test1"): 
 			get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
