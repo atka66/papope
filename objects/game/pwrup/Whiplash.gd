@@ -5,7 +5,7 @@ var maxLength: int = 192
 @export var targetNorm: Vector2
 
 func _ready():
-	if Global.MapControllerNode.isDisco:
+	if Global.MapControllerNode.isNightclub:
 		$Container/WhipSprite.modulate = Color.BLACK
 
 	if Global.playersPerks[origin.playerId].has(Global.PerkEnum.LONG_ARMS):

@@ -5,7 +5,7 @@ extends Area2D
 var conveyed: bool = false
 
 func _ready():
-	if Global.MapControllerNode.isDisco:
+	if Global.MapControllerNode.isNightclub:
 		$Sprite.modulate = Color.BLACK
 
 func _process(delta):

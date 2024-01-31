@@ -26,8 +26,9 @@ var frictionCustom: float = 0.1
 var inputCd: bool = false
 
 func _ready():
-	if !Lobby && Global.MapControllerNode.isDisco:
+	if !Lobby && Global.MapControllerNode.isNightclub:
 		$BodyParts/Face.modulate = Color.BLACK
+		$Crown.modulate = Color.BLACK
 		$LookLine.z_as_relative = false
 		$LookLine.z_index = 3
 		$Crosshairs.z_as_relative = false
@@ -333,10 +334,11 @@ func getTrapped(originPlayerId: int) -> void:
 		Global.incrementStat(originPlayerId, Global.StatEnum.TRP_HIT, 1)
 	if isJustKilled():
 		die(Global.DeathEnum.TRAP)
-		if isTeammate(originPlayerId):
-			Global.registerAchievement(originPlayerId, Global.AchiEnum.TRAITOR)
-		else:
-			Global.addKill(originPlayerId)
+		if playerId != originPlayerId:
+			if isTeammate(originPlayerId):
+				Global.registerAchievement(originPlayerId, Global.AchiEnum.TRAITOR)
+			else:
+				Global.addKill(originPlayerId)
 	if alive && playerId == originPlayerId:
 		Global.registerAchievement(playerId, Global.AchiEnum.CARELESS)
 	trapped = true
@@ -405,7 +407,7 @@ func hurt(damage: int, inflictorPlayerId) -> void:
 		else:
 			Global.spawnFallingLabel(str(int(actualDamage)), global_position, Color.TOMATO, fallingMessageSize)
 			hp -= actualDamage
-			if inflictorPlayerId != null && Global.playersPerks[inflictorPlayerId].has(Global.PerkEnum.VAMPIRE):
+			if inflictorPlayerId != null && playerId != inflictorPlayerId && Global.playersPerks[inflictorPlayerId].has(Global.PerkEnum.VAMPIRE):
 				Global.getPlayer(inflictorPlayerId).heal(actualDamage)
 			if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN) && actualDamage > 5:
 				emitFeathers(actualDamage)

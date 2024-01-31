@@ -7,9 +7,9 @@ var MapControllerNode: Node2D
 var MusicNode: Node
 
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
-const DEBUG = false
+@export var DEBUG = OS.is_debug_build()
 
-const VERSION = '1.4.0'
+const VERSION = '1.4.1 beta'
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
@@ -225,7 +225,7 @@ func goToMap() -> void:
 		if selectedMap == 'highway': get_tree().change_scene_to_file("res://scenes/maps/MapHighway.tscn")
 		if selectedMap == 'pacman': get_tree().change_scene_to_file("res://scenes/maps/MapPacman.tscn")
 		if selectedMap == 'industrial': get_tree().change_scene_to_file("res://scenes/maps/MapIndustrial.tscn")
-		if selectedMap == 'nightclub': get_tree().change_scene_to_file("res://scenes/maps/MapDisco.tscn")
+		if selectedMap == 'nightclub': get_tree().change_scene_to_file("res://scenes/maps/MapNightclub.tscn")
 	else:
 		get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
 

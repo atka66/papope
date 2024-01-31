@@ -5,7 +5,7 @@ const MAX_LENGTH: int = 5000
 @export var targetNorm: Vector2
 
 func _ready():
-	if Global.MapControllerNode.isDisco:
+	if Global.MapControllerNode.isNightclub:
 		z_as_relative = false
 		z_index = 5
 

@@ -5,7 +5,7 @@ extends RigidBody2D
 @export var throwForce: float
 
 func _ready():
-	if Global.MapControllerNode.isDisco:
+	if Global.MapControllerNode.isNightclub:
 		$Container/Sprite.modulate = Color.BLACK
 		$Container/Smoke.z_as_relative = false
 		$Container/Smoke.z_index = 5

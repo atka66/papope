@@ -3,7 +3,7 @@ extends Node2D
 var spawners: Array[Node2D]
 var determRandom: RandomNumberGenerator
 
-var isDisco: bool = false
+var isNightclub: bool = false
 
 func _ready():
 	determRandom = RandomNumberGenerator.new()
@@ -17,7 +17,7 @@ func _ready():
 	
 	Global.MusicNode.play(Global.selectedMap)
 	
-	isDisco = Global.selectedMap == 'nightclub'
+	isNightclub = Global.selectedMap == 'nightclub'
 	
 	for child in get_parent().get_children():
 		if child.is_in_group("pwrupSpawners"):

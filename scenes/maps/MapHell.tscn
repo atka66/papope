@@ -1,18 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://du5e0np6hdr02"]
+[gd_scene load_steps=11 format=3 uid="uid://du5e0np6hdr02"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_y0jny"]
-[ext_resource type="Shader" path="res://shaders/playzone/heat.gdshader" id="2_egx1i"]
 [ext_resource type="AudioStream" uid="uid://b2bwgllix1e8s" path="res://audio/sfx/ambient/amb_ember.ogg" id="2_fjei8"]
 [ext_resource type="Texture2D" uid="uid://cptw0ye1bvw57" path="res://sprites/bg/hell.png" id="2_nwqmd"]
 [ext_resource type="TileSet" uid="uid://ces1lw4u4u8av" path="res://resources/tileset_hell.tres" id="3_8wd21"]
 [ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="3_jjkqp"]
 [ext_resource type="Shader" path="res://shaders/hot.gdshader" id="5_8wf18"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w4cj3"]
-shader = ExtResource("2_egx1i")
-shader_parameter/strength = 0.0007
-shader_parameter/frequency = 100.0
-shader_parameter/speed = 7.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_61gpk"]
 shader = ExtResource("5_8wf18")
@@ -37,22 +30,13 @@ stream = ExtResource("2_fjei8")
 autoplay = true
 bus = &"sfx"
 
-[node name="ShaderCanvas" type="CanvasLayer" parent="."]
-layer = 80
-
-[node name="ShaderRect" type="ColorRect" parent="ShaderCanvas"]
-material = SubResource("ShaderMaterial_w4cj3")
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 1488.0
-offset_bottom = 896.0
-
 [node name="BgNode" type="Node2D" parent="."]
 z_index = -55
 z_as_relative = false
 scale = Vector2(2, 2)
 
 [node name="TextureRect" type="TextureRect" parent="BgNode"]
+modulate = Color(0.752941, 0.752941, 0.752941, 1)
 offset_left = -128.0
 offset_top = -128.0
 offset_right = 832.0
