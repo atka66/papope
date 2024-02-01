@@ -62,7 +62,7 @@ _data = {
 "spin": SubResource("Animation_1turc")
 }
 
-[node name="MapDisco" type="Node2D"]
+[node name="MapNightclub" type="Node2D"]
 
 [node name="MapController" parent="." instance=ExtResource("1_okncr")]
 

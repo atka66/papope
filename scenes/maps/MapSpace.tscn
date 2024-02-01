@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://j5rsgflce7ak"]
+[gd_scene load_steps=16 format=3 uid="uid://j5rsgflce7ak"]
 
 [ext_resource type="PackedScene" uid="uid://3256wkq2cd6w" path="res://objects/system/MapController.tscn" id="1_h08s3"]
+[ext_resource type="Texture2D" uid="uid://c8kbmpe5eeywg" path="res://resources/texture_nebula.tres" id="2_vfpay"]
 [ext_resource type="TileSet" uid="uid://6i4o3v5nmj85" path="res://resources/tileset_space.tres" id="4_lq3qj"]
 [ext_resource type="Texture2D" uid="uid://d042hli2dlcse" path="res://sprites/game/pwrup/spawner.png" id="5_rnulo"]
 [ext_resource type="PackedScene" uid="uid://bgden6gwe6aig" path="res://objects/game/obstacle/SpaceRay.tscn" id="5_xr6dn"]
@@ -27,23 +28,6 @@ tracks/0/keys = {
 _data = {
 "movenebula": SubResource("Animation_ifg7f")
 }
-
-[sub_resource type="Gradient" id="Gradient_ydlkk"]
-offsets = PackedFloat32Array(0, 0.3, 0.6, 0.8, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.0313726, 0, 0.12549, 1, 0.0627451, 0, 0.501961, 1, 0.501961, 0.0627451, 0.627451, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_w5g4j"]
-seed = 666
-frequency = 0.0015
-fractal_type = 2
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n1a5d"]
-width = 384
-height = 384
-seamless = true
-seamless_blend_skirt = 1.0
-color_ramp = SubResource("Gradient_ydlkk")
-noise = SubResource("FastNoiseLite_w5g4j")
 
 [sub_resource type="Gradient" id="Gradient_xc2mu"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
@@ -95,7 +79,7 @@ scale = Vector2(2, 2)
 offset_left = -384.0
 offset_right = 384.0
 offset_bottom = 384.0
-texture = SubResource("NoiseTexture2D_n1a5d")
+texture = ExtResource("2_vfpay")
 stretch_mode = 1
 
 [node name="Stars" type="CPUParticles2D" parent="BgCanvas"]

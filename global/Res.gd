@@ -1,6 +1,6 @@
 extends Node
 
-@onready var ShaderLoaderObject = preload("res://objects/system/ShaderLoader.tscn")
+@onready var ShaderCacheObject = preload("res://objects/system/ShaderCache.tscn")
 
 @onready var CustomLabelObject = preload("res://objects/system/label/CustomLabel.tscn")
 @onready var RoundEndBannerObject = preload("res://objects/system/label/RoundEndBanner.tscn")

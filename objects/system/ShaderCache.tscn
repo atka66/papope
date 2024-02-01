@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dhr6j1he1nblp"]
+[gd_scene load_steps=16 format=3 uid="uid://dhr6j1he1nblp"]
 
 [ext_resource type="Shader" path="res://shaders/playzone/crt.gdshader" id="1_gwv30"]
 [ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_u737a"]
@@ -7,6 +7,7 @@
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="5_ic7i2"]
 [ext_resource type="Shader" path="res://shaders/poster.gdshader" id="6_tmjih"]
 [ext_resource type="Shader" path="res://shaders/shine.gdshader" id="7_n33xl"]
+[ext_resource type="Texture2D" uid="uid://c8kbmpe5eeywg" path="res://resources/texture_nebula.tres" id="8_vynec"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k1ttc"]
 shader = ExtResource("1_gwv30")
@@ -44,7 +45,7 @@ shader = ExtResource("6_tmjih")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v4a38"]
 shader = ExtResource("7_n33xl")
 
-[node name="ShaderLoader" type="Node2D"]
+[node name="ShaderCache" type="Node2D"]
 
 [node name="Crt" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_k1ttc")
@@ -53,30 +54,52 @@ offset_bottom = 64.0
 
 [node name="Circle" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_c3081")
-offset_right = 64.0
+offset_left = 64.0
+offset_right = 128.0
 offset_bottom = 64.0
 
 [node name="CircleCutout" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_e4w0u")
-offset_right = 64.0
+offset_left = 128.0
+offset_right = 192.0
 offset_bottom = 64.0
 
 [node name="Hot" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_2nv7e")
-offset_right = 64.0
+offset_left = 192.0
+offset_right = 256.0
 offset_bottom = 64.0
 
 [node name="Outline" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_plkw4")
+offset_top = 64.0
 offset_right = 64.0
-offset_bottom = 64.0
+offset_bottom = 128.0
 
 [node name="Poster" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_fec1p")
-offset_right = 64.0
-offset_bottom = 64.0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 128.0
+offset_bottom = 128.0
 
 [node name="Shine" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_v4a38")
-offset_right = 64.0
-offset_bottom = 64.0
+offset_left = 128.0
+offset_top = 64.0
+offset_right = 192.0
+offset_bottom = 128.0
+
+[node name="Nebula" type="TextureRect" parent="."]
+offset_left = 192.0
+offset_top = 64.0
+offset_right = 256.0
+offset_bottom = 128.0
+texture = ExtResource("8_vynec")
+
+[node name="Curtain" type="ColorRect" parent="."]
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 1424.0
+offset_bottom = 832.0
+color = Color(0, 0, 0, 1)
