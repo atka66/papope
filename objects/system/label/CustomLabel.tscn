@@ -3,6 +3,46 @@
 [ext_resource type="Script" path="res://objects/system/label/CustomLabel.gd" id="1_1kkh4"]
 [ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="3_8xr18"]
 
+[sub_resource type="Animation" id="Animation_wmyj0"]
+resource_name = "boom_in"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Container:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0872665, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Container:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_6obav"]
 resource_name = "float_in"
 length = 0.2
@@ -188,46 +228,6 @@ tracks/2/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_wmyj0"]
-resource_name = "boom_in"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Container:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(2, 2), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Container:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0872665, 0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Container:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yst4f"]
 _data = {
 "boom_in": SubResource("Animation_wmyj0"),
@@ -237,9 +237,9 @@ _data = {
 "wobble": SubResource("Animation_65ygq")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_yse2h"]
+[sub_resource type="LabelSettings" id="LabelSettings_3dcop"]
 font = ExtResource("3_8xr18")
-font_size = 20
+font_size = 100
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
@@ -255,13 +255,14 @@ libraries = {
 }
 
 [node name="Container" type="Node2D" parent="."]
+visible = false
 
 [node name="Label" type="Label" parent="Container"]
 texture_filter = 2
 offset_right = 86.0
 offset_bottom = 11.0
 text = "sample-text"
-label_settings = SubResource("LabelSettings_yse2h")
+label_settings = SubResource("LabelSettings_3dcop")
 uppercase = true
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
