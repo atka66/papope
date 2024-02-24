@@ -237,9 +237,9 @@ _data = {
 "wobble": SubResource("Animation_65ygq")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_3dcop"]
+[sub_resource type="LabelSettings" id="LabelSettings_18o6m"]
 font = ExtResource("3_8xr18")
-font_size = 100
+font_size = 10
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
@@ -262,7 +262,7 @@ texture_filter = 2
 offset_right = 86.0
 offset_bottom = 11.0
 text = "sample-text"
-label_settings = SubResource("LabelSettings_3dcop")
+label_settings = SubResource("LabelSettings_18o6m")
 uppercase = true
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
