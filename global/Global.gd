@@ -7,9 +7,10 @@ var MapControllerNode: Node2D
 var MusicNode: Node
 
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
-@export var DEBUG = OS.is_debug_build()
+@onready var DEBUG = OS.is_debug_build()
 
-const VERSION = '1.4.1'
+@onready var VERSION = ProjectSettings.get('application/config/version')
+
 const TEAM_COLORS = {
 	0: Color(0.9, 0.2, 0.2),
 	1: Color(0, 0.3, 0.7),
