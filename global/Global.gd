@@ -6,6 +6,10 @@ var CameraNode: Camera2D
 var MapControllerNode: Node2D
 var MusicNode: Node
 
+var disableHotkeys: bool = false
+
+const FEEDBACK_URL = "https://atka-commons-api.alwaysdata.net/feedback"
+
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 @onready var DEBUG = OS.is_debug_build()
 
@@ -164,15 +168,16 @@ func _joy_connection_changed(id: int, connected: bool) -> void:
 			disconnectPlayer(id)
 
 func _input(event):
-	if Input.is_action_just_pressed("fullscreen"):
-		if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-		else:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	if Input.is_action_just_pressed("mute"):
-		var bus = AudioServer.get_bus_index("Master")
-		var mute = AudioServer.is_bus_mute(bus)
-		AudioServer.set_bus_mute(bus, !mute)
+	if !disableHotkeys:
+		if Input.is_action_just_pressed("fullscreen"):
+			if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
+				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+			else:
+				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		if Input.is_action_just_pressed("mute"):
+			var bus = AudioServer.get_bus_index("Master")
+			var mute = AudioServer.is_bus_mute(bus)
+			AudioServer.set_bus_mute(bus, !mute)
 
 func connectPlayer(id: int) -> void:
 	playersConnected[id] = true

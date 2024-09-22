@@ -1,5 +1,11 @@
 extends Node2D
 
+@onready var _feedbackAnim = $MenuCanvas/FeedbackHolder/Anim
+@onready var _feedbackForm = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer
+@onready var _feedbackEdit = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit
+@onready var _feedbackFinish = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/FinishLabel
+@onready var _audioSubmit = $MenuCanvas/FeedbackHolder/AudioSubmit
+
 var countdownNode = null
 
 func _ready():
@@ -28,7 +34,7 @@ func _process(delta):
 func _input(event):
 	if event.is_action_pressed("quit") and !OS.has_feature("web"):
 		get_tree().quit()
-	if Global.DEBUG: 
+	if Global.DEBUG && !Global.disableHotkeys: 
 		if event.is_action_pressed("test1"): 
 			for i in range(4):
 				if !Global.playersConnected[i]:
@@ -80,3 +86,44 @@ func stopCountdown() -> void:
 
 func restartMovingBackground() -> void:
 	$MovingBackground.restartMovingBackground(null)
+
+func _on_feedback_button_toggled(toggled_on):
+	if toggled_on:
+		_feedbackEdit.text = ""
+		feedbackToggle(true)
+		_feedbackAnim.play("appear")
+	else:
+		_feedbackAnim.play_backwards("appear")
+
+func feedbackToggle(toggled_on: bool):
+	_feedbackForm.visible = toggled_on
+	_feedbackFinish.visible = !toggled_on
+
+
+func _on_submit_button_pressed():
+	if _feedbackEdit.text.length() < 1:
+		return
+
+	var explosion = Res.ExplosionAnimObject.instantiate()
+	explosion.position = $Camera.position + get_viewport().get_mouse_position()
+	explosion.harmful = false
+	explosion.shakePwr = 30
+	Global.addToScene(explosion)
+
+	feedbackToggle(false)
+	submitFeedback(_feedbackEdit.text)
+
+func submitFeedback(feedback: String):
+	var request = HTTPRequest.new()
+	add_child(request)
+	var body = JSON.stringify({ 'feedback': feedback, 'source': 'PAPOPE' })
+	request.request(Global.FEEDBACK_URL, ["Content-Type: application/json"], HTTPClient.METHOD_POST, body)
+	var response = await request.request_completed
+	request.queue_free()
+
+
+func _on_feedback_edit_focus_entered():
+	Global.disableHotkeys = true
+
+func _on_feedback_edit_focus_exited():
+	Global.disableHotkeys = false
