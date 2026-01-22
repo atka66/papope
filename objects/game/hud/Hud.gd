@@ -33,6 +33,7 @@ func _ready():
 	else:
 		$Container/ShakeContainer/Face.frame = Global.playersSkin[player.playerId]
 
+# TODO account delta
 func _process(delta):
 	handleHpBar()
 	handleShake()

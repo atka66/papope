@@ -37,9 +37,10 @@ func _process(delta):
 					randomNode = get_parent().get_node('GhostPath/Node' + str(randomNodeId))
 				candidateNode = randomNode
 			prevNode = destNode
+			
 			destNode = candidateNode
 		else:
-			position = position.move_toward(destNode.position, speed)
+			position = position.move_toward(destNode.position, speed * delta)
 
 func _input(event):
 	if Global.DEBUG:

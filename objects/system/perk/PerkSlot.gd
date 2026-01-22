@@ -11,6 +11,7 @@ func _ready():
 	$Sprite.hframes = len(Global.PerkEnum) + 1
 	$Sprite.frame = frame
 
+# TODO account delta
 func _process(delta):
 	if falling:
 		velocity.y += 1

@@ -7,6 +7,7 @@ func _ready():
 	velocity = Vector2(randf_range(-4.0, 4.0), randf_range(-15.0, -20.0))
 	rotation = velocity.x / 10
 
+# TODO account delta
 func _process(delta):
 	position += velocity
 	velocity.y += gravity

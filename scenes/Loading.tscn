@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dy5ovbuh05iji"]
 
-[ext_resource type="Script" path="res://scenes/Loading.gd" id="1_vlr0y"]
+[ext_resource type="Script" uid="uid://c8py22k3bdy1s" path="res://scenes/Loading.gd" id="1_vlr0y"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="1_w40uk"]
 
 [sub_resource type="Animation" id="Animation_u56m1"]
@@ -73,7 +73,7 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ljcpk"]
 _data = {
-"loading": SubResource("Animation_u56m1")
+&"loading": SubResource("Animation_u56m1")
 }
 
 [node name="Loading" type="Node2D"]
@@ -96,7 +96,7 @@ alignment = 2
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ljcpk")
+&"": SubResource("AnimationLibrary_ljcpk")
 }
 autoplay = "loading"
 

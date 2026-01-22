@@ -167,7 +167,7 @@ func _joy_connection_changed(id: int, connected: bool) -> void:
 		else:
 			disconnectPlayer(id)
 
-func _input(event):
+func _input(_event):
 	if !disableHotkeys:
 		if Input.is_action_just_pressed("fullscreen"):
 			if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:

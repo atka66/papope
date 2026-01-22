@@ -194,6 +194,7 @@ func dash(axis: Vector2) -> void:
 	dashParticles.emitting = true
 	add_child(dashParticles)
 
+# TODO account delta
 func _process(delta):
 	inputCd = false
 	if Global.MapControllerNode != null:
@@ -231,6 +232,7 @@ func _process(delta):
 					if aliveTeamId != -1:
 						Global.MapControllerNode.endRound(aliveTeamId)
 
+# TODO account delta
 func _physics_process(delta):
 	if !isFallingIntoWater && !inSpace:
 		apply_central_impulse(-linear_velocity * frictionCustom)

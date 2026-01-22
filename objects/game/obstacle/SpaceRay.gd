@@ -1,5 +1,6 @@
 extends Node2D
 
+# TODO account delta
 func _process(delta):
 	if $Phase2.visible:
 		Global.shakeScreen(5)

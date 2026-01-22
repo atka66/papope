@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var fromRight: bool = false
-@export var speed: float = 10.0
+@export var speed: float = 600.0
 
 func _ready():
 	$AudioHorn.stream = Res.AudioCarHorn.pick_random()
@@ -9,14 +9,15 @@ func _ready():
 	$Sprite.flip_h = !fromRight
 
 func _process(delta):
+	var deltaSpeed = delta * speed
 	if fromRight:
 		if position.x < -2000:
 			queue_free()
-		position.x -= speed
+		position.x -= deltaSpeed
 	else:
 		if position.x > 3560:
 			queue_free()
-		position.x += speed
+		position.x += deltaSpeed
 
 func _on_body_entered(body):
 	if body.is_in_group('players'):

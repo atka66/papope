@@ -11,6 +11,7 @@ func _ready():
 	Global.CameraNode = self
 	make_current()
 
+# TODO account delta
 func _process(delta):
 	calculatePlayersOffset()
 	calculateShakeOffset()

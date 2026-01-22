@@ -117,6 +117,7 @@ func distributeAchievements():
 	if len(Global.playersAchievements[playerId]) >= MAX_ACHIEVEMENTS:
 		Global.playersAchievements[playerId].insert(MAX_ACHIEVEMENTS - 1, Global.AchiEnum.AINT_GON_FIT)
 
+# TODO account delta
 func _process(delta):
 	if scoreCurr < score:
 		scoreCurr += ceil((score - scoreCurr) / 3.0)

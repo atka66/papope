@@ -1,12 +1,12 @@
 [gd_scene load_steps=35 format=3 uid="uid://tlfkm8pk6hy7"]
 
-[ext_resource type="Script" path="res://objects/game/Player.gd" id="1_srq66"]
-[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_uodpr"]
+[ext_resource type="Script" uid="uid://rtb5r2ktpxe8" path="res://objects/game/Player.gd" id="1_srq66"]
+[ext_resource type="Shader" uid="uid://dmuosjg3avx6j" path="res://shaders/circle.gdshader" id="2_uodpr"]
 [ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="3_gq6vx"]
 [ext_resource type="Texture2D" uid="uid://m1y325q5dmor" path="res://sprites/game/player/crown.png" id="4_ep5y4"]
 [ext_resource type="Texture2D" uid="uid://c3u5ie7th23lt" path="res://sprites/game/player/lock.png" id="5_83h66"]
-[ext_resource type="Shader" path="res://shaders/shine.gdshader" id="6_ii0ia"]
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="7_gom1r"]
+[ext_resource type="Shader" uid="uid://it6rot0yjddk" path="res://shaders/shine.gdshader" id="6_ii0ia"]
+[ext_resource type="Shader" uid="uid://cw2hq5o3fnqre" path="res://shaders/outline.gdshader" id="7_gom1r"]
 [ext_resource type="AudioStream" uid="uid://chl7pwr2aquq0" path="res://audio/sfx/pwrup/shield_start.ogg" id="8_eksu2"]
 [ext_resource type="AudioStream" uid="uid://buth7w23vc0am" path="res://audio/sfx/pwrup/shield_end.ogg" id="9_0h1ux"]
 [ext_resource type="AudioStream" uid="uid://6g140bpk81ed" path="res://audio/sfx/player/hurt/hurt_scare.ogg" id="10_38n2i"]
@@ -85,8 +85,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vn70s"]
 _data = {
-"heal": SubResource("Animation_xuqdy"),
-"hurt": SubResource("Animation_qf4hf")
+&"heal": SubResource("Animation_xuqdy"),
+&"hurt": SubResource("Animation_qf4hf")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d0ghp"]
@@ -126,7 +126,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mps8w"]
 _data = {
-"shielded": SubResource("Animation_bm1mf")
+&"shielded": SubResource("Animation_bm1mf")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_finae"]
@@ -169,7 +169,7 @@ gradient = SubResource("Gradient_5726i")
 width = 2
 
 [sub_resource type="Curve" id="Curve_rhgma"]
-min_value = -1.0
+_limits = [-1.0, 1.0, 0.0, 1.0]
 _data = [Vector2(0, 0.0109891), 0.0, 0.0, 0, 0, Vector2(0.397196, 0.186813), 0.0, 0.0, 0, 0, Vector2(0.803738, -0.186813), 0.0, 0.0, 0, 0, Vector2(1, 0.296703), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -187,8 +187,8 @@ collision_mask = 75
 physics_material_override = SubResource("PhysicsMaterial_po7vx")
 gravity_scale = 0.0
 lock_rotation = true
-max_contacts_reported = 2
 contact_monitor = true
+max_contacts_reported = 2
 script = ExtResource("1_srq66")
 
 [node name="BodyParts" type="CanvasGroup" parent="."]
@@ -218,7 +218,7 @@ one_shot = true
 
 [node name="Anim" type="AnimationPlayer" parent="Hurt"]
 libraries = {
-"": SubResource("AnimationLibrary_vn70s")
+&"": SubResource("AnimationLibrary_vn70s")
 }
 autoplay = "hurt"
 
@@ -233,7 +233,7 @@ offset_bottom = 32.0
 
 [node name="Anim" type="AnimationPlayer" parent="Shield"]
 libraries = {
-"": SubResource("AnimationLibrary_mps8w")
+&"": SubResource("AnimationLibrary_mps8w")
 }
 
 [node name="Circle" type="ColorRect" parent="Shield"]
@@ -360,9 +360,9 @@ bus = &"sfx"
 z_index = -1
 z_as_relative = false
 position = Vector2(0, 8)
+texture = SubResource("GradientTexture1D_f86wn")
 lifetime = 0.4
 lifetime_randomness = 0.1
-texture = SubResource("GradientTexture1D_f86wn")
 direction = Vector2(0, -1)
 spread = 25.0
 gravity = Vector2(0, -200)

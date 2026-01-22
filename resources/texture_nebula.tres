@@ -12,7 +12,7 @@ fractal_type = 2
 [resource]
 width = 384
 height = 384
+noise = SubResource("FastNoiseLite_a2rq5")
+color_ramp = SubResource("Gradient_ydlkk")
 seamless = true
 seamless_blend_skirt = 1.0
-color_ramp = SubResource("Gradient_ydlkk")
-noise = SubResource("FastNoiseLite_a2rq5")
