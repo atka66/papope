@@ -105,7 +105,7 @@ func _on_submit_button_pressed():
 		return
 
 	var explosion = Res.ExplosionAnimObject.instantiate()
-	explosion.position = $Camera.position + get_viewport().get_mouse_position()
+	explosion.position = $Camera.offset + get_viewport().get_mouse_position()
 	explosion.harmful = false
 	explosion.shakePwr = 30
 	Global.addToScene(explosion)

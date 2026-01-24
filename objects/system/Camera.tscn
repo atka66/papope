@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bcm1wt3awqg18"]
 
-[ext_resource type="Script" path="res://objects/system/Camera.gd" id="1_u5uut"]
+[ext_resource type="Script" uid="uid://e57fiowylygp" path="res://objects/system/Camera.gd" id="1_u5uut"]
 
 [node name="Camera" type="Camera2D"]
 anchor_mode = 0

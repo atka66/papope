@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=3 uid="uid://cgjwfivoc8wki"]
 
-[ext_resource type="Script" path="res://scenes/Lobby.gd" id="1_i8rer"]
+[ext_resource type="Script" uid="uid://cr7n8x2odisa0" path="res://scenes/Lobby.gd" id="1_i8rer"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_pbfn1"]
 [ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="3_5jgbx"]
 [ext_resource type="PackedScene" uid="uid://co6dqvdhklpn5" path="res://objects/lobby/PlayerSlot.tscn" id="3_32tqe"]
@@ -34,7 +34,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iknuv"]
 _data = {
-"fade_in": SubResource("Animation_6qw7i")
+&"fade_in": SubResource("Animation_6qw7i")
 }
 
 [sub_resource type="Animation" id="Animation_0qv0v"]
@@ -68,7 +68,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mlrgf"]
 _data = {
-"warn": SubResource("Animation_0qv0v")
+&"warn": SubResource("Animation_0qv0v")
 }
 
 [sub_resource type="Animation" id="Animation_t30w8"]
@@ -91,7 +91,22 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_llvxc"]
 _data = {
-"wobble": SubResource("Animation_t30w8")
+&"wobble": SubResource("Animation_t30w8")
+}
+
+[sub_resource type="Animation" id="Animation_7vwmf"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.91986]
 }
 
 [sub_resource type="Animation" id="Animation_m1sbv"]
@@ -111,25 +126,10 @@ tracks/0/keys = {
 "values": [-1.91986, 0.0872665, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_7vwmf"]
-resource_name = "RESET"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-1.91986]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e7qlh"]
 _data = {
-"RESET": SubResource("Animation_7vwmf"),
-"appear": SubResource("Animation_m1sbv")
+&"RESET": SubResource("Animation_7vwmf"),
+&"appear": SubResource("Animation_m1sbv")
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_c0dxd"]
@@ -152,7 +152,7 @@ script = ExtResource("1_i8rer")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_iknuv")
+&"": SubResource("AnimationLibrary_iknuv")
 }
 autoplay = "fade_in"
 
@@ -183,7 +183,7 @@ position = Vector2(680, 672)
 
 [node name="Anim" type="AnimationPlayer" parent="InitHolder"]
 libraries = {
-"": SubResource("AnimationLibrary_mlrgf")
+&"": SubResource("AnimationLibrary_mlrgf")
 }
 
 [node name="WaitingLabel" parent="InitHolder" instance=ExtResource("4_8wgdj")]
@@ -273,7 +273,7 @@ position = Vector2(680, 16)
 
 [node name="Anim" type="AnimationPlayer" parent="MenuCanvas/TitleHolder"]
 libraries = {
-"": SubResource("AnimationLibrary_llvxc")
+&"": SubResource("AnimationLibrary_llvxc")
 }
 autoplay = "wobble"
 
@@ -310,7 +310,7 @@ rotation = -1.91986
 [node name="Anim" type="AnimationPlayer" parent="MenuCanvas/FeedbackHolder"]
 root_node = NodePath("../FeedbackPanel")
 libraries = {
-"": SubResource("AnimationLibrary_e7qlh")
+&"": SubResource("AnimationLibrary_e7qlh")
 }
 
 [node name="FeedbackPanel" type="PanelContainer" parent="MenuCanvas/FeedbackHolder"]
