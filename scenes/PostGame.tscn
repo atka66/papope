@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://c0cxgyxhm7ecc"]
 
-[ext_resource type="Script" path="res://scenes/PostGame.gd" id="1_irosb"]
+[ext_resource type="Script" uid="uid://btrlv4jf2dg5t" path="res://scenes/PostGame.gd" id="1_irosb"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_5yc4x"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_sy2d7"]
 [ext_resource type="SpriteFrames" uid="uid://bjujoaaro01o3" path="res://resources/label/x.tres" id="4_7akrk"]
@@ -57,7 +57,7 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_51s2y"]
 _data = {
-"auto": SubResource("Animation_hqb4x")
+&"auto": SubResource("Animation_hqb4x")
 }
 
 [node name="PostGame" type="Node2D"]
@@ -66,7 +66,7 @@ script = ExtResource("1_irosb")
 [node name="Anim" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Dim")
 libraries = {
-"": SubResource("AnimationLibrary_51s2y")
+&"": SubResource("AnimationLibrary_51s2y")
 }
 autoplay = "auto"
 

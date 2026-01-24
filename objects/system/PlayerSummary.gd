@@ -4,8 +4,8 @@ const MAX_ACHIEVEMENTS = 8
 
 @export var playerId: int = 0
 var winner = false
-var score = 0
-var scoreCurr = 0
+var score: int = 0
+var scoreCurr: int = 0
 
 func _ready():
 	if not Global.playersJoined[playerId]:
@@ -18,6 +18,13 @@ func _ready():
 		$Container/Face.frame = 6
 	else:
 		$Container/Face.frame = Global.playersSkin[playerId]
+
+# tween to animate score "count-up"
+func tweenScore(countupScore) -> void:
+	$Container/KachingAnim.seek(0)
+	$Container/KachingAnim.play("kaching")
+	var tween = create_tween()
+	tween.tween_property(self, "scoreCurr", countupScore, 0.5).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
 
 func calculateScore() -> void:
 	var points = Global.playersPoints[playerId]
@@ -35,6 +42,7 @@ func calculateScore() -> void:
 	add_child(pointsLabel)
 
 	score += points * 1000
+	tweenScore(score)
 
 func showAchievements() -> void:
 	for i in min(len(Global.playersAchievements[playerId]), MAX_ACHIEVEMENTS):
@@ -57,8 +65,9 @@ func showAchievement(y: int, achievement: Global.AchiEnum) -> void:
 	descriptionLabel.alignment = Control.LayoutPreset.PRESET_CENTER
 	descriptionLabel.animation = 'boom_in'
 	$Container.add_child(descriptionLabel)
+	
 	score += 100
-
+	tweenScore(score)
 
 func finalizePoster(finalizingPlayerId: int) -> void:
 	if playerId == finalizingPlayerId:
@@ -117,10 +126,5 @@ func distributeAchievements():
 	if len(Global.playersAchievements[playerId]) >= MAX_ACHIEVEMENTS:
 		Global.playersAchievements[playerId].insert(MAX_ACHIEVEMENTS - 1, Global.AchiEnum.AINT_GON_FIT)
 
-# TODO account delta
 func _process(delta):
-	if scoreCurr < score:
-		scoreCurr += ceil((score - scoreCurr) / 3.0)
-		if scoreCurr > score:
-			scoreCurr = score
-		$Container/MoneyLabel.setText(str(scoreCurr))
+	$Container/MoneyLabel.setText(str(scoreCurr))

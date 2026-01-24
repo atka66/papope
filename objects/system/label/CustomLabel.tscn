@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bli02m5v875nl"]
 
-[ext_resource type="Script" path="res://objects/system/label/CustomLabel.gd" id="1_1kkh4"]
+[ext_resource type="Script" uid="uid://dx1qlm664w0l" path="res://objects/system/label/CustomLabel.gd" id="1_1kkh4"]
 [ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="3_8xr18"]
 
 [sub_resource type="Animation" id="Animation_wmyj0"]
@@ -230,14 +230,14 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yst4f"]
 _data = {
-"boom_in": SubResource("Animation_wmyj0"),
-"float_in": SubResource("Animation_6obav"),
-"float_out": SubResource("Animation_num1l"),
-"none": SubResource("Animation_rhxnh"),
-"wobble": SubResource("Animation_65ygq")
+&"boom_in": SubResource("Animation_wmyj0"),
+&"float_in": SubResource("Animation_6obav"),
+&"float_out": SubResource("Animation_num1l"),
+&"none": SubResource("Animation_rhxnh"),
+&"wobble": SubResource("Animation_65ygq")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_18o6m"]
+[sub_resource type="LabelSettings" id="LabelSettings_gncyx"]
 font = ExtResource("3_8xr18")
 font_size = 10
 outline_size = 8
@@ -251,18 +251,17 @@ script = ExtResource("1_1kkh4")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_yst4f")
+&"": SubResource("AnimationLibrary_yst4f")
 }
 
 [node name="Container" type="Node2D" parent="."]
-visible = false
 
 [node name="Label" type="Label" parent="Container"]
 texture_filter = 2
 offset_right = 86.0
 offset_bottom = 11.0
 text = "sample-text"
-label_settings = SubResource("LabelSettings_18o6m")
+label_settings = SubResource("LabelSettings_gncyx")
 uppercase = true
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]

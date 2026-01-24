@@ -1,10 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://bkf1p0bddiurc"]
+[gd_scene load_steps=16 format=3 uid="uid://bkf1p0bddiurc"]
 
-[ext_resource type="Script" path="res://objects/system/PlayerSummary.gd" id="1_3cgc4"]
+[ext_resource type="Script" uid="uid://cltbuyb84klwt" path="res://objects/system/PlayerSummary.gd" id="1_3cgc4"]
 [ext_resource type="Texture2D" uid="uid://fxafi38bmclt" path="res://sprites/post/wantedposter.png" id="1_jnuo6"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="2_xcrvs"]
 [ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="3_5kh11"]
-[ext_resource type="Shader" path="res://shaders/poster.gdshader" id="3_yaemd"]
+[ext_resource type="Shader" uid="uid://dwrdknwrmyppu" path="res://shaders/poster.gdshader" id="3_yaemd"]
 
 [sub_resource type="Animation" id="Animation_qefva"]
 resource_name = "anim"
@@ -42,7 +42,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bfyey"]
 _data = {
-"anim": SubResource("Animation_qefva")
+&"anim": SubResource("Animation_qefva")
 }
 
 [sub_resource type="Animation" id="Animation_v4l8c"]
@@ -64,7 +64,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x21bq"]
 _data = {
-"shake": SubResource("Animation_v4l8c")
+&"shake": SubResource("Animation_v4l8c")
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1niiq"]
@@ -78,12 +78,98 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 gradient = SubResource("Gradient_qdyyl")
 width = 64
 
+[sub_resource type="Animation" id="Animation_6eikd"]
+resource_name = "kaching"
+length = 0.2
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DollarLabel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.7, 1.7), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DollarLabel:fontColor")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0.501961, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DollarLabel:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.17453292519943295, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_86ar2"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DollarLabel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DollarLabel:fontColor")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.501961, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DollarLabel:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e3tkk"]
+_data = {
+&"RESET": SubResource("Animation_86ar2"),
+&"kaching": SubResource("Animation_6eikd")
+}
+
 [node name="PlayerSummary" type="Node2D"]
 script = ExtResource("1_3cgc4")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_bfyey")
+&"": SubResource("AnimationLibrary_bfyey")
 }
 autoplay = "anim"
 
@@ -91,7 +177,7 @@ autoplay = "anim"
 
 [node name="Anim" type="AnimationPlayer" parent="Container"]
 libraries = {
-"": SubResource("AnimationLibrary_x21bq")
+&"": SubResource("AnimationLibrary_x21bq")
 }
 
 [node name="Poster" type="Sprite2D" parent="Container"]
@@ -132,3 +218,8 @@ offset_top = 290.0
 offset_right = 264.0
 offset_bottom = 306.0
 texture = SubResource("GradientTexture1D_htyuy")
+
+[node name="KachingAnim" type="AnimationPlayer" parent="Container"]
+libraries = {
+&"": SubResource("AnimationLibrary_e3tkk")
+}
