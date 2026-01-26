@@ -34,7 +34,7 @@ func _process(delta):
 func _input(event):
 	if event.is_action_pressed("quit") and !OS.has_feature("web"):
 		get_tree().quit()
-	if Global.DEBUG && !Global.disableHotkeys: 
+	if Global.DEBUG && Global.enableHotkeys: 
 		if event.is_action_pressed("test1"): 
 			for i in range(4):
 				if !Global.playersConnected[i]:
@@ -123,7 +123,7 @@ func submitFeedback(feedback: String):
 
 
 func _on_feedback_edit_focus_entered():
-	Global.disableHotkeys = true
+	Global.enableHotkeys = false
 
 func _on_feedback_edit_focus_exited():
-	Global.disableHotkeys = false
+	Global.enableHotkeys = true

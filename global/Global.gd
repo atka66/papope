@@ -6,9 +6,9 @@ var CameraNode: Camera2D
 var MapControllerNode: Node2D
 var MusicNode: Node
 
-var disableHotkeys: bool = false
+var enableHotkeys: bool = true
 
-const FEEDBACK_URL = "https://atka-commons-api.alwaysdata.net/feedback"
+const FEEDBACK_URL = "https://atka-commons-api.alwaysdata.net/feedback" # TODO move
 
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 @onready var DEBUG = OS.is_debug_build()
@@ -47,8 +47,8 @@ const ACHIEVEMENTS = {
 	AchiEnum.HUTS_HUTS : ['huts-huts', 'accurate with the whip'], # whip accuracy over 75%
 	AchiEnum.DAREDEVIL : ['daredevil', 'won a round with low health'], # win a round with <= 10% of health
 	AchiEnum.GUERRILLA : ['guerrilla', 'well placed traps'], # sprung traps (on enemy) / laid traps > 75%
-	AchiEnum.CARELESS : ['careless', 'stepped in his own trap'], # sprung his own trap
-	AchiEnum.TRAITOR : ['traitor', 'killed his own teammate'], # killed his own teammate with revolver, dynamite or whip
+	AchiEnum.CARELESS : ['careless', 'stepped in their own trap'], # sprung his own trap
+	AchiEnum.TRAITOR : ['traitor', 'killed their own teammate'], # killed his own teammate with revolver, dynamite or whip
 	AchiEnum.NO_REFUNDS : ['no refunds', 'shield on, still died'], # die while having active shield
 	AchiEnum.WAKA_WAKA : ['waka waka', 'ate a lot of pellets'], # ate a lot of pellets
 	AchiEnum.GHOSTBUSTER : ['ghostbuster', 'killed a lot of ghosts'], # killed 5 ghosts
@@ -165,7 +165,7 @@ func _joy_connection_changed(id: int, connected: bool) -> void:
 			disconnectPlayer(id)
 
 func _input(_event):
-	if !disableHotkeys:
+	if enableHotkeys:
 		if Input.is_action_just_pressed("fullscreen"):
 			if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
 				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)

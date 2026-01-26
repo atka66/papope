@@ -4,9 +4,11 @@ extends Node2D
 @export var fromRight: bool = false
 @export var fromTop: bool = false
 
+const SHAKE_FADE: int = 7
+
 var playerColor: Color
-var hudShakePwr: int = 0
-var ammoShakePwr: int = 0
+var hudShakePwr: float = 0
+var ammoShakePwr: float = 0
 
 var prevAmmo: int = 0
 var prevHp: int = 0
@@ -36,7 +38,7 @@ func _ready():
 # TODO account delta
 func _process(delta):
 	handleHpBar()
-	handleShake()
+	handleShake(delta)
 	prevHp = player.hp
 	$Container/ShakeContainer/ScoreLabel.text = str(Global.playersPoints[player.playerId])
 
@@ -61,19 +63,24 @@ func handleHpBar() -> void:
 	$Container/ShakeContainer/HpBarFlicker.scale = $Container/ShakeContainer/HpBar.scale
 	$Container/ShakeContainer/HpBarFlicker.visible = player.hp < maxHp * 0.2
 
-func handleShake() -> void:
+func handleShake(delta) -> void:
+	handleHudShake(delta)
+	handleAmmoShake(delta)
+
+func handleHudShake(delta) -> void:
 	if player.hp < prevHp:
-		hudShakePwr = 7
-		Input.start_joy_vibration(player.playerId, 1.0, 1.0, 0.2) # todo not working, fix it
+		hudShakePwr = 5
+		#Input.start_joy_vibration(player.playerId, 1.0, 1.0, 0.2) # TODO not working, fix it
 	if hudShakePwr > 0:
-		$Container/ShakeContainer.position = Vector2((randi() % (hudShakePwr * 2)) - hudShakePwr, (randi() % (hudShakePwr * 2)) - hudShakePwr)
-		hudShakePwr -= 1
+		hudShakePwr = lerpf(hudShakePwr, 0, SHAKE_FADE * delta)
+		$Container/ShakeContainer.position = Vector2(randf_range(-hudShakePwr, hudShakePwr), randf_range(-hudShakePwr, hudShakePwr))
 	else:
 		$Container/ShakeContainer.position = Vector2.ZERO
 
+func handleAmmoShake(delta) -> void:
 	if ammoShakePwr > 0:
-		$Container/ShakeContainer/Inventory/Container.position = Vector2((randi() % (ammoShakePwr * 2)) - hudShakePwr, (randi() % (ammoShakePwr * 2)) - ammoShakePwr)
-		ammoShakePwr -= 1
+		ammoShakePwr = lerpf(ammoShakePwr, 0, SHAKE_FADE * delta)
+		$Container/ShakeContainer/Inventory/Container.position = Vector2(randf_range(-ammoShakePwr, ammoShakePwr), randf_range(-ammoShakePwr, ammoShakePwr))
 	else:
 		$Container/ShakeContainer/Inventory/Container.position = Vector2.ZERO
 
