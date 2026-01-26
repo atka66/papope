@@ -10,4 +10,4 @@ func deleteCache():
 	shaderCache.queue_free()
 
 func _on_anim_animation_finished(anim_name):
-	get_tree().change_scene_to_file("res://scenes/Splash.tscn")
+	get_tree().change_scene_to_file("res://scenes/NewSplash.tscn")

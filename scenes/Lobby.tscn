@@ -264,7 +264,7 @@ alignment = 3
 
 [node name="GodotLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(680, 764)
-text = "made with godot"
+text = "powered by godot"
 fontSize = 2
 alignment = 7
 

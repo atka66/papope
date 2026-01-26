@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://nqnooauve2nh"]
 
 [ext_resource type="Texture2D" uid="uid://dwehclchfvnxe" path="res://sprites/godot.png" id="1_2fm32"]
-[ext_resource type="Script" path="res://scenes/Splash.gd" id="1_y2s2j"]
+[ext_resource type="Script" uid="uid://4gtkpw3loixb" path="res://scenes/Splash.gd" id="1_y2s2j"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_isgji"]
 
 [sub_resource type="Animation" id="Animation_c1i5m"]
@@ -80,7 +80,7 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uh4f6"]
 _data = {
-"splash": SubResource("Animation_c1i5m")
+&"splash": SubResource("Animation_c1i5m")
 }
 
 [node name="Splash" type="Node2D"]
@@ -103,5 +103,5 @@ alignment = 5
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_uh4f6")
+&"": SubResource("AnimationLibrary_uh4f6")
 }

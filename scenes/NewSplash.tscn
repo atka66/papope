@@ -1,0 +1,170 @@
+[gd_scene load_steps=6 format=3 uid="uid://bs5268pjfyjwj"]
+
+[ext_resource type="Script" uid="uid://4gtkpw3loixb" path="res://scenes/Splash.gd" id="1_iqacf"]
+[ext_resource type="Texture2D" uid="uid://dwehclchfvnxe" path="res://sprites/godot.png" id="2_v6aoi"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_jsqyd"]
+
+[sub_resource type="Animation" id="Animation_p1oll"]
+resource_name = "splash"
+length = 2.5
+step = 0.2
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"toLobby"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Holder/MadeByLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 2.2, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Holder/GodotHolder:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 2.2, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Holder/MadeByLabel:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -80), Vector2(0, -80), Vector2(0, -24)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Holder/GodotHolder:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 80), Vector2(0, 80), Vector2(0, 16)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Holder/RightLine:points")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 0, 0), PackedVector2Array(0, 0, 256, 0), PackedVector2Array(512, 0, 512, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Holder/RightLine:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1.4, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Holder/LeftLine:points")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 0, 0), PackedVector2Array(0, 0, -256, 0), PackedVector2Array(-512, 0, -512, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Holder/LeftLine:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 1.4, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iqacf"]
+_data = {
+&"splash": SubResource("Animation_p1oll")
+}
+
+[node name="NewSplash" type="Node2D"]
+script = ExtResource("1_iqacf")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_iqacf")
+}
+
+[node name="Holder" type="Node2D" parent="."]
+position = Vector2(680, 336)
+
+[node name="MadeByLabel" parent="Holder" instance=ExtResource("3_jsqyd")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, -80)
+text = "powered by"
+fontSize = 3
+alignment = 7
+
+[node name="GodotHolder" type="Node2D" parent="Holder"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, 80)
+
+[node name="GodotLabel" parent="Holder/GodotHolder" instance=ExtResource("3_jsqyd")]
+position = Vector2(72, 0)
+text = "godot"
+fontSize = 10
+alignment = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Holder/GodotHolder"]
+position = Vector2(-216, 64)
+scale = Vector2(2, 2)
+texture = ExtResource("2_v6aoi")
+
+[node name="RightLine" type="Line2D" parent="Holder"]
+visible = false
+position = Vector2(0, 8)
+points = PackedVector2Array(0, 0, 0, 0)
+width = 4.0
+
+[node name="LeftLine" type="Line2D" parent="Holder"]
+visible = false
+position = Vector2(0, 8)
+points = PackedVector2Array(0, 0, 0, 0)
+width = 4.0
