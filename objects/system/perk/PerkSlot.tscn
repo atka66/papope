@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dnakmogpy1vc"]
 
-[ext_resource type="Script" path="res://objects/system/perk/PerkSlot.gd" id="1_qph0j"]
+[ext_resource type="Script" uid="uid://c40kg2ivwyqab" path="res://objects/system/perk/PerkSlot.gd" id="1_qph0j"]
 [ext_resource type="Texture2D" uid="uid://b458ln7prqp1y" path="res://sprites/perk/perks.png" id="2_08k83"]
 
 [sub_resource type="Animation" id="Animation_5o3r1"]
@@ -21,7 +21,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r0lx3"]
 _data = {
-"bump": SubResource("Animation_5o3r1")
+&"bump": SubResource("Animation_5o3r1")
 }
 
 [node name="PerkSlot" type="Node2D"]
@@ -29,7 +29,7 @@ script = ExtResource("1_qph0j")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_r0lx3")
+&"": SubResource("AnimationLibrary_r0lx3")
 }
 
 [node name="Sprite" type="Sprite2D" parent="."]
