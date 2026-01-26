@@ -1,11 +1,27 @@
 [gd_scene load_steps=20 format=3 uid="uid://byt0mpq4frnq8"]
 
 [ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="1_k2qbb"]
-[ext_resource type="Script" path="res://objects/game/hud/Hud.gd" id="1_sv67i"]
+[ext_resource type="Script" uid="uid://d2162qkq1a5o3" path="res://objects/game/hud/Hud.gd" id="1_sv67i"]
 [ext_resource type="Texture2D" uid="uid://u1ukb7vraab2" path="res://sprites/game/hud/hud_revolver_drum.png" id="4_jks62"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_u57dk"]
 [ext_resource type="Texture2D" uid="uid://drtx8a3qwxbd7" path="res://sprites/game/hud/hud_revolver_ammo.png" id="5_gprcb"]
 [ext_resource type="Texture2D" uid="uid://bqixonvrws2t6" path="res://sprites/game/hud/hud_ammo.png" id="6_8u23c"]
+
+[sub_resource type="Animation" id="Animation_eqjci"]
+resource_name = "die"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container/ShakeContainer/HudPolygon:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.02, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_8p6r6"]
 resource_name = "fromleft"
@@ -63,27 +79,11 @@ tracks/1/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_eqjci"]
-resource_name = "die"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Container/ShakeContainer/HudPolygon:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.02, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r51xx"]
 _data = {
-"die": SubResource("Animation_eqjci"),
-"fromleft": SubResource("Animation_8p6r6"),
-"fromright": SubResource("Animation_wxcsu")
+&"die": SubResource("Animation_eqjci"),
+&"fromleft": SubResource("Animation_8p6r6"),
+&"fromright": SubResource("Animation_wxcsu")
 }
 
 [sub_resource type="Animation" id="Animation_wdwda"]
@@ -120,8 +120,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3p57v"]
 _data = {
-"frombottom": SubResource("Animation_wdwda"),
-"fromtop": SubResource("Animation_8p224")
+&"frombottom": SubResource("Animation_wdwda"),
+&"fromtop": SubResource("Animation_8p224")
 }
 
 [sub_resource type="Animation" id="Animation_4e3tr"]
@@ -186,9 +186,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o3ipx"]
 _data = {
-"fire_1": SubResource("Animation_4e3tr"),
-"fire_2": SubResource("Animation_3oshu"),
-"fire_both": SubResource("Animation_vu8wd")
+&"fire_1": SubResource("Animation_4e3tr"),
+&"fire_2": SubResource("Animation_3oshu"),
+&"fire_both": SubResource("Animation_vu8wd")
 }
 
 [sub_resource type="Animation" id="Animation_h2fdj"]
@@ -210,7 +210,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kd4l1"]
 _data = {
-"flicker": SubResource("Animation_h2fdj")
+&"flicker": SubResource("Animation_h2fdj")
 }
 
 [node name="Hud" type="Node2D"]
@@ -218,7 +218,7 @@ script = ExtResource("1_sv67i")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_r51xx")
+&"": SubResource("AnimationLibrary_r51xx")
 }
 
 [node name="Container" type="Node2D" parent="."]
@@ -230,7 +230,7 @@ position = Vector2(132, 28)
 
 [node name="Anim" type="AnimationPlayer" parent="Container/ShakeContainer/Inventory"]
 libraries = {
-"": SubResource("AnimationLibrary_3p57v")
+&"": SubResource("AnimationLibrary_3p57v")
 }
 
 [node name="Container" type="Node2D" parent="Container/ShakeContainer/Inventory"]
@@ -239,7 +239,7 @@ libraries = {
 
 [node name="Anim" type="AnimationPlayer" parent="Container/ShakeContainer/Inventory/Container/Revolver"]
 libraries = {
-"": SubResource("AnimationLibrary_o3ipx")
+&"": SubResource("AnimationLibrary_o3ipx")
 }
 
 [node name="Drum1" type="Sprite2D" parent="Container/ShakeContainer/Inventory/Container/Revolver"]
@@ -442,7 +442,7 @@ polygon = PackedVector2Array(0, 0, 188, 0, 188, 14, 0, 14)
 
 [node name="Anim" type="AnimationPlayer" parent="Container/ShakeContainer/HpBarFlicker"]
 libraries = {
-"": SubResource("AnimationLibrary_kd4l1")
+&"": SubResource("AnimationLibrary_kd4l1")
 }
 autoplay = "flicker"
 

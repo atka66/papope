@@ -5,6 +5,7 @@ extends Node2D
 @export var fromTop: bool = false
 
 const SHAKE_FADE: int = 7
+const HP_DELAY_FADE: int = 2
 
 var playerColor: Color
 var hudShakePwr: float = 0
@@ -35,9 +36,8 @@ func _ready():
 	else:
 		$Container/ShakeContainer/Face.frame = Global.playersSkin[player.playerId]
 
-# TODO account delta
 func _process(delta):
-	handleHpBar()
+	handleHpBar(delta)
 	handleShake(delta)
 	prevHp = player.hp
 	$Container/ShakeContainer/ScoreLabel.text = str(Global.playersPoints[player.playerId])
@@ -47,13 +47,12 @@ func setHudColor(color: Color):
 	$Container/ShakeContainer/FaceBg.color = playerColor
 	$Container/ShakeContainer/HpBar.color = playerColor
 
-func handleHpBar() -> void:
+func handleHpBar(delta) -> void:
 	$Container/ShakeContainer/HpBar.scale = Vector2(min(float(player.hp) / maxHp, 1.0), 1)
 	$Container/ShakeContainer/HpBarDelay.scale = Vector2(min(float(delayedHp) / maxHp, 1.0), 1)
 	$Container/ShakeContainer/HpBar2.scale = Vector2(max(float(player.hp - maxHp) / maxHp, 0.0), 1)
 	$Container/ShakeContainer/HpBarDelay2.scale = Vector2(max(float(delayedHp - maxHp) / maxHp, 0.0), 1)
-	if delayedHp > player.hp:
-		delayedHp -= 1
+	delayedHp = lerpf(delayedHp, player.hp, HP_DELAY_FADE * delta)
 
 	if player.shielded:
 		$Container/ShakeContainer/HpBar.color = Color.WHITE
