@@ -7,6 +7,7 @@ extends Node2D
 @onready var _audioSubmit = $MenuCanvas/FeedbackHolder/AudioSubmit
 
 var countdownNode = null
+var hasConnected = true
 
 func _ready():
 	Global.MusicNode.play('menu')
@@ -16,7 +17,15 @@ func _ready():
 	initPlayers()
 
 func _process(delta):
-	var hasConnected = Global.playersJoined.has(true)
+	var currentHasConnected = Global.playersJoined.has(true)
+	if currentHasConnected != hasConnected:
+		$MenuCanvas/TitleHolder/Anim.seek(0)
+		if currentHasConnected:
+			$MenuCanvas/TitleHolder/Anim.play("back")
+		else:
+			$MenuCanvas/TitleHolder/Anim.play("front")
+	
+	hasConnected = currentHasConnected
 	
 	$Settings.visible = hasConnected
 	$MenuCanvas/Hints.visible = !ProjectSettings.get("papope/hosted_mode") && hasConnected

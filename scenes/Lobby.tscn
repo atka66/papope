@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cgjwfivoc8wki"]
+[gd_scene load_steps=30 format=3 uid="uid://cgjwfivoc8wki"]
 
 [ext_resource type="Script" uid="uid://cr7n8x2odisa0" path="res://scenes/Lobby.gd" id="1_i8rer"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_pbfn1"]
@@ -71,27 +71,97 @@ _data = {
 &"warn": SubResource("Animation_0qv0v")
 }
 
-[sub_resource type="Animation" id="Animation_t30w8"]
-resource_name = "wobble"
-length = 12.0
-loop_mode = 1
-step = 1.0
+[sub_resource type="Animation" id="Animation_yyg1t"]
+resource_name = "front"
+length = 0.2
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Title:scale")
-tracks/0/interp = 2
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 6, 12),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(1, 1)]
+"values": [Vector2(680, 32), Vector2(680, 128)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(0.7, 0.7), Vector2(1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_llvxc"]
+[sub_resource type="Animation" id="Animation_o6r7d"]
+resource_name = "RESET"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(680, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.7, 0.7)]
+}
+
+[sub_resource type="Animation" id="Animation_ug4sb"]
+resource_name = "back"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(680, 128), Vector2(680, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.7, 0.7)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ug4sb"]
 _data = {
-&"wobble": SubResource("Animation_t30w8")
+&"RESET": SubResource("Animation_o6r7d"),
+&"back": SubResource("Animation_ug4sb"),
+&"front": SubResource("Animation_yyg1t")
 }
 
 [sub_resource type="Animation" id="Animation_7vwmf"]
@@ -269,13 +339,13 @@ fontSize = 2
 alignment = 7
 
 [node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
-position = Vector2(680, 16)
+position = Vector2(680, 32)
+scale = Vector2(0.7, 0.7)
 
 [node name="Anim" type="AnimationPlayer" parent="MenuCanvas/TitleHolder"]
 libraries = {
-&"": SubResource("AnimationLibrary_llvxc")
+&"": SubResource("AnimationLibrary_ug4sb")
 }
-autoplay = "wobble"
 
 [node name="Title" type="Sprite2D" parent="MenuCanvas/TitleHolder"]
 texture_filter = 2
