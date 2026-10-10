@@ -8,10 +8,9 @@ func _ready():
 	if Global.MapControllerNode.isNightclub:
 		$Sprite.modulate = Color.BLACK
 
-# TODO account delta
 func _process(delta):
 	if conveyed:
-		position.x -= Global.CONVEYOR_VEL_AREA
+		position.x += Global.CONVEYOR_SPEED.x * delta
 
 func spring(entity: Node2D) -> void:
 	if armed:

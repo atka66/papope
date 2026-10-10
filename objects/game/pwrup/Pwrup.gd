@@ -21,10 +21,9 @@ func _ready():
 	$Container/Sprite.play()
 	spawnAnimation()
 
-# TODO account delta
 func _process(delta):
 	if conveyed:
-		position.x -= Global.CONVEYOR_VEL_AREA
+		position.x += Global.CONVEYOR_SPEED.x * delta
 
 func spawnAnimation():
 	var anim = Res.SpawnPwrupAnimObject.instantiate()

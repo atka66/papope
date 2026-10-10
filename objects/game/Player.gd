@@ -26,6 +26,7 @@ var frictionCustom: float = 0.1
 var inputCd: bool = false
 var kbAimActive: bool = false
 var lavaAccum: float = 0.0
+var onConveyorBelt: bool = false
 
 func _ready():
 	if !Lobby && Global.MapControllerNode.isNightclub:
@@ -505,6 +506,9 @@ func exitedLava() -> void:
 
 func _integrate_forces(state):
 	Global.pacmanWrap(state)
+	if onConveyorBelt:
+		var beltStep: Vector2 = Global.CONVEYOR_SPEED * state.step
+		state.transform.origin += beltStep
 
 func _on_body_entered(body):
 	if body.is_in_group('players'):
@@ -538,4 +542,7 @@ func isJustKilled() -> bool:
 	return alive && hp <= 0
 
 func convey() -> void:
-	add_constant_central_force(Global.CONVEYOR_VEL_RIGID)
+	onConveyorBelt = true
+
+func unconvey() -> void:
+	onConveyorBelt = false

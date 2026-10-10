@@ -153,6 +153,7 @@ func _on_conveyor_belt_body_entered(body):
 
 func _on_conveyor_belt_body_exited(body):
 	if body.is_in_group("players"):
+		body.unconvey()
 		if !body.isFallingIntoWater:
 			body.fallDown(true)
 
