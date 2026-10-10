@@ -191,6 +191,8 @@ func joinPlayer(id: int, silent: bool) -> void:
 	connect("player_remove", player._on_remove)
 	player.playerId = id
 	player.silent = silent
+	if Net.isOnline:
+		player.isLocal = (id == Net.localSlot)
 	slot.add_child(player)
 
 func leavePlayer(id: int) -> void:
@@ -221,18 +223,21 @@ func goToMap() -> void:
 		else:
 			selectedMapIndex = optionsSelected['map']
 
-		selectedMap = options['map'][selectedMapIndex]
-		
-		if selectedMap == 'hell': get_tree().change_scene_to_file("res://scenes/maps/MapHell.tscn")
-		if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")
-		if selectedMap == 'ship': get_tree().change_scene_to_file("res://scenes/maps/MapShip.tscn")
-		if selectedMap == 'space': get_tree().change_scene_to_file("res://scenes/maps/MapSpace.tscn")
-		if selectedMap == 'highway': get_tree().change_scene_to_file("res://scenes/maps/MapHighway.tscn")
-		if selectedMap == 'pacman': get_tree().change_scene_to_file("res://scenes/maps/MapPacman.tscn")
-		if selectedMap == 'industrial': get_tree().change_scene_to_file("res://scenes/maps/MapIndustrial.tscn")
-		if selectedMap == 'nightclub': get_tree().change_scene_to_file("res://scenes/maps/MapNightclub.tscn")
+		goToMapOnline(options['map'][selectedMapIndex])
 	else:
 		get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
+
+func goToMapOnline(mapName: String) -> void:
+	selectedMap = mapName
+
+	if selectedMap == 'hell': get_tree().change_scene_to_file("res://scenes/maps/MapHell.tscn")
+	if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")
+	if selectedMap == 'ship': get_tree().change_scene_to_file("res://scenes/maps/MapShip.tscn")
+	if selectedMap == 'space': get_tree().change_scene_to_file("res://scenes/maps/MapSpace.tscn")
+	if selectedMap == 'highway': get_tree().change_scene_to_file("res://scenes/maps/MapHighway.tscn")
+	if selectedMap == 'pacman': get_tree().change_scene_to_file("res://scenes/maps/MapPacman.tscn")
+	if selectedMap == 'industrial': get_tree().change_scene_to_file("res://scenes/maps/MapIndustrial.tscn")
+	if selectedMap == 'nightclub': get_tree().change_scene_to_file("res://scenes/maps/MapNightclub.tscn")
 
 func startRound() -> void:
 	playersFrozen = false
@@ -241,6 +246,9 @@ func startRound() -> void:
 		initGhostSpawn()
 
 func initGhostSpawn():
+	# Online ghosts are host-driven (host broadcasts via Net.ghost_event).
+	if Net.isOnline and not multiplayer.is_server():
+		return
 	MapControllerNode.initGhostSpawn()
 
 func getPlayer(playerId: int) -> Object:
@@ -276,10 +284,15 @@ func getNumberOfTeams():
 	return distinctTeams.size()
 
 func registerAchievement(playerId: int, achievement: AchiEnum):
+	# Online stats/achievements are host-authoritative; client copies converge via state sync.
+	if Net.isOnline and not multiplayer.is_server():
+		return
 	if not (achievement in playersAchievements[playerId]):
 		playersAchievements[playerId].append(achievement)
 
 func incrementStat(playerId : int, stat : StatEnum, i) -> void:
+	if Net.isOnline and not multiplayer.is_server():
+		return
 	if playersStats:
 		playersStats[playerId][stat] += i
 
@@ -316,6 +329,8 @@ func getRandomPwrup() -> PwrupEnum:
 	return [PwrupEnum.REVOLVER, PwrupEnum.DYNAMITE, PwrupEnum.SHIELD, PwrupEnum.TRAP, PwrupEnum.WHIP].pick_random()
 
 func addKill(playerId) -> void:
+	if Net.isOnline and not multiplayer.is_server():
+		return
 	playersKills[playerId] += 1
 	if playersKills[playerId] == 3:
 		registerAchievement(playerId, Global.AchiEnum.TRIPLE_KILL)

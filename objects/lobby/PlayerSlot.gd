@@ -35,6 +35,9 @@ func _process(delta):
 	handleHints()
 
 func _input(event):
+	if Net.isOnline:
+		_onlineInput(event)
+		return
 	if Global.playersConnected[playerId] && event.device == playerId:
 		if event.is_action_pressed("accept") and Lobby.countdownNode == null:
 			if !Global.playersJoined[playerId]:
@@ -69,3 +72,25 @@ func _input(event):
 				else:
 					Global.playersCrowned[0] = false
 					Global.leavePlayer(0)
+
+func _onlineInput(event):
+	# Online slots are assigned by the host; each peer drives only their own slot.
+	# Device ids are per-machine, so any local pad/keyboard owns the local slot.
+	if playerId != Net.localSlot:
+		return
+	var padStart: bool = event.is_action_pressed("accept") || (Global.enableHotkeys && event.is_action_pressed("kb_accept"))
+	var padBack: bool = event.is_action_pressed("cancel") || (Global.enableHotkeys && event.is_action_pressed("kb_cancel"))
+	if padStart and Lobby.countdownNode == null:
+		if Global.getNumberOfTeams() > 1:
+			if Net.isHost:
+				Net.begin_countdown()
+		else:
+			Lobby.warnCannotStart()
+	if padBack:
+		if Lobby.countdownNode != null:
+			if Net.isHost:
+				Net.cancel_countdown()
+		else:
+			Global.playersCrowned[playerId] = false
+			Net.leave()
+			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")

@@ -21,6 +21,12 @@ func _ready():
 	for i in range(3):
 		spawnPerkSlot(i, true)
 
+func _process(_delta):
+	if Net.isOnline and !Global.playersJoined[playerId]:
+		# Peer left mid-draft: don't stall the overlay.
+		isFinished = true
+		hide()
+
 func _input(event):
 	if Global.DEBUG && Input.is_action_just_pressed("test3"):
 		var cardNode = get_node("PerkCard")
@@ -40,7 +46,7 @@ func _input(event):
 			else:
 				$SwapHolder.show()
 				updateSwapSelected()
-	if event.device == playerId:
+	if event.device == playerId and (!Net.isOnline or playerId == Net.localSlot):
 		var cardNode = get_node("PerkCard")
 		if cardNode && !donePerking:
 			if event.is_action_pressed("accept"):
@@ -80,7 +86,22 @@ func updateSwapSelected():
 
 func finishAnimation():
 	donePerking = true
+	if Net.isOnline and not Net.isHost and playerId == Net.localSlot:
+		Net.submit_perks.rpc_id(1, playerId, Global.playersPerks[playerId].duplicate())
 	await get_tree().create_timer(3).timeout
+	isFinished = true
+
+func sync_remote_perks(perks: Array) -> void:
+	# Host-approved picks for a slot owned by another peer.
+	Global.playersPerks[playerId] = perks.duplicate()
+	var cardNode = get_node_or_null("PerkCard")
+	if cardNode != null:
+		cardNode.queue_free()
+	for i in range(3):
+		spawnPerkSlot(i, true)
+	donePerking = true
+	$RevealHolder.hide()
+	$SwapHolder.hide()
 	isFinished = true
 
 func spawnPerkSlot(slot: int, silent: bool):

@@ -14,7 +14,13 @@ func _ready():
 	$MenuCanvas/VersionLabel.setText(Global.VERSION)
 	if ProjectSettings.get("papope/hosted_mode"):
 		$MenuCanvas/FullscreenLabel.setText('atka66.itch.io/papope')
-	initPlayers()
+	if Net.isOnline:
+		$MenuCanvas/OnlineButton.hide()
+		initPlayersOnline()
+		Net.lobby_updated.connect(_on_lobby_updated)
+	else:
+		$MenuCanvas/OnlineLabel.hide()
+		initPlayers()
 
 func _process(delta):
 	var currentHasConnected = Global.playersJoined.has(true)
@@ -33,6 +39,9 @@ func _process(delta):
 	$InitHolder/WaitingLabel.hide()
 	$InitHolder/TeamLimitLabel.hide()
 	$InitHolder/StartHolder.hide()
+	if Net.isOnline:
+		_updateOnlineLabels()
+		return
 	if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.show()
 	elif Global.getNumberOfTeams() < 2:
@@ -40,10 +49,33 @@ func _process(delta):
 	elif countdownNode == null:
 		$InitHolder/StartHolder.show()
 
+func _updateOnlineLabels() -> void:
+	if Net.isHost:
+		$MenuCanvas/OnlineLabel.setText("online - hosting (slot 0)")
+	else:
+		$MenuCanvas/OnlineLabel.setText("online - player " + str(Net.localSlot))
+	if Global.playersJoined.count(true) < 2:
+		$InitHolder/WaitingLabel.setText("waiting for more players...")
+		$InitHolder/WaitingLabel.show()
+	elif Global.getNumberOfTeams() < 2:
+		$InitHolder/TeamLimitLabel.show()
+	elif Net.isHost and countdownNode == null:
+		$InitHolder/StartHolder.show()
+	elif not Net.isHost:
+		$InitHolder/WaitingLabel.setText("waiting for host...")
+		$InitHolder/WaitingLabel.show()
+
 func _input(event):
 	if event.is_action_pressed("quit") and !OS.has_feature("web"):
-		get_tree().quit()
-	if Global.DEBUG && Global.enableHotkeys: 
+		if Net.isOnline:
+			Net.leave()
+			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+		else:
+			get_tree().quit()
+	if !Net.isOnline and event is InputEventKey and event.pressed and !event.echo:
+		if event.physical_keycode == KEY_O and Global.enableHotkeys:
+			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+	if Global.DEBUG && Global.enableHotkeys && !Net.isOnline: 
 		if event.is_action_pressed("test1"): 
 			for i in range(4):
 				if !Global.playersConnected[i]:
@@ -78,6 +110,27 @@ func initPlayers() -> void:
 		else:
 			if Global.playersConnected[i] && Global.playersJoined[i]:
 				Global.joinPlayer(i, true)
+
+func initPlayersOnline() -> void:
+	Global.playersFrozen = false
+	Global.playersPoints = [0, 0, 0, 0]
+	Global.playersAchievements = [[], [], [], []]
+	Global.playersPerks = [[], [], [], []]
+	Global.initPlayerStats()
+	for i in range(4):
+		if Global.playersJoined[i]:
+			Global.joinPlayer(i, true)
+
+func _on_online_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+
+func _on_lobby_updated():
+	# Spawn previews for peers that joined after we entered the lobby.
+	if !Net.isOnline:
+		return
+	for i in range(4):
+		if Global.playersJoined[i] and Global.getPlayer(i) == null:
+			Global.joinPlayer(i, true)
 
 func warnCannotStart() -> void:
 	$InitHolder/Anim.stop()

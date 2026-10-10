@@ -4,10 +4,13 @@ var spawners: Array[Node2D]
 var determRandom: RandomNumberGenerator
 
 var isNightclub: bool = false
+var _stateAccum: float = 0.0
 
 func _ready():
 	determRandom = RandomNumberGenerator.new()
 	determRandom.set_seed(123)
+	if Net.isOnline and multiplayer.is_server():
+		determRandom.set_seed(randi())
 	
 	$Dim.show()
 	$HudCanvas/MapLabel.text = Global.selectedMap
@@ -32,7 +35,8 @@ func _ready():
 	else:
 		await get_tree().create_timer(1.5).timeout
 	
-	pwrupSpawnLoop()
+	if !Net.isOnline || multiplayer.is_server():
+		pwrupSpawnLoop()
 	initCountdown()
 	await get_tree().create_timer(1.0).timeout
 	for i in range(4):
@@ -40,31 +44,72 @@ func _ready():
 			spawnPlayer(i)
 			await get_tree().create_timer(0.25).timeout
 
+func _process(delta):
+	# Host replicates player states to all clients ~20 times per second.
+	if Net.isOnline and multiplayer.is_server():
+		_stateAccum += delta
+		if _stateAccum >= 0.05:
+			_stateAccum = 0.0
+			Net.push_state.rpc(_collectStates())
+
+func _collectStates() -> Array:
+	var states := []
+	for player in get_tree().get_nodes_in_group('players'):
+		var itemInt := -1
+		if player.item != null:
+			itemInt = int(player.item)
+		var aim := Vector2.ZERO
+		if player.has_method("getAimVector"):
+			aim = player.getAimVector()
+		states.append([player.playerId, player.global_position, player.linear_velocity,
+			player.hp, player.alive, itemInt, player.ammo, player.shielded, aim])
+	return states
+
 func _input(event):
 	if event.is_action_pressed("quit"):
-		Global.goToLobby()
-	if Global.DEBUG:
+		if Net.isOnline:
+			Net.leave()
+			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+		else:
+			Global.goToLobby()
+	if Global.DEBUG && !Net.isOnline:
 		if Input.is_action_just_pressed("test1"): 
 			get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
 
 func pwrupSpawnLoop() -> void:
 	await get_tree().create_timer(ProjectSettings.get("papope/pwrup_respawn_time")).timeout
-	var spawner = spawners.pick_random()
-	if spawner != null:
-		var pwrupGroupName = spawner.name + "pwrups"
-		for spawnerPwrups in get_tree().get_nodes_in_group(pwrupGroupName):
-			spawnerPwrups.despawn()
-		var pwrup = Res.PwrupObject.instantiate()
-		pwrup.add_to_group(pwrupGroupName)
-		pwrup.type = Global.PwrupEnum.values().pick_random()
-		pwrup.position = spawner.position
-		get_parent().add_child(pwrup)
+	if Net.isOnline and multiplayer.is_server() and spawners.size() > 0:
+		var spIdx := determRandom.randi_range(0, spawners.size() - 1)
+		var typeIdx := determRandom.randi_range(0, Global.PwrupEnum.size() - 1)
+		spawnNetPwrup(spIdx, typeIdx)
+		Net.spawn_pwrup.rpc(spIdx, typeIdx)
+	elif !Net.isOnline:
+		var spawner = spawners.pick_random()
+		if spawner != null:
+			_spawnPwrupAt(spawner, Global.PwrupEnum.values().pick_random())
 	pwrupSpawnLoop()
+
+func spawnNetPwrup(spawnerIdx: int, typeIdx: int) -> void:
+	if spawnerIdx < 0 or spawnerIdx >= spawners.size():
+		return
+	_spawnPwrupAt(spawners[spawnerIdx], typeIdx)
+
+func _spawnPwrupAt(spawner: Node2D, type) -> void:
+	var pwrupGroupName = spawner.name + "pwrups"
+	for spawnerPwrups in get_tree().get_nodes_in_group(pwrupGroupName):
+		spawnerPwrups.despawn()
+	var pwrup = Res.PwrupObject.instantiate()
+	pwrup.add_to_group(pwrupGroupName)
+	pwrup.type = type
+	pwrup.position = spawner.position
+	get_parent().add_child(pwrup)
 
 func spawnPlayer(playerId : int) -> void:
 	var player = Res.PlayerObject.instantiate()
 	player.position = get_parent().get_node("PlayerSpawner" + str(playerId)).position
 	player.playerId = playerId
+	if Net.isOnline:
+		player.isLocal = (playerId == Net.localSlot)
 	get_parent().add_child(player)
 	player.hud = spawnPlayerHud(player)
 
@@ -87,8 +132,11 @@ func initCountdown() -> void:
 	$HudCanvas.add_child(countdown)
 
 func endRound(aliveTeamId: int) -> void:
+	# Online scoring is host-authoritative; clients render via showNetRoundEnd.
+	if Net.isOnline and not multiplayer.is_server():
+		return
 	$AudioRoundEnd.play()
-	
+
 	for player in get_tree().get_nodes_in_group('players'):
 		if Global.playersJoined[player.playerId] && player.hp > 0 && player.hp <= Global.playersMaxHp[player.playerId] / 10:
 			Global.registerAchievement(player.playerId, Global.AchiEnum.DAREDEVIL)
@@ -98,7 +146,17 @@ func endRound(aliveTeamId: int) -> void:
 		for i in range(4):
 			if Global.playersJoined[i] && Global.playersTeam[i] == aliveTeamId:
 				Global.playersPoints[i] += 1
-	
+
+	_showRoundEndBanner(aliveTeamId)
+	if Net.isOnline:
+		Net.round_end.rpc(aliveTeamId, Global.playersPoints.duplicate())
+
+func showNetRoundEnd(aliveTeamId: int) -> void:
+	$AudioRoundEnd.play()
+	Global.playersFrozen = true
+	_showRoundEndBanner(aliveTeamId)
+
+func _showRoundEndBanner(aliveTeamId: int) -> void:
 	var endBanner = Res.RoundEndBannerObject.instantiate()
 	endBanner.aliveTeamId = aliveTeamId
 	$HudCanvas.add_child(endBanner)
@@ -117,7 +175,19 @@ func showCount(position: Vector2, cnt: String) -> void:
 	add_child(label)
 
 func initGhostSpawn() -> void:
-	var spawnNode = get_parent().get_node('GhostPath/SpawnNode' + str(randi() % 2))
+	# Online ghosts are host-driven; clients spawn via Net.ghost_event.
+	if Net.isOnline and not multiplayer.is_server():
+		return
+	var nodeIdx := randi() % 2
+	if Net.isOnline:
+		Net.ghost_event.rpc(nodeIdx)
+	_ghostCountdown(nodeIdx)
+
+func spawnNetGhost(nodeIdx: int) -> void:
+	_ghostCountdown(nodeIdx)
+
+func _ghostCountdown(nodeIdx: int) -> void:
+	var spawnNode = get_parent().get_node('GhostPath/SpawnNode' + str(nodeIdx))
 	var respawnTime = ProjectSettings.get("papope/ghost_respawn_time")
 	for i in range(respawnTime):
 		showCount(spawnNode.position, str(respawnTime - i))

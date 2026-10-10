@@ -25,7 +25,12 @@ func _ready():
 					Global.playersMaxHp[i] = 1
 				'cards':
 					Global.playersMaxHp[i] = 100
-		Global.goToMap()
+		if Net.isOnline:
+			# Host fans everyone out to the same map; clients wait for the RPC.
+			if multiplayer.is_server():
+				Net.host_start_match()
+		else:
+			Global.goToMap()
 	else:
 		showCount("go!", 12, null)
 		Global.startRound()
