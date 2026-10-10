@@ -25,6 +25,7 @@ var frictionCustom: float = 0.1
 
 var inputCd: bool = false
 var kbAimActive: bool = false
+var lavaAccum: float = 0.0
 
 func _ready():
 	if !Lobby && Global.MapControllerNode.isNightclub:
@@ -223,7 +224,6 @@ func dash(axis: Vector2) -> void:
 	dashParticles.emitting = true
 	add_child(dashParticles)
 
-# TODO account delta
 func _process(delta):
 	inputCd = false
 	if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS):
@@ -235,7 +235,10 @@ func _process(delta):
 	if Global.MapControllerNode != null:
 		if alive:
 			if contactsLava && !shielded:
-				hurt(Global.DAMAGE_LAVA, null)
+				lavaAccum += Global.DPS_LAVA * delta
+				while lavaAccum >= 1.0:
+					lavaAccum -= 1.0
+					hurt(1, null)
 			if hp < 1:
 				updateColor(Global.TEAM_COLORS[4])
 				alive = false
@@ -267,7 +270,6 @@ func _process(delta):
 					if aliveTeamId != -1:
 						Global.MapControllerNode.endRound(aliveTeamId)
 
-# TODO account delta
 func _physics_process(delta):
 	if !isFallingIntoWater && !inSpace:
 		apply_central_impulse(-linear_velocity * frictionCustom)
@@ -498,6 +500,7 @@ func enteredLava() -> void:
 
 func exitedLava() -> void:
 	contactsLava = false
+	lavaAccum = 0.0
 	$SmokeParticles.emitting = false
 
 func _integrate_forces(state):

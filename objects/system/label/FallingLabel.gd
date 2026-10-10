@@ -20,9 +20,9 @@ func _ready():
 	$CustomLabel.setText(text)
 	$CustomLabel.setFontColor(color)
 
-# TODO account delta
 func _process(delta):
-	position += velocity
-	velocity.y += gravity
+	var step: float = delta * 60.0
+	position += velocity * step
+	velocity.y += gravity * step
 	if velocity.y > 0:
-		rotation *= 1.1
+		rotation *= pow(1.1, step)

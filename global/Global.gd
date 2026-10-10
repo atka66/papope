@@ -83,7 +83,7 @@ const PERKS : Dictionary = {
 
 enum PwrupEnum { REVOLVER, DYNAMITE, SHIELD, TRAP, WHIP }
 
-const DAMAGE_LAVA = 1
+const DPS_LAVA = 50 # damage per second while standing in lava
 const DAMAGE_REVOLVER = 20
 const DAMAGE_WHIP = 30
 const DAMAGE_SPACERAY = 25
