@@ -388,13 +388,130 @@ func spawn_pwrup(spawnerIdx: int, typeIdx: int) -> void:
 		Global.MapControllerNode.spawnNetPwrup(spawnerIdx, typeIdx)
 
 @rpc("any_peer", "reliable")
-func ghost_event(nodeIdx: int) -> void:
+func ghost_event(nodeIdx: int, colorIdx: int = -1) -> void:
 	if not isOnline:
 		return
 	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
 		return
 	if Global.MapControllerNode != null and is_instance_valid(Global.MapControllerNode) and Global.MapControllerNode.has_method("spawnNetGhost"):
-		Global.MapControllerNode.spawnNetGhost(nodeIdx)
+		Global.MapControllerNode.spawnNetGhost(nodeIdx, colorIdx)
+
+@rpc("any_peer", "unreliable")
+func push_ghost(pos: Vector2) -> void:
+	if not isOnline or isHost:
+		return
+	if multiplayer.get_remote_sender_id() != 1:
+		return
+	for ghost in get_tree().get_nodes_in_group("ghosts"):
+		if is_instance_valid(ghost) and ghost.has_method("push_snapshot"):
+			ghost.push_snapshot(pos)
+			break
+
+@rpc("any_peer", "reliable")
+func ghost_died() -> void:
+	if not isOnline:
+		return
+	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+		return
+	for ghost in get_tree().get_nodes_in_group("ghosts"):
+		if is_instance_valid(ghost) and ghost.has_method("mirrorDeath"):
+			ghost.mirrorDeath()
+			break
+
+@rpc("any_peer", "reliable")
+func pellet_eaten(pos: Vector2) -> void:
+	if not isOnline:
+		return
+	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+		return
+	var best = null
+	var bestDist := 48.0
+	for node in get_tree().get_nodes_in_group("pellets"):
+		if node != null and is_instance_valid(node) and not node.is_queued_for_deletion():
+			var d: float = (node as Node2D).global_position.distance_to(pos)
+			if d < bestDist:
+				bestDist = d
+				best = node
+	if best != null:
+		best.hide()
+		best.queue_free()
+
+@rpc("any_peer", "reliable")
+func despawn_pwrup(spawnerIdx: int) -> void:
+	if not isOnline:
+		return
+	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+		return
+	if Global.MapControllerNode != null and is_instance_valid(Global.MapControllerNode) and Global.MapControllerNode.has_method("despawnNetPwrup"):
+		Global.MapControllerNode.despawnNetPwrup(spawnerIdx)
+
+@rpc("any_peer", "reliable")
+func car_event(laneName: String, carSpeed: float, paint: int) -> void:
+	if not isOnline:
+		return
+	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+		return
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	var lane := scene.get_node_or_null(laneName)
+	if lane != null and lane.has_method("spawnNetCar"):
+		lane.spawnNetCar(carSpeed, paint)
+
+@rpc("any_peer", "reliable")
+func trap_sprung(trapPos: Vector2) -> void:
+	if not isOnline:
+		return
+	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+		return
+	var best = null
+	var bestDist := 200.0
+	for node in get_tree().get_nodes_in_group("conveyables"):
+		if node != null and is_instance_valid(node) and node.has_method("showSprung"):
+			var d: float = (node as Node2D).global_position.distance_to(trapPos)
+			if d < bestDist:
+				bestDist = d
+				best = node
+	if best != null:
+		best.showSprung()
+
+@rpc("any_peer", "reliable")
+func cactus_hit(cactusPos: Vector2) -> void:
+	if not isOnline:
+		return
+	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+		return
+	var best = null
+	var bestDist := 120.0
+	for node in get_tree().get_nodes_in_group("cacti"):
+		if node != null and is_instance_valid(node):
+			var d: float = (node as Node2D).global_position.distance_to(cactusPos)
+			if d < bestDist:
+				bestDist = d
+				best = node
+	if best != null:
+		best.bounce()
+		best.pinch()
+
+@rpc("any_peer", "unreliable")
+func damage_number(text: String, pos: Vector2, color: Color, size: int) -> void:
+	# Cosmetic: unreliable on purpose (a dropped number beats a network stall).
+	if not isOnline or isHost:
+		return
+	if multiplayer.get_remote_sender_id() != 1:
+		return
+	Global.spawnFallingLabel(text, pos, color, size)
+
+@rpc("any_peer", "reliable")
+func disco_cycle(idx: int, seed: int) -> void:
+	if not isOnline:
+		return
+	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+		return
+	for floor in get_tree().get_nodes_in_group("discofloor"):
+		if is_instance_valid(floor) and floor.has_method("_runCycle"):
+			floor._runCycle(idx, seed)
+			break
 
 @rpc("any_peer", "reliable")
 func round_end(aliveTeamId: int, points: Array) -> void:
@@ -466,7 +583,7 @@ func push_state(states: Array) -> void:
 	if multiplayer.get_remote_sender_id() != 1:
 		return
 	for s in states:
-		if not (s is Array) or s.size() < 9:
+		if not (s is Array) or s.size() < 10:
 			continue
 		var player := Global.getPlayer(int(s[0]))
 		if player != null and player.has_method("apply_net_state"):

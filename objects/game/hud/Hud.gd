@@ -142,6 +142,17 @@ func updateAmmo(item: Global.PwrupEnum, ammo: int) -> void:
 				var ammoNode: Node = get_node('Container/ShakeContainer/Inventory/Container/Whip/Ammo' + str(i))
 				ammoNode.visible = i < ammo
 
+func syncInventory(item, ammo: int) -> void:
+	# Silent inventory refresh for network state sync (no sound/anims/labels).
+	hideItems()
+	if item == null:
+		return
+	if item == Global.PwrupEnum.REVOLVER:
+		$Container/ShakeContainer/Inventory/Container/Revolver/Drum1.show()
+		if ammo > 6:
+			$Container/ShakeContainer/Inventory/Container/Revolver/Drum2.show()
+	updateAmmo(item, ammo)
+
 func hideItems() -> void:
 	$Container/ShakeContainer/Inventory/Container/Revolver/Drum1.hide()
 	$Container/ShakeContainer/Inventory/Container/Revolver/Drum2.hide()

@@ -2,10 +2,14 @@ extends Area2D
 
 @export var fromRight: bool = false
 @export var speed: float = 600.0
+@export var netPaint: int = -1 # online: host-rolled paint, -1 = roll locally
 
 func _ready():
 	$AudioHorn.stream = Res.AudioCarHorn.pick_random()
-	$Sprite.frame = randi() % $Sprite.vframes
+	if netPaint >= 0:
+		$Sprite.frame = absi(netPaint) % $Sprite.vframes
+	else:
+		$Sprite.frame = randi() % $Sprite.vframes
 	$Sprite.flip_h = !fromRight
 
 func _process(delta):

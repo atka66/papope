@@ -38,6 +38,7 @@ var hasAimOverride: bool = false
 var _sendAccum: float = 0.0
 var _lastTeam: int = -1
 var _lastSkin: int = -1
+var _lastShielded: bool = false
 # guest-side snapshot interpolation for remote players
 const NET_INTERP_DELAY := 0.1
 var netSnaps: Array = []
@@ -338,7 +339,7 @@ func _process(delta):
 				else:
 					$AudioDeath.play()
 				
-				Global.spawnFallingLabel(Global.getDeathMessage(deathReason), global_position, Color.DARK_GRAY, 3)
+				_netLabel(Global.getDeathMessage(deathReason), global_position, Color.DARK_GRAY, 3)
 				
 				if shielded:
 					Global.registerAchievement(playerId, Global.AchiEnum.NO_REFUNDS)
@@ -386,14 +387,19 @@ func _refreshLobbyVisuals() -> void:
 			$BodyParts/Face.frame = _lastSkin
 
 func apply_net_state(s: Array) -> void:
-	# s = [slot, pos, vel, hp, alive, itemInt, ammo, shielded, aim]
+	# s = [slot, pos, vel, hp, alive, itemInt, ammo, shielded, aim, trapped]
 	var targetPos: Vector2 = s[1]
 	var targetVel: Vector2 = s[2]
 	if Net.isOnline and not Net.isHost and not isLocal:
-		# Remote body on a guest: buffer the snapshot, interpolation renders it.
-		netSnaps.append({"t": Time.get_ticks_msec() / 1000.0, "pos": targetPos, "vel": targetVel})
+		# Remote body on a guest: buffer the snapshot, interpolation renders
+		# position AND aim (crosshair would step at 20Hz otherwise).
+		var incomingAim: Vector2 = s[8]
+		netSnaps.append({"t": Time.get_ticks_msec() / 1000.0, "pos": targetPos, "vel": targetVel, "aim": incomingAim})
 		while netSnaps.size() > 4:
 			netSnaps.pop_front()
+		if not hasNetAim:
+			netAim = incomingAim
+			hasNetAim = true
 	elif isLocal:
 		# Own predicted body: fully trust local sim while the error is small,
 		# snap only on large divergence (dash, knockback, teleport).
@@ -410,8 +416,9 @@ func apply_net_state(s: Array) -> void:
 		linear_velocity = targetVel
 	hp = int(s[3])
 	shielded = bool(s[7])
-	netAim = s[8]
-	hasNetAim = true
+	if not (Net.isOnline and not Net.isHost and not isLocal):
+		netAim = s[8]
+		hasNetAim = true
 	var itemInt := int(s[5])
 	var newItem = null
 	if itemInt >= 0:
@@ -421,13 +428,28 @@ func apply_net_state(s: Array) -> void:
 		ammo = int(s[6])
 		_syncCrosshairs()
 		if hud:
-			if item == null:
-				hud.hideItems()
-			else:
-				hud.updateAmmo(item, ammo)
+			hud.syncInventory(item, ammo)
+		if item != null:
+			_gainFeedback()
 	elif hud and item != null and int(s[6]) != ammo:
 		ammo = int(s[6])
 		hud.updateAmmo(item, ammo)
+	if shielded != _lastShielded:
+		_lastShielded = shielded
+		if shielded:
+			$Shield.show()
+		else:
+			$Shield.hide()
+	# s[9]: trapped flag (host-side trap springs). Apply visuals only;
+	# damage/achievements already ran on the host.
+	if s.size() >= 10:
+		var trappedState := bool(s[9])
+		if trappedState and not trapped:
+			trapped = true
+			$Lock.show()
+			$Lock/Timer.start(2.0)
+		elif not trappedState and trapped:
+			untrap()
 	var newAlive := bool(s[4])
 	if alive and not newAlive:
 		alive = false
@@ -440,6 +462,32 @@ func apply_net_state(s: Array) -> void:
 	elif not alive and newAlive:
 		alive = true
 		updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
+
+func _netLabel(text: String, pos: Vector2, color: Color, size: int) -> void:
+	# Damage numbers are host-truth: guests skip local spawns and render the
+	# host's broadcast instead, so every screen shows the same numbers.
+	if Net.isOnline and not multiplayer.is_server():
+		return
+	Global.spawnFallingLabel(text, pos, color, size)
+	if Net.isOnline:
+		Net.damage_number.rpc(text, pos, color, size)
+
+func _gainFeedback() -> void:	# Host-side pickup() already played full feedback there; this mirrors the
+	# noticeable bits on guests when the synced item arrives.
+	$AudioPickup.play()
+	var pwrupName := 'unknown'
+	match item:
+		Global.PwrupEnum.DYNAMITE:
+			pwrupName = 'dynamite'
+		Global.PwrupEnum.REVOLVER:
+			pwrupName = 'revolver'
+		Global.PwrupEnum.SHIELD:
+			pwrupName = 'shield'
+		Global.PwrupEnum.TRAP:
+			pwrupName = 'trap'
+		Global.PwrupEnum.WHIP:
+			pwrupName = 'whip'
+	Global.spawnFallingLabel(pwrupName, global_position, Color.LIGHT_GREEN, 3)
 
 func _syncCrosshairs() -> void:
 	hideCrosshairs()
@@ -463,15 +511,18 @@ func _interpRemote() -> void:
 		return
 	var now := Time.get_ticks_msec() / 1000.0
 	var rt := now - NET_INTERP_DELAY
-	var d1: Dictionary = netSnaps[1]
-	while netSnaps.size() > 2 and float(d1.get("t", 0.0)) <= rt:
-		netSnaps.pop_front()
+	var d1: Dictionary = {}
+	while netSnaps.size() > 2:
 		d1 = netSnaps[1]
+		if float(d1.get("t", 0.0)) > rt:
+			break
+		netSnaps.pop_front()
 	var a: Dictionary = netSnaps[0]
 	if netSnaps.size() < 2:
 		var pa0: Vector2 = a["pos"]
 		global_position = global_position.lerp(pa0, 0.5)
 		linear_velocity = a["vel"]
+		netAim = a.get("aim", netAim)
 		return
 	var b: Dictionary = netSnaps[1]
 	var ta := float(a.get("t", 0.0))
@@ -480,18 +531,23 @@ func _interpRemote() -> void:
 	var pb: Vector2 = b["pos"]
 	var va: Vector2 = a["vel"]
 	var vb: Vector2 = b["vel"]
+	var aa: Vector2 = a.get("aim", netAim)
+	var ab: Vector2 = b.get("aim", netAim)
 	if rt <= ta:
 		global_position = pa
 		linear_velocity = va
+		netAim = aa
 		return
 	if rt >= tb:
 		var over := minf(rt - tb, 0.05)
 		global_position = pb + vb * over
 		linear_velocity = vb
+		netAim = ab
 		return
 	var f := clampf((rt - ta) / maxf(tb - ta, 0.001), 0.0, 1.0)
 	global_position = pa.lerp(pb, f)
 	linear_velocity = va.lerp(vb, f)
+	netAim = aa.lerp(ab, f)
 
 func _on_remove(id):
 	if playerId == id:
@@ -639,6 +695,8 @@ func shield() -> void:
 	shielded = true
 	Global.spawnFallingLabel("shielded!", global_position, Color.LIGHT_BLUE, 3)
 	$Shield.show()
+	if Net.isOnline and not Net.isHost and not isLocal:
+		return # host owns the duration; visibility mirrors via state sync
 	$AudioShieldStart.play()
 	$Shield/Anim.stop()
 	$Shield/Anim.play('shielded')
@@ -661,9 +719,9 @@ func hurt(damage: int, inflictorPlayerId) -> void:
 	if actualDamage > 0 && alive && !Global.playersFrozen:
 		var fallingMessageSize = int(actualDamage / 10) + 1
 		if shielded:
-			Global.spawnFallingLabel('0', global_position, Color.WHITE, fallingMessageSize)
+			_netLabel('0', global_position, Color.WHITE, fallingMessageSize)
 		else:
-			Global.spawnFallingLabel(str(int(actualDamage)), global_position, Color.TOMATO, fallingMessageSize)
+			_netLabel(str(int(actualDamage)), global_position, Color.TOMATO, fallingMessageSize)
 			hp -= actualDamage
 			if inflictorPlayerId != null && playerId != inflictorPlayerId && Global.playersPerks[inflictorPlayerId].has(Global.PerkEnum.VAMPIRE):
 				Global.getPlayer(inflictorPlayerId).heal(actualDamage)
@@ -674,7 +732,7 @@ func hurt(damage: int, inflictorPlayerId) -> void:
 
 func heal(amount) -> void:
 	if amount > 0 && alive && !Global.playersFrozen:
-		Global.spawnFallingLabel(str(int(amount)), global_position, Color.LIGHT_GREEN, int(amount / 10) + 1)
+		_netLabel(str(int(amount)), global_position, Color.LIGHT_GREEN, int(amount / 10) + 1)
 		hp = min(hp + amount, Global.playersMaxHp[playerId])
 		$Hurt/Anim.stop()
 		$Hurt/Anim.play("heal")
@@ -741,12 +799,17 @@ func _on_body_entered(body):
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):
+		# Online cactus hits are host-authorized; guests replay via Net.cactus_hit.
+		if Net.isOnline and not multiplayer.is_server():
+			return
 		# todo maybe hurt sound for the non-chicken as well?
 		if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
 			hurtSound(Res.AudioChickenHurt.pick_random())
 		hurt(Global.DAMAGE_CACTUS, null)
 		body.bounce()
 		body.pinch()
+		if Net.isOnline:
+			Net.cactus_hit.rpc(body.global_position)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 	# todo wall sound
 

@@ -14,12 +14,22 @@ func _process(delta):
 
 func spring(entity: Node2D) -> void:
 	if armed:
+		if Net.isOnline and not multiplayer.is_server():
+			return # host authorizes springs; guests reveal via Net.trap_sprung
 		if entity.is_in_group('trappables'):
 			entity.getTrapped(originPlayerId)
-			$Anim.play("spring")
-			var crack = Res.CrackAnimObject.instantiate()
-			crack.position = position
-			Global.addToScene(crack)
+			if Net.isOnline:
+				Net.trap_sprung.rpc(global_position)
+			showSprung()
+
+func showSprung() -> void:
+	# Visual reveal only (damage/flags arrive via host state sync).
+	if not armed:
+		return
+	$Anim.play("spring")
+	var crack = Res.CrackAnimObject.instantiate()
+	crack.position = position
+	Global.addToScene(crack)
 
 func convey() -> void:
 	conveyed = true

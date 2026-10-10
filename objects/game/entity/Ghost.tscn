@@ -116,7 +116,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Ghost" type="Area2D" groups=["shootables", "trappables", "whippables"]]
+[node name="Ghost" type="Area2D" groups=["shootables", "trappables", "whippables", "ghosts"]]
 z_index = 4
 z_as_relative = false
 collision_layer = 32

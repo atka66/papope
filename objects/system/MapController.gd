@@ -5,6 +5,7 @@ var determRandom: RandomNumberGenerator
 
 var isNightclub: bool = false
 var _stateAccum: float = 0.0
+var _ghostAccum: float = 0.0
 
 func _ready():
 	determRandom = RandomNumberGenerator.new()
@@ -51,6 +52,13 @@ func _process(delta):
 		if _stateAccum >= 0.05:
 			_stateAccum = 0.0
 			Net.push_state.rpc(_collectStates())
+		_ghostAccum += delta
+		if _ghostAccum >= 0.1:
+			_ghostAccum = 0.0
+			for ghost in get_tree().get_nodes_in_group("ghosts"):
+				if is_instance_valid(ghost):
+					Net.push_ghost.rpc((ghost as Node2D).global_position)
+					break
 
 func _collectStates() -> Array:
 	var states := []
@@ -62,7 +70,7 @@ func _collectStates() -> Array:
 		if player.has_method("getAimVector"):
 			aim = player.getAimVector()
 		states.append([player.playerId, player.global_position, player.linear_velocity,
-			player.hp, player.alive, itemInt, player.ammo, player.shielded, aim])
+			player.hp, player.alive, itemInt, player.ammo, player.shielded, aim, player.trapped])
 	return states
 
 func _input(event):
@@ -92,15 +100,23 @@ func pwrupSpawnLoop() -> void:
 func spawnNetPwrup(spawnerIdx: int, typeIdx: int) -> void:
 	if spawnerIdx < 0 or spawnerIdx >= spawners.size():
 		return
-	_spawnPwrupAt(spawners[spawnerIdx], typeIdx)
+	_spawnPwrupAt(spawners[spawnerIdx], typeIdx, spawnerIdx)
 
-func _spawnPwrupAt(spawner: Node2D, type) -> void:
+func despawnNetPwrup(spawnerIdx: int) -> void:
+	if spawnerIdx < 0 or spawnerIdx >= spawners.size():
+		return
+	var pwrupGroupName = spawners[spawnerIdx].name + "pwrups"
+	for spawnerPwrups in get_tree().get_nodes_in_group(pwrupGroupName):
+		spawnerPwrups.despawn()
+
+func _spawnPwrupAt(spawner: Node2D, type, spawnerIdx: int = -1) -> void:
 	var pwrupGroupName = spawner.name + "pwrups"
 	for spawnerPwrups in get_tree().get_nodes_in_group(pwrupGroupName):
 		spawnerPwrups.despawn()
 	var pwrup = Res.PwrupObject.instantiate()
 	pwrup.add_to_group(pwrupGroupName)
 	pwrup.type = type
+	pwrup.netSpawner = spawnerIdx
 	pwrup.position = spawner.position
 	get_parent().add_child(pwrup)
 
@@ -179,20 +195,22 @@ func initGhostSpawn() -> void:
 	if Net.isOnline and not multiplayer.is_server():
 		return
 	var nodeIdx := randi() % 2
+	var colorIdx := randi() % 4
 	if Net.isOnline:
-		Net.ghost_event.rpc(nodeIdx)
-	_ghostCountdown(nodeIdx)
+		Net.ghost_event.rpc(nodeIdx, colorIdx)
+	_ghostCountdown(nodeIdx, colorIdx)
 
-func spawnNetGhost(nodeIdx: int) -> void:
-	_ghostCountdown(nodeIdx)
+func spawnNetGhost(nodeIdx: int, colorIdx: int = -1) -> void:
+	_ghostCountdown(nodeIdx, colorIdx)
 
-func _ghostCountdown(nodeIdx: int) -> void:
+func _ghostCountdown(nodeIdx: int, colorIdx: int = -1) -> void:
 	var spawnNode = get_parent().get_node('GhostPath/SpawnNode' + str(nodeIdx))
 	var respawnTime = ProjectSettings.get("papope/ghost_respawn_time")
 	for i in range(respawnTime):
 		showCount(spawnNode.position, str(respawnTime - i))
 		await get_tree().create_timer(1).timeout
 	var ghost = Res.GhostObject.instantiate()
+	ghost.netColorIdx = colorIdx
 	ghost.destNode = spawnNode
 	get_parent().add_child(ghost)
 

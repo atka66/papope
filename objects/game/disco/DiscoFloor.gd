@@ -2,9 +2,20 @@ extends Node2D
 
 const orCols: Array[Color] = [Color("0042e1"), Color("a71cc8"), Color("e600a3"), Color("ff007a"), Color("ff4853"), Color("ff7b30"), Color("ffa710")]
 
+# online: the host rolls pattern + seed per cycle and broadcasts; everyone
+# (host included) runs the routine against discoRng so all screens show the
+# same light show. This matters on nightclub: darkened players are only
+# visible under lit tiles, so a divergent show would be unfair.
+var discoRng := RandomNumberGenerator.new()
+
 func _ready():
 	initPlayerTiles()
+	if Net.isOnline and not multiplayer.is_server():
+		return # guests run cycles via Net.disco_cycle
 	playRandomAnim()
+
+func _pickCol() -> Color:
+	return orCols[discoRng.randi_range(0, orCols.size() - 1)]
 
 func initPlayerTiles():
 	for i in range(4):
@@ -15,18 +26,42 @@ func getTile(row: int, col: int) -> Object:
 	return get_node('DiscoTile' + str(row) + str(col))
 
 func playRandomAnim():
-	await [square, diamond, brazilWave, brazilWaveDiagonal, colorAllRandomSync, sparkleRandom, scanLine].pick_random().call()
+	# Pattern + colors vary per cycle; online the host's roll is broadcast so
+	# every screen runs the identical show from the same seed.
+	var idx := randi() % 7
+	var seed := randi()
+	if Net.isOnline:
+		Net.disco_cycle.rpc(idx, seed)
+	await _runCycle(idx, seed)
+	playRandomAnim()
+
+func _runCycle(idx: int, seed: int) -> void:
+	discoRng.seed = seed
+	match idx:
+		0:
+			await square()
+		1:
+			await diamond()
+		2:
+			await brazilWave()
+		3:
+			await brazilWaveDiagonal()
+		4:
+			await colorAllRandomSync()
+		5:
+			await sparkleRandom()
+		_:
+			await scanLine()
 	for i in range(1, 6):
 		for j in range(1, 6):
 			getTile(i, j).off()
-	playRandomAnim()
 
 # animations
 
 func square(): # done
 	var waitTime = 0.2
 	for n in range(8):
-		var color = orCols.pick_random()
+		var color = _pickCol()
 		getTile(3, 3).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
 		getTile(2, 2).anim_pulse(color)
@@ -59,7 +94,7 @@ func square(): # done
 func diamond(): # done
 	var waitTime = 0.1
 	for n in range(9):
-		var color = orCols.pick_random()
+		var color = _pickCol()
 		getTile(3, 3).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
 		getTile(2, 3).anim_pulse(color)
@@ -92,10 +127,10 @@ func diamond(): # done
 		await get_tree().create_timer(waitTime).timeout
 
 func brazilWave(): # done
-	var inverted = randi() % 2 == 0
-	var vertical = randi() % 2 == 0
+	var inverted = discoRng.randi() % 2 == 0
+	var vertical = discoRng.randi() % 2 == 0
 	for n in range(8):
-		var color = orCols.pick_random()
+		var color = _pickCol()
 		for i in range(1, 6):
 			for j in range(1, 6):
 				var ix
@@ -115,7 +150,7 @@ func brazilWave(): # done
 func brazilWaveDiagonal(): # done
 	var waitTime = 0.1
 	for n in range(5):
-		var color = orCols.pick_random()
+		var color = _pickCol()
 		getTile(1, 1).anim_pulse(color) # i = 1; j = 1
 		await get_tree().create_timer(waitTime).timeout
 		getTile(1, 2).anim_pulse(color) # i = 2; j = 1
@@ -155,21 +190,21 @@ func colorAllRandomSync(): # done
 	for n in range(8):
 		for i in range(1, 6):
 			for j in range(1, 6):
-				getTile(i, j).on(orCols.pick_random())
+				getTile(i, j).on(_pickCol())
 		await get_tree().create_timer(0.6).timeout
 
 func sparkleRandom(): #done
 	for n in range(75):
-		getTile(randi_range(1, 5), randi_range(1, 5)).anim_pulse(orCols.pick_random())
+		getTile(discoRng.randi_range(1, 5), discoRng.randi_range(1, 5)).anim_pulse(_pickCol())
 		await get_tree().create_timer(0.05).timeout
 
 func scanLine(): # done
-	var rainbowLine = randi() % 2 == 0
+	var rainbowLine = discoRng.randi() % 2 == 0
 	for n in range(6):
-		var color = orCols.pick_random()
+		var color = _pickCol()
 		for i in range(1, 6):
 			if rainbowLine:
-				color = orCols.pick_random()
+				color = _pickCol()
 			for j in range(1, 6):
 				getTile(i, j).anim_pulse(color)
 				await get_tree().create_timer(0.02).timeout

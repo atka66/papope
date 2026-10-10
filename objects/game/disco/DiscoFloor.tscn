@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cjgyrppvjtkm2" path="res://objects/game/disco/DiscoTile.tscn" id="1_d4gac"]
 [ext_resource type="Script" path="res://objects/game/disco/DiscoFloor.gd" id="1_hsyyo"]
 
-[node name="DiscoFloor" type="Node2D"]
+[node name="DiscoFloor" type="Node2D" groups=["discofloor"]
 script = ExtResource("1_hsyyo")
 
 [node name="DiscoTile01" parent="." instance=ExtResource("1_d4gac")]
