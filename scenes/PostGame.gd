@@ -14,7 +14,7 @@ func _ready():
 				Global.playersCrowned[i] = false
 
 func _input(event):
-	if event.is_action_pressed('quit') or (event.is_action_pressed('accept') and canProceed):
+	if event.is_action_pressed('quit') or ((event.is_action_pressed('accept') or event.is_action_pressed('kb_accept')) and canProceed):
 		Global.goToLobby()
 
 func allowProceed():

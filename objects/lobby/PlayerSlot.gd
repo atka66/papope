@@ -51,3 +51,21 @@ func _input(event):
 				else:
 					Global.playersCrowned[playerId] = false
 					Global.leavePlayer(playerId)
+	if playerId == 0:
+		if Global.enableHotkeys && event.is_action_pressed("kb_accept") and Lobby.countdownNode == null:
+			if !Global.playersConnected[0]:
+				Global.connectPlayer(0)
+			if !Global.playersJoined[0]:
+				Global.joinPlayer(0, false)
+			else:
+				if Global.getNumberOfTeams() > 1:
+					Lobby.startCountdown()
+				else:
+					Lobby.warnCannotStart()
+		if Global.enableHotkeys && event.is_action_pressed("kb_cancel"):
+			if Global.playersJoined[0]:
+				if Lobby.countdownNode != null:
+					Lobby.stopCountdown()
+				else:
+					Global.playersCrowned[0] = false
+					Global.leavePlayer(0)

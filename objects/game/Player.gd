@@ -24,6 +24,7 @@ var dashMultiplier: int = 30
 var frictionCustom: float = 0.1
 
 var inputCd: bool = false
+var kbAimActive: bool = false
 
 func _ready():
 	if !Lobby && Global.MapControllerNode.isNightclub:
@@ -72,75 +73,103 @@ func _ready():
 		await get_tree().create_timer(0.2).timeout
 		pickup(Global.getRandomPwrup())
 
-func _input(event):
+func getMoveVector() -> Vector2:
 	var lhAxis: float = Input.get_joy_axis(playerId, JOY_AXIS_LEFT_X)
 	var lvAxis: float = Input.get_joy_axis(playerId, JOY_AXIS_LEFT_Y)
 	if abs(lhAxis) < 0.1:
 		lhAxis = 0.0
 	if abs(lvAxis) < 0.1:
 		lvAxis = 0.0
-
 	var lAxis: Vector2 = Vector2(lhAxis, lvAxis)
-
+	if playerId == 0 && Global.enableHotkeys:
+		# ignore WASD while typing in a text field (lobby feedback)
+		lAxis += Input.get_vector("kb_move_left", "kb_move_right", "kb_move_up", "kb_move_down")
+		if lAxis.length() > 1.0:
+			lAxis = lAxis.normalized()
 	if Global.playersPerks[playerId].has(Global.PerkEnum.REVERSE):
 		lAxis *= -1
-	if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS):
-		thrust = Vector2.ZERO
-	else:
-		thrust = lAxis * speed
+	return lAxis
 
-	if alive:
-		var rAxis: Vector2 = Vector2(
-			Input.get_joy_axis(playerId, JOY_AXIS_RIGHT_X),
-			Input.get_joy_axis(playerId, JOY_AXIS_RIGHT_Y)
-		)
-		
+func getAimVector() -> Vector2:
+	var stick: Vector2 = Vector2(
+		Input.get_joy_axis(playerId, JOY_AXIS_RIGHT_X),
+		Input.get_joy_axis(playerId, JOY_AXIS_RIGHT_Y)
+	)
+	if stick.length() > 0.15:
+		kbAimActive = false
+
+	var rAxis: Vector2
+	var mouseDist: float = -1.0
+	if playerId == 0 && kbAimActive:
+		var toMouse: Vector2 = get_global_mouse_position() - global_position
+		if toMouse.length() < 1.0:
+			toMouse = Vector2.RIGHT
+		mouseDist = toMouse.length()
+		rAxis = toMouse.normalized()
+	else:
+		rAxis = stick
 		if rAxis.x == 0.0 && rAxis.y == 0.0:
 			rAxis.x = 0.001
-		
-		if Global.playersPerks[playerId].has(Global.PerkEnum.BACKFIRE):
-			rAxis *= -1
-		if Global.playersPerks[playerId].has(Global.PerkEnum.RIGHT):
-			rAxis.x = max(0, rAxis.x)
-		
-		$LookVector.position = rAxis
-		$Crosshairs.rotation = rAxis.angle()
-		$Crosshairs.position = rAxis
-		
-		var factor = 0
-		match item:
-			Global.PwrupEnum.REVOLVER:
-				factor = 400
-			Global.PwrupEnum.DYNAMITE:
-				factor = 400
-			Global.PwrupEnum.WHIP:
-				factor = 192
-		if Global.playersPerks[playerId].has(Global.PerkEnum.LONG_ARMS):
-			factor *= 2
-		$Crosshairs.position *= factor
-		$LookVector.position *= factor
-		$LookLine.set_point_position(1, rAxis * factor)
 
-	if event.device == playerId && !inputCd:
-		inputCd = true
+	if Global.playersPerks[playerId].has(Global.PerkEnum.BACKFIRE):
+		rAxis *= -1
+	if Global.playersPerks[playerId].has(Global.PerkEnum.RIGHT):
+		rAxis.x = max(0, rAxis.x)
+
+	var factor = 0
+	match item:
+		Global.PwrupEnum.REVOLVER:
+			factor = 400
+		Global.PwrupEnum.DYNAMITE:
+			factor = 400
+		Global.PwrupEnum.WHIP:
+			factor = 192
+	if Global.playersPerks[playerId].has(Global.PerkEnum.LONG_ARMS):
+		factor *= 2
+	if mouseDist >= 0.0:
+		return rAxis.normalized() * min(mouseDist, float(factor))
+	return rAxis * factor
+
+func updateAimVisuals() -> void:
+	var rAxis: Vector2 = getAimVector()
+	$LookVector.position = rAxis
+	$Crosshairs.rotation = rAxis.angle()
+	$Crosshairs.position = rAxis
+	$LookLine.set_point_position(1, rAxis)
+
+func _input(event):
+	if playerId == 0 && (event is InputEventMouseMotion || event is InputEventMouseButton):
+		kbAimActive = true
+
+	var lAxis: Vector2 = getMoveVector()
+
+	var padDash: bool = event.is_action_pressed("game_dash")
+	var padUse: bool = event.is_action_pressed("game_use")
+	var kbDash: bool = playerId == 0 && event.is_action_pressed("kb_dash")
+	var kbUse: bool = playerId == 0 && event.is_action_pressed("kb_use")
+	if event.device == playerId || kbDash || kbUse:
 		if Lobby != null:
 			if Lobby.countdownNode == null && !ProjectSettings.get("papope/hosted_mode"):
-				if event.is_action_pressed("skin_next"):
-					Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
-					$BodyParts/Face.frame = Global.playersSkin[playerId]
-				if event.is_action_pressed("game_use"):
-					if Global.DEBUG:
-						Global.spawnFallingLabel(Global.DEATH_STRINGS[Global.DeathEnum.DEFAULT].pick_random(), global_position, Color.LIGHT_GREEN, 3)
-					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
-				if event.is_action_pressed("game_dash"):
-					Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
-				updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
+				if (event.is_action_pressed("skin_next") || padUse || padDash) && !inputCd:
+					inputCd = true
+					if event.is_action_pressed("skin_next"):
+						Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
+						$BodyParts/Face.frame = Global.playersSkin[playerId]
+					if padUse:
+						if Global.DEBUG:
+							Global.spawnFallingLabel(Global.DEATH_STRINGS[Global.DeathEnum.DEFAULT].pick_random(), global_position, Color.LIGHT_GREEN, 3)
+						Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
+					if padDash:
+						Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
+					updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
 		else:
 			if alive && !Global.playersFrozen && !isFallingIntoWater:
 				if !trapped && linear_velocity.length() < 2000 && lAxis.length() > 0:
-					if event.is_action_pressed("game_dash"):
+					if (padDash || kbDash) && !inputCd:
+						inputCd = true
 						dash(lAxis)
-				if event.is_action_pressed("game_use"):
+				if (padUse || kbUse) && !inputCd:
+					inputCd = true
 					useItem()
 
 func regenLoop() -> void:
@@ -197,6 +226,12 @@ func dash(axis: Vector2) -> void:
 # TODO account delta
 func _process(delta):
 	inputCd = false
+	if Global.playersPerks[playerId].has(Global.PerkEnum.NO_LEGS):
+		thrust = Vector2.ZERO
+	else:
+		thrust = getMoveVector() * speed
+	if alive:
+		updateAimVisuals()
 	if Global.MapControllerNode != null:
 		if alive:
 			if contactsLava && !shielded:

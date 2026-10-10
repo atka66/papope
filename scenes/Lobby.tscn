@@ -368,6 +368,7 @@ offset_left = 1296.0
 offset_right = 1360.0
 offset_bottom = 64.0
 toggle_mode = true
+focus_mode = 0
 texture_normal = ExtResource("13_2t2lg")
 stretch_mode = 3
 
@@ -424,6 +425,7 @@ placeholder_text = "WHAT'S ON YOUR MIND?..."
 wrap_mode = 1
 
 [node name="SubmitButton" type="Button" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer"]
+focus_mode = 0
 layout_mode = 2
 theme_override_fonts/font = ExtResource("14_fa23m")
 theme_override_font_sizes/font_size = 24
