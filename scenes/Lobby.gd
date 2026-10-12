@@ -14,7 +14,6 @@ var _bgAccum := 0.0
 var _bgSeed := 0
 var _bgStep := 0
 var _bgPeriod := 8.0
-var _lastBgDbg := 0
 
 func _ready():
 	Global.MusicNode.play('menu')
@@ -23,7 +22,7 @@ func _ready():
 		$MenuCanvas/FullscreenLabel.setText('atka66.itch.io/papope')
 	if Net.isOnline:
 		$MenuCanvas/OnlineButton.hide()
-		initPlayersOnline()
+		initPlayers()
 		Net.lobby_updated.connect(_on_lobby_updated)
 	else:
 		$MenuCanvas/OnlineLabel.hide()
@@ -57,7 +56,7 @@ func _process(delta):
 		# interpolate the snapshots, so collisions behave like in-map.
 		if Net.isHost:
 			_netAccum += delta
-			if _netAccum >= 0.05:
+			if _netAccum >= Net.STATE_RATE:
 				_netAccum = 0.0
 				Net.push_state.rpc(Global.getPlayerStates())
 			# 'random' background steps on all screens via broadcast, aligned
@@ -130,7 +129,12 @@ func initPlayers() -> void:
 	#Global.playersAchievements = [[Global.AchiEnum.UNDERDOG, Global.AchiEnum.NO_REFUNDS, Global.AchiEnum.GUNSLINGER, Global.AchiEnum.DAREDEVIL, Global.AchiEnum.TRIPLE_KILL], [Global.AchiEnum.TRIPLE_KILL, Global.AchiEnum.TRIPLE_KILL], [], []]
 	Global.playersPerks = [[], [], [], []]
 	Global.initPlayerStats()
-	
+
+	if Net.isOnline:
+		for i in range(4):
+			if Global.playersJoined[i]:
+				Global.joinPlayer(i, true)
+		return
 	for i in range(4):
 		if ProjectSettings.get("papope/hosted_mode"):
 			Global.playersJoined[i] = false
@@ -138,30 +142,8 @@ func initPlayers() -> void:
 			if Global.playersConnected[i] && Global.playersJoined[i]:
 				Global.joinPlayer(i, true)
 
-func initPlayersOnline() -> void:
-	Global.playersFrozen = false
-	Global.playersPoints = [0, 0, 0, 0]
-	Global.matchSeed = 123
-	Global.playersAchievements = [[], [], [], []]
-	Global.playersPerks = [[], [], [], []]
-	Global.initPlayerStats()
-	for i in range(4):
-		if Global.playersJoined[i]:
-			Global.joinPlayer(i, true)
-
 func _on_online_button_pressed():
 	get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
-
-func _dbgBg(what: String) -> void:
-	# Debug builds only: per-peer replay timeline. Compare the +Nms
-	# intervals between consecutive lines on each peer; they must hold
-	# steady (~8000ms for steps). Clocks differ per machine, so only
-	# same-peer intervals are comparable, not absolute times.
-	if !Global.DEBUG:
-		return
-	var now := Time.get_ticks_msec()
-	print("[BG] ", what, " (+", now - _lastBgDbg, "ms)")
-	_lastBgDbg = now
 
 func advanceBgFrame() -> void:
 	# Host-side 'random' rotation: deterministic seeded order shared by all.
@@ -176,7 +158,6 @@ func advanceBgFrame() -> void:
 	# Full replay (frame + pan restart) like a selection change: keeps the
 	# pan phase aligned on all peers instead of drifting per load time.
 	applyBgFrame(frame, true)
-	_dbgBg("host step %d -> frame %d" % [_bgStep, frame])
 	Net.bg_frame.rpc(frame, true)
 
 func applyBgFrame(frame: int, replay: bool) -> void:
@@ -185,7 +166,6 @@ func applyBgFrame(frame: int, replay: bool) -> void:
 		return
 	var frameCount: int = bg.sprite_frames.get_frame_count('default')
 	bg.frame = frame % frameCount
-	_dbgBg("apply frame %d replay %s" % [frame, str(replay)])
 	if replay:
 		var anim = get_node_or_null("MovingBackground/Anim")
 		if anim != null:
@@ -224,10 +204,8 @@ func _on_lobby_updated():
 				var frameCount: int = bg.sprite_frames.get_frame_count('default')
 				var frame := _bgSeed % frameCount
 				applyBgFrame(frame, true)
-				_dbgBg("host select random seed %d -> frame %d" % [_bgSeed, frame])
 				Net.bg_frame.rpc(frame, true)
 		elif mapName != 'random' or !Net.isOnline:
-			_dbgBg("select " + mapName)
 			restartMovingBackground()
 		# else: online guest with 'random' waits for the host's bg_frame.
 

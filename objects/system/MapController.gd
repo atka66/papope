@@ -49,11 +49,11 @@ func _process(delta):
 	# Host replicates player states to all clients ~20 times per second.
 	if Net.isOnline and multiplayer.is_server():
 		_stateAccum += delta
-		if _stateAccum >= 0.05:
+		if _stateAccum >= Net.STATE_RATE:
 			_stateAccum = 0.0
 			Net.push_state.rpc(_collectStates())
 		_ghostAccum += delta
-		if _ghostAccum >= 0.1:
+		if _ghostAccum >= Net.GHOST_RATE:
 			_ghostAccum = 0.0
 			for ghost in get_tree().get_nodes_in_group("ghosts"):
 				if is_instance_valid(ghost):

@@ -11,6 +11,10 @@ signal lobby_updated
 signal host_left
 
 const MAX_SLOTS := 4
+const STATE_RATE := 0.05
+const INTERP_DELAY := 0.1
+const GHOST_RATE := 0.1
+const JOIN_TIMEOUT := 10.0
 
 var isOnline := false
 var isHost := false
@@ -33,10 +37,6 @@ func _ready() -> void:
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 # ------------------------------------------------------------------ lifecycle
-
-func listRooms() -> Array:
-	# Stub for a future lobby registry; v1 is manual IP only.
-	return []
 
 func host(gamePort: int = -1) -> bool:
 	leave()
@@ -83,7 +83,7 @@ func join(ipText: String) -> void:
 	isHost = false
 	localSlot = -1
 	_wasJoined = false
-	_joinTimer = get_tree().create_timer(10.0)
+	_joinTimer = get_tree().create_timer(JOIN_TIMEOUT)
 	_joinTimer.timeout.connect(_on_join_timeout)
 
 func leave() -> void:
@@ -119,6 +119,40 @@ func get_local_ips() -> String:
 	return pick if not pick.is_empty() else "127.0.0.1"
 
 # ------------------------------------------------------------------ host helpers
+
+func _isHostSender() -> bool:
+	if not isOnline:
+		return false
+	var sender := multiplayer.get_remote_sender_id()
+	return sender == 1 or sender == 0
+
+func find_nearest(group: String, pos: Vector2, radius: float):
+	var best = null
+	var bestDist := radius
+	for node in get_tree().get_nodes_in_group(group):
+		if node == null or not is_instance_valid(node):
+			continue
+		if node.is_queued_for_deletion():
+			continue
+		var d: float = (node as Node2D).global_position.distance_to(pos)
+		if d < bestDist:
+			bestDist = d
+			best = node
+	return best
+
+func first_in_group(group: String):
+	for node in get_tree().get_nodes_in_group(group):
+		if is_instance_valid(node):
+			return node
+	return null
+
+func advance_match() -> void:
+	if not isOnline:
+		Global.goToMap()
+		return
+	if multiplayer.is_server():
+		host_start_match()
+	# clients wait for the host RPC
 
 func _reset_lobby_state() -> void:
 	Global.playersConnected = [true, false, false, false]
@@ -285,9 +319,7 @@ func refuse_slot() -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func sync_lobby(connected: Array, joined: Array, team: Array, skin: Array, options: Dictionary, points: Array, peerSlots: Dictionary) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	Global.playersConnected = connected
 	Global.playersJoined = joined
@@ -329,9 +361,7 @@ func request_lobby_change(kind: String, slot: int, value) -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func do_countdown() -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	var lobby := get_node_or_null("/root/Lobby")
 	if lobby != null and lobby.has_method("startCountdown") and lobby.countdownNode == null:
@@ -339,9 +369,7 @@ func do_countdown() -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func undo_countdown() -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	var lobby := get_node_or_null("/root/Lobby")
 	if lobby != null and lobby.has_method("stopCountdown") and lobby.countdownNode != null:
@@ -349,20 +377,16 @@ func undo_countdown() -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func enter_map(mapName: String, maxHp: Array, points: Array, mapSeed: int = 123) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	Global.playersMaxHp = maxHp
 	Global.playersPoints = points
 	Global.matchSeed = mapSeed
-	Global.goToMapOnline(mapName)
+	Global.goToMap(mapName)
 
 @rpc("any_peer", "call_local", "reliable")
 func enter_postgame(achi: Array = [], stats: Array = [], kills: Array = []) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	if achi.size() == 4:
 		Global.playersAchievements = achi
@@ -374,17 +398,13 @@ func enter_postgame(achi: Array = [], stats: Array = [], kills: Array = []) -> v
 
 @rpc("any_peer", "call_local", "reliable")
 func go_lobby() -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
 
 @rpc("any_peer", "call_local", "reliable")
 func remove_map_player(slot: int) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	var player := Global.getPlayer(slot)
 	if player != null:
@@ -396,18 +416,14 @@ func remove_map_player(slot: int) -> void:
 
 @rpc("any_peer", "reliable")
 func spawn_pwrup(spawnerIdx: int, typeIdx: int) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	if Global.MapControllerNode != null and is_instance_valid(Global.MapControllerNode) and Global.MapControllerNode.has_method("spawnNetPwrup"):
 		Global.MapControllerNode.spawnNetPwrup(spawnerIdx, typeIdx)
 
 @rpc("any_peer", "reliable")
 func ghost_event(nodeIdx: int, colorIdx: int = -1) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	if Global.MapControllerNode != null and is_instance_valid(Global.MapControllerNode) and Global.MapControllerNode.has_method("spawnNetGhost"):
 		Global.MapControllerNode.spawnNetGhost(nodeIdx, colorIdx)
@@ -418,53 +434,36 @@ func push_ghost(pos: Vector2) -> void:
 		return
 	if multiplayer.get_remote_sender_id() != 1:
 		return
-	for ghost in get_tree().get_nodes_in_group("ghosts"):
-		if is_instance_valid(ghost) and ghost.has_method("push_snapshot"):
-			ghost.push_snapshot(pos)
-			break
+	var ghost = first_in_group("ghosts")
+	if ghost != null and ghost.has_method("push_snapshot"):
+		ghost.push_snapshot(pos)
 
 @rpc("any_peer", "reliable")
 func ghost_died() -> void:
-	if not isOnline:
+	if not _isHostSender():
 		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
-		return
-	for ghost in get_tree().get_nodes_in_group("ghosts"):
-		if is_instance_valid(ghost) and ghost.has_method("mirrorDeath"):
-			ghost.mirrorDeath()
-			break
+	var ghost = first_in_group("ghosts")
+	if ghost != null and ghost.has_method("mirrorDeath"):
+		ghost.mirrorDeath()
 
 @rpc("any_peer", "reliable")
 func pellet_eaten(pos: Vector2) -> void:
-	if not isOnline:
+	if not _isHostSender():
 		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
-		return
-	var best = null
-	var bestDist := 48.0
-	for node in get_tree().get_nodes_in_group("pellets"):
-		if node != null and is_instance_valid(node) and not node.is_queued_for_deletion():
-			var d: float = (node as Node2D).global_position.distance_to(pos)
-			if d < bestDist:
-				bestDist = d
-				best = node
+	var best = find_nearest("pellets", pos, 48.0)
 	if best != null and best.has_method("consume"):
 		best.consume()
 
 @rpc("any_peer", "reliable")
 func despawn_pwrup(spawnerIdx: int) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	if Global.MapControllerNode != null and is_instance_valid(Global.MapControllerNode) and Global.MapControllerNode.has_method("despawnNetPwrup"):
 		Global.MapControllerNode.despawnNetPwrup(spawnerIdx)
 
 @rpc("any_peer", "reliable")
 func car_event(laneName: String, carSpeed: float, paint: int) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	var scene := get_tree().current_scene
 	if scene == null:
@@ -475,35 +474,17 @@ func car_event(laneName: String, carSpeed: float, paint: int) -> void:
 
 @rpc("any_peer", "reliable")
 func trap_sprung(trapPos: Vector2) -> void:
-	if not isOnline:
+	if not _isHostSender():
 		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
-		return
-	var best = null
-	var bestDist := 200.0
-	for node in get_tree().get_nodes_in_group("conveyables"):
-		if node != null and is_instance_valid(node) and node.has_method("showSprung"):
-			var d: float = (node as Node2D).global_position.distance_to(trapPos)
-			if d < bestDist:
-				bestDist = d
-				best = node
-	if best != null:
+	var best = find_nearest("conveyables", trapPos, 200.0)
+	if best != null and best.has_method("showSprung"):
 		best.showSprung()
 
 @rpc("any_peer", "reliable")
 func cactus_hit(cactusPos: Vector2) -> void:
-	if not isOnline:
+	if not _isHostSender():
 		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
-		return
-	var best = null
-	var bestDist := 120.0
-	for node in get_tree().get_nodes_in_group("cacti"):
-		if node != null and is_instance_valid(node):
-			var d: float = (node as Node2D).global_position.distance_to(cactusPos)
-			if d < bestDist:
-				bestDist = d
-				best = node
+	var best = find_nearest("cacti", cactusPos, 120.0)
 	if best != null:
 		best.bounce()
 		best.pinch()
@@ -519,20 +500,15 @@ func damage_number(text: String, pos: Vector2, color: Color, size: int) -> void:
 
 @rpc("any_peer", "reliable")
 func disco_cycle(idx: int, cycleSeed: int) -> void:
-	if not isOnline:
+	if not _isHostSender():
 		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
-		return
-	for discoFloor in get_tree().get_nodes_in_group("discofloor"):
-		if is_instance_valid(discoFloor) and discoFloor.has_method("adoptCycle"):
-			discoFloor.adoptCycle(idx, cycleSeed)
-			break
+	var discoFloor = first_in_group("discofloor")
+	if discoFloor != null and discoFloor.has_method("adoptCycle"):
+		discoFloor.adoptCycle(idx, cycleSeed)
 
 @rpc("any_peer", "reliable")
 func collision_fx(pos: Vector2, animScale: float, lookPos: Vector2) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	var anim = Res.CollisionAnimObject.instantiate()
 	anim.scale = Vector2(animScale, animScale)
@@ -542,9 +518,7 @@ func collision_fx(pos: Vector2, animScale: float, lookPos: Vector2) -> void:
 
 @rpc("any_peer", "reliable")
 func bg_frame(frame: int, replay: bool) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	var lobby := get_node_or_null("/root/Lobby")
 	if lobby == null or not lobby.has_method("applyBgFrame"):
@@ -557,18 +531,15 @@ func request_disco() -> void:
 	if not isOnline or not multiplayer.is_server():
 		return
 	var sender := multiplayer.get_remote_sender_id()
-	for discoFloor in get_tree().get_nodes_in_group("discofloor"):
-		if is_instance_valid(discoFloor):
-			var cur: Array = discoFloor.get("_current")
-			if cur.size() == 2 and int(cur[0]) >= 0:
-				disco_cycle.rpc_id(sender, int(cur[0]), int(cur[1]))
-			break
+	var discoFloor = first_in_group("discofloor")
+	if discoFloor != null:
+		var cur: Array = discoFloor.get("_current")
+		if cur.size() == 2 and int(cur[0]) >= 0:
+			disco_cycle.rpc_id(sender, int(cur[0]), int(cur[1]))
 
 @rpc("any_peer", "reliable")
 func round_end(aliveTeamId: int, points: Array) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	Global.playersPoints = points
 	if Global.MapControllerNode != null and is_instance_valid(Global.MapControllerNode) and Global.MapControllerNode.has_method("showNetRoundEnd"):
@@ -577,9 +548,7 @@ func round_end(aliveTeamId: int, points: Array) -> void:
 @rpc("any_peer", "reliable")
 func notify_action(slot: int, action: String, aimVec: Vector2, moveVec: Vector2) -> void:
 	# Host broadcast: every peer executes the action on its copy of the player.
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	_exec_action(slot, action, aimVec, moveVec)
 
@@ -595,14 +564,14 @@ func _exec_action(slot: int, action: String, aimVec: Vector2, moveVec: Vector2) 
 	var player := Global.getPlayer(slot)
 	if player == null or not player.alive:
 		return
-	player.aimOverride = aimVec
-	player.hasAimOverride = true
+	player.remoteAim = aimVec
+	player.hasRemoteAim = true
 	match action:
 		"use":
 			player.useItem()
 		"dash":
 			player.dash(moveVec)
-	player.hasAimOverride = false
+	player.hasRemoteAim = false
 
 @rpc("any_peer", "reliable")
 func notify_fall(slot: int, isLava: bool) -> void:
@@ -624,8 +593,8 @@ func send_input(slot: int, moveVec: Vector2, aimVec: Vector2) -> void:
 	var player := Global.getPlayer(slot)
 	if player != null:
 		player.netMove = moveVec
-		player.netAim = aimVec
-		player.hasNetAim = true
+		player.remoteAim = aimVec
+		player.hasRemoteAim = true
 
 @rpc("any_peer", "unreliable")
 func push_state(states: Array) -> void:
@@ -652,9 +621,7 @@ func submit_perks(slot: int, perks: Array) -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func push_perks(perks: Array) -> void:
-	if not isOnline:
-		return
-	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+	if not _isHostSender():
 		return
 	Global.playersPerks = perks
 	var scene := get_tree().current_scene

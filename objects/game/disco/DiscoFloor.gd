@@ -8,7 +8,6 @@ const orCols: Array[Color] = [Color("0042e1"), Color("a71cc8"), Color("e600a3"),
 # visible under lit tiles, so a divergent show would be unfair.
 var discoRng := RandomNumberGenerator.new()
 var _current := [-1, 0]
-var _cycleStarted := false
 var _gen := 0
 
 # Writes from a superseded cycle go here instead of the tiles: a newer
@@ -22,12 +21,9 @@ var _sink := TileSink.new()
 func _ready():
 	initPlayerTiles()
 	if Net.isOnline and not multiplayer.is_server():
-		# The host's broadcast may predate our load; ask (twice, to survive
-		# any ordering skew) for the current cycle to be unicast back.
+		# The host's broadcast may predate our load; ask for the current
+		# cycle to be unicast back (host also pushes on join, see Net).
 		Net.request_disco.rpc_id(1)
-		await get_tree().create_timer(3.0).timeout
-		if not _cycleStarted and is_inside_tree():
-			Net.request_disco.rpc_id(1)
 		return # guests run cycles via Net.disco_cycle
 	playRandomAnim()
 
@@ -68,7 +64,6 @@ func playRandomAnim():
 	playRandomAnim()
 
 func _runCycle(idx: int, cycleSeed: int, g: int) -> void:
-	_cycleStarted = true
 	discoRng.seed = cycleSeed
 	match idx:
 		0:

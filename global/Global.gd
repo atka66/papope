@@ -216,20 +216,19 @@ func initPlayerStats() -> void:
 func goToLobby() -> void:
 	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
 
-func goToMap() -> void:
-	if getWinnerTeamByScore() < 0:
+func goToMap(mapName: String = "") -> void:
+	if mapName != "":
+		selectedMap = mapName
+	else:
+		if getWinnerTeamByScore() >= 0:
+			get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
+			return
 		var selectedMapIndex: int
 		if optionsSelected['map'] == 0:
 			selectedMapIndex = (randi() % (len(options['map']) - 1) + 1)
 		else:
 			selectedMapIndex = optionsSelected['map']
-
-		goToMapOnline(options['map'][selectedMapIndex])
-	else:
-		get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
-
-func goToMapOnline(mapName: String) -> void:
-	selectedMap = mapName
+		selectedMap = options['map'][selectedMapIndex]
 
 	if selectedMap == 'hell': get_tree().change_scene_to_file("res://scenes/maps/MapHell.tscn")
 	if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")

@@ -11,9 +11,4 @@ func _ready():
 		$Anim.play('draw')
 	
 	await $Anim.animation_finished
-	if Net.isOnline:
-		# Host advances everyone to the next round together; clients wait.
-		if multiplayer.is_server():
-			Net.host_start_match()
-	else:
-		Global.goToMap()
+	Net.advance_match()

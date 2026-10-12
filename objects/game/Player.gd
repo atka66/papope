@@ -31,10 +31,8 @@ var onConveyorBelt: bool = false
 # online multiplayer: only the owning peer polls hardware for this player
 var isLocal: bool = true
 var netMove: Vector2 = Vector2.ZERO
-var netAim: Vector2 = Vector2.ZERO
-var hasNetAim: bool = false
-var aimOverride: Vector2 = Vector2.ZERO
-var hasAimOverride: bool = false
+var remoteAim: Vector2 = Vector2.ZERO
+var hasRemoteAim: bool = false
 var _sendAccum: float = 0.0
 var _lastTeam: int = -1
 var _lastSkin: int = -1
@@ -94,6 +92,9 @@ func _ready():
 		await get_tree().create_timer(0.2).timeout
 		pickup(Global.getRandomPwrup())
 
+func ownsKeyboard() -> bool:
+	return playerId == 0 or (Net.isOnline and isLocal)
+
 func getMoveVector() -> Vector2:
 	# Online: host drives remote slots from forwarded inputs, clients hold still
 	# between host state syncs (never poll another peer's gamepad).
@@ -108,7 +109,7 @@ func getMoveVector() -> Vector2:
 	if abs(lvAxis) < 0.1:
 		lvAxis = 0.0
 	var lAxis: Vector2 = Vector2(lhAxis, lvAxis)
-	if (playerId == 0 || (Net.isOnline && isLocal)) && Global.enableHotkeys:
+	if ownsKeyboard() && Global.enableHotkeys:
 		# ignore WASD while typing in a text field (lobby feedback)
 		lAxis += Input.get_vector("kb_move_left", "kb_move_right", "kb_move_up", "kb_move_down")
 		if lAxis.length() > 1.0:
@@ -118,10 +119,8 @@ func getMoveVector() -> Vector2:
 	return lAxis
 
 func getAimVector() -> Vector2:
-	if hasAimOverride:
-		return aimOverride
-	if Net.isOnline and not isLocal and hasNetAim:
-		return netAim
+	if Net.isOnline and not isLocal and hasRemoteAim:
+		return remoteAim
 	var stick: Vector2 = Vector2(
 		Input.get_joy_axis(playerId, JOY_AXIS_RIGHT_X),
 		Input.get_joy_axis(playerId, JOY_AXIS_RIGHT_Y)
@@ -131,7 +130,7 @@ func getAimVector() -> Vector2:
 
 	var rAxis: Vector2
 	var mouseDist: float = -1.0
-	if (playerId == 0 || (Net.isOnline && isLocal)) && kbAimActive:
+	if ownsKeyboard() && kbAimActive:
 		var toMouse: Vector2 = get_global_mouse_position() - global_position
 		if toMouse.length() < 1.0:
 			toMouse = Vector2.RIGHT
@@ -172,7 +171,7 @@ func _input(event):
 	# Online: only the owning peer drives this player (device ids are per-machine).
 	if Net.isOnline and not isLocal:
 		return
-	if playerId == 0 || (Net.isOnline && isLocal):
+	if ownsKeyboard():
 		if event is InputEventMouseMotion || event is InputEventMouseButton:
 			kbAimActive = true
 
@@ -180,8 +179,8 @@ func _input(event):
 
 	var padDash: bool = event.is_action_pressed("game_dash")
 	var padUse: bool = event.is_action_pressed("game_use")
-	var kbDash: bool = (playerId == 0 || (Net.isOnline && isLocal)) && event.is_action_pressed("kb_dash")
-	var kbUse: bool = (playerId == 0 || (Net.isOnline && isLocal)) && event.is_action_pressed("kb_use")
+	var kbDash: bool = ownsKeyboard() && event.is_action_pressed("kb_dash")
+	var kbUse: bool = ownsKeyboard() && event.is_action_pressed("kb_use")
 	var ownsEvent: bool = (Net.isOnline && isLocal) || (!Net.isOnline && event.device == playerId)
 	if ownsEvent || kbDash || kbUse:
 		if Lobby != null:
@@ -376,7 +375,7 @@ func _physics_process(delta):
 			# Forward owned inputs in map and lobby alike; the host
 			# simulates every non-owned body from these.
 			_sendAccum += delta
-			if _sendAccum >= 0.05:
+			if _sendAccum >= Net.STATE_RATE:
 				_sendAccum = 0.0
 				Net.send_input.rpc_id(1, playerId, getMoveVector(), getAimVector())
 
@@ -400,9 +399,9 @@ func apply_net_state(s: Array) -> void:
 		netSnaps.append({"t": Time.get_ticks_msec() / 1000.0, "pos": targetPos, "vel": targetVel, "aim": incomingAim})
 		while netSnaps.size() > 4:
 			netSnaps.pop_front()
-		if not hasNetAim:
-			netAim = incomingAim
-			hasNetAim = true
+		if not hasRemoteAim:
+			remoteAim = incomingAim
+			hasRemoteAim = true
 	elif isLocal:
 		# Own predicted body: fully trust local sim while the error is small,
 		# snap only on large divergence (dash, knockback, teleport).
@@ -420,8 +419,8 @@ func apply_net_state(s: Array) -> void:
 	hp = int(s[3])
 	shielded = bool(s[7])
 	if not (Net.isOnline and not Net.isHost and not isLocal):
-		netAim = s[8]
-		hasNetAim = true
+		remoteAim = s[8]
+		hasRemoteAim = true
 	var itemInt := int(s[5])
 	var newItem = null
 	if itemInt >= 0:
@@ -482,18 +481,7 @@ func _netLabel(text: String, pos: Vector2, color: Color, size: int) -> void:
 func _gainFeedback() -> void:	# Host-side pickup() already played full feedback there; this mirrors the
 	# noticeable bits on guests when the synced item arrives.
 	$AudioPickup.play()
-	var pwrupName := 'unknown'
-	match item:
-		Global.PwrupEnum.DYNAMITE:
-			pwrupName = 'dynamite'
-		Global.PwrupEnum.REVOLVER:
-			pwrupName = 'revolver'
-		Global.PwrupEnum.SHIELD:
-			pwrupName = 'shield'
-		Global.PwrupEnum.TRAP:
-			pwrupName = 'trap'
-		Global.PwrupEnum.WHIP:
-			pwrupName = 'whip'
+	var pwrupName := str(Global.PwrupEnum.keys()[int(item)]).to_lower()
 	Global.spawnFallingLabel(pwrupName, global_position, Color.LIGHT_GREEN, 3)
 
 func _syncCrosshairs() -> void:
@@ -529,7 +517,7 @@ func _interpRemote() -> void:
 		var pa0: Vector2 = a["pos"]
 		global_position = global_position.lerp(pa0, 0.5)
 		linear_velocity = a["vel"]
-		netAim = a.get("aim", netAim)
+		remoteAim = a.get("aim", remoteAim)
 		return
 	var b: Dictionary = netSnaps[1]
 	var ta := float(a.get("t", 0.0))
@@ -538,23 +526,23 @@ func _interpRemote() -> void:
 	var pb: Vector2 = b["pos"]
 	var va: Vector2 = a["vel"]
 	var vb: Vector2 = b["vel"]
-	var aa: Vector2 = a.get("aim", netAim)
-	var ab: Vector2 = b.get("aim", netAim)
+	var aa: Vector2 = a.get("aim", remoteAim)
+	var ab: Vector2 = b.get("aim", remoteAim)
 	if rt <= ta:
 		global_position = pa
 		linear_velocity = va
-		netAim = aa
+		remoteAim = aa
 		return
 	if rt >= tb:
 		var over := minf(rt - tb, 0.05)
 		global_position = pb + vb * over
 		linear_velocity = vb
-		netAim = ab
+		remoteAim = ab
 		return
 	var f := clampf((rt - ta) / maxf(tb - ta, 0.001), 0.0, 1.0)
 	global_position = pa.lerp(pb, f)
 	linear_velocity = va.lerp(vb, f)
-	netAim = aa.lerp(ab, f)
+	remoteAim = aa.lerp(ab, f)
 
 func _on_remove(id):
 	if playerId == id:
