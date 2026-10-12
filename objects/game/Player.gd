@@ -44,9 +44,9 @@ const NET_INTERP_DELAY := 0.1
 var netSnaps: Array = []
 
 func _ready():
-	if Net.isOnline and not Net.isHost and not isLocal:
-		# Guests never integrate remote bodies: snapshots drive them via
-		# interpolation, so no local physics ever fights the network state.
+	if Net.isOnline and not isLocal and not Net.isHost:
+		# Guests never integrate non-owned bodies anywhere (map or lobby):
+		# the host simulates everything, snapshots drive the rest.
 		freeze = true
 	if !Lobby && Global.MapControllerNode.isNightclub:
 		$BodyParts/Face.modulate = Color.BLACK
@@ -356,14 +356,15 @@ func _process(delta):
 					var aliveTeamId: int = Global.getWinnerTeam()
 					if aliveTeamId != -1:
 						Global.MapControllerNode.endRound(aliveTeamId)
-	if Net.isOnline and not Net.isHost and not isLocal and Lobby == null:
+	if _isNetGhost():
 		_interpRemote()
 
+func _isNetGhost() -> bool:
+	return Net.isOnline and not isLocal and freeze
+
 func _physics_process(delta):
-	# Online guests don't integrate remote players locally: they coast on the
-	# last broadcast velocity. Simulating them (friction + zero thrust) then
-	# snapping on every host update is what caused the back-and-forth jiggle.
-	var coast := Net.isOnline and not Net.isHost and not isLocal
+	# Online ghosts don't integrate locally (frozen): snapshots drive them.
+	var coast := _isNetGhost()
 	if !isFallingIntoWater && !inSpace && !coast:
 		apply_central_impulse(-linear_velocity * frictionCustom)
 		if alive && !Global.playersFrozen && !trapped:
@@ -371,7 +372,9 @@ func _physics_process(delta):
 	if Net.isOnline:
 		if Lobby != null:
 			_refreshLobbyVisuals()
-		elif isLocal && !Net.isHost && alive:
+		if isLocal && !Net.isHost && (Lobby != null || alive):
+			# Forward owned inputs in map and lobby alike; the host
+			# simulates every non-owned body from these.
 			_sendAccum += delta
 			if _sendAccum >= 0.05:
 				_sendAccum = 0.0
@@ -440,6 +443,10 @@ func apply_net_state(s: Array) -> void:
 			$Shield.show()
 		else:
 			$Shield.hide()
+			if not isLocal:
+				# Remote copies have no expiry anim; mirror the end sound too
+				# (local copies play it via their own unshield anim).
+				$AudioShieldEnd.play()
 	# s[9]: trapped flag (host-side trap springs). Apply visuals only;
 	# damage/achievements already ran on the host.
 	if s.size() >= 10:
@@ -696,7 +703,8 @@ func shield() -> void:
 	Global.spawnFallingLabel("shielded!", global_position, Color.LIGHT_BLUE, 3)
 	$Shield.show()
 	if Net.isOnline and not Net.isHost and not isLocal:
-		return # host owns the duration; visibility mirrors via state sync
+		$AudioShieldStart.play()
+		return # host owns the duration; visibility/end sound mirror via state sync
 	$AudioShieldStart.play()
 	$Shield/Anim.stop()
 	$Shield/Anim.play('shielded')
@@ -790,12 +798,17 @@ func _on_body_entered(body):
 	if body.is_in_group('players'):
 		if !hit:
 			body.hit = true
-			var collisionAnim = Res.CollisionAnimObject.instantiate()
-			var animScale = (thrust.length() + body.thrust.length()) / 60
-			collisionAnim.scale = Vector2(animScale, animScale)
-			collisionAnim.position = global_position - ((global_position - body.global_position) / 2)
-			collisionAnim.look_at(global_position)
-			Global.addToScene(collisionAnim)
+			if Net.isOnline and not multiplayer.is_server():
+				pass # host authors the FX; impulses below stay local
+			else:
+				var collisionAnim = Res.CollisionAnimObject.instantiate()
+				var animScale = (thrust.length() + body.thrust.length()) / 60
+				collisionAnim.scale = Vector2(animScale, animScale)
+				collisionAnim.position = global_position - ((global_position - body.global_position) / 2)
+				collisionAnim.look_at(global_position)
+				Global.addToScene(collisionAnim)
+				if Net.isOnline:
+					Net.collision_fx.rpc(collisionAnim.position, animScale, global_position)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):

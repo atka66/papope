@@ -160,14 +160,20 @@ func host_start_match() -> void:
 	if not isOnline or not multiplayer.is_server():
 		return
 	if Global.getWinnerTeamByScore() >= 0:
-		enter_postgame.rpc()
+		# Podium data is final here: pre-derive post-match achievements so the
+		# transmitted lists render identically on all screens.
+		for i in range(4):
+			if Global.playersJoined[i]:
+				Global.finalizeAchievements(i)
+		enter_postgame.rpc(Global.playersAchievements.duplicate(true), Global.playersStats.duplicate(true), Global.playersKills.duplicate())
 		return
 	var mapName := "hell"
 	var idx: int = Global.optionsSelected["map"]
 	if idx == 0:
 		idx = randi() % (Global.options["map"].size() - 1) + 1
 	mapName = Global.options["map"][idx]
-	enter_map.rpc(mapName, Global.playersMaxHp.duplicate(), Global.playersPoints.duplicate())
+	Global.matchSeed = randi()
+	enter_map.rpc(mapName, Global.playersMaxHp.duplicate(), Global.playersPoints.duplicate(), Global.matchSeed)
 
 func to_lobby() -> void:
 	if not isOnline or not isHost:
@@ -196,6 +202,9 @@ func _on_peer_connected(id: int) -> void:
 	Global.playersJoined[slot] = true
 	Global.playersCrowned[slot] = false
 	push_lobby()
+	var lobby := get_node_or_null("/root/Lobby")
+	if lobby != null and lobby.has_method("sendBgTo"):
+		lobby.sendBgTo(id)
 
 func _on_peer_disconnected(id: int) -> void:
 	if not isOnline:
@@ -339,21 +348,28 @@ func undo_countdown() -> void:
 		lobby.stopCountdown()
 
 @rpc("any_peer", "call_local", "reliable")
-func enter_map(mapName: String, maxHp: Array, points: Array) -> void:
+func enter_map(mapName: String, maxHp: Array, points: Array, mapSeed: int = 123) -> void:
 	if not isOnline:
 		return
 	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
 		return
 	Global.playersMaxHp = maxHp
 	Global.playersPoints = points
+	Global.matchSeed = mapSeed
 	Global.goToMapOnline(mapName)
 
 @rpc("any_peer", "call_local", "reliable")
-func enter_postgame() -> void:
+func enter_postgame(achi: Array = [], stats: Array = [], kills: Array = []) -> void:
 	if not isOnline:
 		return
 	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
 		return
+	if achi.size() == 4:
+		Global.playersAchievements = achi
+	if stats.size() == 4:
+		Global.playersStats = stats
+	if kills.size() == 4:
+		Global.playersKills = kills
 	get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
 
 @rpc("any_peer", "call_local", "reliable")
@@ -432,9 +448,8 @@ func pellet_eaten(pos: Vector2) -> void:
 			if d < bestDist:
 				bestDist = d
 				best = node
-	if best != null:
-		best.hide()
-		best.queue_free()
+	if best != null and best.has_method("consume"):
+		best.consume()
 
 @rpc("any_peer", "reliable")
 func despawn_pwrup(spawnerIdx: int) -> void:
@@ -503,14 +518,50 @@ func damage_number(text: String, pos: Vector2, color: Color, size: int) -> void:
 	Global.spawnFallingLabel(text, pos, color, size)
 
 @rpc("any_peer", "reliable")
-func disco_cycle(idx: int, seed: int) -> void:
+func disco_cycle(idx: int, cycleSeed: int) -> void:
 	if not isOnline:
 		return
 	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
 		return
-	for floor in get_tree().get_nodes_in_group("discofloor"):
-		if is_instance_valid(floor) and floor.has_method("_runCycle"):
-			floor._runCycle(idx, seed)
+	for discoFloor in get_tree().get_nodes_in_group("discofloor"):
+		if is_instance_valid(discoFloor) and discoFloor.has_method("adoptCycle"):
+			discoFloor.adoptCycle(idx, cycleSeed)
+			break
+
+@rpc("any_peer", "reliable")
+func collision_fx(pos: Vector2, animScale: float, lookPos: Vector2) -> void:
+	if not isOnline:
+		return
+	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+		return
+	var anim = Res.CollisionAnimObject.instantiate()
+	anim.scale = Vector2(animScale, animScale)
+	anim.position = pos
+	anim.look_at(lookPos)
+	Global.addToScene(anim)
+
+@rpc("any_peer", "reliable")
+func bg_frame(frame: int, replay: bool) -> void:
+	if not isOnline:
+		return
+	if multiplayer.get_remote_sender_id() != 1 and multiplayer.get_remote_sender_id() != 0:
+		return
+	var lobby := get_node_or_null("/root/Lobby")
+	if lobby == null or not lobby.has_method("applyBgFrame"):
+		return
+	lobby.applyBgFrame(frame, replay)
+
+@rpc("any_peer", "reliable")
+func request_disco() -> void:
+	# Late-loading guest missed the current cycle broadcast; unicast it back.
+	if not isOnline or not multiplayer.is_server():
+		return
+	var sender := multiplayer.get_remote_sender_id()
+	for discoFloor in get_tree().get_nodes_in_group("discofloor"):
+		if is_instance_valid(discoFloor):
+			var cur: Array = discoFloor.get("_current")
+			if cur.size() == 2 and int(cur[0]) >= 0:
+				disco_cycle.rpc_id(sender, int(cur[0]), int(cur[1]))
 			break
 
 @rpc("any_peer", "reliable")

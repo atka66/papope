@@ -135,6 +135,7 @@ var playersPerks = [[], [], [], []]
 #var playersPerks = [[PerkEnum.HEALTHY], [PerkEnum.UNHEALTHY], [], []]
 
 var selectedMap = 'none'
+var matchSeed = 123 # online: host-rolled per round, synced to all peers
 
 func _ready():
 	randomize()
@@ -257,6 +258,21 @@ func getPlayer(playerId: int) -> Object:
 			return player
 	return null
 
+func getPlayerStates() -> Array:
+	# Canonical snapshot shape shared by map and lobby replication:
+	# [slot, pos, vel, hp, alive, itemInt, ammo, shielded, aim, trapped].
+	var states := []
+	for player in get_tree().get_nodes_in_group('players'):
+		var itemInt := -1
+		if player.item != null:
+			itemInt = int(player.item)
+		var aim := Vector2.ZERO
+		if player.has_method("getAimVector"):
+			aim = player.getAimVector()
+		states.append([player.playerId, player.global_position, player.linear_velocity,
+			player.hp, player.alive, itemInt, player.ammo, player.shielded, aim, player.trapped])
+	return states
+
 func getWinnerTeam() -> int:
 	var aliveTeams: Array[int] = []
 	for player in get_tree().get_nodes_in_group('players'):
@@ -289,6 +305,45 @@ func registerAchievement(playerId: int, achievement: AchiEnum):
 		return
 	if not (achievement in playersAchievements[playerId]):
 		playersAchievements[playerId].append(achievement)
+
+func finalizeAchievements(playerId: int) -> void:
+	# Post-match derivations from synced data (points/options/stats/perks).
+	# Runs on host before transmitting, and on host/offline peers at render;
+	# guests render transmitted lists (see PlayerSummary.distributeAchievements).
+	# check underdog/jatszunkmast achievement
+	var optionPoints = options['rounds'][optionsSelected['rounds']]
+	if optionPoints >= 3 and playersPoints[playerId] <= optionPoints / 4:
+		registerAchievement(playerId, AchiEnum.UNDERDOG)
+	# check stat achievements
+	var playerStats = playersStats[playerId]
+	var dyn_use = playerStats[StatEnum.DYN_USE]
+	var dyn_dmg = playerStats[StatEnum.DYN_DMG]
+	var rev_use = playerStats[StatEnum.REV_USE]
+	var rev_hit = playerStats[StatEnum.REV_HIT]
+	var whp_use = playerStats[StatEnum.WHP_USE]
+	var whp_hit = playerStats[StatEnum.WHP_HIT]
+	var trp_use = playerStats[StatEnum.TRP_USE]
+	var trp_hit = playerStats[StatEnum.TRP_HIT]
+	var pellets = playerStats[StatEnum.PELLETS]
+	var ghost_kill = playerStats[StatEnum.GHOST_KILL]
+	if dyn_use > 3 && float(dyn_dmg) / dyn_use > 70:
+		registerAchievement(playerId, AchiEnum.DEMOLITION_MAN)
+	if rev_use > 3 && float(rev_hit) / rev_use > 0.75:
+		registerAchievement(playerId, AchiEnum.GUNSLINGER)
+	if whp_use > 3 && float(whp_hit) / whp_use > 0.75:
+		registerAchievement(playerId, AchiEnum.HUTS_HUTS)
+	if trp_use > 3 && float(trp_hit) / trp_use > 0.75:
+		registerAchievement(playerId, AchiEnum.GUERRILLA)
+	if pellets >= 100:
+		registerAchievement(playerId, AchiEnum.WAKA_WAKA)
+	if ghost_kill >= 5:
+		registerAchievement(playerId, AchiEnum.GHOSTBUSTER)
+
+	if getWinnerTeamByScore() == playersTeam[playerId] && playersPerks[playerId].has(PerkEnum.CHICKEN):
+		registerAchievement(playerId, AchiEnum.CHICKEN_DINNER)
+
+	if len(playersAchievements[playerId]) >= 8 and not (AchiEnum.AINT_GON_FIT in playersAchievements[playerId]):
+		playersAchievements[playerId].insert(8 - 1, AchiEnum.AINT_GON_FIT)
 
 func incrementStat(playerId : int, stat : StatEnum, i) -> void:
 	if Net.isOnline and not multiplayer.is_server():
@@ -326,6 +381,10 @@ func getDeathMessage(reason : DeathEnum):
 	return [DEATH_STRINGS[reason], DEATH_STRINGS[DeathEnum.DEFAULT]].pick_random().pick_random()
 
 func getRandomPwrup() -> PwrupEnum:
+	# In-map rolls use the synced determRandom so every peer draws the same
+	# item (e.g. PREPARED perk at spawn); elsewhere keep global randomness.
+	if MapControllerNode != null and is_instance_valid(MapControllerNode):
+		return PwrupEnum.values()[MapControllerNode.determRandom.randi_range(0, PwrupEnum.size() - 1)]
 	return [PwrupEnum.REVOLVER, PwrupEnum.DYNAMITE, PwrupEnum.SHIELD, PwrupEnum.TRAP, PwrupEnum.WHIP].pick_random()
 
 func addKill(playerId) -> void:

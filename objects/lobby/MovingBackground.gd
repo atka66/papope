@@ -1,6 +1,12 @@
 extends Node2D
 
 func _ready():
+	if Net.isOnline:
+		# Don't paint defaults pre-sync (flashes a wrong map); the first
+		# lobby sync fixates the frame, then pan only.
+		$Anim.seek(0)
+		$Anim.play("loop")
+		return
 	restartMovingBackground(null)
 
 func restartMovingBackground(anim_name) -> void:

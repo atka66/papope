@@ -8,6 +8,13 @@ extends Node2D
 
 var countdownNode = null
 var hasConnected = true
+var _bgFingerprint = []
+var _netAccum := 0.0
+var _bgAccum := 0.0
+var _bgSeed := 0
+var _bgStep := 0
+var _bgPeriod := 8.0
+var _lastBgDbg := 0
 
 func _ready():
 	Global.MusicNode.play('menu')
@@ -21,6 +28,11 @@ func _ready():
 	else:
 		$MenuCanvas/OnlineLabel.hide()
 		initPlayers()
+	# 'random' backdrop steps align with pan-loop ends so every replay
+	# coincides with a sweep boundary on all peers (read, not hardcoded).
+	var loopAnim = $MovingBackground/Anim
+	if loopAnim != null and loopAnim.has_animation("loop"):
+		_bgPeriod = loopAnim.get_animation("loop").length
 
 func _process(delta):
 	var currentHasConnected = Global.playersJoined.has(true)
@@ -41,6 +53,20 @@ func _process(delta):
 	$InitHolder/StartHolder.hide()
 	if Net.isOnline:
 		_updateOnlineLabels()
+		# Host simulates every preview (map-identical authority); guests
+		# interpolate the snapshots, so collisions behave like in-map.
+		if Net.isHost:
+			_netAccum += delta
+			if _netAccum >= 0.05:
+				_netAccum = 0.0
+				Net.push_state.rpc(Global.getPlayerStates())
+			# 'random' background steps on all screens via broadcast, aligned
+			# to pan-loop ends (see _bgPeriod).
+			if Global.options['map'][Global.optionsSelected['map']] == 'random':
+				_bgAccum += delta
+				if _bgAccum >= _bgPeriod:
+					_bgAccum = 0.0
+					advanceBgFrame()
 		return
 	if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.show()
@@ -98,6 +124,7 @@ func _input(event):
 func initPlayers() -> void:
 	Global.playersFrozen = false
 	Global.playersPoints = [0, 0, 0, 0]
+	Global.matchSeed = 123
 	Global.playersAchievements = [[], [], [], []]
 	# for debugging purposes
 	#Global.playersAchievements = [[Global.AchiEnum.UNDERDOG, Global.AchiEnum.NO_REFUNDS, Global.AchiEnum.GUNSLINGER, Global.AchiEnum.DAREDEVIL, Global.AchiEnum.TRIPLE_KILL], [Global.AchiEnum.TRIPLE_KILL, Global.AchiEnum.TRIPLE_KILL], [], []]
@@ -114,6 +141,7 @@ func initPlayers() -> void:
 func initPlayersOnline() -> void:
 	Global.playersFrozen = false
 	Global.playersPoints = [0, 0, 0, 0]
+	Global.matchSeed = 123
 	Global.playersAchievements = [[], [], [], []]
 	Global.playersPerks = [[], [], [], []]
 	Global.initPlayerStats()
@@ -124,6 +152,55 @@ func initPlayersOnline() -> void:
 func _on_online_button_pressed():
 	get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
 
+func _dbgBg(what: String) -> void:
+	# Debug builds only: per-peer replay timeline. Compare the +Nms
+	# intervals between consecutive lines on each peer; they must hold
+	# steady (~8000ms for steps). Clocks differ per machine, so only
+	# same-peer intervals are comparable, not absolute times.
+	if !Global.DEBUG:
+		return
+	var now := Time.get_ticks_msec()
+	print("[BG] ", what, " (+", now - _lastBgDbg, "ms)")
+	_lastBgDbg = now
+
+func advanceBgFrame() -> void:
+	# Host-side 'random' rotation: deterministic seeded order shared by all.
+	if !Net.isOnline or !Net.isHost:
+		return
+	var bg = get_node_or_null("MovingBackground/Backgrounds")
+	if bg == null:
+		return
+	var frameCount: int = bg.sprite_frames.get_frame_count('default')
+	_bgStep += 1
+	var frame := (_bgSeed + _bgStep) % frameCount
+	# Full replay (frame + pan restart) like a selection change: keeps the
+	# pan phase aligned on all peers instead of drifting per load time.
+	applyBgFrame(frame, true)
+	_dbgBg("host step %d -> frame %d" % [_bgStep, frame])
+	Net.bg_frame.rpc(frame, true)
+
+func applyBgFrame(frame: int, replay: bool) -> void:
+	var bg = get_node_or_null("MovingBackground/Backgrounds")
+	if bg == null:
+		return
+	var frameCount: int = bg.sprite_frames.get_frame_count('default')
+	bg.frame = frame % frameCount
+	_dbgBg("apply frame %d replay %s" % [frame, str(replay)])
+	if replay:
+		var anim = get_node_or_null("MovingBackground/Anim")
+		if anim != null:
+			anim.seek(0)
+			anim.play("loop")
+
+func sendBgTo(peerId: int) -> void:
+	# Newcomer paint: explicit maps resolve locally, random takes host's frame.
+	if Global.options['map'][Global.optionsSelected['map']] != 'random':
+		return
+	var bg = get_node_or_null("MovingBackground/Backgrounds")
+	if bg == null:
+		return
+	Net.bg_frame.rpc_id(peerId, int(bg.frame), true)
+
 func _on_lobby_updated():
 	# Spawn previews for peers that joined after we entered the lobby.
 	if !Net.isOnline:
@@ -131,6 +208,28 @@ func _on_lobby_updated():
 	for i in range(4):
 		if Global.playersJoined[i] and Global.getPlayer(i) == null:
 			Global.joinPlayer(i, true)
+	# Fixate the background on the host's map selection only; other
+	# options (mode/rounds/teams/skins) must not retrigger it. Guests
+	# resolve explicit maps locally; 'random' follows host broadcasts.
+	var fingerprint = [Global.optionsSelected['map']]
+	if fingerprint != _bgFingerprint:
+		_bgFingerprint = fingerprint
+		var mapName = Global.options['map'][Global.optionsSelected['map']]
+		if Net.isHost and mapName == 'random':
+			_bgSeed = randi()
+			_bgStep = 0
+			_bgAccum = 0.0
+			var bg = get_node_or_null("MovingBackground/Backgrounds")
+			if bg != null:
+				var frameCount: int = bg.sprite_frames.get_frame_count('default')
+				var frame := _bgSeed % frameCount
+				applyBgFrame(frame, true)
+				_dbgBg("host select random seed %d -> frame %d" % [_bgSeed, frame])
+				Net.bg_frame.rpc(frame, true)
+		elif mapName != 'random' or !Net.isOnline:
+			_dbgBg("select " + mapName)
+			restartMovingBackground()
+		# else: online guest with 'random' waits for the host's bg_frame.
 
 func warnCannotStart() -> void:
 	$InitHolder/Anim.stop()

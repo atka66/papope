@@ -27,4 +27,8 @@ func _input(event):
 
 func allowProceed():
 	canProceed = true
+	if Net.isOnline and not Net.isHost:
+		# Guests can't advance the podium; say so instead of prompting.
+		$HintHolder/OSprite.hide()
+		$HintHolder/LobbyHint.setText("waiting for host...")
 	$HintHolder.show()

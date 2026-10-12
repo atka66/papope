@@ -9,9 +9,9 @@ var _ghostAccum: float = 0.0
 
 func _ready():
 	determRandom = RandomNumberGenerator.new()
-	determRandom.set_seed(123)
-	if Net.isOnline and multiplayer.is_server():
-		determRandom.set_seed(randi())
+	# Synced seed: host rolls per round and broadcasts (online), fixed 123
+	# offline. Tile variants + PREPARED items draw from this in fixed order.
+	determRandom.set_seed(Global.matchSeed)
 	
 	$Dim.show()
 	$HudCanvas/MapLabel.text = Global.selectedMap
@@ -61,17 +61,7 @@ func _process(delta):
 					break
 
 func _collectStates() -> Array:
-	var states := []
-	for player in get_tree().get_nodes_in_group('players'):
-		var itemInt := -1
-		if player.item != null:
-			itemInt = int(player.item)
-		var aim := Vector2.ZERO
-		if player.has_method("getAimVector"):
-			aim = player.getAimVector()
-		states.append([player.playerId, player.global_position, player.linear_velocity,
-			player.hp, player.alive, itemInt, player.ammo, player.shielded, aim, player.trapped])
-	return states
+	return Global.getPlayerStates()
 
 func _input(event):
 	if event.is_action_pressed("quit"):

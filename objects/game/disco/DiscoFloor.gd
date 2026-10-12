@@ -7,10 +7,27 @@ const orCols: Array[Color] = [Color("0042e1"), Color("a71cc8"), Color("e600a3"),
 # same light show. This matters on nightclub: darkened players are only
 # visible under lit tiles, so a divergent show would be unfair.
 var discoRng := RandomNumberGenerator.new()
+var _current := [-1, 0]
+var _cycleStarted := false
+var _gen := 0
+
+# Writes from a superseded cycle go here instead of the tiles: a newer
+# broadcast instantly takes over the floor, old coroutines fade harmlessly.
+class TileSink:
+	func anim_pulse(_c): pass
+	func on(_c): pass
+	func off(): pass
+var _sink := TileSink.new()
 
 func _ready():
 	initPlayerTiles()
 	if Net.isOnline and not multiplayer.is_server():
+		# The host's broadcast may predate our load; ask (twice, to survive
+		# any ordering skew) for the current cycle to be unicast back.
+		Net.request_disco.rpc_id(1)
+		await get_tree().create_timer(3.0).timeout
+		if not _cycleStarted and is_inside_tree():
+			Net.request_disco.rpc_id(1)
 		return # guests run cycles via Net.disco_cycle
 	playRandomAnim()
 
@@ -25,108 +42,122 @@ func initPlayerTiles():
 func getTile(row: int, col: int) -> Object:
 	return get_node('DiscoTile' + str(row) + str(col))
 
+func adoptCycle(idx: int, cycleSeed: int) -> void:
+	# Newest broadcast wins instantly: bump the generation so any in-flight
+	# cycle's tile writes sink, then run the fresh cycle (lag stays ~RTT).
+	if not is_inside_tree():
+		return
+	_gen += 1
+	_runCycle(idx, cycleSeed, _gen)
+
+func GT(g: int, row: int, col: int) -> Object:
+	if g == _gen:
+		return getTile(row, col)
+	return _sink
+
 func playRandomAnim():
 	# Pattern + colors vary per cycle; online the host's roll is broadcast so
 	# every screen runs the identical show from the same seed.
-	var idx := randi() % 7
-	var seed := randi()
+	var idx := randi() % 6
+	var cycleSeed := randi()
 	if Net.isOnline:
-		Net.disco_cycle.rpc(idx, seed)
-	await _runCycle(idx, seed)
+		_current = [idx, cycleSeed]
+		Net.disco_cycle.rpc(idx, cycleSeed)
+		_gen += 1
+	await _runCycle(idx, cycleSeed, _gen)
 	playRandomAnim()
 
-func _runCycle(idx: int, seed: int) -> void:
-	discoRng.seed = seed
+func _runCycle(idx: int, cycleSeed: int, g: int) -> void:
+	_cycleStarted = true
+	discoRng.seed = cycleSeed
 	match idx:
 		0:
-			await square()
+			await square(g)
 		1:
-			await diamond()
+			await diamond(g)
 		2:
-			await brazilWave()
+			await brazilWave(g)
 		3:
-			await brazilWaveDiagonal()
+			await brazilWaveDiagonal(g)
 		4:
-			await colorAllRandomSync()
-		5:
-			await sparkleRandom()
+			await colorAllRandomSync(g)
 		_:
-			await scanLine()
+			await scanLine(g)
 	for i in range(1, 6):
 		for j in range(1, 6):
-			getTile(i, j).off()
+			GT(g,i, j).off()
 
 # animations
 
-func square(): # done
+func square(g: int): # done
 	var waitTime = 0.2
 	for n in range(8):
 		var color = _pickCol()
-		getTile(3, 3).anim_pulse(color)
+		GT(g,3, 3).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
-		getTile(2, 2).anim_pulse(color)
-		getTile(2, 3).anim_pulse(color)
-		getTile(2, 4).anim_pulse(color)
-		getTile(3, 2).anim_pulse(color)
-		getTile(3, 4).anim_pulse(color)
-		getTile(4, 2).anim_pulse(color)
-		getTile(4, 3).anim_pulse(color)
-		getTile(4, 4).anim_pulse(color)
+		GT(g,2, 2).anim_pulse(color)
+		GT(g,2, 3).anim_pulse(color)
+		GT(g,2, 4).anim_pulse(color)
+		GT(g,3, 2).anim_pulse(color)
+		GT(g,3, 4).anim_pulse(color)
+		GT(g,4, 2).anim_pulse(color)
+		GT(g,4, 3).anim_pulse(color)
+		GT(g,4, 4).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
-		getTile(1, 1).anim_pulse(color)
-		getTile(1, 2).anim_pulse(color)
-		getTile(1, 3).anim_pulse(color)
-		getTile(1, 4).anim_pulse(color)
-		getTile(1, 5).anim_pulse(color)
-		getTile(2, 1).anim_pulse(color)
-		getTile(2, 5).anim_pulse(color)
-		getTile(3, 1).anim_pulse(color)
-		getTile(3, 5).anim_pulse(color)
-		getTile(4, 1).anim_pulse(color)
-		getTile(4, 5).anim_pulse(color)
-		getTile(5, 1).anim_pulse(color)
-		getTile(5, 2).anim_pulse(color)
-		getTile(5, 3).anim_pulse(color)
-		getTile(5, 4).anim_pulse(color)
-		getTile(5, 5).anim_pulse(color)
+		GT(g,1, 1).anim_pulse(color)
+		GT(g,1, 2).anim_pulse(color)
+		GT(g,1, 3).anim_pulse(color)
+		GT(g,1, 4).anim_pulse(color)
+		GT(g,1, 5).anim_pulse(color)
+		GT(g,2, 1).anim_pulse(color)
+		GT(g,2, 5).anim_pulse(color)
+		GT(g,3, 1).anim_pulse(color)
+		GT(g,3, 5).anim_pulse(color)
+		GT(g,4, 1).anim_pulse(color)
+		GT(g,4, 5).anim_pulse(color)
+		GT(g,5, 1).anim_pulse(color)
+		GT(g,5, 2).anim_pulse(color)
+		GT(g,5, 3).anim_pulse(color)
+		GT(g,5, 4).anim_pulse(color)
+		GT(g,5, 5).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
 
-func diamond(): # done
+func diamond(g: int): # done
 	var waitTime = 0.1
 	for n in range(9):
 		var color = _pickCol()
-		getTile(3, 3).anim_pulse(color)
+		GT(g,3, 3).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
-		getTile(2, 3).anim_pulse(color)
-		getTile(3, 2).anim_pulse(color)
-		getTile(3, 4).anim_pulse(color)
-		getTile(4, 3).anim_pulse(color)
+		GT(g,2, 3).anim_pulse(color)
+		GT(g,3, 2).anim_pulse(color)
+		GT(g,3, 4).anim_pulse(color)
+		GT(g,4, 3).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
-		getTile(1, 3).anim_pulse(color)
-		getTile(2, 2).anim_pulse(color)
-		getTile(2, 4).anim_pulse(color)
-		getTile(3, 1).anim_pulse(color)
-		getTile(3, 5).anim_pulse(color)
-		getTile(4, 2).anim_pulse(color)
-		getTile(4, 4).anim_pulse(color)
-		getTile(5, 3).anim_pulse(color)
+		GT(g,1, 3).anim_pulse(color)
+		GT(g,2, 2).anim_pulse(color)
+		GT(g,2, 4).anim_pulse(color)
+		GT(g,3, 1).anim_pulse(color)
+		GT(g,3, 5).anim_pulse(color)
+		GT(g,4, 2).anim_pulse(color)
+		GT(g,4, 4).anim_pulse(color)
+		GT(g,5, 3).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
-		getTile(1, 2).anim_pulse(color)
-		getTile(1, 4).anim_pulse(color)
-		getTile(2, 1).anim_pulse(color)
-		getTile(2, 5).anim_pulse(color)
-		getTile(4, 1).anim_pulse(color)
-		getTile(4, 5).anim_pulse(color)
-		getTile(5, 2).anim_pulse(color)
-		getTile(5, 4).anim_pulse(color)
+		GT(g,1, 2).anim_pulse(color)
+		GT(g,1, 4).anim_pulse(color)
+		GT(g,2, 1).anim_pulse(color)
+		GT(g,2, 5).anim_pulse(color)
+		GT(g,4, 1).anim_pulse(color)
+		GT(g,4, 5).anim_pulse(color)
+		GT(g,5, 2).anim_pulse(color)
+		GT(g,5, 4).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
-		getTile(1, 1).anim_pulse(color)
-		getTile(1, 5).anim_pulse(color)
-		getTile(5, 1).anim_pulse(color)
-		getTile(5, 5).anim_pulse(color)
+		GT(g,1, 1).anim_pulse(color)
+		GT(g,1, 5).anim_pulse(color)
+		GT(g,5, 1).anim_pulse(color)
+		GT(g,5, 5).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
 
-func brazilWave(): # done
+func brazilWave(g: int): # done
 	var inverted = discoRng.randi() % 2 == 0
 	var vertical = discoRng.randi() % 2 == 0
 	for n in range(8):
@@ -144,61 +175,56 @@ func brazilWave(): # done
 				if inverted:
 					ix = 6 - ix
 					jx = 6 - jx
-				getTile(ix, jx).anim_pulse(color)
+				GT(g,ix, jx).anim_pulse(color)
 			await get_tree().create_timer(0.1).timeout
 
-func brazilWaveDiagonal(): # done
+func brazilWaveDiagonal(g: int): # done
 	var waitTime = 0.1
 	for n in range(5):
 		var color = _pickCol()
-		getTile(1, 1).anim_pulse(color) # i = 1; j = 1
+		GT(g,1, 1).anim_pulse(color) # i = 1; j = 1
 		await get_tree().create_timer(waitTime).timeout
-		getTile(1, 2).anim_pulse(color) # i = 2; j = 1
-		getTile(2, 1).anim_pulse(color) # i = 2; j = 2
+		GT(g,1, 2).anim_pulse(color) # i = 2; j = 1
+		GT(g,2, 1).anim_pulse(color) # i = 2; j = 2
 		await get_tree().create_timer(waitTime).timeout
-		getTile(1, 3).anim_pulse(color) # i = 3; j = 1
-		getTile(2, 2).anim_pulse(color) # i = 3; j = 2
-		getTile(3, 1).anim_pulse(color) # i = 3; j = 3
+		GT(g,1, 3).anim_pulse(color) # i = 3; j = 1
+		GT(g,2, 2).anim_pulse(color) # i = 3; j = 2
+		GT(g,3, 1).anim_pulse(color) # i = 3; j = 3
 		await get_tree().create_timer(waitTime).timeout
-		getTile(1, 4).anim_pulse(color) # i = 4; j = 1
-		getTile(2, 3).anim_pulse(color) # i = 4; j = 2
-		getTile(3, 2).anim_pulse(color) # i = 4; j = 3
-		getTile(4, 1).anim_pulse(color) # i = 4; j = 4
+		GT(g,1, 4).anim_pulse(color) # i = 4; j = 1
+		GT(g,2, 3).anim_pulse(color) # i = 4; j = 2
+		GT(g,3, 2).anim_pulse(color) # i = 4; j = 3
+		GT(g,4, 1).anim_pulse(color) # i = 4; j = 4
 		await get_tree().create_timer(waitTime).timeout
-		getTile(1, 5).anim_pulse(color) # i = 5; j = 1
-		getTile(2, 4).anim_pulse(color) # i = 5; j = 2
-		getTile(3, 3).anim_pulse(color) # i = 5; j = 3
-		getTile(4, 2).anim_pulse(color) # i = 5; j = 4
-		getTile(5, 1).anim_pulse(color) # i = 5; j = 5
+		GT(g,1, 5).anim_pulse(color) # i = 5; j = 1
+		GT(g,2, 4).anim_pulse(color) # i = 5; j = 2
+		GT(g,3, 3).anim_pulse(color) # i = 5; j = 3
+		GT(g,4, 2).anim_pulse(color) # i = 5; j = 4
+		GT(g,5, 1).anim_pulse(color) # i = 5; j = 5
 		await get_tree().create_timer(waitTime).timeout
-		getTile(2, 5).anim_pulse(color)
-		getTile(3, 4).anim_pulse(color)
-		getTile(4, 3).anim_pulse(color)
-		getTile(5, 2).anim_pulse(color)
+		GT(g,2, 5).anim_pulse(color)
+		GT(g,3, 4).anim_pulse(color)
+		GT(g,4, 3).anim_pulse(color)
+		GT(g,5, 2).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
-		getTile(3, 5).anim_pulse(color)
-		getTile(4, 4).anim_pulse(color)
-		getTile(5, 3).anim_pulse(color)
+		GT(g,3, 5).anim_pulse(color)
+		GT(g,4, 4).anim_pulse(color)
+		GT(g,5, 3).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
-		getTile(4, 5).anim_pulse(color)
-		getTile(5, 4).anim_pulse(color)
+		GT(g,4, 5).anim_pulse(color)
+		GT(g,5, 4).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
-		getTile(5, 5).anim_pulse(color)
+		GT(g,5, 5).anim_pulse(color)
 		await get_tree().create_timer(waitTime).timeout
 
-func colorAllRandomSync(): # done
+func colorAllRandomSync(g: int): # done
 	for n in range(8):
 		for i in range(1, 6):
 			for j in range(1, 6):
-				getTile(i, j).on(_pickCol())
+				GT(g,i, j).on(_pickCol())
 		await get_tree().create_timer(0.6).timeout
 
-func sparkleRandom(): #done
-	for n in range(75):
-		getTile(discoRng.randi_range(1, 5), discoRng.randi_range(1, 5)).anim_pulse(_pickCol())
-		await get_tree().create_timer(0.05).timeout
-
-func scanLine(): # done
+func scanLine(g: int): # done
 	var rainbowLine = discoRng.randi() % 2 == 0
 	for n in range(6):
 		var color = _pickCol()
@@ -206,5 +232,5 @@ func scanLine(): # done
 			if rainbowLine:
 				color = _pickCol()
 			for j in range(1, 6):
-				getTile(i, j).anim_pulse(color)
+				GT(g,i, j).anim_pulse(color)
 				await get_tree().create_timer(0.02).timeout
