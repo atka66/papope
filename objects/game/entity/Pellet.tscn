@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_m4xtl"]
 radius = 4.0
 
-[node name="Pellet" type="Area2D"]
+[node name="Pellet" type="Area2D" groups=["pellets"]]
 z_index = 2
 z_as_relative = false
 collision_layer = 0

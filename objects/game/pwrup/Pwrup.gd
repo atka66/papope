@@ -2,6 +2,7 @@ extends Area2D
 
 @export var type: Global.PwrupEnum = Global.PwrupEnum.DYNAMITE
 var conveyed: bool = false
+var netSpawner: int = -1 # online: spawner index for host-driven despawn sync
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,8 +37,13 @@ func despawn():
 
 func _on_body_entered(body):
 	if body.is_in_group('players'):
+		# Online pickups are host-authoritative; guests apply via state sync.
+		if Net.isOnline and not multiplayer.is_server():
+			return
 		if body.alive && !Global.playersFrozen:
 			body.pickup(type)
+			if Net.isOnline:
+				Net.despawn_pwrup.rpc(netSpawner)
 			despawn()
 
 func convey() -> void:

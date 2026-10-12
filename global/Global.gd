@@ -135,6 +135,7 @@ var playersPerks = [[], [], [], []]
 #var playersPerks = [[PerkEnum.HEALTHY], [PerkEnum.UNHEALTHY], [], []]
 
 var selectedMap = 'none'
+var matchSeed = 123 # online: host-rolled per round, synced to all peers
 
 func _ready():
 	randomize()
@@ -191,6 +192,8 @@ func joinPlayer(id: int, silent: bool) -> void:
 	connect("player_remove", player._on_remove)
 	player.playerId = id
 	player.silent = silent
+	if Net.isOnline:
+		player.isLocal = (id == Net.localSlot)
 	slot.add_child(player)
 
 func leavePlayer(id: int) -> void:
@@ -213,26 +216,28 @@ func initPlayerStats() -> void:
 func goToLobby() -> void:
 	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
 
-func goToMap() -> void:
-	if getWinnerTeamByScore() < 0:
+func goToMap(mapName: String = "") -> void:
+	if mapName != "":
+		selectedMap = mapName
+	else:
+		if getWinnerTeamByScore() >= 0:
+			get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
+			return
 		var selectedMapIndex: int
 		if optionsSelected['map'] == 0:
 			selectedMapIndex = (randi() % (len(options['map']) - 1) + 1)
 		else:
 			selectedMapIndex = optionsSelected['map']
-
 		selectedMap = options['map'][selectedMapIndex]
-		
-		if selectedMap == 'hell': get_tree().change_scene_to_file("res://scenes/maps/MapHell.tscn")
-		if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")
-		if selectedMap == 'ship': get_tree().change_scene_to_file("res://scenes/maps/MapShip.tscn")
-		if selectedMap == 'space': get_tree().change_scene_to_file("res://scenes/maps/MapSpace.tscn")
-		if selectedMap == 'highway': get_tree().change_scene_to_file("res://scenes/maps/MapHighway.tscn")
-		if selectedMap == 'pacman': get_tree().change_scene_to_file("res://scenes/maps/MapPacman.tscn")
-		if selectedMap == 'industrial': get_tree().change_scene_to_file("res://scenes/maps/MapIndustrial.tscn")
-		if selectedMap == 'nightclub': get_tree().change_scene_to_file("res://scenes/maps/MapNightclub.tscn")
-	else:
-		get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
+
+	if selectedMap == 'hell': get_tree().change_scene_to_file("res://scenes/maps/MapHell.tscn")
+	if selectedMap == 'western': get_tree().change_scene_to_file("res://scenes/maps/MapWestern.tscn")
+	if selectedMap == 'ship': get_tree().change_scene_to_file("res://scenes/maps/MapShip.tscn")
+	if selectedMap == 'space': get_tree().change_scene_to_file("res://scenes/maps/MapSpace.tscn")
+	if selectedMap == 'highway': get_tree().change_scene_to_file("res://scenes/maps/MapHighway.tscn")
+	if selectedMap == 'pacman': get_tree().change_scene_to_file("res://scenes/maps/MapPacman.tscn")
+	if selectedMap == 'industrial': get_tree().change_scene_to_file("res://scenes/maps/MapIndustrial.tscn")
+	if selectedMap == 'nightclub': get_tree().change_scene_to_file("res://scenes/maps/MapNightclub.tscn")
 
 func startRound() -> void:
 	playersFrozen = false
@@ -241,6 +246,9 @@ func startRound() -> void:
 		initGhostSpawn()
 
 func initGhostSpawn():
+	# Online ghosts are host-driven (host broadcasts via Net.ghost_event).
+	if Net.isOnline and not multiplayer.is_server():
+		return
 	MapControllerNode.initGhostSpawn()
 
 func getPlayer(playerId: int) -> Object:
@@ -248,6 +256,21 @@ func getPlayer(playerId: int) -> Object:
 		if player.playerId == playerId:
 			return player
 	return null
+
+func getPlayerStates() -> Array:
+	# Canonical snapshot shape shared by map and lobby replication:
+	# [slot, pos, vel, hp, alive, itemInt, ammo, shielded, aim, trapped].
+	var states := []
+	for player in get_tree().get_nodes_in_group('players'):
+		var itemInt := -1
+		if player.item != null:
+			itemInt = int(player.item)
+		var aim := Vector2.ZERO
+		if player.has_method("getAimVector"):
+			aim = player.getAimVector()
+		states.append([player.playerId, player.global_position, player.linear_velocity,
+			player.hp, player.alive, itemInt, player.ammo, player.shielded, aim, player.trapped])
+	return states
 
 func getWinnerTeam() -> int:
 	var aliveTeams: Array[int] = []
@@ -276,10 +299,54 @@ func getNumberOfTeams():
 	return distinctTeams.size()
 
 func registerAchievement(playerId: int, achievement: AchiEnum):
+	# Online stats/achievements are host-authoritative; client copies converge via state sync.
+	if Net.isOnline and not multiplayer.is_server():
+		return
 	if not (achievement in playersAchievements[playerId]):
 		playersAchievements[playerId].append(achievement)
 
+func finalizeAchievements(playerId: int) -> void:
+	# Post-match derivations from synced data (points/options/stats/perks).
+	# Runs on host before transmitting, and on host/offline peers at render;
+	# guests render transmitted lists (see PlayerSummary.distributeAchievements).
+	# check underdog/jatszunkmast achievement
+	var optionPoints = options['rounds'][optionsSelected['rounds']]
+	if optionPoints >= 3 and playersPoints[playerId] <= optionPoints / 4:
+		registerAchievement(playerId, AchiEnum.UNDERDOG)
+	# check stat achievements
+	var playerStats = playersStats[playerId]
+	var dyn_use = playerStats[StatEnum.DYN_USE]
+	var dyn_dmg = playerStats[StatEnum.DYN_DMG]
+	var rev_use = playerStats[StatEnum.REV_USE]
+	var rev_hit = playerStats[StatEnum.REV_HIT]
+	var whp_use = playerStats[StatEnum.WHP_USE]
+	var whp_hit = playerStats[StatEnum.WHP_HIT]
+	var trp_use = playerStats[StatEnum.TRP_USE]
+	var trp_hit = playerStats[StatEnum.TRP_HIT]
+	var pellets = playerStats[StatEnum.PELLETS]
+	var ghost_kill = playerStats[StatEnum.GHOST_KILL]
+	if dyn_use > 3 && float(dyn_dmg) / dyn_use > 70:
+		registerAchievement(playerId, AchiEnum.DEMOLITION_MAN)
+	if rev_use > 3 && float(rev_hit) / rev_use > 0.75:
+		registerAchievement(playerId, AchiEnum.GUNSLINGER)
+	if whp_use > 3 && float(whp_hit) / whp_use > 0.75:
+		registerAchievement(playerId, AchiEnum.HUTS_HUTS)
+	if trp_use > 3 && float(trp_hit) / trp_use > 0.75:
+		registerAchievement(playerId, AchiEnum.GUERRILLA)
+	if pellets >= 100:
+		registerAchievement(playerId, AchiEnum.WAKA_WAKA)
+	if ghost_kill >= 5:
+		registerAchievement(playerId, AchiEnum.GHOSTBUSTER)
+
+	if getWinnerTeamByScore() == playersTeam[playerId] && playersPerks[playerId].has(PerkEnum.CHICKEN):
+		registerAchievement(playerId, AchiEnum.CHICKEN_DINNER)
+
+	if len(playersAchievements[playerId]) >= 8 and not (AchiEnum.AINT_GON_FIT in playersAchievements[playerId]):
+		playersAchievements[playerId].insert(8 - 1, AchiEnum.AINT_GON_FIT)
+
 func incrementStat(playerId : int, stat : StatEnum, i) -> void:
+	if Net.isOnline and not multiplayer.is_server():
+		return
 	if playersStats:
 		playersStats[playerId][stat] += i
 
@@ -313,9 +380,15 @@ func getDeathMessage(reason : DeathEnum):
 	return [DEATH_STRINGS[reason], DEATH_STRINGS[DeathEnum.DEFAULT]].pick_random().pick_random()
 
 func getRandomPwrup() -> PwrupEnum:
+	# In-map rolls use the synced determRandom so every peer draws the same
+	# item (e.g. PREPARED perk at spawn); elsewhere keep global randomness.
+	if MapControllerNode != null and is_instance_valid(MapControllerNode):
+		return PwrupEnum.values()[MapControllerNode.determRandom.randi_range(0, PwrupEnum.size() - 1)]
 	return [PwrupEnum.REVOLVER, PwrupEnum.DYNAMITE, PwrupEnum.SHIELD, PwrupEnum.TRAP, PwrupEnum.WHIP].pick_random()
 
 func addKill(playerId) -> void:
+	if Net.isOnline and not multiplayer.is_server():
+		return
 	playersKills[playerId] += 1
 	if playersKills[playerId] == 3:
 		registerAchievement(playerId, Global.AchiEnum.TRIPLE_KILL)

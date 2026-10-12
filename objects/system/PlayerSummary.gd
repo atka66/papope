@@ -91,40 +91,11 @@ func finalizePoster(finalizingPlayerId: int) -> void:
 			$Container/Anim.play("shake")
 
 func distributeAchievements():
-	# check underdog/jatszunkmast achievement
-	var optionPoints = Global.options['rounds'][Global.optionsSelected['rounds']]
-	if optionPoints >= 3 and Global.playersPoints[playerId] <= optionPoints / 4:
-		Global.registerAchievement(playerId, Global.AchiEnum.UNDERDOG)
-	# check stat achievements
-	var playerStats = Global.playersStats[playerId]
-	var dyn_use = playerStats[Global.StatEnum.DYN_USE]
-	var dyn_dmg = playerStats[Global.StatEnum.DYN_DMG]
-	var rev_use = playerStats[Global.StatEnum.REV_USE]
-	var rev_hit = playerStats[Global.StatEnum.REV_HIT]
-	var whp_use = playerStats[Global.StatEnum.WHP_USE]
-	var whp_hit = playerStats[Global.StatEnum.WHP_HIT]
-	var trp_use = playerStats[Global.StatEnum.TRP_USE]
-	var trp_hit = playerStats[Global.StatEnum.TRP_HIT]
-	var pellets = playerStats[Global.StatEnum.PELLETS]
-	var ghost_kill = playerStats[Global.StatEnum.GHOST_KILL]
-	if dyn_use > 3 && float(dyn_dmg) / dyn_use > 70:
-		Global.registerAchievement(playerId, Global.AchiEnum.DEMOLITION_MAN)
-	if rev_use > 3 && float(rev_hit) / rev_use > 0.75:
-		Global.registerAchievement(playerId, Global.AchiEnum.GUNSLINGER)
-	if whp_use > 3 && float(whp_hit) / whp_use > 0.75:
-		Global.registerAchievement(playerId, Global.AchiEnum.HUTS_HUTS)
-	if trp_use > 3 && float(trp_hit) / trp_use > 0.75:
-		Global.registerAchievement(playerId, Global.AchiEnum.GUERRILLA)
-	if pellets >= 100:
-		Global.registerAchievement(playerId, Global.AchiEnum.WAKA_WAKA)
-	if ghost_kill >= 5:
-		Global.registerAchievement(playerId, Global.AchiEnum.GHOSTBUSTER)
-
-	if winner && Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
-		Global.registerAchievement(playerId, Global.AchiEnum.CHICKEN_DINNER)
-
-	if len(Global.playersAchievements[playerId]) >= MAX_ACHIEVEMENTS:
-		Global.playersAchievements[playerId].insert(MAX_ACHIEVEMENTS - 1, Global.AchiEnum.AINT_GON_FIT)
+	# Host pre-computes (see Net.host_start_match); guests render transmitted
+	# lists, everyone else derives identically from synced match data.
+	if Net.isOnline and not Net.isHost:
+		return
+	Global.finalizeAchievements(playerId)
 
 func _process(delta):
 	$Container/MoneyLabel.setText(str(scoreCurr))

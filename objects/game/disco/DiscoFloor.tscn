@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://dao4ayv03v6y"]
 
 [ext_resource type="PackedScene" uid="uid://cjgyrppvjtkm2" path="res://objects/game/disco/DiscoTile.tscn" id="1_d4gac"]
-[ext_resource type="Script" path="res://objects/game/disco/DiscoFloor.gd" id="1_hsyyo"]
+[ext_resource type="Script" uid="uid://bkv5osavfdixi" path="res://objects/game/disco/DiscoFloor.gd" id="1_hsyyo"]
 
-[node name="DiscoFloor" type="Node2D"]
+[node name="DiscoFloor" type="Node2D" groups=["discofloor"]]
 script = ExtResource("1_hsyyo")
 
 [node name="DiscoTile01" parent="." instance=ExtResource("1_d4gac")]

@@ -28,6 +28,7 @@ buses/default_bus_layout="res://audio/audio_bus_layout.tres"
 Music="*res://global/Music.tscn"
 Res="*res://global/Res.gd"
 Global="*res://global/Global.gd"
+Net="*res://global/Net.gd"
 
 [display]
 
@@ -186,6 +187,7 @@ default_option_map=0
 default_option_rounds=1
 hosted_mode=false
 ghost_speed=250.0
+online_port=7777
 
 [rendering]
 

@@ -11,4 +11,4 @@ func _ready():
 		$Anim.play('draw')
 	
 	await $Anim.animation_finished
-	Global.goToMap()
+	Net.advance_match()

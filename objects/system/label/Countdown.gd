@@ -25,7 +25,7 @@ func _ready():
 					Global.playersMaxHp[i] = 1
 				'cards':
 					Global.playersMaxHp[i] = 100
-		Global.goToMap()
+		Net.advance_match()
 	else:
 		showCount("go!", 12, null)
 		Global.startRound()
