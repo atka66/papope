@@ -58,7 +58,7 @@ func _process(delta):
 			_netAccum += delta
 			if _netAccum >= Net.STATE_RATE:
 				_netAccum = 0.0
-				Net.push_state.rpc(Global.getPlayerStates())
+				Net.push_state(Global.getPlayerStates())
 			# 'random' background steps on all screens via broadcast, aligned
 			# to pan-loop ends (see _bgPeriod).
 			if Global.options['map'][Global.optionsSelected['map']] == 'random':
@@ -158,7 +158,7 @@ func advanceBgFrame() -> void:
 	# Full replay (frame + pan restart) like a selection change: keeps the
 	# pan phase aligned on all peers instead of drifting per load time.
 	applyBgFrame(frame, true)
-	Net.bg_frame.rpc(frame, true)
+	Net.send_bg_frame(frame, true)
 
 func applyBgFrame(frame: int, replay: bool) -> void:
 	var bg = get_node_or_null("MovingBackground/Backgrounds")
@@ -172,14 +172,14 @@ func applyBgFrame(frame: int, replay: bool) -> void:
 			anim.seek(0)
 			anim.play("loop")
 
-func sendBgTo(peerId: int) -> void:
+func sendBgTo() -> void:
 	# Newcomer paint: explicit maps resolve locally, random takes host's frame.
 	if Global.options['map'][Global.optionsSelected['map']] != 'random':
 		return
 	var bg = get_node_or_null("MovingBackground/Backgrounds")
 	if bg == null:
 		return
-	Net.bg_frame.rpc_id(peerId, int(bg.frame), true)
+	Net.send_bg_frame(int(bg.frame), true)
 
 func _on_lobby_updated():
 	# Spawn previews for peers that joined after we entered the lobby.
@@ -204,7 +204,7 @@ func _on_lobby_updated():
 				var frameCount: int = bg.sprite_frames.get_frame_count('default')
 				var frame := _bgSeed % frameCount
 				applyBgFrame(frame, true)
-				Net.bg_frame.rpc(frame, true)
+				Net.send_bg_frame(frame, true)
 		elif mapName != 'random' or !Net.isOnline:
 			restartMovingBackground()
 		# else: online guest with 'random' waits for the host's bg_frame.

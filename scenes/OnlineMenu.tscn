@@ -23,15 +23,15 @@ theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 32
 text = "HOST GAME"
 
-[node name="IpEdit" type="LineEdit" parent="."]
+[node name="CodeEdit" type="LineEdit" parent="."]
 offset_left = 430.0
 offset_top = 392.0
 offset_right = 730.0
 offset_bottom = 440.0
 theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 20
-placeholder_text = "host ip"
-max_length = 32
+placeholder_text = "room code"
+max_length = 4
 
 [node name="JoinButton" type="Button" parent="."]
 offset_left = 750.0
@@ -42,6 +42,24 @@ focus_mode = 0
 theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 32
 text = "JOIN"
+
+[node name="RoomList" type="ItemList" parent="."]
+offset_left = 970.0
+offset_top = 280.0
+offset_right = 1290.0
+offset_bottom = 440.0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+
+[node name="RefreshButton" type="Button" parent="."]
+offset_left = 970.0
+offset_top = 448.0
+offset_right = 1290.0
+offset_bottom = 496.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 32
+text = "REFRESH"
 
 [node name="StatusLabel" parent="." instance=ExtResource("2_label")]
 position = Vector2(680, 500)

@@ -87,7 +87,7 @@ func updateSwapSelected():
 func finishAnimation():
 	donePerking = true
 	if Net.isOnline and not Net.isHost and playerId == Net.localSlot:
-		Net.submit_perks.rpc_id(1, playerId, Global.playersPerks[playerId].duplicate())
+		Net.submit_perks(playerId, Global.playersPerks[playerId].duplicate())
 	await get_tree().create_timer(3).timeout
 	isFinished = true
 

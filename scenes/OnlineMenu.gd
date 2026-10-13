@@ -1,20 +1,29 @@
 extends Node2D
 
-@onready var _ipEdit = $IpEdit
+@onready var _codeEdit = $CodeEdit
 @onready var _statusLabel = $StatusLabel
+@onready var _roomList = $RoomList
+
+var _roomCodes: Array = []
 
 func _ready():
 	$TitleLabel.setText("online rumble")
-	$InfoLabel.setText("your ip: " + Net.get_local_ips() + " - host must open udp " + str(Net.port) + ", or play over zerotier/hamachi")
+	$InfoLabel.setText("relay: " + Net.relay_base())
 	$HostButton.pressed.connect(_on_host_pressed)
 	$JoinButton.pressed.connect(_on_join_pressed)
+	$RefreshButton.pressed.connect(_on_refresh_pressed)
 	$BackButton.pressed.connect(_on_back_pressed)
-	_ipEdit.text_submitted.connect(_on_ip_submitted)
+	_codeEdit.text_submitted.connect(_on_code_submitted)
+	_roomList.item_selected.connect(_on_room_selected)
+	Net.hosted.connect(_on_hosted)
 	Net.joined.connect(_on_joined)
 	Net.join_failed.connect(_on_join_failed)
 	Net.host_left.connect(_on_host_left)
+	_on_refresh_pressed()
 
 func _exit_tree():
+	if Net.hosted.is_connected(_on_hosted):
+		Net.hosted.disconnect(_on_hosted)
 	if Net.joined.is_connected(_on_joined):
 		Net.joined.disconnect(_on_joined)
 	if Net.join_failed.is_connected(_on_join_failed):
@@ -27,18 +36,38 @@ func _input(event):
 		_on_back_pressed()
 
 func _on_host_pressed():
-	setStatus("opening port...")
-	if Net.host():
-		setStatus("hosting on " + Net.get_local_ips() + ":" + str(Net.port) + " - share it!")
-		await get_tree().create_timer(0.5).timeout
-		get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
+	setStatus("creating room...")
+	Net.host()
+
+func _on_hosted():
+	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
 
 func _on_join_pressed():
-	Net.join(_ipEdit.text)
+	Net.join(_codeEdit.text)
 	setStatus("connecting...")
 
-func _on_ip_submitted(_text):
+func _on_code_submitted(_text):
 	_on_join_pressed()
+
+func _on_refresh_pressed():
+	setStatus("fetching rooms...")
+	var rooms := await Net.rest_list_rooms()
+	if not is_instance_valid(_roomList):
+		return
+	_roomList.clear()
+	_roomCodes.clear()
+	for r in rooms:
+		if r is Dictionary:
+			_roomCodes.append(str(r.get("code", "?")))
+			_roomList.add_item("%s (%d/4)" % [str(r.get("code", "?")), int(r.get("players", 0))])
+	if rooms.is_empty():
+		setStatus("no rooms - host one!")
+	else:
+		setStatus("%d room(s)" % rooms.size())
+
+func _on_room_selected(index: int):
+	if index >= 0 and index < _roomCodes.size():
+		_codeEdit.text = _roomCodes[index]
 
 func _on_back_pressed():
 	if Net.isOnline:

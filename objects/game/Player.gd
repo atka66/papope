@@ -99,7 +99,7 @@ func getMoveVector() -> Vector2:
 	# Online: host drives remote slots from forwarded inputs, clients hold still
 	# between host state syncs (never poll another peer's gamepad).
 	if Net.isOnline and not isLocal:
-		if multiplayer.is_server():
+		if Net.isHost:
 			return netMove
 		return Vector2.ZERO
 	var lhAxis: float = Input.get_joy_axis(playerId, JOY_AXIS_LEFT_X)
@@ -237,7 +237,7 @@ func _requestLobbyChange(kind: String, value) -> void:
 	if Net.isHost:
 		Net.request_lobby_change(kind, playerId, value)
 	else:
-		Net.request_lobby_change.rpc_id(1, kind, playerId, value)
+		Net.request_lobby_change(kind, playerId, value)
 
 func _onlineDash(axis: Vector2) -> void:
 	if !Net.isOnline:
@@ -245,9 +245,9 @@ func _onlineDash(axis: Vector2) -> void:
 		return
 	if Net.isHost:
 		dash(axis)
-		Net.notify_action.rpc(playerId, "dash", getAimVector(), axis)
+		Net.notify_action(playerId, "dash", getAimVector(), axis)
 	else:
-		Net.request_action.rpc_id(1, playerId, "dash", getAimVector(), axis)
+		Net.request_action(playerId, "dash", getAimVector(), axis)
 
 func _onlineUse() -> void:
 	if !Net.isOnline:
@@ -255,9 +255,9 @@ func _onlineUse() -> void:
 		return
 	if Net.isHost:
 		useItem()
-		Net.notify_action.rpc(playerId, "use", getAimVector(), getMoveVector())
+		Net.notify_action(playerId, "use", getAimVector(), getMoveVector())
 	else:
-		Net.request_action.rpc_id(1, playerId, "use", getAimVector(), getMoveVector())
+		Net.request_action(playerId, "use", getAimVector(), getMoveVector())
 
 func regenLoop() -> void:
 	await get_tree().create_timer(1.0).timeout
@@ -377,7 +377,7 @@ func _physics_process(delta):
 			_sendAccum += delta
 			if _sendAccum >= Net.STATE_RATE:
 				_sendAccum = 0.0
-				Net.send_input.rpc_id(1, playerId, getMoveVector(), getAimVector())
+				Net.send_input(playerId, getMoveVector(), getAimVector())
 
 func _refreshLobbyVisuals() -> void:
 	if Global.playersTeam[playerId] != _lastTeam:
@@ -472,11 +472,11 @@ func apply_net_state(s: Array) -> void:
 func _netLabel(text: String, pos: Vector2, color: Color, size: int) -> void:
 	# Damage numbers are host-truth: guests skip local spawns and render the
 	# host's broadcast instead, so every screen shows the same numbers.
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	Global.spawnFallingLabel(text, pos, color, size)
 	if Net.isOnline:
-		Net.damage_number.rpc(text, pos, color, size)
+		Net.damage_number(text, pos, color, size)
 
 func _gainFeedback() -> void:	# Host-side pickup() already played full feedback there; this mirrors the
 	# noticeable bits on guests when the synced item arrives.
@@ -743,7 +743,7 @@ func hurtSound(sound: AudioStreamOggVorbis) -> void:
 
 func fallDown(isLava: bool) -> void:
 	if Net.isOnline and isLocal and not Net.isHost and alive and not isFallingIntoWater:
-		Net.notify_fall.rpc_id(1, playerId, isLava)
+		Net.notify_fall(playerId, isLava)
 	$CollisionShape.set_deferred("disabled", true)
 	isFallingIntoWater = true
 	if alive:
@@ -786,7 +786,7 @@ func _on_body_entered(body):
 	if body.is_in_group('players'):
 		if !hit:
 			body.hit = true
-			if Net.isOnline and not multiplayer.is_server():
+			if Net.isOnline and not Net.isHost:
 				pass # host authors the FX; impulses below stay local
 			else:
 				var collisionAnim = Res.CollisionAnimObject.instantiate()
@@ -796,12 +796,12 @@ func _on_body_entered(body):
 				collisionAnim.look_at(global_position)
 				Global.addToScene(collisionAnim)
 				if Net.isOnline:
-					Net.collision_fx.rpc(collisionAnim.position, animScale, global_position)
+					Net.collision_fx(collisionAnim.position, animScale, global_position)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):
 		# Online cactus hits are host-authorized; guests replay via Net.cactus_hit.
-		if Net.isOnline and not multiplayer.is_server():
+		if Net.isOnline and not Net.isHost:
 			return
 		# todo maybe hurt sound for the non-chicken as well?
 		if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
@@ -810,7 +810,7 @@ func _on_body_entered(body):
 		body.bounce()
 		body.pinch()
 		if Net.isOnline:
-			Net.cactus_hit.rpc(body.global_position)
+			Net.cactus_hit(body.global_position)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
 	# todo wall sound
 

@@ -36,7 +36,7 @@ func _ready():
 	else:
 		await get_tree().create_timer(1.5).timeout
 	
-	if !Net.isOnline || multiplayer.is_server():
+	if !Net.isOnline || Net.isHost:
 		pwrupSpawnLoop()
 	initCountdown()
 	await get_tree().create_timer(1.0).timeout
@@ -47,17 +47,17 @@ func _ready():
 
 func _process(delta):
 	# Host replicates player states to all clients ~20 times per second.
-	if Net.isOnline and multiplayer.is_server():
+	if Net.isOnline and Net.isHost:
 		_stateAccum += delta
 		if _stateAccum >= Net.STATE_RATE:
 			_stateAccum = 0.0
-			Net.push_state.rpc(_collectStates())
+			Net.push_state(_collectStates())
 		_ghostAccum += delta
 		if _ghostAccum >= Net.GHOST_RATE:
 			_ghostAccum = 0.0
 			for ghost in get_tree().get_nodes_in_group("ghosts"):
 				if is_instance_valid(ghost):
-					Net.push_ghost.rpc((ghost as Node2D).global_position)
+					Net.push_ghost((ghost as Node2D).global_position)
 					break
 
 func _collectStates() -> Array:
@@ -76,11 +76,11 @@ func _input(event):
 
 func pwrupSpawnLoop() -> void:
 	await get_tree().create_timer(ProjectSettings.get("papope/pwrup_respawn_time")).timeout
-	if Net.isOnline and multiplayer.is_server() and spawners.size() > 0:
+	if Net.isOnline and Net.isHost and spawners.size() > 0:
 		var spIdx := determRandom.randi_range(0, spawners.size() - 1)
 		var typeIdx := determRandom.randi_range(0, Global.PwrupEnum.size() - 1)
 		spawnNetPwrup(spIdx, typeIdx)
-		Net.spawn_pwrup.rpc(spIdx, typeIdx)
+		Net.spawn_pwrup(spIdx, typeIdx)
 	elif !Net.isOnline:
 		var spawner = spawners.pick_random()
 		if spawner != null:
@@ -139,7 +139,7 @@ func initCountdown() -> void:
 
 func endRound(aliveTeamId: int) -> void:
 	# Online scoring is host-authoritative; clients render via showNetRoundEnd.
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	$AudioRoundEnd.play()
 
@@ -155,7 +155,7 @@ func endRound(aliveTeamId: int) -> void:
 
 	_showRoundEndBanner(aliveTeamId)
 	if Net.isOnline:
-		Net.round_end.rpc(aliveTeamId, Global.playersPoints.duplicate())
+		Net.round_end(aliveTeamId, Global.playersPoints.duplicate())
 
 func showNetRoundEnd(aliveTeamId: int) -> void:
 	$AudioRoundEnd.play()
@@ -182,12 +182,12 @@ func showCount(position: Vector2, cnt: String) -> void:
 
 func initGhostSpawn() -> void:
 	# Online ghosts are host-driven; clients spawn via Net.ghost_event.
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	var nodeIdx := randi() % 2
 	var colorIdx := randi() % 4
 	if Net.isOnline:
-		Net.ghost_event.rpc(nodeIdx, colorIdx)
+		Net.ghost_event(nodeIdx, colorIdx)
 	_ghostCountdown(nodeIdx, colorIdx)
 
 func spawnNetGhost(nodeIdx: int, colorIdx: int = -1) -> void:

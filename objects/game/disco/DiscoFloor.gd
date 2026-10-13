@@ -20,10 +20,10 @@ var _sink := TileSink.new()
 
 func _ready():
 	initPlayerTiles()
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		# The host's broadcast may predate our load; ask for the current
 		# cycle to be unicast back (host also pushes on join, see Net).
-		Net.request_disco.rpc_id(1)
+		Net.request_disco()
 		return # guests run cycles via Net.disco_cycle
 	playRandomAnim()
 
@@ -58,7 +58,7 @@ func playRandomAnim():
 	var cycleSeed := randi()
 	if Net.isOnline:
 		_current = [idx, cycleSeed]
-		Net.disco_cycle.rpc(idx, cycleSeed)
+		Net.disco_cycle(idx, cycleSeed)
 		_gen += 1
 	await _runCycle(idx, cycleSeed, _gen)
 	playRandomAnim()

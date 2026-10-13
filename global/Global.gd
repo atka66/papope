@@ -247,7 +247,7 @@ func startRound() -> void:
 
 func initGhostSpawn():
 	# Online ghosts are host-driven (host broadcasts via Net.ghost_event).
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	MapControllerNode.initGhostSpawn()
 
@@ -300,7 +300,7 @@ func getNumberOfTeams():
 
 func registerAchievement(playerId: int, achievement: AchiEnum):
 	# Online stats/achievements are host-authoritative; client copies converge via state sync.
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	if not (achievement in playersAchievements[playerId]):
 		playersAchievements[playerId].append(achievement)
@@ -345,7 +345,7 @@ func finalizeAchievements(playerId: int) -> void:
 		playersAchievements[playerId].insert(8 - 1, AchiEnum.AINT_GON_FIT)
 
 func incrementStat(playerId : int, stat : StatEnum, i) -> void:
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	if playersStats:
 		playersStats[playerId][stat] += i
@@ -387,7 +387,7 @@ func getRandomPwrup() -> PwrupEnum:
 	return [PwrupEnum.REVOLVER, PwrupEnum.DYNAMITE, PwrupEnum.SHIELD, PwrupEnum.TRAP, PwrupEnum.WHIP].pick_random()
 
 func addKill(playerId) -> void:
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	playersKills[playerId] += 1
 	if playersKills[playerId] == 3:

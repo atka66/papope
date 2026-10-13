@@ -187,7 +187,7 @@ default_option_map=0
 default_option_rounds=1
 hosted_mode=false
 ghost_speed=250.0
-online_port=7777
+relay_url="ws://localhost:8080"
 
 [rendering]
 
