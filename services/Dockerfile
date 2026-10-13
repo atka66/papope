@@ -4,7 +4,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN go build -o papope-relay ./cmd
+RUN go build -o papope-relay ./cmd/papope-relay
 
 FROM scratch
 COPY --from=builder /app/papope-relay /papope-relay
