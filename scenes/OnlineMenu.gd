@@ -6,6 +6,7 @@ extends Node2D
 @onready var _relayEdit = $RelayEdit
 
 var _roomCodes: Array = []
+var _roomLocked: Array = []
 
 func _ready():
 	$TitleLabel.setText("online rumble")
@@ -42,12 +43,17 @@ func _input(event):
 
 func _on_host_pressed():
 	setStatus("creating room...")
-	Net.host()
+	Net.host($PrivateCheck.button_pressed)
 
 func _on_hosted():
 	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
 
 func _on_join_pressed():
+	var code: String = _codeEdit.text.strip_edges().to_upper()
+	for i in range(_roomCodes.size()):
+		if _roomCodes[i] == code and i < _roomLocked.size() and bool(_roomLocked[i]):
+			setStatus("match in progress")
+			return
 	Net.join(_codeEdit.text)
 	setStatus("connecting...")
 
@@ -61,10 +67,18 @@ func _on_refresh_pressed():
 		return
 	_roomList.clear()
 	_roomCodes.clear()
+	_roomLocked.clear()
 	for r in rooms:
 		if r is Dictionary:
+			if int(r.get("players", 0)) <= 0:
+				continue # orphaned listing, unjoinable
+			var locked := bool(r.get("locked", false))
 			_roomCodes.append(str(r.get("code", "?")))
-			_roomList.add_item("%s (%d/4)" % [str(r.get("code", "?")), int(r.get("players", 0))])
+			_roomLocked.append(locked)
+			var label := "%s (%d/4)" % [str(r.get("code", "?")), int(r.get("players", 0))]
+			if locked:
+				label += " [IN MATCH]"
+			_roomList.add_item(label)
 	if rooms.is_empty():
 		setStatus("no rooms - host one!")
 	else:

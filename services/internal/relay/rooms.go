@@ -15,6 +15,8 @@ const (
 type Room struct {
 	code     string
 	version  string
+	locked   bool // match running: listed, but joins are rejected
+	unlisted bool // private: omitted from lists, joinable by code
 	conns    map[*Conn]struct{}
 	lastSeen time.Time
 }
@@ -53,11 +55,15 @@ func (h *Hub) join(room *Room, c *Conn) {
 	room.lastSeen = time.Now()
 }
 
-// leave unregisters c; empty rooms are left for the GC sweep.
+// leave unregisters c; rooms emptied this way are dropped at once,
+// the GC sweep stays as backstop for the rest.
 func (h *Hub) leave(room *Room, c *Conn) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	delete(room.conns, c)
+	if len(room.conns) == 0 {
+		delete(h.rooms, room.code)
+	}
 }
 
 // broadcastExcept queues env to every member of room except sender.

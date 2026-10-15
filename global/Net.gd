@@ -16,6 +16,7 @@ const MAX_SLOTS := 4
 const STATE_RATE := 0.05
 const GHOST_RATE := 0.1
 const JOIN_TIMEOUT := 10.0
+const HEARTBEAT_RATE := 15.0
 const RELAY_VERSION := "1"
 
 var isOnline := false
@@ -30,11 +31,12 @@ var ws: WebSocketPeer = null
 var _wsWasOpen := false
 var _wasJoined := false
 var _joinTimer: SceneTreeTimer = null
+var _beatAccum := 0.0
 
 func _ready() -> void:
 	randomize()
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if ws == null:
 		return
 	ws.poll()
@@ -58,6 +60,12 @@ func _process(_delta: float) -> void:
 					get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
 			elif not had:
 				emit_signal("join_failed", "lost relay connection")
+	# Host lock advertisement: the list learns our match state from these.
+	if isOnline and isHost and not roomCode.is_empty():
+		_beatAccum += delta
+		if _beatAccum >= HEARTBEAT_RATE:
+			_beatAccum = 0.0
+			send_heartbeat()
 
 # ------------------------------------------------------------------ config
 
@@ -98,7 +106,7 @@ func rest_base() -> String:
 
 # ------------------------------------------------------------------ lifecycle
 
-func host() -> void:
+func host(unlisted: bool = false) -> void:
 	leave()
 	isOnline = true
 	isHost = true
@@ -106,7 +114,7 @@ func host() -> void:
 	remoteInputs.clear()
 	slotByNonce.clear()
 	_reset_lobby_state()
-	var code := await _rest_create_room()
+	var code := await _rest_create_room(unlisted)
 	if not isOnline:
 		return # backed out while creating
 	if code.is_empty():
@@ -119,8 +127,8 @@ func host() -> void:
 func join(codeText: String) -> void:
 	leave()
 	var code := codeText.strip_edges().to_upper()
-	if code.length() != 4:
-		emit_signal("join_failed", "room code is 4 letters")
+	if code.length() != 6:
+		emit_signal("join_failed", "room code is 6 numbers")
 		return
 	isOnline = true
 	isHost = false
@@ -133,6 +141,8 @@ func join(codeText: String) -> void:
 	_ws_connect()
 
 func leave() -> void:
+	if isHost and not roomCode.is_empty():
+		_rest_delete_room(roomCode)
 	if ws != null:
 		ws.close()
 		ws = null
@@ -176,11 +186,11 @@ func _on_join_timeout() -> void:
 
 # ------------------------------------------------------------------ REST (lobby service)
 
-func _rest_create_room() -> String:
+func _rest_create_room(unlisted: bool) -> String:
 	var http := HTTPRequest.new()
 	add_child(http)
 	var err := http.request(rest_base() + "/v1/rooms", ["Content-Type: application/json"],
-		HTTPClient.METHOD_POST, JSON.stringify({"version": RELAY_VERSION}))
+		HTTPClient.METHOD_POST, JSON.stringify({"version": RELAY_VERSION, "unlisted": unlisted}))
 	if err != OK:
 		http.queue_free()
 		return ""
@@ -209,6 +219,24 @@ func rest_list_rooms() -> Array:
 	if parsed is Array:
 		rooms = parsed
 	return rooms
+
+func send_heartbeat() -> void:
+	# Lock advertisement (and room liveness) for the room list.
+	if not isOnline or not isHost or roomCode.is_empty():
+		return
+	var http := HTTPRequest.new()
+	add_child(http)
+	http.request_completed.connect(http.queue_free)
+	http.request(rest_base() + "/v1/rooms/" + roomCode + "/heartbeat",
+		["Content-Type: application/json"], HTTPClient.METHOD_POST,
+		JSON.stringify({"locked": is_match_locked()}))
+
+func _rest_delete_room(code: String) -> void:
+	# Fire-and-forget: no orphaned listing if we leave cleanly.
+	var http := HTTPRequest.new()
+	add_child(http)
+	http.request_completed.connect(http.queue_free)
+	http.request(rest_base() + "/v1/rooms/" + code, [], HTTPClient.METHOD_DELETE)
 
 # ------------------------------------------------------------------ host helpers
 
@@ -263,18 +291,24 @@ func push_lobby() -> void:
 		"options": Global.optionsSelected.duplicate(),
 		"points": Global.playersPoints.duplicate(),
 	})
+	# The relay never echoes to the sender, so without this the host's own
+	# Lobby would never spawn previews for late joiners (guests learn
+	# through the broadcast above). No listeners outside the lobby: harmless.
+	emit_signal("lobby_updated")
 
 func begin_countdown() -> void:
 	if not isOnline or not isHost:
 		return
 	_do_countdown()
 	_send("countdown", {})
+	send_heartbeat()
 
 func cancel_countdown() -> void:
 	if not isOnline or not isHost:
 		return
 	_undo_countdown()
 	_send("undo_countdown", {})
+	send_heartbeat()
 
 func host_start_match() -> void:
 	# Called on the host when a round should begin (lobby countdown or banner).
@@ -293,6 +327,7 @@ func host_start_match() -> void:
 			"stats": _stats_to_rows(),
 			"kills": _ints(Global.playersKills),
 		})
+		send_heartbeat()
 		return
 	var mapName := "hell"
 	var idx: int = Global.optionsSelected["map"]
@@ -307,12 +342,14 @@ func host_start_match() -> void:
 		"points": _ints(Global.playersPoints),
 		"seed": Global.matchSeed,
 	})
+	send_heartbeat()
 
 func to_lobby() -> void:
 	if not isOnline or not isHost:
 		return
 	_do_go_lobby()
 	_send("go_lobby", {})
+	send_heartbeat()
 
 func remove_map_player(slot: int) -> void:
 	if not isOnline or not isHost:
@@ -614,6 +651,18 @@ func _handle_envelope(env: Dictionary) -> void:
 func is_map_ready() -> bool:
 	return Global.MapControllerNode != null and is_instance_valid(Global.MapControllerNode)
 
+func is_match_locked() -> bool:
+	# Unlocked only while the host idles in the lobby: rounds chain
+	# map-to-map with no lobby in between (no unlock window mid-match),
+	# a running countdown counts as ongoing, and transitions default
+	# to locked.
+	if not isOnline or not isHost:
+		return false
+	var lobby := get_node_or_null("/root/Lobby")
+	if lobby == null:
+		return true
+	return lobby.countdownNode != null
+
 # ------------------------------------------------------------------ hello / welcome / bye
 
 func _on_hello(nonce: int) -> void:
@@ -628,8 +677,13 @@ func _on_hello(nonce: int) -> void:
 		if not Global.playersJoined[i]:
 			slot = i
 			break
+	if is_match_locked():
+		# Running match: the list flag is advisory, this is enforcement.
+		# Covers stale lists, direct code entry, and old clients alike.
+		_send("welcome", {"nonce": nonce, "slot": -1, "reason": "match"})
+		return
 	if slot < 0:
-		_send("welcome", {"nonce": nonce, "slot": -1})
+		_send("welcome", {"nonce": nonce, "slot": -1, "reason": "full"})
 		return
 	slotByNonce[nonce] = slot
 	Global.playersConnected[slot] = true
@@ -645,7 +699,10 @@ func _on_welcome(payload: Dictionary) -> void:
 	var slot := int(payload.get("slot", -1))
 	if slot < 0:
 		leave()
-		emit_signal("join_failed", "room is full")
+		if str(payload.get("reason", "")) == "match":
+			emit_signal("join_failed", "match in progress")
+		else:
+			emit_signal("join_failed", "room is full")
 		return
 	localSlot = slot
 	_wasJoined = true

@@ -343,6 +343,12 @@ position = Vector2(1352, 700)
 fontSize = 2
 alignment = 3
 
+[node name="RoomLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
+position = Vector2(1352, 724)
+text = ""
+fontSize = 2
+alignment = 3
+
 [node name="OnlineButton" type="Button" parent="MenuCanvas"]
 offset_left = 8.0
 offset_top = 676.0

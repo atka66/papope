@@ -72,6 +72,22 @@ func TestExchangeAndBye(t *testing.T) {
 	}
 }
 
+// Dropping the last socket deletes the room at once (GC is backstop).
+func TestEmptyRoomDeleted(t *testing.T) {
+	hub, srv := serveTestHub(t)
+	a := dial(t, srv, "GONE")
+	b := dial(t, srv, "GONE")
+	a.Close()
+	b.Close()
+	deadline := time.Now().Add(3 * time.Second)
+	for hub.RoomCount() != 0 {
+		if time.Now().After(deadline) {
+			t.Fatalf("room count %d, want 0 after last leave", hub.RoomCount())
+		}
+		time.Sleep(20 * time.Millisecond)
+	}
+}
+
 // Oversize (>64KB) messages drop the sender; the survivor gets bye.
 func TestOversizeDropsPeer(t *testing.T) {
 	_, srv := serveTestHub(t)

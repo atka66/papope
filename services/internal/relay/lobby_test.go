@@ -69,16 +69,24 @@ func TestRoomLifecycle(t *testing.T) {
 		t.Fatalf("create status %d (%v)", status, created)
 	}
 	code, _ := created["code"].(string)
-	if len(code) != 4 {
-		t.Fatalf("code %q is not 4 chars", code)
+	if len(code) != 6 {
+		t.Fatalf("code %q is not 6 chars", code)
 	}
 	for _, c := range code {
-		if c < 'A' || c > 'Z' {
-			t.Fatalf("code %q is not letters-only", code)
+		if c < '0' || c > '9' {
+			t.Fatalf("code %q is not digits-only", code)
 		}
 	}
 
 	status, body := getPath(t, srv, "/v1/rooms?version=1")
+	if status != http.StatusOK || strings.Contains(body, code) {
+		t.Fatalf("list %d %q, want no connectionless %s", status, body, code)
+	}
+
+	// A live socket lists it.
+	ws := dial(t, srv, code)
+	defer ws.Close()
+	status, body = getPath(t, srv, "/v1/rooms?version=1")
 	if status != http.StatusOK || !strings.Contains(body, code) {
 		t.Fatalf("list %d %q, want it to contain %s", status, body, code)
 	}
@@ -99,6 +107,69 @@ func TestRoomLifecycle(t *testing.T) {
 	status, body = getPath(t, srv, "/v1/rooms?version=1")
 	if status != http.StatusOK || strings.Contains(body, code) {
 		t.Fatalf("list after delete %d %q, want no %s", status, body, code)
+	}
+}
+
+// Unlisted rooms never appear in lists, but still heartbeat.
+func TestUnlistedHidden(t *testing.T) {
+	srv, _ := serveLobbyHub(t)
+
+	status, priv := postJSON(t, srv, "/v1/rooms", `{"version":"1","unlisted":true}`)
+	if status != http.StatusOK {
+		t.Fatalf("create unlisted status %d (%v)", status, priv)
+	}
+	privCode, _ := priv["code"].(string)
+	status, pub := postJSON(t, srv, "/v1/rooms", `{"version":"1"}`)
+	if status != http.StatusOK {
+		t.Fatalf("create status %d (%v)", status, pub)
+	}
+	pubCode, _ := pub["code"].(string)
+
+	ws := dial(t, srv, privCode)
+	defer ws.Close()
+	wsPub := dial(t, srv, pubCode)
+	defer wsPub.Close()
+
+	status, body := getPath(t, srv, "/v1/rooms?version=1")
+	if status != http.StatusOK {
+		t.Fatalf("list status %d", status)
+	}
+	if strings.Contains(body, privCode) {
+		t.Fatalf("list %q contains unlisted %s", body, privCode)
+	}
+	if !strings.Contains(body, pubCode) {
+		t.Fatalf("list %q misses listed %s", body, pubCode)
+	}
+	if status, _ := postJSON(t, srv, "/v1/rooms/"+privCode+"/heartbeat", `{"locked":true}`); status != http.StatusOK {
+		t.Fatalf("heartbeat unlisted: status %d, want 200", status)
+	}
+}
+
+// Heartbeat {"locked":...} flags the list entry; empty bodies still touch.
+func TestLockedFlag(t *testing.T) {
+	srv, _ := serveLobbyHub(t)
+
+	status, created := postJSON(t, srv, "/v1/rooms", `{"version":"1"}`)
+	if status != http.StatusOK {
+		t.Fatalf("create status %d (%v)", status, created)
+	}
+	code, _ := created["code"].(string)
+	ws := dial(t, srv, code)
+	defer ws.Close()
+
+	if status, _ := postJSON(t, srv, "/v1/rooms/"+code+"/heartbeat", `{"locked":true}`); status != http.StatusOK {
+		t.Fatalf("heartbeat locked: status %d, want 200", status)
+	}
+	_, body := getPath(t, srv, "/v1/rooms?version=1")
+	if !strings.Contains(body, `"locked":true`) {
+		t.Fatalf("list %q, want locked:true", body)
+	}
+	if status, _ := postJSON(t, srv, "/v1/rooms/"+code+"/heartbeat", `{"locked":false}`); status != http.StatusOK {
+		t.Fatalf("heartbeat unlocked: status %d, want 200", status)
+	}
+	_, body = getPath(t, srv, "/v1/rooms?version=1")
+	if strings.Contains(body, `"locked":true`) {
+		t.Fatalf("list %q, want locked cleared", body)
 	}
 }
 
@@ -142,11 +213,11 @@ func TestCreateRateLimit(t *testing.T) {
 func TestRoomCap(t *testing.T) {
 	hub := NewHub()
 	for range maxRooms {
-		if _, err := hub.CreateRoom(gameVersion); err != nil {
+		if _, err := hub.CreateRoom(gameVersion, false); err != nil {
 			t.Fatalf("create below cap: %v", err)
 		}
 	}
-	if _, err := hub.CreateRoom(gameVersion); err == nil {
+	if _, err := hub.CreateRoom(gameVersion, false); err == nil {
 		t.Fatal("create past cap succeeded, want refusal")
 	}
 }

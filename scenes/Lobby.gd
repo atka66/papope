@@ -26,6 +26,7 @@ func _ready():
 		Net.lobby_updated.connect(_on_lobby_updated)
 	else:
 		$MenuCanvas/OnlineLabel.hide()
+		$MenuCanvas/RoomLabel.hide()
 		initPlayers()
 	# 'random' backdrop steps align with pan-loop ends so every replay
 	# coincides with a sweep boundary on all peers (read, not hardcoded).
@@ -79,6 +80,7 @@ func _updateOnlineLabels() -> void:
 		$MenuCanvas/OnlineLabel.setText("online - hosting (slot 0)")
 	else:
 		$MenuCanvas/OnlineLabel.setText("online - player " + str(Net.localSlot))
+	$MenuCanvas/RoomLabel.setText("room: " + Net.roomCode)
 	if Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.setText("waiting for more players...")
 		$InitHolder/WaitingLabel.show()

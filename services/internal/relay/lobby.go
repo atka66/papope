@@ -21,9 +21,10 @@ const (
 	gameVersion = "1"
 	// maxRooms bounds memory on a small Pi.
 	maxRooms = 256
-	// codeAlphabet is letters only: no digits, so I/O are unambiguous.
-	codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	codeLen      = 4
+	// codeAlphabet is digits only: blockbit glyphs make letters hard to
+	// tell apart, digits read clearly.
+	codeAlphabet = "0123456789"
+	codeLen      = 6
 	// Rate limits, per client IP, fixed-window.
 	createLimitPerMin = 30
 	listLimitPerMin   = 60
@@ -31,9 +32,11 @@ const (
 )
 
 // RoomInfo is one entry of the list response. Players is live socket count.
+// Unlisted rooms are omitted outright; locked ones are listed with the flag.
 type RoomInfo struct {
 	Code    string `json:"code"`
 	Players int    `json:"players"`
+	Locked  bool   `json:"locked"`
 	Version string `json:"version"`
 }
 
@@ -43,7 +46,7 @@ type errFull struct{}
 func (errFull) Error() string { return "room cap reached" }
 
 // CreateRoom mints a code and stores the room. Collisions retry; a full hub errors.
-func (h *Hub) CreateRoom(version string) (string, error) {
+func (h *Hub) CreateRoom(version string, unlisted bool) (string, error) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	if len(h.rooms) >= maxRooms {
@@ -54,7 +57,7 @@ func (h *Hub) CreateRoom(version string) (string, error) {
 		if _, taken := h.rooms[code]; taken {
 			continue
 		}
-		h.rooms[code] = &Room{code: code, version: version, conns: make(map[*Conn]struct{}), lastSeen: time.Now()}
+		h.rooms[code] = &Room{code: code, version: version, unlisted: unlisted, conns: make(map[*Conn]struct{}), lastSeen: time.Now()}
 		return code, nil
 	}
 	return "", errFull{}
@@ -72,6 +75,19 @@ func (h *Hub) TouchRoom(code string) bool {
 	return true
 }
 
+// SetLocked flags a running match for the list; false if the code is unknown.
+func (h *Hub) SetLocked(code string, locked bool) bool {
+	h.mu.Lock()
+	defer h.mu.Unlock()
+	r, ok := h.rooms[code]
+	if !ok {
+		return false
+	}
+	r.locked = locked
+	r.lastSeen = time.Now()
+	return true
+}
+
 // DeleteRoom removes the code; false if unknown.
 func (h *Hub) DeleteRoom(code string) bool {
 	h.mu.Lock()
@@ -83,21 +99,22 @@ func (h *Hub) DeleteRoom(code string) bool {
 	return true
 }
 
-// ListRooms returns rooms matching version (unknown version -> empty, not error).
+// ListRooms returns listed rooms matching version (unknown version ->
+// empty, not error). Unlisted and connectionless rooms never appear.
 func (h *Hub) ListRooms(version string) []RoomInfo {
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	out := []RoomInfo{}
 	for _, r := range h.rooms {
-		if r.version != version {
+		if r.version != version || r.unlisted || len(r.conns) == 0 {
 			continue
 		}
-		out = append(out, RoomInfo{Code: r.code, Players: len(r.conns), Version: r.version})
+		out = append(out, RoomInfo{Code: r.code, Players: len(r.conns), Locked: r.locked, Version: r.version})
 	}
 	return out
 }
 
-// genCode draws codeLen letters from codeAlphabet via crypto/rand.
+// genCode draws codeLen digits from codeAlphabet via crypto/rand.
 func genCode() string {
 	var b [codeLen]byte
 	var rnd [codeLen]byte
@@ -170,7 +187,8 @@ func (h *Hub) HandleCreateRoom(lobby *Lobby, w http.ResponseWriter, r *http.Requ
 		return
 	}
 	var req struct {
-		Version string `json:"version"`
+		Version  string `json:"version"`
+		Unlisted bool   `json:"unlisted"`
 	}
 	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1024)).Decode(&req); err != nil {
 		writeErr(w, http.StatusBadRequest, "body must be {\"version\":\"...\"}")
@@ -180,7 +198,7 @@ func (h *Hub) HandleCreateRoom(lobby *Lobby, w http.ResponseWriter, r *http.Requ
 		writeErr(w, http.StatusBadRequest, "unsupported version")
 		return
 	}
-	code, err := h.CreateRoom(req.Version)
+	code, err := h.CreateRoom(req.Version, req.Unlisted)
 	if err != nil {
 		writeErr(w, http.StatusTooManyRequests, "no room slots left")
 		return
@@ -198,8 +216,21 @@ func (h *Hub) HandleListRooms(lobby *Lobby, w http.ResponseWriter, r *http.Reque
 }
 
 // HandleHeartbeat: POST /v1/rooms/{code}/heartbeat -> {} (404 if unknown).
+// An optional {"locked":bool} body flags a running match for the list;
+// an empty body just touches like before.
 func (h *Hub) HandleHeartbeat(w http.ResponseWriter, r *http.Request) {
 	code := strings.ToUpper(r.PathValue("code"))
+	var req struct {
+		Locked *bool `json:"locked"`
+	}
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1024)).Decode(&req); err == nil && req.Locked != nil {
+		if !h.SetLocked(code, *req.Locked) {
+			writeErr(w, http.StatusNotFound, "unknown room")
+			return
+		}
+		writeJSON(w, http.StatusOK, map[string]string{})
+		return
+	}
 	if !h.TouchRoom(code) {
 		writeErr(w, http.StatusNotFound, "unknown room")
 		return
