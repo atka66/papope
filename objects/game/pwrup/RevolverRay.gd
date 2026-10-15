@@ -26,7 +26,10 @@ func _ready():
 		var hitAngle = $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle()
 		var collider = $HitScan.get_collider()
 		if collider.is_in_group('shootables'):
-			collider.getShot(origin.playerId, $HitScan.target_position.normalized())
+			# Damage is host-authoritative; guest rays are visuals only while
+			# hp/kills converge via state sync (same rule as Trap/Pwrup).
+			if not Net.isOnline or Net.isHost:
+				collider.getShot(origin.playerId, $HitScan.target_position.normalized())
 			if collider.is_in_group('players'):
 				$AudioPlayerHit.play()
 			if collider.is_in_group('car'):

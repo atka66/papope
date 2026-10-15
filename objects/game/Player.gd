@@ -244,7 +244,8 @@ func _onlineDash(axis: Vector2) -> void:
 		dash(axis)
 		return
 	if Net.isHost:
-		dash(axis)
+		# notify_action executes locally and broadcasts (no relay echo),
+		# so the host must not pre-execute or the action fires twice.
 		Net.notify_action(playerId, "dash", getAimVector(), axis)
 	else:
 		Net.request_action(playerId, "dash", getAimVector(), axis)
@@ -254,7 +255,7 @@ func _onlineUse() -> void:
 		useItem()
 		return
 	if Net.isHost:
-		useItem()
+		# Same single-execution rule as dash above.
 		Net.notify_action(playerId, "use", getAimVector(), getMoveVector())
 	else:
 		Net.request_action(playerId, "use", getAimVector(), getMoveVector())
@@ -320,7 +321,9 @@ func _process(delta):
 		updateAimVisuals()
 	if Global.MapControllerNode != null:
 		if alive:
-			if contactsLava && !shielded:
+			# Lava damage is host-authorized; guests keep smoke/sound locally
+			# (enteredLava) while hp converges via state sync.
+			if contactsLava && !shielded && (not Net.isOnline or Net.isHost):
 				lavaAccum += Global.DPS_LAVA * delta
 				while lavaAccum >= 1.0:
 					lavaAccum -= 1.0

@@ -23,7 +23,9 @@ func _ready():
 		hitPosition = $HitScan.get_collision_point()
 		var collider = $HitScan.get_collider()
 		if collider.is_in_group('whippables'):
-			collider.getWhipped(origin.playerId, $HitScan.target_position.normalized())
+			# Host-authoritative damage; guest lashes are visuals only.
+			if not Net.isOnline or Net.isHost:
+				collider.getWhipped(origin.playerId, $HitScan.target_position.normalized())
 			if collider.is_in_group('players'):
 				playerHit = true
 	else:

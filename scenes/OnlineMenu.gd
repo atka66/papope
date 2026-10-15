@@ -3,6 +3,7 @@ extends Node2D
 @onready var _codeEdit = $CodeEdit
 @onready var _statusLabel = $StatusLabel
 @onready var _roomList = $RoomList
+@onready var _relayEdit = $RelayEdit
 
 var _roomCodes: Array = []
 
@@ -15,6 +16,10 @@ func _ready():
 	$BackButton.pressed.connect(_on_back_pressed)
 	_codeEdit.text_submitted.connect(_on_code_submitted)
 	_roomList.item_selected.connect(_on_room_selected)
+	_relayEdit.text = Net.get_user_relay_url()
+	_relayEdit.text_submitted.connect(_on_relay_submitted)
+	$RelayApplyButton.pressed.connect(_on_relay_apply)
+	$RelayResetButton.pressed.connect(_on_relay_reset)
 	Net.hosted.connect(_on_hosted)
 	Net.joined.connect(_on_joined)
 	Net.join_failed.connect(_on_join_failed)
@@ -68,6 +73,32 @@ func _on_refresh_pressed():
 func _on_room_selected(index: int):
 	if index >= 0 and index < _roomCodes.size():
 		_codeEdit.text = _roomCodes[index]
+
+func _on_relay_submitted(_text):
+	_on_relay_apply()
+
+func _on_relay_apply():
+	var url: String = _relayEdit.text.strip_edges()
+	if url.is_empty():
+		Net.clear_user_relay_url()
+		setStatus("relay reset to default")
+	else:
+		if not (url.begins_with("ws://") or url.begins_with("wss://")):
+			setStatus("url must start with ws:// or wss://")
+			return
+		Net.set_user_relay_url(url)
+		setStatus("relay updated")
+	_refreshRelay()
+
+func _on_relay_reset():
+	Net.clear_user_relay_url()
+	_relayEdit.text = ""
+	setStatus("relay reset to default")
+	_refreshRelay()
+
+func _refreshRelay():
+	$InfoLabel.setText("relay: " + Net.relay_base())
+	_on_refresh_pressed()
 
 func _on_back_pressed():
 	if Net.isOnline:

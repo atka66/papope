@@ -13,11 +13,17 @@ func _ready():
 	apply_central_impulse(targetNorm * throwForce)
 
 func explode():
+	# Host-authoritative: only the host spawns the damaging blast and tells
+	# guests to mirror it; guest copies are inert.
+	if Net.isOnline and not Net.isHost:
+		return
 	var explosion = Res.ExplosionAnimObject.instantiate()
 	explosion.position = position
 	explosion.originPlayerId = origin.playerId
 	explosion.shakePwr = 15
 	Global.addToScene(explosion)
+	if Net.isOnline:
+		Net.dynamite_blast(position, origin.playerId)
 	queue_free()
 
 func getShot(playerId: int, normal: Vector2) -> void:
@@ -37,6 +43,8 @@ func _integrate_forces(state):
 
 func _on_body_entered(body):
 	if body.is_in_group("players"):
+		if Net.isOnline and not Net.isHost:
+			return
 		if body.alive && !body.shielded:
 			body.directExplosion()
 		explode()

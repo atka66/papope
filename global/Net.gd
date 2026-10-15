@@ -62,10 +62,31 @@ func _process(_delta: float) -> void:
 # ------------------------------------------------------------------ config
 
 func relay_base() -> String:
+	var custom := get_user_relay_url()
+	if not custom.is_empty():
+		return custom.trim_suffix("/")
 	var env := OS.get_environment("PAPOPE_RELAY_URL").strip_edges()
 	if not env.is_empty():
 		return env.trim_suffix("/")
 	return str(ProjectSettings.get_setting("papope/relay_url", "ws://localhost:8080")).strip_edges().trim_suffix("/")
+
+const USER_RELAY_PATH := "user://relay.cfg"
+
+func get_user_relay_url() -> String:
+	# In-game override from OnlineMenu (persists per machine, never in git).
+	var cfg := ConfigFile.new()
+	if cfg.load(USER_RELAY_PATH) != OK:
+		return ""
+	return str(cfg.get_value("relay", "url", "")).strip_edges()
+
+func set_user_relay_url(url: String) -> void:
+	var cfg := ConfigFile.new()
+	cfg.set_value("relay", "url", url.strip_edges())
+	cfg.save(USER_RELAY_PATH)
+
+func clear_user_relay_url() -> void:
+	if FileAccess.file_exists(USER_RELAY_PATH):
+		DirAccess.remove_absolute(USER_RELAY_PATH)
 
 func rest_base() -> String:
 	var base := relay_base()
@@ -403,6 +424,11 @@ func cactus_hit(cactusPos: Vector2) -> void:
 		return
 	_send("cactus", {"pos": _v2a(cactusPos)})
 
+func dynamite_blast(pos: Vector2, originSlot: int) -> void:
+	if not isOnline or not isHost:
+		return
+	_send("dynamite", {"pos": _v2a(pos), "slot": originSlot})
+
 func damage_number(text: String, pos: Vector2, color: Color, size: int) -> void:
 	# Cosmetic: best effort (a dropped number beats any stall).
 	if not isOnline or not isHost:
@@ -547,6 +573,17 @@ func _handle_envelope(env: Dictionary) -> void:
 				if best != null:
 					best.bounce()
 					best.pinch()
+		"dynamite":
+			if from == 0:
+				var at := _a2v(payload.get("pos"))
+				var best = find_nearest("dynamites", at, 256.0)
+				if best != null and is_instance_valid(best):
+					best.queue_free()
+				var boom = Res.ExplosionAnimObject.instantiate()
+				boom.position = at
+				boom.originPlayerId = int(payload.get("slot", 0))
+				boom.harmful = false
+				Global.addToScene(boom)
 		"damage":
 			if from == 0:
 				Global.spawnFallingLabel(str(payload.get("text", "")), _a2v(payload.get("pos")),

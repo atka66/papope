@@ -61,6 +61,35 @@ theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 32
 text = "REFRESH"
 
+[node name="RelayEdit" type="LineEdit" parent="."]
+offset_left = 280.0
+offset_top = 600.0
+offset_right = 760.0
+offset_bottom = 644.0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 20
+placeholder_text = "relay url (empty = default)"
+
+[node name="RelayApplyButton" type="Button" parent="."]
+offset_left = 780.0
+offset_top = 600.0
+offset_right = 920.0
+offset_bottom = 644.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 32
+text = "SET"
+
+[node name="RelayResetButton" type="Button" parent="."]
+offset_left = 940.0
+offset_top = 600.0
+offset_right = 1080.0
+offset_bottom = 644.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 32
+text = "RESET"
+
 [node name="StatusLabel" parent="." instance=ExtResource("2_label")]
 position = Vector2(680, 500)
 fontSize = 2

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Papope"
-config/version="1.4.4 beta"
+config/version="1.5.0"
 run/main_scene="res://scenes/Loading.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
@@ -187,7 +187,7 @@ default_option_map=0
 default_option_rounds=1
 hosted_mode=false
 ghost_speed=250.0
-relay_url="ws://localhost:8080"
+relay_url="wss://papope-relay.tlac.xyz/"
 
 [rendering]
 
