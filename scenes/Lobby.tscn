@@ -349,16 +349,6 @@ text = ""
 fontSize = 2
 alignment = 3
 
-[node name="OnlineButton" type="Button" parent="MenuCanvas"]
-offset_left = 8.0
-offset_top = 676.0
-offset_right = 208.0
-offset_bottom = 732.0
-focus_mode = 0
-theme_override_fonts/font = ExtResource("14_fa23m")
-theme_override_font_sizes/font_size = 24
-text = "ONLINE"
-
 [node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
 position = Vector2(680, 32)
 scale = Vector2(0.7, 0.7)
@@ -462,7 +452,6 @@ autowrap_mode = 2
 uppercase = true
 
 [connection signal="toggled" from="MenuCanvas/FeedbackButton" to="." method="_on_feedback_button_toggled"]
-[connection signal="pressed" from="MenuCanvas/OnlineButton" to="." method="_on_online_button_pressed"]
 [connection signal="focus_entered" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit" to="." method="_on_feedback_edit_focus_entered"]
 [connection signal="focus_exited" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit" to="." method="_on_feedback_edit_focus_exited"]
 [connection signal="pressed" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/SubmitButton" to="." method="_on_submit_button_pressed"]

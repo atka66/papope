@@ -70,3 +70,9 @@ autoplay = "default"
 text = "leave"
 fontSize = 2
 alignment = 8
+
+[node name="SchemeLabel" parent="." instance=ExtResource("4_vrrwg")]
+position = Vector2(0, 140)
+text = ""
+fontSize = 2
+alignment = 8

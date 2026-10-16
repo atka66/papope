@@ -21,7 +21,6 @@ func _ready():
 	if ProjectSettings.get("papope/hosted_mode"):
 		$MenuCanvas/FullscreenLabel.setText('atka66.itch.io/papope')
 	if Net.isOnline:
-		$MenuCanvas/OnlineButton.hide()
 		initPlayers()
 		Net.lobby_updated.connect(_on_lobby_updated)
 	else:
@@ -68,6 +67,10 @@ func _process(delta):
 					_bgAccum = 0.0
 					advanceBgFrame()
 		return
+	if !Net.isOnline and !Global.playersJoined.has(true):
+		# Last player left: back to the mode select.
+		Global.goToMainMenu()
+		return
 	if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.show()
 	elif Global.getNumberOfTeams() < 2:
@@ -94,14 +97,14 @@ func _updateOnlineLabels() -> void:
 
 func _input(event):
 	if event.is_action_pressed("quit") and !OS.has_feature("web"):
+		var focusOwner := get_viewport().gui_get_focus_owner()
+		if focusOwner is TextEdit or focusOwner is LineEdit:
+			return # typing feedback: keep Esc for the field
 		if Net.isOnline:
 			Net.leave()
 			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
 		else:
-			get_tree().quit()
-	if !Net.isOnline and event is InputEventKey and event.pressed and !event.echo:
-		if event.physical_keycode == KEY_O and Global.enableHotkeys:
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+			Global.goToMainMenu()
 	if Global.DEBUG && Global.enableHotkeys && !Net.isOnline: 
 		if event.is_action_pressed("test1"): 
 			for i in range(4):
@@ -109,6 +112,9 @@ func _input(event):
 					Global.playersConnected[i] = true
 					break
 				if !Global.playersJoined[i]:
+					Global.playersInputMode[i] = Global.InputMode.PAD
+					Global.playersDevice[i] = i
+					Global.kbClaimable = false
 					Global.playersJoined[i] = true
 					Global.joinPlayer(i, false)
 					break
@@ -117,6 +123,8 @@ func _input(event):
 				if Global.playersConnected[i]:
 					if Global.playersJoined[i]:
 						Global.playersJoined[i] = false
+						Global.playersInputMode[i] = Global.InputMode.EMPTY
+						Global.playersDevice[i] = -1
 						Global.leavePlayer(i)
 						break
 		if event.is_action_pressed("test3"):
@@ -139,13 +147,11 @@ func initPlayers() -> void:
 		return
 	for i in range(4):
 		if ProjectSettings.get("papope/hosted_mode"):
-			Global.playersJoined[i] = false
+			if Global.playersInputMode[i] == Global.InputMode.EMPTY:
+				Global.playersJoined[i] = false
 		else:
 			if Global.playersConnected[i] && Global.playersJoined[i]:
 				Global.joinPlayer(i, true)
-
-func _on_online_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
 
 func advanceBgFrame() -> void:
 	# Host-side 'random' rotation: deterministic seeded order shared by all.

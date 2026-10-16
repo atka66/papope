@@ -1,0 +1,119 @@
+[gd_scene load_steps=11 format=3 uid="uid://cmainmenut01sc"]
+
+[ext_resource type="Script" uid="uid://cmainmenu001gd" path="res://scenes/MainMenu.gd" id="1_menu"]
+[ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_bg"]
+[ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="3_cam"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_label"]
+[ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="5_font"]
+[ext_resource type="AudioStream" uid="uid://ba4m2xuga6qbv" path="res://audio/sfx/system/fail.ogg" id="6_fail"]
+[ext_resource type="AudioStream" uid="uid://bfnectokibmn7" path="res://audio/sfx/system/option.ogg" id="6_tick"]
+[ext_resource type="Texture2D" uid="uid://c8v20op2i3bd4" path="res://sprites/lobby/title/title_hell.png" id="7_title"]
+
+[sub_resource type="Animation" id="Animation_fadein"]
+resource_name = "fade_in"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fadein"]
+_data = {
+&"fade_in": SubResource("Animation_fadein")
+}
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_menu")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_fadein")
+}
+autoplay = "fade_in"
+
+[node name="MovingBackground" parent="." instance=ExtResource("2_bg")]
+
+[node name="Camera" parent="." instance=ExtResource("3_cam")]
+
+[node name="AudioTick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_tick")
+bus = &"sfx"
+
+[node name="AudioFail" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_fail")
+bus = &"sfx"
+
+[node name="MenuCanvas" type="CanvasLayer" parent="."]
+
+[node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
+position = Vector2(680, 120)
+
+[node name="Title" type="Sprite2D" parent="MenuCanvas/TitleHolder"]
+texture_filter = 2
+texture = ExtResource("7_title")
+centered = false
+offset = Vector2(-250, -16)
+
+[node name="SubtitleLabel" parent="MenuCanvas/TitleHolder" instance=ExtResource("4_label")]
+position = Vector2(0, 160)
+text = "twin stick arena"
+fontSize = 4
+fontColor = Color(1, 0.752941, 0.12549, 1)
+alignment = 8
+animation = "wobble"
+
+[node name="LocalButton" type="Button" parent="MenuCanvas"]
+offset_left = 480.0
+offset_top = 340.0
+offset_right = 880.0
+offset_bottom = 404.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 40
+text = "LOCAL RUMBLE"
+
+[node name="OnlineButton" type="Button" parent="MenuCanvas"]
+offset_left = 480.0
+offset_top = 428.0
+offset_right = 880.0
+offset_bottom = 492.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 40
+text = "ONLINE RUMBLE"
+
+[node name="HintLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
+position = Vector2(680, 580)
+text = "up/down: choose - enter/a: play - mouse counts as keyboard"
+fontSize = 2
+alignment = 8
+
+[node name="VersionLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
+position = Vector2(8, 764)
+fontSize = 2
+alignment = 2
+
+[node name="FullscreenLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
+position = Vector2(1352, 764)
+text = "f - toggle fullscreen"
+fontSize = 2
+alignment = 3
+
+[node name="GodotLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
+position = Vector2(680, 764)
+text = "powered by godot"
+fontSize = 2
+alignment = 7
+
+[connection signal="pressed" from="MenuCanvas/LocalButton" to="." method="_on_local_button_pressed"]
+[connection signal="mouse_entered" from="MenuCanvas/LocalButton" to="." method="_on_local_mouse_entered"]
+[connection signal="pressed" from="MenuCanvas/OnlineButton" to="." method="_on_online_button_pressed"]
+[connection signal="mouse_entered" from="MenuCanvas/OnlineButton" to="." method="_on_online_mouse_entered"]

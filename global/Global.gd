@@ -120,6 +120,13 @@ var optionsSelected = {
 
 var playersConnected = [false, false, false, false]
 var playersJoined = [false, false, false, false]
+# Offline input locks: chosen in MainMenu by the initiating input (lowest-free
+# slot first). KB dies once a pad binds (kbClaimable flips, never restored
+# until the menu). Online ignores all of this: the local slot owns everything.
+enum InputMode { EMPTY, KB, PAD }
+var playersInputMode = [InputMode.EMPTY, InputMode.EMPTY, InputMode.EMPTY, InputMode.EMPTY]
+var playersDevice = [-1, -1, -1, -1] # bound joypad index for PAD slots
+var kbClaimable := true
 var playersPoints = [0, 0, 0, 0]
 var playersSkin = [0, 1, 2, 3]
 var playersTeam = [0, 1, 2, 3]
@@ -158,11 +165,19 @@ func _ready():
 		Global.initPlayerStats()
 
 func _joy_connection_changed(id: int, connected: bool) -> void:
-	if id < 4:
-		if connected:
-			connectPlayer(id)
-		else:
-			disconnectPlayer(id)
+	if Net.isOnline:
+		return # online slots are relay-managed (hello/bye), ignore hardware
+	var sceneName := ""
+	var scene := get_tree().get_current_scene()
+	if scene != null:
+		sceneName = scene.get_name()
+	if sceneName == 'MainMenu' or sceneName == 'OnlineMenu':
+		return # menus claim inputs explicitly via bind calls
+	if connected:
+		return # availability only; pads join via accept (bindPad)
+	unbindDevice(id)
+	if sceneName != 'Lobby' and sceneName != 'MainMenu':
+		goToLobby()
 
 func _input(_event):
 	if enableHotkeys:
@@ -180,10 +195,96 @@ func connectPlayer(id: int) -> void:
 	playersConnected[id] = true
 
 func disconnectPlayer(id: int) -> void:
-	playersConnected[id] = false
-	leavePlayer(id)
+	if id < 0 or id >= 4:
+		return
+	clearSlot(id)
 	if get_tree().get_current_scene().get_name() != 'Lobby':
 		goToLobby()
+
+func clearMenuState() -> void:
+	# MainMenu entry: start empty, keyboard still claimable.
+	playersConnected = [false, false, false, false]
+	playersJoined = [false, false, false, false]
+	playersInputMode = [InputMode.EMPTY, InputMode.EMPTY, InputMode.EMPTY, InputMode.EMPTY]
+	playersDevice = [-1, -1, -1, -1]
+	kbClaimable = true
+	playersCrowned = [false, false, false, false]
+	playersTeam = [0, 1, 2, 3]
+	playersSkin = [0, 1, 2, 3]
+
+func lowestFreeSlot() -> int:
+	for i in range(4):
+		if playersInputMode[i] == InputMode.EMPTY:
+			return i
+	return -1
+
+func isDeviceBound(device: int) -> bool:
+	for i in range(4):
+		if playersInputMode[i] == InputMode.PAD and playersDevice[i] == device:
+			return true
+	return false
+
+func isKbJoinAllowed() -> bool:
+	return not Net.isOnline and kbClaimable and playersInputMode[0] == InputMode.EMPTY
+
+func bindKbSlot0() -> bool:
+	if Net.isOnline or not kbClaimable or playersInputMode[0] != InputMode.EMPTY:
+		return false
+	playersInputMode[0] = InputMode.KB
+	playersDevice[0] = -1
+	playersConnected[0] = true
+	playersJoined[0] = true
+	return true
+
+func bindPad(device: int) -> int:
+	# Lowest-free-first: the first pad always lands slot 0, so no pad is ever
+	# orphaned by a keyboard lock.
+	if Net.isOnline or device < 0 or isDeviceBound(device):
+		return -1
+	var slot := lowestFreeSlot()
+	if slot < 0:
+		return -1
+	playersInputMode[slot] = InputMode.PAD
+	playersDevice[slot] = device
+	playersConnected[slot] = true
+	playersJoined[slot] = true
+	kbClaimable = false
+	return slot
+
+func unbindDevice(device: int) -> int:
+	for i in range(4):
+		if playersInputMode[i] == InputMode.PAD and playersDevice[i] == device:
+			clearSlot(i)
+			return i
+	return -1
+
+func clearSlot(slot: int) -> void:
+	if slot < 0 or slot >= 4:
+		return
+	playersInputMode[slot] = InputMode.EMPTY
+	playersDevice[slot] = -1
+	playersConnected[slot] = false
+	playersCrowned[slot] = false
+	leavePlayer(slot)
+
+func deviceForPlayer(slot: int) -> int:
+	# Local hardware index driving this slot (-1 = none / keyboard-only,
+	# -2 = no local device).
+	if Net.isOnline:
+		if slot == Net.localSlot:
+			return localJoyDevice()
+		return -2
+	if slot < 0 or slot >= 4:
+		return -2
+	if playersInputMode[slot] == InputMode.PAD:
+		return playersDevice[slot]
+	return -1 if playersInputMode[slot] == InputMode.KB else -2
+
+func localJoyDevice() -> int:
+	var pads := Input.get_connected_joypads()
+	if pads.is_empty():
+		return -1
+	return pads[0]
 
 func joinPlayer(id: int, silent: bool) -> void:
 	playersJoined[id] = true
@@ -212,6 +313,9 @@ func initPlayerStats() -> void:
 				Global.StatEnum.PELLETS: 0, Global.StatEnum.GHOST_KILL: 0
 			}
 		)
+
+func goToMainMenu() -> void:
+	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 
 func goToLobby() -> void:
 	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")

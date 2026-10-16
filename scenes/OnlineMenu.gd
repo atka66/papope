@@ -25,6 +25,7 @@ func _ready():
 	Net.joined.connect(_on_joined)
 	Net.join_failed.connect(_on_join_failed)
 	Net.host_left.connect(_on_host_left)
+	$HostButton.grab_focus()
 	_on_refresh_pressed()
 
 func _exit_tree():
@@ -39,7 +40,34 @@ func _exit_tree():
 
 func _input(event):
 	if event.is_action_pressed("quit") or event.is_action_pressed("kb_cancel"):
+		if get_viewport().gui_get_focus_owner() is LineEdit and event.is_action_pressed("kb_cancel"):
+			return # editing a field: keep Backspace for the field
 		_on_back_pressed()
+		return
+	# Gamepad menu control. Native ui_accept/ui focus nav already drives
+	# focused Buttons/CheckBoxes, so only the room list needs an explicit
+	# accept (join the selected room); LineEdits stay keyboard-only.
+	if event.is_action_pressed("cancel"):
+		var focus := get_viewport().gui_get_focus_owner()
+		if focus is LineEdit:
+			get_viewport().gui_release_focus()
+			$HostButton.grab_focus()
+		else:
+			_on_back_pressed()
+		return
+	if event.is_action_pressed("accept"):
+		var focusOwner := get_viewport().gui_get_focus_owner()
+		if focusOwner is ItemList:
+			var list := focusOwner as ItemList
+			var sel := list.get_selected_items()
+			if not sel.is_empty() and sel[0] >= 0 and sel[0] < _roomCodes.size():
+				_codeEdit.text = _roomCodes[sel[0]]
+				_on_join_pressed()
+			elif _roomCodes.size() > 0:
+				list.select(0)
+				_codeEdit.text = _roomCodes[0]
+				_on_join_pressed()
+		# Focused Buttons/CheckBoxes are activated natively via ui_accept.
 
 func _on_host_pressed():
 	setStatus("creating room...")
@@ -117,7 +145,7 @@ func _refreshRelay():
 func _on_back_pressed():
 	if Net.isOnline:
 		Net.leave()
-	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
+	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 
 func _on_joined():
 	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")

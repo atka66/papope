@@ -93,7 +93,9 @@ func _ready():
 		pickup(Global.getRandomPwrup())
 
 func ownsKeyboard() -> bool:
-	return playerId == 0 or (Net.isOnline and isLocal)
+	if Net.isOnline:
+		return isLocal
+	return Global.playersInputMode[playerId] == Global.InputMode.KB
 
 func getMoveVector() -> Vector2:
 	# Online: host drives remote slots from forwarded inputs, clients hold still
@@ -102,13 +104,16 @@ func getMoveVector() -> Vector2:
 		if Net.isHost:
 			return netMove
 		return Vector2.ZERO
-	var lhAxis: float = Input.get_joy_axis(playerId, JOY_AXIS_LEFT_X)
-	var lvAxis: float = Input.get_joy_axis(playerId, JOY_AXIS_LEFT_Y)
-	if abs(lhAxis) < 0.1:
-		lhAxis = 0.0
-	if abs(lvAxis) < 0.1:
-		lvAxis = 0.0
-	var lAxis: Vector2 = Vector2(lhAxis, lvAxis)
+	var lAxis := Vector2.ZERO
+	var joyDevice := Global.deviceForPlayer(playerId)
+	if joyDevice >= 0:
+		var lhAxis: float = Input.get_joy_axis(joyDevice, JOY_AXIS_LEFT_X)
+		var lvAxis: float = Input.get_joy_axis(joyDevice, JOY_AXIS_LEFT_Y)
+		if abs(lhAxis) < 0.1:
+			lhAxis = 0.0
+		if abs(lvAxis) < 0.1:
+			lvAxis = 0.0
+		lAxis = Vector2(lhAxis, lvAxis)
 	if ownsKeyboard() && Global.enableHotkeys:
 		# ignore WASD while typing in a text field (lobby feedback)
 		lAxis += Input.get_vector("kb_move_left", "kb_move_right", "kb_move_up", "kb_move_down")
@@ -121,12 +126,17 @@ func getMoveVector() -> Vector2:
 func getAimVector() -> Vector2:
 	if Net.isOnline and not isLocal and hasRemoteAim:
 		return remoteAim
-	var stick: Vector2 = Vector2(
-		Input.get_joy_axis(playerId, JOY_AXIS_RIGHT_X),
-		Input.get_joy_axis(playerId, JOY_AXIS_RIGHT_Y)
-	)
+	var stick := Vector2.ZERO
+	var joyDevice := Global.deviceForPlayer(playerId)
+	if joyDevice >= 0:
+		stick = Vector2(
+			Input.get_joy_axis(joyDevice, JOY_AXIS_RIGHT_X),
+			Input.get_joy_axis(joyDevice, JOY_AXIS_RIGHT_Y)
+		)
 	if stick.length() > 0.15:
 		kbAimActive = false
+	elif not Net.isOnline and Global.playersInputMode[playerId] == Global.InputMode.KB:
+		kbAimActive = true # locked KB: mouse aim stays on, no stick to steal it
 
 	var rAxis: Vector2
 	var mouseDist: float = -1.0
@@ -181,7 +191,7 @@ func _input(event):
 	var padUse: bool = event.is_action_pressed("game_use")
 	var kbDash: bool = ownsKeyboard() && event.is_action_pressed("kb_dash")
 	var kbUse: bool = ownsKeyboard() && event.is_action_pressed("kb_use")
-	var ownsEvent: bool = (Net.isOnline && isLocal) || (!Net.isOnline && event.device == playerId)
+	var ownsEvent: bool = (Net.isOnline && isLocal) || (!Net.isOnline && event.device == Global.deviceForPlayer(playerId))
 	if ownsEvent || kbDash || kbUse:
 		if Lobby != null:
 			if Lobby.countdownNode == null && !ProjectSettings.get("papope/hosted_mode"):
@@ -218,13 +228,13 @@ func _onlineLobbyInput(event, padUse: bool, padDash: bool, kbDash: bool, kbUse: 
 			_requestLobbyChange("team", (Global.playersTeam[playerId] + 1) % 4)
 		if padDash || kbDash:
 			_requestLobbyChange("team", (Global.playersTeam[playerId] + 3) % 4)
-	if event.is_action_pressed("accept") || ((playerId == 0 || isLocal) && event.is_action_pressed("kb_accept")):
+	if event.is_action_pressed("accept") || (ownsKeyboard() && event.is_action_pressed("kb_accept")):
 		if Global.getNumberOfTeams() > 1:
 			if Net.isHost:
 				Net.begin_countdown()
 		else:
 			Lobby.warnCannotStart()
-	if event.is_action_pressed("cancel") || ((playerId == 0 || isLocal) && event.is_action_pressed("kb_cancel")):
+	if event.is_action_pressed("cancel") || (ownsKeyboard() && event.is_action_pressed("kb_cancel")):
 		if Lobby.countdownNode != null:
 			if Net.isHost:
 				Net.cancel_countdown()
