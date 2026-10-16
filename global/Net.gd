@@ -56,8 +56,8 @@ func _process(delta: float) -> void:
 			leave()
 			if had and not wasHost:
 				emit_signal("host_left")
-				if get_tree().current_scene != null and get_tree().current_scene.name != "OnlineMenu":
-					get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+				if get_tree().current_scene != null and get_tree().current_scene.name != "MainMenu":
+					get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 			elif not had:
 				emit_signal("join_failed", "lost relay connection")
 	# Host lock advertisement: the list learns our match state from these.
@@ -81,7 +81,7 @@ func relay_base() -> String:
 const USER_RELAY_PATH := "user://relay.cfg"
 
 func get_user_relay_url() -> String:
-	# In-game override from OnlineMenu (persists per machine, never in git).
+	# In-game override from the online panel (persists per machine, never in git).
 	var cfg := ConfigFile.new()
 	if cfg.load(USER_RELAY_PATH) != OK:
 		return ""
@@ -713,8 +713,8 @@ func _on_bye(from: int) -> void:
 		# Game-host gone: session over.
 		leave()
 		emit_signal("host_left")
-		if get_tree().current_scene != null and get_tree().current_scene.name != "OnlineMenu":
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+		if get_tree().current_scene != null and get_tree().current_scene.name != "MainMenu":
+			get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 	elif isHost and from > 0:
 		_drop_slot(from)
 	elif not isHost and from > 0:

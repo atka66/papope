@@ -1,13 +1,6 @@
 extends Node2D
 
-@onready var _feedbackAnim = $MenuCanvas/FeedbackHolder/Anim
-@onready var _feedbackForm = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer
-@onready var _feedbackEdit = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit
-@onready var _feedbackFinish = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/FinishLabel
-@onready var _audioSubmit = $MenuCanvas/FeedbackHolder/AudioSubmit
-
 var countdownNode = null
-var hasConnected = true
 var _bgFingerprint = []
 var _netAccum := 0.0
 var _bgAccum := 0.0
@@ -24,7 +17,6 @@ func _ready():
 		initPlayers()
 		Net.lobby_updated.connect(_on_lobby_updated)
 	else:
-		$MenuCanvas/OnlineLabel.hide()
 		$MenuCanvas/RoomLabel.hide()
 		initPlayers()
 	# 'random' backdrop steps align with pan-loop ends so every replay
@@ -34,18 +26,9 @@ func _ready():
 		_bgPeriod = loopAnim.get_animation("loop").length
 
 func _process(delta):
-	var currentHasConnected = Global.playersJoined.has(true)
-	if currentHasConnected != hasConnected:
-		$MenuCanvas/TitleHolder/Anim.seek(0)
-		if currentHasConnected:
-			$MenuCanvas/TitleHolder/Anim.play("back")
-		else:
-			$MenuCanvas/TitleHolder/Anim.play("front")
-	
-	hasConnected = currentHasConnected
-	
-	$Settings.visible = hasConnected
-	$MenuCanvas/Hints.visible = !ProjectSettings.get("papope/hosted_mode") && hasConnected
+	var hasAnyJoined := Global.playersJoined.has(true)
+	$Settings.visible = hasAnyJoined
+	$MenuCanvas/Hints.visible = !ProjectSettings.get("papope/hosted_mode") && hasAnyJoined
 
 	$InitHolder/WaitingLabel.hide()
 	$InitHolder/TeamLimitLabel.hide()
@@ -79,10 +62,6 @@ func _process(delta):
 		$InitHolder/StartHolder.show()
 
 func _updateOnlineLabels() -> void:
-	if Net.isHost:
-		$MenuCanvas/OnlineLabel.setText("online - hosting (slot 0)")
-	else:
-		$MenuCanvas/OnlineLabel.setText("online - player " + str(Net.localSlot))
 	$MenuCanvas/RoomLabel.setText("room: " + Net.roomCode)
 	if Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.setText("waiting for more players...")
@@ -102,7 +81,7 @@ func _input(event):
 			return # typing feedback: keep Esc for the field
 		if Net.isOnline:
 			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+			get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 		else:
 			Global.goToMainMenu()
 	if Global.DEBUG && Global.enableHotkeys && !Net.isOnline: 
@@ -233,44 +212,3 @@ func stopCountdown() -> void:
 
 func restartMovingBackground() -> void:
 	$MovingBackground.restartMovingBackground(null)
-
-func _on_feedback_button_toggled(toggled_on):
-	if toggled_on:
-		_feedbackEdit.text = ""
-		feedbackToggle(true)
-		_feedbackAnim.play("appear")
-	else:
-		_feedbackAnim.play_backwards("appear")
-
-func feedbackToggle(toggled_on: bool):
-	_feedbackForm.visible = toggled_on
-	_feedbackFinish.visible = !toggled_on
-
-
-func _on_submit_button_pressed():
-	if _feedbackEdit.text.length() < 1:
-		return
-
-	var explosion = Res.ExplosionAnimObject.instantiate()
-	explosion.position = $Camera.offset + get_viewport().get_mouse_position()
-	explosion.harmful = false
-	explosion.shakePwr = 30
-	Global.addToScene(explosion)
-
-	feedbackToggle(false)
-	submitFeedback(_feedbackEdit.text)
-
-func submitFeedback(feedback: String):
-	var request = HTTPRequest.new()
-	add_child(request)
-	var body = JSON.stringify({ 'feedback': feedback, 'source': 'PAPOPE' })
-	request.request(Global.FEEDBACK_URL, ["Content-Type: application/json"], HTTPClient.METHOD_POST, body)
-	var response = await request.request_completed
-	request.queue_free()
-
-
-func _on_feedback_edit_focus_entered():
-	Global.enableHotkeys = false
-
-func _on_feedback_edit_focus_exited():
-	Global.enableHotkeys = true

@@ -241,7 +241,7 @@ func _onlineLobbyInput(event, padUse: bool, padDash: bool, kbDash: bool, kbUse: 
 		else:
 			Global.playersCrowned[playerId] = false
 			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+			get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 
 func _requestLobbyChange(kind: String, value) -> void:
 	if Net.isHost:

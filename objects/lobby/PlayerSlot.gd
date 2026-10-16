@@ -19,6 +19,21 @@ func handleHints() -> void:
 	$LeaveHolder.hide()
 	$ControllerSprite.hide()
 
+	if Net.isOnline:
+		# Prompts are per-client: only the local slot's hints are actionable
+		# (remote input is ignored), so only it gets any. The prompt itself
+		# marks your slot - no extra label needed.
+		if Global.playersJoined[playerId]:
+			$ControllerSprite.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
+			$ControllerSprite.show()
+			if playerId == Net.localSlot:
+				if Lobby.countdownNode != null:
+					$CancelHolder.show()
+				else:
+					$LeaveHolder.show()
+		updateSchemeBadge()
+		return
+
 	if Global.playersConnected[playerId]:
 		var color = Color.WHITE
 		if Global.playersJoined[playerId]:
@@ -40,10 +55,7 @@ func handleHints() -> void:
 
 func updateSchemeBadge() -> void:
 	var text := ""
-	if Net.isOnline:
-		if Global.playersJoined[playerId] and playerId == Net.localSlot:
-			text = "you"
-	elif Global.playersJoined[playerId]:
+	if not Net.isOnline and Global.playersJoined[playerId]:
 		if Global.playersInputMode[playerId] == Global.InputMode.KB:
 			text = "kb"
 		elif Global.playersInputMode[playerId] == Global.InputMode.PAD:
@@ -117,4 +129,4 @@ func _onlineInput(event):
 		else:
 			Global.playersCrowned[playerId] = false
 			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+			get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")

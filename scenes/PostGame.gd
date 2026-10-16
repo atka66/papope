@@ -20,7 +20,7 @@ func _input(event):
 			Net.to_lobby()
 		elif not Net.isHost and event.is_action_pressed('quit'):
 			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+			get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 		return
 	if event.is_action_pressed('quit') or ((event.is_action_pressed('accept') or event.is_action_pressed('kb_accept')) and canProceed):
 		Global.goToLobby()

@@ -67,7 +67,7 @@ func _input(event):
 	if event.is_action_pressed("quit"):
 		if Net.isOnline:
 			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+			get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 		else:
 			Global.goToLobby()
 	if Global.DEBUG && !Net.isOnline:

@@ -171,7 +171,7 @@ func _joy_connection_changed(id: int, connected: bool) -> void:
 	var scene := get_tree().get_current_scene()
 	if scene != null:
 		sceneName = scene.get_name()
-	if sceneName == 'MainMenu' or sceneName == 'OnlineMenu':
+	if sceneName == 'MainMenu':
 		return # menus claim inputs explicitly via bind calls
 	if connected:
 		return # availability only; pads join via accept (bindPad)
