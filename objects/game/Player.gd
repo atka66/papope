@@ -825,7 +825,10 @@ func _on_body_entered(body):
 		if Net.isOnline:
 			Net.cactus_hit(body.global_position)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
-	# todo wall sound
+	if body.is_in_group('discowalls') and body.has_method('boop'):
+		# Nightclub neon ring: bumping the dancefloor edge lights it up.
+		# Remote bumps arrive via Net.disco_hit (host authored).
+		body.boop()
 
 func isTeammate(otherPlayerId) -> bool:
 	return Global.playersTeam[otherPlayerId] == Global.playersTeam[playerId]

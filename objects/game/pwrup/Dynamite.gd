@@ -49,4 +49,6 @@ func _on_body_entered(body):
 			body.directExplosion()
 		explode()
 	else:
+		if body.is_in_group('discowalls') and body.has_method('boop'):
+			body.boop()
 		$AudioBounce.play()

@@ -15,12 +15,15 @@ const FEEDBACK_URL = "https://atka-commons-api.alwaysdata.net/feedback" # TODO m
 
 @onready var VERSION = ProjectSettings.get('application/config/version')
 
+# Endesga 64. Each team takes the brightest, most saturated cell of its hue ramp
+# (red/blue/green/yellow) so players read as high-value gameplay elements against
+# the dark environment art. Blue (#0098dc) is kept clear of ghost AQUA (#00ffff).
 const TEAM_COLORS = {
-	0: Color(0.9, 0.2, 0.2),
-	1: Color(0, 0.3, 0.7),
-	2: Color(0.5, 0.9, 0.0),
-	3: Color(1.0, 0.7, 0),
-	4: Color(0.2, 0.2, 0.2)
+	0: Color("ea323c"), # red
+	1: Color("0098dc"), # blue
+	2: Color("99e65f"), # green
+	3: Color("ffc825"), # yellow
+	4: Color("3d3d3d")  # neutral / dead
 }
 enum DeathEnum {
 	DEFAULT, EXPLOSION, REVOLVER, WHIP, WATER, LASER, GHOST, TRAP

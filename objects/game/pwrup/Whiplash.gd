@@ -22,10 +22,18 @@ func _ready():
 	if $HitScan.is_colliding():
 		hitPosition = $HitScan.get_collision_point()
 		var collider = $HitScan.get_collider()
+		if collider.is_in_group('discowalls') and collider.has_method('boop'):
+			# Neon ring: lights up for the lash too (no damage).
+			collider.boop()
 		if collider.is_in_group('whippables'):
 			# Host-authoritative damage; guest lashes are visuals only.
-			if not Net.isOnline or Net.isHost:
+			# Cacti are damage-free, so their wobble replays on any peer and
+			# the host re-broadcasts it for peers holding no lash.
+			var cosmetic: bool = collider.is_in_group('cacti')
+			if cosmetic or not Net.isOnline or Net.isHost:
 				collider.getWhipped(origin.playerId, $HitScan.target_position.normalized())
+			if cosmetic and Net.isOnline and Net.isHost:
+				Net.cactus_hit(collider.global_position, false)
 			if collider.is_in_group('players'):
 				playerHit = true
 	else:

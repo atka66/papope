@@ -563,10 +563,16 @@ func trap_sprung(trapPos: Vector2) -> void:
 		return
 	_send("trap", {"pos": _v2a(trapPos)})
 
-func cactus_hit(cactusPos: Vector2) -> void:
+func cactus_hit(cactusPos: Vector2, sound: bool = true) -> void:
 	if not isOnline or not isHost:
 		return
-	_send("cactus", {"pos": _v2a(cactusPos)})
+	_send("cactus", {"pos": _v2a(cactusPos), "sound": sound})
+
+func disco_hit(wallPos: Vector2) -> void:
+	# Nightclub neon ring: the host authors the flash, everyone replays it.
+	if not isOnline or not isHost:
+		return
+	_send("discowall", {"pos": _v2a(wallPos)})
 
 func dynamite_blast(pos: Vector2, originSlot: int) -> void:
 	if not isOnline or not isHost:
@@ -726,7 +732,13 @@ func _handle_envelope(env: Dictionary) -> void:
 				var best = find_nearest("cacti", _a2v(payload.get("pos")), 120.0)
 				if best != null:
 					best.bounce()
-					best.pinch()
+					if bool(payload.get("sound", true)):
+						best.pinch()
+		"discowall":
+			if from == 0:
+				var wall = find_nearest("discowalls", _a2v(payload.get("pos")), 8.0)
+				if wall != null and wall.has_method("boop"):
+					wall.boop()
 		"dynamite":
 			if from == 0:
 				var at := _a2v(payload.get("pos"))
