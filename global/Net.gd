@@ -17,6 +17,9 @@ const STATE_RATE := 0.05
 const GHOST_RATE := 0.1
 const JOIN_TIMEOUT := 10.0
 const HEARTBEAT_RATE := 15.0
+const HOST_TIMEOUT := 6.0
+const PHASE_RATE := 2.0
+const PHASE_GRACE := 1.5
 const RELAY_VERSION := "1"
 
 var isOnline := false
@@ -30,8 +33,11 @@ var ws: WebSocketPeer = null
 
 var _wsWasOpen := false
 var _wasJoined := false
+var _lastHostMsg := -1.0
 var _joinTimer: SceneTreeTimer = null
 var _beatAccum := 0.0
+var _phaseAccum := 0.0
+var _phaseSince := -1.0
 
 func _ready() -> void:
 	randomize()
@@ -53,19 +59,40 @@ func _process(delta: float) -> void:
 		if isOnline:
 			var had := _wasJoined
 			var wasHost := isHost
-			leave()
 			if had and not wasHost:
-				emit_signal("host_left")
-				if get_tree().current_scene != null and get_tree().current_scene.name != "MainMenu":
-					get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
-			elif not had:
-				emit_signal("join_failed", "lost relay connection")
+				_give_up_on_host()
+			else:
+				leave()
+				if not had:
+					emit_signal("join_failed", "lost relay connection")
 	# Host lock advertisement: the list learns our match state from these.
 	if isOnline and isHost and not roomCode.is_empty():
 		_beatAccum += delta
 		if _beatAccum >= HEARTBEAT_RATE:
 			_beatAccum = 0.0
 			send_heartbeat()
+	# Host phase ping: lobby and map snapshots carry the phase already, this
+	# only keeps a steady host voice where nothing else is pushed on a
+	# schedule (post-game podium). Guests read it like any other host frame.
+	if isOnline and isHost:
+		_phaseAccum += delta
+		if _phaseAccum >= PHASE_RATE:
+			_phaseAccum = 0.0
+			_send("phase", {"phase": _phase_tag()})
+	# Guest watchdog: the host speaks at least every PHASE_RATE seconds in
+	# every scene, so a silent host means the session is dead even if the
+	# socket stayed open (relay kept it, no bye arrived).
+	if isOnline and not isHost and _wasJoined:
+		var now := Time.get_ticks_msec() / 1000.0
+		if _lastHostMsg >= 0.0 and now - _lastHostMsg > HOST_TIMEOUT:
+			_give_up_on_host()
+
+func _give_up_on_host() -> void:
+	# The host is gone: drop the session and leave the dead room.
+	leave()
+	emit_signal("host_left")
+	if get_tree().current_scene != null and get_tree().current_scene.name != "MainMenu":
+		get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 
 # ------------------------------------------------------------------ config
 
@@ -141,6 +168,13 @@ func join(codeText: String) -> void:
 	_ws_connect()
 
 func leave() -> void:
+	if isOnline and ws != null and ws.get_ready_state() == WebSocketPeer.STATE_OPEN:
+		# Say farewell ourselves instead of relying on the socket dropping:
+		# the relay's own bye only fires once the peer really disconnects and
+		# it carries -1 for a peer that never sent a frame, which a host
+		# ignores. Best effort - an unflushed frame just falls back to that.
+		_send("bye", {})
+		ws.poll()
 	if isHost and not roomCode.is_empty():
 		_rest_delete_room(roomCode)
 	if ws != null:
@@ -154,6 +188,9 @@ func leave() -> void:
 	slotByNonce.clear()
 	_wsWasOpen = false
 	_wasJoined = false
+	_lastHostMsg = -1.0
+	_phaseSince = -1.0
+	_phaseAccum = 0.0
 	# Restore offline connection flags from real hardware.
 	var joypads := Input.get_connected_joypads()
 	for i in range(MAX_SLOTS):
@@ -373,7 +410,7 @@ func send_input(slot: int, moveVec: Vector2, aimVec: Vector2) -> void:
 func push_state(states: Array) -> void:
 	if not isOnline or not isHost:
 		return
-	_send("state", {"states": _enc_states(states)})
+	_send("state", {"states": _enc_states(states), "phase": _phase_tag()})
 
 func notify_action(slot: int, action: String, aimVec: Vector2, moveVec: Vector2) -> void:
 	if not isOnline or not isHost:
@@ -414,6 +451,76 @@ func request_disco() -> void:
 	if not isOnline or isHost:
 		return
 	_send("disco_req", {})
+
+func request_resync() -> void:
+	# Guest -> host: "which phase are we in?". Travel messages (enter_map,
+	# enter_postgame, go_lobby, bye) are sent once and the relay drops frames
+	# for a stalled peer, so one lost frame would strand this guest in a room
+	# the others have left. The host re-announces its phase instead.
+	if not isOnline or isHost:
+		return
+	_send("resync", {})
+
+func current_phase() -> String:
+	# Coarse session phase, shared as a tag on host traffic. Guests compare it
+	# against their own scene to notice a missed travel message.
+	var scene := get_tree().current_scene
+	if scene == null:
+		return ""
+	var name := str(scene.name)
+	if name == "Lobby":
+		return "lobby"
+	if name.begins_with("Map"):
+		return "map"
+	if name == "PostGame":
+		return "postgame"
+	return ""
+
+func _phase_tag() -> String:
+	# Wire tag: the phase, plus the round seed inside a map so a guest that
+	# missed a round change reads it as a mismatch too (seed rolls per round).
+	var phase := current_phase()
+	if phase == "map":
+		return phase + ":" + str(Global.matchSeed)
+	return phase
+
+func _note_host_phase(payload: Dictionary) -> void:
+	if not isOnline or isHost or not _wasJoined:
+		return
+	var hostTag := str(payload.get("phase", ""))
+	var now := Time.get_ticks_msec() / 1000.0
+	if hostTag == "" or hostTag == _phase_tag():
+		_phaseSince = -1.0
+		return
+	if _phaseSince < 0.0:
+		_phaseSince = now # mismatch: give a travel message in flight time
+	elif now - _phaseSince >= PHASE_GRACE:
+		_phaseSince = now # hold off again until the answer lands
+		request_resync()
+
+func _send_phase_snapshot() -> void:
+	# Host answer to a resync. Receivers ignore it when they are already
+	# there (or already on their way), so it is safe to send at any time.
+	if not isOnline or not isHost:
+		return
+	match current_phase():
+		"map":
+			_send("enter_map", {
+				"map": Global.selectedMap,
+				"maxHp": _ints(Global.playersMaxHp),
+				"points": _ints(Global.playersPoints),
+				"seed": Global.matchSeed,
+			})
+		"postgame":
+			_send("enter_postgame", {
+				"achi": _nested_ints(Global.playersAchievements),
+				"stats": _stats_to_rows(),
+				"kills": _ints(Global.playersKills),
+			})
+		"lobby":
+			push_lobby()
+			_send("countdown" if is_match_locked() else "undo_countdown", {})
+			_push_join_state()
 
 # Host-only event broadcasts (callers run under isHost checks already).
 func spawn_pwrup(spawnerIdx: int, typeIdx: int) -> void:
@@ -503,6 +610,8 @@ func _handle_envelope(env: Dictionary) -> void:
 		return
 	var kind := str(env.get("kind", ""))
 	var from := int(env.get("from", -1))
+	if from == 0:
+		_lastHostMsg = Time.get_ticks_msec() / 1000.0
 	var payload: Dictionary = {}
 	if env.get("payload") is Dictionary:
 		payload = env["payload"]
@@ -540,6 +649,7 @@ func _handle_envelope(env: Dictionary) -> void:
 				_do_remove_map_player(int(payload.get("slot", -1)))
 		"state":
 			if from == 0:
+				_note_host_phase(payload)
 				_apply_states(payload.get("states", []))
 		"input":
 			if isHost:
@@ -568,6 +678,13 @@ func _handle_envelope(env: Dictionary) -> void:
 		"disco_req":
 			if isHost:
 				_push_disco_current()
+		"resync":
+			if isHost and from != 0:
+				# A guest asked where we are: re-announce the phase.
+				_send_phase_snapshot()
+		"phase":
+			if from == 0:
+				_note_host_phase(payload)
 		"spawn_pwrup":
 			if from == 0 and is_map_ready():
 				Global.MapControllerNode.spawnNetPwrup(int(payload.get("spawner", -1)), int(payload.get("type", -1)))
@@ -711,10 +828,7 @@ func _on_welcome(payload: Dictionary) -> void:
 func _on_bye(from: int) -> void:
 	if not isHost and from == 0:
 		# Game-host gone: session over.
-		leave()
-		emit_signal("host_left")
-		if get_tree().current_scene != null and get_tree().current_scene.name != "MainMenu":
-			get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
+		_give_up_on_host()
 	elif isHost and from > 0:
 		_drop_slot(from)
 	elif not isHost and from > 0:
@@ -761,10 +875,18 @@ func _undo_countdown() -> void:
 		lobby.stopCountdown()
 
 func _do_enter_map(mapName: String, maxHp: Array, points: Array, mapSeed: int = 123) -> void:
+	if not isHost and _in_map_named(mapName) and mapSeed == Global.matchSeed:
+		return # same round re-announced, not a new one (seed rolls per round)
 	Global.playersMaxHp = maxHp
 	Global.playersPoints = points
 	Global.matchSeed = mapSeed
 	Global.goToMap(mapName)
+
+func _in_map_named(mapName: String) -> bool:
+	var scene := get_tree().current_scene
+	if scene == null or mapName.is_empty():
+		return false
+	return str(scene.name).to_lower() == "map" + mapName.to_lower()
 
 func _do_enter_postgame(achi: Array, stats: Array, kills: Array) -> void:
 	if achi.size() == 4:
@@ -779,9 +901,13 @@ func _do_enter_postgame(achi: Array, stats: Array, kills: Array) -> void:
 		Global.playersStats = rebuilt
 	if kills.size() == 4:
 		Global.playersKills = kills
+	if not isHost and current_phase() == "postgame":
+		return # already here: a re-announced phase
 	get_tree().change_scene_to_file("res://scenes/PostGame.tscn")
 
 func _do_go_lobby() -> void:
+	if not isHost and current_phase() == "lobby":
+		return # already here: a re-announced phase
 	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
 
 func _do_remove_map_player(slot: int) -> void:

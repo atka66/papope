@@ -9,11 +9,15 @@ enum MenuState { MAIN, ONLINE }
 var menuState := MenuState.MAIN
 var currentOption := 0 # 0 = local, 1 = online
 
-const SELECTED_COLOR := Color(1.0, 0.752941, 0.12549)
+# Focus reads brighter (white) while the rest of the choices stay gold.
+const FOCUS_COLOR := Color.WHITE
+const IDLE_COLOR := Color(1.0, 0.752941, 0.12549)
 const SUMMARIES := ["play together on one screen", "play with others across the net"]
 
 var _roomCodes: Array = []
 var _roomLocked: Array = []
+var _statusText := ""
+var _infoText := ""
 var onlineAction := 0 # 0 = host, 1 = join
 var isPrivate := false
 var onlineRow := 0
@@ -31,7 +35,6 @@ var onlineRow := 0
 @onready var _feedbackEdit = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit
 @onready var _feedbackFinish = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/FinishLabel
 @onready var _audioSubmit = $MenuCanvas/FeedbackHolder/AudioSubmit
-@onready var _statusLabel = $MenuCanvas/OnlineHolder/StatusLabel
 @onready var _roomList = $MenuCanvas/OnlineHolder/RoomList
 @onready var _actionOption = $MenuCanvas/OnlineHolder/ActionOption
 @onready var _visibilityOption = $MenuCanvas/OnlineHolder/VisibilityOption
@@ -169,16 +172,16 @@ func _applyOnlineCursor():
 	var target: String = targets[onlineRow]
 	_actionOption.setFocus(target == "action")
 	_visibilityOption.setFocus(target == "visibility")
-	_hostActionLabel.setFontColor(SELECTED_COLOR if target == "hostaction" else Color.WHITE)
-	_refreshLabel.setFontColor(SELECTED_COLOR if target == "refresh" else Color.WHITE)
-	_joinLabel.setFontColor(SELECTED_COLOR if target == "joinbutton" else Color.WHITE)
+	_hostActionLabel.setFontColor(FOCUS_COLOR if target == "hostaction" else IDLE_COLOR)
+	_refreshLabel.setFontColor(FOCUS_COLOR if target == "refresh" else IDLE_COLOR)
+	_joinLabel.setFontColor(FOCUS_COLOR if target == "joinbutton" else IDLE_COLOR)
 	match target:
 		"hostaction":
-			_showActionArrow(396.0)
+			_showActionArrow(400.0)
 		"refresh":
-			_showActionArrow(528.0)
+			_showActionArrow(484.0)
 		"joinbutton":
-			_showActionArrow(632.0)
+			_showActionArrow(588.0)
 		_:
 			_actionArrow.hide()
 	var ctl := _onlineControl(target)
@@ -270,11 +273,15 @@ func _layoutOnline():
 
 func _updateOnlineInfo():
 	if onlineAction == 0:
-		_infoLine.setText("hidden - share the code" if isPrivate else "listed - anyone can join")
+		_infoText = "hidden - share the code" if isPrivate else "listed - anyone can join"
+	_renderInfoLine()
+
+func _renderInfoLine():
+	_infoLine.setText(_statusText if _statusText != "" else _infoText)
 
 func updateSelection():
-	_localLabel.setFontColor(SELECTED_COLOR if currentOption == 0 else Color.WHITE)
-	_onlineLabel.setFontColor(SELECTED_COLOR if currentOption == 1 else Color.WHITE)
+	_localLabel.setFontColor(FOCUS_COLOR if currentOption == 0 else IDLE_COLOR)
+	_onlineLabel.setFontColor(FOCUS_COLOR if currentOption == 1 else IDLE_COLOR)
 	_selectArrow.position.y = 428.0 if currentOption == 0 else 518.0
 	$MenuCanvas/MainHolder/SummaryLabel.setText(SUMMARIES[currentOption])
 
@@ -318,7 +325,8 @@ func _on_code_submitted(_text):
 func _on_refresh_pressed():
 	setStatus("fetching rooms...")
 	if onlineAction == 1:
-		_infoLine.setText("")
+		_infoText = ""
+		_renderInfoLine()
 	var rooms := await Net.rest_list_rooms()
 	if not is_instance_valid(_roomList):
 		return
@@ -337,9 +345,9 @@ func _on_refresh_pressed():
 				label += " [IN MATCH]"
 			_roomList.add_item(label)
 	if rooms.is_empty():
-		_infoLine.setText("no rooms - host one!")
+		_infoText = "no rooms - host one!"
 	else:
-		_infoLine.setText("%d room(s)" % rooms.size())
+		_infoText = "%d room(s)" % rooms.size()
 	setStatus("")
 
 func _joinSelectedRoom():
@@ -369,7 +377,8 @@ func _on_host_left():
 	setStatus("host left")
 
 func setStatus(text: String):
-	_statusLabel.setText(text)
+	_statusText = text
+	_renderInfoLine()
 
 func _on_feedback_button_toggled(toggled_on):
 	if toggled_on:

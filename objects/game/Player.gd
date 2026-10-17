@@ -197,7 +197,7 @@ func _input(event):
 			if Lobby.countdownNode == null && !ProjectSettings.get("papope/hosted_mode"):
 				if Net.isOnline:
 					_onlineLobbyInput(event, padUse, padDash, kbDash, kbUse)
-				elif (event.is_action_pressed("skin_next") || padUse || padDash) && !inputCd:
+				elif (Global.enableHotkeys && event.is_action_pressed("skin_next") || padUse || padDash) && !inputCd:
 					inputCd = true
 					if event.is_action_pressed("skin_next"):
 						Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
@@ -220,7 +220,7 @@ func _input(event):
 					_onlineUse()
 
 func _onlineLobbyInput(event, padUse: bool, padDash: bool, kbDash: bool, kbUse: bool) -> void:
-	if (event.is_action_pressed("skin_next") || padUse || padDash || kbDash || kbUse) && !inputCd:
+	if (Global.enableHotkeys && event.is_action_pressed("skin_next") || padUse || padDash || kbDash || kbUse) && !inputCd:
 		inputCd = true
 		if event.is_action_pressed("skin_next"):
 			_requestLobbyChange("skin", (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT)

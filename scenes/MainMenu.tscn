@@ -9,9 +9,9 @@
 [ext_resource type="AudioStream" uid="uid://bfnectokibmn7" path="res://audio/sfx/system/option.ogg" id="6_tick"]
 [ext_resource type="Texture2D" uid="uid://c8v20op2i3bd4" path="res://sprites/lobby/title/title_hell.png" id="7_title"]
 [ext_resource type="Texture2D" uid="uid://d0akw842o4pyu" path="res://sprites/lobby/arrow.png" id="8_arrow"]
-[ext_resource type="PackedScene" uid="uid://bovpg4jmn5nqu" path="res://objects/system/settings/Option.tscn" id="11_opt"]
 [ext_resource type="Texture2D" uid="uid://bsqq4c31uabj3" path="res://sprites/lobby/feedback.png" id="9_fb"]
 [ext_resource type="FontFile" uid="uid://cvmvr7lse21up" path="res://fonts/HomeVideo-BLG6G.ttf" id="10_hv"]
+[ext_resource type="PackedScene" uid="uid://bovpg4jmn5nqu" path="res://objects/system/settings/Option.tscn" id="11_opt"]
 
 [sub_resource type="Animation" id="Animation_fadein"]
 resource_name = "fade_in"
@@ -33,59 +33,6 @@ tracks/0/keys = {
 _data = {
 &"fade_in": SubResource("Animation_fadein")
 }
-
-[sub_resource type="Animation" id="Animation_fbreset"]
-resource_name = "RESET"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-1.91986]
-}
-
-[sub_resource type="Animation" id="Animation_fbappear"]
-resource_name = "appear"
-length = 0.2
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(0.5, 2, 1),
-"update": 0,
-"values": [-1.91986, 0.0872665, 0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_fbappear"]
-_data = {
-&"RESET": SubResource("Animation_fbreset"),
-&"appear": SubResource("Animation_fbappear")
-}
-
-[sub_resource type="LabelSettings" id="LabelSettings_fbt"]
-font = ExtResource("5_font")
-font_size = 32
-outline_size = 8
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_fbd"]
-font = ExtResource("5_font")
-outline_size = 8
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_fbf"]
-font = ExtResource("5_font")
-font_size = 30
 
 [sub_resource type="Animation" id="Animation_o6r7d"]
 resource_name = "RESET"
@@ -180,6 +127,59 @@ _data = {
 &"front": SubResource("Animation_yyg1t")
 }
 
+[sub_resource type="Animation" id="Animation_fbreset"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.91986]
+}
+
+[sub_resource type="Animation" id="Animation_fbappear"]
+resource_name = "appear"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [-1.91986, 0.0872665, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fbappear"]
+_data = {
+&"RESET": SubResource("Animation_fbreset"),
+&"appear": SubResource("Animation_fbappear")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_fbt"]
+font = ExtResource("5_font")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fbd"]
+font = ExtResource("5_font")
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fbf"]
+font = ExtResource("5_font")
+font_size = 30
+
 [node name="MainMenu" type="Node2D"]
 modulate = Color(0, 0, 0, 1)
 script = ExtResource("1_menu")
@@ -228,7 +228,7 @@ frame = 1
 [node name="SummaryLabel" parent="MenuCanvas/MainHolder" instance=ExtResource("4_label")]
 position = Vector2(680, 672)
 text = "play together on one screen"
-fontSize = 3
+fontSize = 2
 alignment = 8
 
 [node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
@@ -255,7 +255,6 @@ alignment = 8
 animation = "wobble"
 
 [node name="OnlineHolder" type="Node2D" parent="MenuCanvas"]
-visible = false
 
 [node name="ActionOption" parent="MenuCanvas/OnlineHolder" instance=ExtResource("11_opt")]
 position = Vector2(344, 300)
@@ -270,10 +269,12 @@ fontSize = 3
 alignment = 8
 
 [node name="ActionArrow" type="Sprite2D" parent="MenuCanvas/OnlineHolder"]
-position = Vector2(200, 396)
+position = Vector2(200, 400)
 scale = Vector2(2, 2)
 texture = ExtResource("8_arrow")
+offset = Vector2(-16, 0)
 hframes = 2
+frame = 1
 
 [node name="InfoLine" parent="MenuCanvas/OnlineHolder" instance=ExtResource("4_label")]
 position = Vector2(856, 348)
@@ -282,38 +283,33 @@ fontSize = 2
 alignment = 8
 
 [node name="CodeEdit" type="LineEdit" parent="MenuCanvas/OnlineHolder"]
-offset_left = 200.0
-offset_top = 556.0
-offset_right = 600.0
-offset_bottom = 600.0
+offset_left = 184.0
+offset_top = 508.0
+offset_right = 520.0
+offset_bottom = 552.0
 theme_override_fonts/font = ExtResource("5_font")
 theme_override_font_sizes/font_size = 20
 placeholder_text = "room code"
 max_length = 6
 
 [node name="JoinLabel" parent="MenuCanvas/OnlineHolder" instance=ExtResource("4_label")]
-position = Vector2(400, 632)
-text = "join"
+position = Vector2(352, 584)
+text = "join game"
 fontSize = 3
 alignment = 8
 
 [node name="RoomList" type="ItemList" parent="MenuCanvas/OnlineHolder"]
-offset_left = 200.0
-offset_top = 380.0
-offset_right = 600.0
-offset_bottom = 500.0
+offset_left = 184.0
+offset_top = 332.0
+offset_right = 520.0
+offset_bottom = 452.0
 theme_override_fonts/font = ExtResource("5_font")
 theme_override_font_sizes/font_size = 20
 
 [node name="RefreshLabel" parent="MenuCanvas/OnlineHolder" instance=ExtResource("4_label")]
-position = Vector2(400, 528)
+position = Vector2(352, 480)
 text = "refresh"
 fontSize = 3
-alignment = 8
-
-[node name="StatusLabel" parent="MenuCanvas/OnlineHolder" instance=ExtResource("4_label")]
-position = Vector2(400, 668)
-fontSize = 2
 alignment = 8
 
 [node name="VersionLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
