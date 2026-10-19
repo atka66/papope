@@ -32,6 +32,8 @@ func _ready():
 	if Global.options['mode'][Global.optionsSelected['mode']] == 'cards':
 		var perkOverlay = Res.PerkOverlayObject.instantiate()
 		add_child(perkOverlay)
+		if Net.isOnline:
+			Net.flush_perk_sync()
 		await perkOverlay.finished
 	else:
 		await get_tree().create_timer(1.5).timeout

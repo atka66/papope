@@ -38,6 +38,10 @@ var _joinTimer: SceneTreeTimer = null
 var _beatAccum := 0.0
 var _phaseAccum := 0.0
 var _phaseSince := -1.0
+# Draft messages that landed before this peer's perk overlay existed (slow map
+# load); flushed by MapController once the overlay is in the tree.
+var _pending_perk_reveals: Dictionary = {} # slot -> perk
+var _pending_perk_picks: Dictionary = {} # slot -> perks
 
 func _ready() -> void:
 	randomize()
@@ -191,6 +195,8 @@ func leave() -> void:
 	_lastHostMsg = -1.0
 	_phaseSince = -1.0
 	_phaseAccum = 0.0
+	_pending_perk_reveals.clear()
+	_pending_perk_picks.clear()
 	# Restore offline connection flags from real hardware.
 	var joypads := Input.get_connected_joypads()
 	for i in range(MAX_SLOTS):
@@ -446,6 +452,20 @@ func submit_perks(slot: int, perks: Array) -> void:
 		return
 	_send("perks", {"slot": slot, "perks": perks.duplicate()})
 
+func push_perk_reveal(slot: int, perk: int) -> void:
+	# A player revealed their card. Host rebroadcasts; a guest's copy is caught
+	# by the host and echoed to everyone (the relay never echoes to the sender).
+	if not isOnline:
+		return
+	_send("perk_reveal", {"slot": slot, "perk": perk})
+
+func broadcast_perks(slot: int, perks: Array) -> void:
+	# Host finish: announce the host's own picks (submit_perks only fires for
+	# guests). Per-slot so a still-drafting peer is never marked done.
+	if not isOnline or not isHost:
+		return
+	_send("perk_pick", {"slot": slot, "perks": perks.duplicate()})
+
 func request_disco() -> void:
 	# Late-loading guest missed the current cycle broadcast; host sends it back.
 	if not isOnline or isHost:
@@ -678,9 +698,16 @@ func _handle_envelope(env: Dictionary) -> void:
 		"perks":
 			if isHost:
 				_apply_perks(int(payload.get("slot", -1)), payload.get("perks", []))
-		"perks_all":
+		"perk_reveal":
+			if isHost and from != 0:
+				# Guest reveal: mirror it locally, then rebroadcast as host truth.
+				_apply_perk_reveal(int(payload.get("slot", -1)), int(payload.get("perk", -1)))
+				_send("perk_reveal", payload)
+			elif from == 0:
+				_apply_perk_reveal(int(payload.get("slot", -1)), int(payload.get("perk", -1)))
+		"perk_pick":
 			if from == 0:
-				_apply_perks_all(payload.get("perks", []))
+				_apply_perk_pick(int(payload.get("slot", -1)), payload.get("perks", []))
 		"disco_req":
 			if isHost:
 				_push_disco_current()
@@ -889,6 +916,9 @@ func _undo_countdown() -> void:
 func _do_enter_map(mapName: String, maxHp: Array, points: Array, mapSeed: int = 123) -> void:
 	if not isHost and _in_map_named(mapName) and mapSeed == Global.matchSeed:
 		return # same round re-announced, not a new one (seed rolls per round)
+	# New round: drop any draft message cached for the previous round's overlay.
+	_pending_perk_reveals.clear()
+	_pending_perk_picks.clear()
 	Global.playersMaxHp = maxHp
 	Global.playersPoints = points
 	Global.matchSeed = mapSeed
@@ -1010,21 +1040,61 @@ func _apply_perks(slot: int, perks) -> void:
 		return
 	if perks is Array:
 		Global.playersPerks[slot] = _ints(perks)
-		_send("perks_all", {"perks": _nested_ints(Global.playersPerks)})
+		# Update the host's own overlay for the guest's slot, then rebroadcast.
+		_apply_perk_pick(slot, Global.playersPerks[slot])
+		_send("perk_pick", {"slot": slot, "perks": Global.playersPerks[slot]})
 
-func _apply_perks_all(perks) -> void:
+func _apply_perk_reveal(slot: int, perk: int) -> void:
+	if slot < 0 or slot >= MAX_SLOTS:
+		return
+	if perk < 0 or perk >= len(Global.PerkEnum):
+		return
+	if slot == localSlot:
+		return # own draft already revealed locally
+	var node := _player_perks_node(slot)
+	if node == null:
+		_pending_perk_reveals[slot] = perk # overlay not up yet (slow load)
+		return
+	if node.has_method("remote_reveal"):
+		node.remote_reveal(perk)
+
+func _apply_perk_pick(slot: int, perks) -> void:
+	if slot < 0 or slot >= MAX_SLOTS:
+		return
 	if not (perks is Array):
 		return
-	Global.playersPerks = _nested_ints(perks)
+	if slot == localSlot:
+		return # own draft stays authoritative locally
+	Global.playersPerks[slot] = _ints(perks)
+	var node := _player_perks_node(slot)
+	if node == null:
+		_pending_perk_picks[slot] = Global.playersPerks[slot] # overlay not up yet
+		return
+	if node.has_method("sync_remote_perks"):
+		node.sync_remote_perks(Global.playersPerks[slot])
+
+func flush_perk_sync() -> void:
+	# MapController calls this once the perk overlay is in the tree: replay any
+	# reveal/pick that raced the map load so no slot is left face-down forever.
+	if not isOnline:
+		return
+	for slot in _pending_perk_reveals.keys():
+		_apply_perk_reveal(int(slot), int(_pending_perk_reveals[slot]))
+	_pending_perk_reveals.clear()
+	for slot in _pending_perk_picks.keys():
+		_apply_perk_pick(int(slot), _pending_perk_picks[slot])
+	_pending_perk_picks.clear()
+
+func _player_perks_node(slot: int) -> Node:
+	var mc := Global.MapControllerNode
+	if mc != null and is_instance_valid(mc):
+		var n := mc.get_node_or_null("PerkOverlay/PlayerPerks" + str(slot))
+		if n != null:
+			return n
 	var scene := get_tree().current_scene
 	if scene == null:
-		return
-	for i in range(mini((perks as Array).size(), MAX_SLOTS)):
-		if i == localSlot:
-			continue # own draft stays authoritative locally
-		var node := scene.get_node_or_null("MapController/PerkOverlay/PlayerPerks" + str(i))
-		if node != null and node.has_method("sync_remote_perks"):
-			node.sync_remote_perks(Global.playersPerks[i])
+		return null
+	return scene.get_node_or_null("MapController/PerkOverlay/PlayerPerks" + str(slot))
 
 # ------------------------------------------------------------------ payload codecs (JSON turns every number into float)
 

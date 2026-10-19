@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://cop2o1vtkv1qt"]
 
-[ext_resource type="Script" path="res://objects/lobby/MovingBackground.gd" id="1_105ju"]
+[ext_resource type="Script" uid="uid://b0a12m2m4qk2w" path="res://objects/lobby/MovingBackground.gd" id="1_105ju"]
 [ext_resource type="Texture2D" uid="uid://haoeer3guucd" path="res://sprites/lobby/bg_industrial.png" id="1_fx2n7"]
 [ext_resource type="Texture2D" uid="uid://bsmp3oggmsgx7" path="res://sprites/lobby/bg_hell.png" id="2_nntt6"]
 [ext_resource type="Texture2D" uid="uid://bvxd4o8wayq1v" path="res://sprites/lobby/bg_pacman.png" id="3_ehb48"]
@@ -93,13 +93,14 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_arf80"]
 _data = {
-"loop": SubResource("Animation_5mort")
+&"loop": SubResource("Animation_5mort")
 }
 
 [node name="MovingBackground" type="Node2D"]
 script = ExtResource("1_105ju")
 
 [node name="Backgrounds" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.9, 0.9, 0.9, 1)
 z_index = -52
 z_as_relative = false
 position = Vector2(-300, -300)
@@ -109,6 +110,7 @@ frame_progress = 0.531845
 centered = false
 
 [node name="BackgroundDim" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.7529412)
 z_index = -49
 z_as_relative = false
 offset_left = -300.0
@@ -121,7 +123,7 @@ stretch_mode = 1
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_arf80")
+&"": SubResource("AnimationLibrary_arf80")
 }
 
 [connection signal="animation_finished" from="Anim" to="." method="restartMovingBackground"]
