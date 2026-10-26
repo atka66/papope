@@ -65,24 +65,28 @@ enum PerkEnum {
 	LONG_ARMS, CHICKEN, HEALTHY, UNHEALTHY, REGEN, VAMPIRE, PREPARED
 }
 
-const PERKS : Dictionary = {
-	PerkEnum.AKIMBO: ['akimbo', 'pickups are doubled', 1],
-	PerkEnum.ARMORED: ['armored', 'incoming damage halved', 2], 
-	PerkEnum.FAST: ['fast', 'doubled movement speed', 3],
-	PerkEnum.REVERSE: ['reverse', 'inverted movement', 4],
-	PerkEnum.BACKFIRE: ['backfire', 'inverted aim', 5],
-	PerkEnum.SLOW: ['slow', 'halved movement speed', 6],
-	PerkEnum.NO_LEGS: ['no legs', 'can only dash', 7],
-	PerkEnum.RESET: ['reset', 'current cards removed', 8],
-	PerkEnum.RIGHT: ['right', 'cannot aim to the left', 9],
-	PerkEnum.LONG_ARMS: ['long arms', 'longer aim range', 10],
-	PerkEnum.CHICKEN: ['chicken', 'you are a chicken', 11],
-	PerkEnum.HEALTHY: ['healthy', 'doubled max health', 12],
-	PerkEnum.UNHEALTHY: ['unhealthy', 'halved max health', 13],
-	PerkEnum.REGEN: ['regen', 'heals over time', 14],
-	PerkEnum.VAMPIRE: ['vampire', 'dealing damage heals', 15],
-	PerkEnum.PREPARED: ['prepared', 'starts with random item', 16]
+## Display data for every perk, keyed by PerkEnum. Read via perk().
+var PERK_DB : Dictionary = {
+	PerkEnum.AKIMBO: PerkDef.make(PerkEnum.AKIMBO, 'akimbo', 'pickups are doubled', 1),
+	PerkEnum.ARMORED: PerkDef.make(PerkEnum.ARMORED, 'armored', 'incoming damage halved', 2),
+	PerkEnum.FAST: PerkDef.make(PerkEnum.FAST, 'fast', 'doubled movement speed', 3),
+	PerkEnum.REVERSE: PerkDef.make(PerkEnum.REVERSE, 'reverse', 'inverted movement', 4),
+	PerkEnum.BACKFIRE: PerkDef.make(PerkEnum.BACKFIRE, 'backfire', 'inverted aim', 5),
+	PerkEnum.SLOW: PerkDef.make(PerkEnum.SLOW, 'slow', 'halved movement speed', 6),
+	PerkEnum.NO_LEGS: PerkDef.make(PerkEnum.NO_LEGS, 'no legs', 'can only dash', 7),
+	PerkEnum.RESET: PerkDef.make(PerkEnum.RESET, 'reset', 'current cards removed', 8),
+	PerkEnum.RIGHT: PerkDef.make(PerkEnum.RIGHT, 'right', 'cannot aim to the left', 9),
+	PerkEnum.LONG_ARMS: PerkDef.make(PerkEnum.LONG_ARMS, 'long arms', 'longer aim range', 10),
+	PerkEnum.CHICKEN: PerkDef.make(PerkEnum.CHICKEN, 'chicken', 'you are a chicken', 11),
+	PerkEnum.HEALTHY: PerkDef.make(PerkEnum.HEALTHY, 'healthy', 'doubled max health', 12),
+	PerkEnum.UNHEALTHY: PerkDef.make(PerkEnum.UNHEALTHY, 'unhealthy', 'halved max health', 13),
+	PerkEnum.REGEN: PerkDef.make(PerkEnum.REGEN, 'regen', 'heals over time', 14),
+	PerkEnum.VAMPIRE: PerkDef.make(PerkEnum.VAMPIRE, 'vampire', 'dealing damage heals', 15),
+	PerkEnum.PREPARED: PerkDef.make(PerkEnum.PREPARED, 'prepared', 'starts with random item', 16)
 }
+
+func perk(id: int) -> PerkDef:
+	return PERK_DB[id]
 
 enum PwrupEnum { REVOLVER, DYNAMITE, SHIELD, TRAP, WHIP }
 
@@ -142,6 +146,8 @@ var playersAchievements = [[], [], [], []]
 enum StatEnum {REV_USE, REV_HIT, DYN_USE, DYN_DMG, WHP_USE, WHP_HIT, TRP_USE, TRP_HIT, PELLETS, GHOST_KILL}
 var playersStats = []
 var playersPerks = [[], [], [], []]
+# Set by PerkDraft while a cards round's overlay is alive; null otherwise.
+var PerkDraftNode: Node = null
 #var playersPerks = [[PerkEnum.HEALTHY], [PerkEnum.UNHEALTHY], [], []]
 
 var selectedMap = 'none'
@@ -288,6 +294,35 @@ func localJoyDevice() -> int:
 	if pads.is_empty():
 		return -1
 	return pads[0]
+
+func ownsKeyboardFor(slot: int) -> bool:
+	# Mirror Player.gd: online the local slot owns both schemes.
+	if Net.isOnline:
+		return slot == Net.localSlot
+	if slot < 0 or slot >= 4:
+		return false
+	return playersInputMode[slot] == InputMode.KB
+
+func slotOwningEvent(event: InputEvent) -> int:
+	# Which local slot, if any, should react to this event. Keyboard + mouse
+	# both report device 0, so they are matched by kind: only the KB-owning
+	# slot takes them, and a pad slot never claims a key/mouse event just
+	# because its joypad index happens to be 0.
+	for slot in range(4):
+		if not playersJoined[slot]:
+			continue
+		if event is InputEventKey or event is InputEventMouse:
+			if ownsKeyboardFor(slot):
+				return slot
+			continue
+		if Net.isOnline:
+			if slot == Net.localSlot:
+				return slot
+			continue
+		var dev := deviceForPlayer(slot)
+		if dev >= 0 and event.device == dev:
+			return slot
+	return -1
 
 func joinPlayer(id: int, silent: bool) -> void:
 	playersJoined[id] = true

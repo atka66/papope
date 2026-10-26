@@ -1,47 +1,48 @@
+class_name PerkCard
 extends Node2D
+## A single dealt card. Pure view: PerkPanel sets the perk and plays the
+## reveal. The flip, the shine and the name/description pop-in are all
+## authored in the scene's AnimationPlayer, so nothing here waits on timers.
 
-@export var perk: Global.PerkEnum
-var revealed = false
-var perkData
+var perk: int = -1
+var revealed: bool = false
 
-func _ready():
-	perkData = Global.PERKS[perk]
-	$Shine.hide()
-	$CardSprite/PerkSprite.hframes = len(Global.PerkEnum) + 1
-	$CardSprite/PerkSprite.frame = perkData[2]
-	$CardSprite/PerkSprite.hide()
+@onready var _perk_sprite: Sprite2D = $CardSprite/PerkSprite
+@onready var _shine: CPUParticles2D = $Shine
+@onready var _name_label: Label = $NameLabel
+@onready var _desc_label: Label = $DescLabel
 
-func setPerk(newPerk: int) -> void:
-	# A remote reveal can land after _ready(): refresh the data + sprite frame.
-	perk = newPerk
-	perkData = Global.PERKS[perk]
-	$CardSprite/PerkSprite.hframes = len(Global.PerkEnum) + 1
-	$CardSprite/PerkSprite.frame = perkData[2]
 
-func reveal():
+func _ready() -> void:
+	_perk_sprite.hframes = len(Global.PerkEnum) + 1
+	_reset()
+	hide() # stays hidden until this slot's card is dealt
+
+
+func _reset() -> void:
+	revealed = false
+	$Anim.stop()
+	$CardSprite.frame = 0
+	$CardSprite.scale = Vector2(2, 2)
+	_perk_sprite.hide()
+	_shine.emitting = false
+	_name_label.hide()
+	_desc_label.hide()
+
+
+func set_perk(new_perk: int) -> void:
+	perk = new_perk
+	var data := Global.perk(new_perk)
+	_perk_sprite.frame = data.frame
+	_name_label.text = data.display_name
+	_desc_label.text = data.description
+	show()
+
+
+func reveal() -> void:
+	if revealed:
+		return
 	revealed = true
-	$Anim.play('reveal')
 	$AudioFlip.stream = Res.AudioCardFlip[randi() % len(Res.AudioCardFlip)]
 	$AudioFlip.play()
-
-func showAll():
-	$Shine.show()
-	$CardSprite/PerkSprite.show()
-	await get_tree().create_timer(0.3).timeout
-	var nameLabel = Res.CustomLabelObject.instantiate()
-	nameLabel.position = Vector2(0, 128)
-	nameLabel.text = perkData[0]
-	nameLabel.fontSize = 4
-	nameLabel.animation = 'boom_in'
-	nameLabel.alignment = Control.LayoutPreset.PRESET_CENTER
-	nameLabel.audio = Res.AudioRoundGo
-	add_child(nameLabel)
-	
-	await get_tree().create_timer(0.1).timeout
-	var descLabel = Res.CustomLabelObject.instantiate()
-	descLabel.position = Vector2(0, 168)
-	descLabel.text = perkData[1]
-	descLabel.fontSize = 2
-	descLabel.animation = 'boom_in'
-	descLabel.alignment = Control.LayoutPreset.PRESET_CENTER
-	add_child(descLabel)
+	$Anim.play("reveal")

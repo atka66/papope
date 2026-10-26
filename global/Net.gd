@@ -39,7 +39,7 @@ var _beatAccum := 0.0
 var _phaseAccum := 0.0
 var _phaseSince := -1.0
 # Draft messages that landed before this peer's perk overlay existed (slow map
-# load); flushed by MapController once the overlay is in the tree.
+# load); drained by PerkDraft.open() once the overlay is in the tree.
 var _pending_perk_reveals: Dictionary = {} # slot -> perk
 var _pending_perk_picks: Dictionary = {} # slot -> perks
 
@@ -1051,12 +1051,11 @@ func _apply_perk_reveal(slot: int, perk: int) -> void:
 		return
 	if slot == localSlot:
 		return # own draft already revealed locally
-	var node := _player_perks_node(slot)
-	if node == null:
+	var draft = Global.PerkDraftNode
+	if draft == null:
 		_pending_perk_reveals[slot] = perk # overlay not up yet (slow load)
 		return
-	if node.has_method("remote_reveal"):
-		node.remote_reveal(perk)
+	draft.reveal_remote(slot, perk)
 
 func _apply_perk_pick(slot: int, perks) -> void:
 	if slot < 0 or slot >= MAX_SLOTS:
@@ -1066,35 +1065,19 @@ func _apply_perk_pick(slot: int, perks) -> void:
 	if slot == localSlot:
 		return # own draft stays authoritative locally
 	Global.playersPerks[slot] = _ints(perks)
-	var node := _player_perks_node(slot)
-	if node == null:
+	var draft = Global.PerkDraftNode
+	if draft == null:
 		_pending_perk_picks[slot] = Global.playersPerks[slot] # overlay not up yet
 		return
-	if node.has_method("sync_remote_perks"):
-		node.sync_remote_perks(Global.playersPerks[slot])
+	draft.apply_remote_pick(slot, Global.playersPerks[slot])
 
-func flush_perk_sync() -> void:
-	# MapController calls this once the perk overlay is in the tree: replay any
-	# reveal/pick that raced the map load so no slot is left face-down forever.
-	if not isOnline:
-		return
-	for slot in _pending_perk_reveals.keys():
-		_apply_perk_reveal(int(slot), int(_pending_perk_reveals[slot]))
+## Draft messages that arrived before this machine's overlay existed. The draft
+## drains these in open() so no slot is left face-down forever.
+func take_pending_draft() -> Array:
+	var out := [_pending_perk_reveals.duplicate(), _pending_perk_picks.duplicate()]
 	_pending_perk_reveals.clear()
-	for slot in _pending_perk_picks.keys():
-		_apply_perk_pick(int(slot), _pending_perk_picks[slot])
 	_pending_perk_picks.clear()
-
-func _player_perks_node(slot: int) -> Node:
-	var mc := Global.MapControllerNode
-	if mc != null and is_instance_valid(mc):
-		var n := mc.get_node_or_null("PerkOverlay/PlayerPerks" + str(slot))
-		if n != null:
-			return n
-	var scene := get_tree().current_scene
-	if scene == null:
-		return null
-	return scene.get_node_or_null("MapController/PerkOverlay/PlayerPerks" + str(slot))
+	return out
 
 # ------------------------------------------------------------------ payload codecs (JSON turns every number into float)
 
