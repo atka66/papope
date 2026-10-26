@@ -145,6 +145,11 @@ func rest_base() -> String:
 		return "http://" + base.substr(5)
 	return base
 
+func feedback_url() -> String:
+	# Feedback rides the relay's REST surface, so it follows the same
+	# override.cfg / env / in-game relay URL resolution as room discovery.
+	return rest_base() + "/v1/feedback"
+
 # ------------------------------------------------------------------ lifecycle
 
 func host(unlisted: bool = false) -> void:

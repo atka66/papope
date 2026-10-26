@@ -8,8 +8,6 @@ var MusicNode: Node
 
 var enableHotkeys: bool = true
 
-const FEEDBACK_URL = "https://atka-commons-api.alwaysdata.net/feedback" # TODO move
-
 # main debug mode switch (players joined without controllers, debug key to start game, etc)
 @onready var DEBUG = OS.is_debug_build()
 

@@ -392,7 +392,8 @@ func feedbackToggle(toggled_on: bool):
 
 
 func _on_submit_button_pressed():
-	if _feedbackEdit.text.length() < 1:
+	var feedback: String = _feedbackEdit.text.strip_edges()
+	if feedback.length() < 1:
 		return
 
 	var explosion = Res.ExplosionAnimObject.instantiate()
@@ -401,16 +402,33 @@ func _on_submit_button_pressed():
 	explosion.shakePwr = 30
 	Global.addToScene(explosion)
 
+	# Fire-and-forget: thank the player immediately and never block the menu on
+	# the network. A failed send is only a log line, not a UI state.
 	feedbackToggle(false)
-	submitFeedback(_feedbackEdit.text)
+	submitFeedback(feedback)
 
-func submitFeedback(feedback: String):
-	var request = HTTPRequest.new()
+func submitFeedback(feedback: String) -> void:
+	var request := HTTPRequest.new()
+	request.timeout = 10.0
 	add_child(request)
-	var body = JSON.stringify({ 'feedback': feedback, 'source': 'PAPOPE' })
-	request.request(Global.FEEDBACK_URL, ["Content-Type: application/json"], HTTPClient.METHOD_POST, body)
-	var response = await request.request_completed
+	var body := JSON.stringify({
+		'feedback': feedback.substr(0, 1800),
+		'source': 'PAPOPE',
+		'version': str(Global.VERSION),
+		'platform': OS.get_name()
+	})
+	if request.request(Net.feedback_url(), ["Content-Type: application/json"], HTTPClient.METHOD_POST, body) != OK:
+		push_warning("feedback: request could not start")
+		request.queue_free()
+		return
+	var completed: Array = await request.request_completed
 	request.queue_free()
+	if int(completed[0]) != HTTPRequest.RESULT_SUCCESS:
+		push_warning("feedback: send failed (result %d)" % int(completed[0]))
+		return
+	var code := int(completed[1])
+	if code < 200 or code >= 300:
+		push_warning("feedback: relay answered %d" % code)
 
 
 func _on_feedback_edit_focus_entered():

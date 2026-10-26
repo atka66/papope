@@ -16,13 +16,20 @@ A fast-paced twin-stick arena fighter for you and your friends.
 
 In the editor: Project → Export…, pick the `Web` or `Windows Desktop` preset and export (needs the Godot 4.5 export templates installed).
 
-Relay server (one binary, port 8080: WebSocket hub at `/room/`, lobby REST at `/v1/rooms`):
+Relay server (one binary, port 8080: WebSocket hub at `/room/`, lobby REST at `/v1/rooms`, feedback at `/v1/feedback`):
 
 ```sh
 cd services
 go build -o papope-relay ./cmd/papope-relay
 ./papope-relay  # or: docker build -t papope-relay .
 ```
+
+Feedback is stateless: `POST /v1/feedback` validates and forwards the message to a chat
+webhook, storing nothing. Point it at a Discord channel webhook with
+`PAPOPE_FEEDBACK_WEBHOOK` (required, keep it secret — never in the client or git);
+`PAPOPE_FEEDBACK_RATE` caps sends per IP per minute (default 5). Without the webhook the
+route answers 503 and the rest of the relay keeps working. The route serves CORS headers
+because the itch.io web build preflights it.
 
 Expose it over TLS (browsers require `wss://` for the web build) with a reverse proxy in front of `:8080`.
 
