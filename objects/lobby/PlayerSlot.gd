@@ -22,10 +22,10 @@ func handleHints() -> void:
 	if Net.isOnline:
 		# Prompts are per-client: only the local slot's hints are actionable
 		# (remote input is ignored), so only it gets any. The prompt itself
-		# marks your slot - no extra label needed.
+		# marks your slot - no extra label needed. No scheme sprite either:
+		# online a slot owns both schemes (last input wins), so there is no
+		# per-player scheme to show.
 		if Global.playersJoined[playerId]:
-			$ControllerSprite.modulate = Global.TEAM_COLORS[Global.playersTeam[playerId]]
-			$ControllerSprite.show()
 			if playerId == Net.localSlot:
 				if Lobby.countdownNode != null:
 					$CancelHolder.show()
@@ -35,6 +35,9 @@ func handleHints() -> void:
 		return
 
 	if Global.playersConnected[playerId]:
+		# Sheet frame 0 = gamepad, 1 = kb+mouse. EMPTY means a pad is plugged
+		# but unbound (connected-but-not-joined), so it falls back to pad.
+		$ControllerSprite.frame = 1 if Global.playersInputMode[playerId] == Global.InputMode.KB else 0
 		var color = Color.WHITE
 		if Global.playersJoined[playerId]:
 			color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
