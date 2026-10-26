@@ -152,6 +152,8 @@ var PerkDraftNode: Node = null
 
 var selectedMap = 'none'
 var matchSeed = 123 # online: host-rolled per round, synced to all peers
+# Set when an online session ends for this peer; MainMenu shows it once.
+var sessionNotice := ""
 
 func _ready():
 	randomize()
@@ -175,7 +177,12 @@ func _ready():
 
 func _joy_connection_changed(id: int, connected: bool) -> void:
 	if Net.isOnline:
-		return # online slots are relay-managed (hello/bye), ignore hardware
+		# Online the local peer is exactly one player: losing a pad is leaving.
+		# The host closes the room, a guest is dropped from the lobby or ends
+		# the running session (see Net._on_bye).
+		if not connected and Net.in_session():
+			Net.leave_to_menu()
+		return
 	var sceneName := ""
 	var scene := get_tree().get_current_scene()
 	if scene != null:

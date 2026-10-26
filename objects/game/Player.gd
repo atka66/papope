@@ -239,9 +239,7 @@ func _onlineLobbyInput(event, padUse: bool, padDash: bool, kbDash: bool, kbUse: 
 			if Net.isHost:
 				Net.cancel_countdown()
 		else:
-			Global.playersCrowned[playerId] = false
-			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
+			Net.leave_to_menu()
 
 func _requestLobbyChange(kind: String, value) -> void:
 	if Net.isHost:
@@ -698,6 +696,10 @@ func untrap():
 
 func directExplosion():
 	hurtSound(Res.AudioHurtDynamite)
+
+func shieldBlocked() -> void:
+	# Host-authored feedback, mirrored to guests like damage numbers.
+	_netLabel('busted!', global_position, Color.LIGHT_BLUE, 3)
 
 func shield() -> void:
 	shielded = true

@@ -127,6 +127,4 @@ func _onlineInput(event):
 			if Net.isHost:
 				Net.cancel_countdown()
 		else:
-			Global.playersCrowned[playerId] = false
-			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
+			Net.leave_to_menu()

@@ -140,9 +140,14 @@ func _on_body_entered(body):
 	if Net.isOnline and not Net.isHost:
 		return
 	if body.is_in_group('players') && body.alive && !Global.playersFrozen:
-		body.get_node('AudioScared').play()
-		body.die(Global.DeathEnum.GHOST)
-		Global.registerAchievement(body.playerId, Global.AchiEnum.SPOOKED)
+		if body.shielded:
+			# An active shield busts the ghost instead of the player.
+			body.shieldBlocked()
+			die(body.playerId)
+		else:
+			body.get_node('AudioScared').play()
+			body.die(Global.DeathEnum.GHOST)
+			Global.registerAchievement(body.playerId, Global.AchiEnum.SPOOKED)
 	if body.is_in_group('dynamites'):
 		body.explode()
 		die(body.origin.playerId)

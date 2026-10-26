@@ -80,8 +80,7 @@ func _input(event):
 		if focusOwner is TextEdit or focusOwner is LineEdit:
 			return # typing feedback: keep Esc for the field
 		if Net.isOnline:
-			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
+			Net.leave_to_menu()
 		else:
 			Global.goToMainMenu()
 	if Global.DEBUG && Global.enableHotkeys && !Net.isOnline: 
@@ -169,12 +168,16 @@ func sendBgTo() -> void:
 	Net.send_bg_frame(int(bg.frame), true)
 
 func _on_lobby_updated():
-	# Spawn previews for peers that joined after we entered the lobby.
+	# Reconcile previews with the host's slot flags both ways: joiners appear,
+	# leavers disappear. No dedicated removal message needed.
 	if !Net.isOnline:
 		return
 	for i in range(4):
-		if Global.playersJoined[i] and Global.getPlayer(i) == null:
+		var preview = Global.getPlayer(i)
+		if Global.playersJoined[i] and preview == null:
 			Global.joinPlayer(i, true)
+		elif not Global.playersJoined[i] and preview != null:
+			preview.queue_free()
 	# Fixate the background on the host's map selection only; other
 	# options (mode/rounds/teams/skins) must not retrigger it. Guests
 	# resolve explicit maps locally; 'random' follows host broadcasts.
@@ -209,6 +212,7 @@ func startCountdown() -> void:
 
 func stopCountdown() -> void:
 	countdownNode.queue_free()
+	countdownNode = null
 
 func restartMovingBackground() -> void:
 	$MovingBackground.restartMovingBackground(null)

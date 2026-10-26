@@ -58,10 +58,13 @@ func _ready():
 	Net.hosted.connect(_on_hosted)
 	Net.joined.connect(_on_joined)
 	Net.join_failed.connect(_on_join_failed)
-	Net.host_left.connect(_on_host_left)
 	_actionOption.setOption('action')
 	_visibilityOption.setOption('visibility')
 	_showMain()
+	if Global.sessionNotice != "":
+		# Kicked out of an online session: say why where the mode summary sits.
+		$MenuCanvas/MainHolder/SummaryLabel.setText(Global.sessionNotice)
+		Global.sessionNotice = ""
 	_on_refresh_pressed()
 
 func _exit_tree():
@@ -71,8 +74,6 @@ func _exit_tree():
 		Net.joined.disconnect(_on_joined)
 	if Net.join_failed.is_connected(_on_join_failed):
 		Net.join_failed.disconnect(_on_join_failed)
-	if Net.host_left.is_connected(_on_host_left):
-		Net.host_left.disconnect(_on_host_left)
 
 func _showMain():
 	menuState = MenuState.MAIN
@@ -372,9 +373,6 @@ func _on_joined():
 
 func _on_join_failed(reason: String):
 	setStatus(reason)
-
-func _on_host_left():
-	setStatus("host left")
 
 func setStatus(text: String):
 	_statusText = text

@@ -10,7 +10,6 @@ signal hosted
 signal joined
 signal join_failed(reason: String)
 signal lobby_updated
-signal host_left
 
 const MAX_SLOTS := 4
 const STATE_RATE := 0.05
@@ -64,7 +63,7 @@ func _process(delta: float) -> void:
 			var had := _wasJoined
 			var wasHost := isHost
 			if had and not wasHost:
-				_give_up_on_host()
+				_end_session("connection lost")
 			else:
 				leave()
 				if not had:
@@ -89,13 +88,24 @@ func _process(delta: float) -> void:
 	if isOnline and not isHost and _wasJoined:
 		var now := Time.get_ticks_msec() / 1000.0
 		if _lastHostMsg >= 0.0 and now - _lastHostMsg > HOST_TIMEOUT:
-			_give_up_on_host()
+			_end_session("host left")
 
-func _give_up_on_host() -> void:
-	# The host is gone: drop the session and leave the dead room.
+func leave_to_menu() -> void:
+	# Voluntary exit: this peer is done with the room. Host -> room closes,
+	# guest -> host drops the slot in a lobby or ends the session elsewhere.
+	_end_session("")
+
+func in_session() -> bool:
+	# True once the relay actually put us in a room (false while connecting).
+	return isOnline and _wasJoined
+
+func _end_session(notice: String) -> void:
+	# The one place a session ends for this peer: local quit, host gone, or a
+	# peer lost outside the lobby. Everyone lands on the mode select.
+	Global.sessionNotice = notice
 	leave()
-	emit_signal("host_left")
-	if get_tree().current_scene != null and get_tree().current_scene.name != "MainMenu":
+	var scene := get_tree().current_scene
+	if scene != null and scene.name != "MainMenu":
 		get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 
 # ------------------------------------------------------------------ config
@@ -394,12 +404,6 @@ func to_lobby() -> void:
 	_send("go_lobby", {})
 	send_heartbeat()
 
-func remove_map_player(slot: int) -> void:
-	if not isOnline or not isHost:
-		return
-	_do_remove_map_player(slot)
-	_send("remove_player", {"slot": slot})
-
 func send_bg_frame(frame: int, replay: bool) -> void:
 	if not isOnline or not isHost:
 		return
@@ -670,9 +674,6 @@ func _handle_envelope(env: Dictionary) -> void:
 		"go_lobby":
 			if from == 0:
 				_do_go_lobby()
-		"remove_player":
-			if from == 0:
-				_do_remove_map_player(int(payload.get("slot", -1)))
 		"state":
 			if from == 0:
 				_note_host_phase(payload)
@@ -865,15 +866,25 @@ func _on_welcome(payload: Dictionary) -> void:
 	emit_signal("joined")
 
 func _on_bye(from: int) -> void:
-	if not isHost and from == 0:
-		# Game-host gone: session over.
-		_give_up_on_host()
-	elif isHost and from > 0:
-		_drop_slot(from)
-	elif not isHost and from > 0:
-		_do_remove_map_player(from)
+	if isHost:
+		# A peer that never became a player (failed join, stray probe) must not
+		# kill the room. A joined one is normal churn in the lobby and fatal
+		# once we are past it (map, postgame, transitions).
+		if from <= 0 or from >= MAX_SLOTS or not Global.playersJoined[from]:
+			return
+		if current_phase() == "lobby":
+			_drop_lobby_slot(from)
+		else:
+			_end_session("player left")
+		return
+	if from == 0:
+		# Game-host gone: session over. Guest-vs-guest byes are ignored here:
+		# the host decides whether the room lives on or ends.
+		_end_session("host left")
 
-func _drop_slot(slot: int) -> void:
+func _drop_lobby_slot(slot: int) -> void:
+	# Lobby only: peers come and go and the room lives on. Previews follow via
+	# the push_lobby below (Lobby._on_lobby_updated reconciles both ways).
 	for nonce in slotByNonce.keys():
 		if int(slotByNonce[nonce]) == slot:
 			slotByNonce.erase(nonce)
@@ -881,9 +892,8 @@ func _drop_slot(slot: int) -> void:
 	Global.playersConnected[slot] = false
 	Global.playersJoined[slot] = false
 	Global.playersCrowned[slot] = false
-	Global.emit_signal("player_remove", slot)
-	_do_remove_map_player(slot)
-	_send("remove_player", {"slot": slot})
+	if is_match_locked() and (Global.playersJoined.count(true) < 2 or Global.getNumberOfTeams() < 2):
+		cancel_countdown()
 	push_lobby()
 
 func _push_join_state() -> void:
@@ -951,15 +961,6 @@ func _do_go_lobby() -> void:
 	if not isHost and current_phase() == "lobby":
 		return # already here: a re-announced phase
 	get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
-
-func _do_remove_map_player(slot: int) -> void:
-	var player := Global.getPlayer(slot)
-	if player != null:
-		player.queue_free()
-	if is_map_ready():
-		var hud := Global.MapControllerNode.get_node_or_null("HudCanvas/Hud" + str(slot))
-		if hud != null:
-			hud.queue_free()
 
 func _apply_lobby(payload: Dictionary) -> void:
 	Global.playersConnected = _bools(payload.get("connected", []))
