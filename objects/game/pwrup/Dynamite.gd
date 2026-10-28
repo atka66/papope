@@ -4,13 +4,17 @@ extends RigidBody2D
 @export var targetNorm: Vector2
 @export var throwForce: float
 
+# Fuse is half as long, so speed is scaled to throw's reach; also cancels
+# linear damp.
+const THROW_SPEED_SCALE := 1.95
+
 func _ready():
 	if Global.MapControllerNode.isNightclub:
 		$Container/Sprite.modulate = Color.BLACK
 		$Container/Smoke.z_as_relative = false
 		$Container/Smoke.z_index = 5
 	add_collision_exception_with(origin)
-	apply_central_impulse(targetNorm * throwForce)
+	apply_central_impulse(targetNorm * throwForce * THROW_SPEED_SCALE)
 
 func explode():
 	# Host-authoritative: only the host spawns the damaging blast and tells
