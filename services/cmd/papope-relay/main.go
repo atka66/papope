@@ -31,11 +31,13 @@ func main() {
 	mux.HandleFunc("DELETE /v1/rooms/{code}", hub.HandleDeleteRoom)
 	// Feedback: stateless forwarder to the configured chat webhook.
 	mux.HandleFunc("POST /v1/feedback", feedback.HandleCreate)
-	mux.HandleFunc("OPTIONS /v1/feedback", feedback.HandlePreflight)
 	mux.HandleFunc("GET /healthz", relay.HandleHealthz)
 
 	log.Printf("papope-relay listening on %s", addr)
-	if err := http.ListenAndServe(addr, mux); err != nil {
+	// CORS wraps the whole mux: the itch.io web build preflights every REST
+	// call (JSON POST, DELETE) and the middleware answers OPTIONS before
+	// ServeMux can reject the method.
+	if err := http.ListenAndServe(addr, relay.WithCORS(mux)); err != nil {
 		log.Fatal(err)
 	}
 }

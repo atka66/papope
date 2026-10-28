@@ -24,7 +24,7 @@ func serveLobbyHub(t *testing.T) (*httptest.Server, *Hub) {
 	mux.HandleFunc("POST /v1/rooms/{code}/heartbeat", hub.HandleHeartbeat)
 	mux.HandleFunc("DELETE /v1/rooms/{code}", hub.HandleDeleteRoom)
 	mux.HandleFunc("GET /healthz", HandleHealthz)
-	srv := httptest.NewServer(mux)
+	srv := httptest.NewServer(WithCORS(mux))
 	t.Cleanup(srv.Close)
 	return srv, hub
 }

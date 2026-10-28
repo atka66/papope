@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net"
 	"net/http"
+	"os"
 	"strings"
 	"sync"
 	"time"
@@ -125,6 +126,10 @@ func genCode() string {
 	return string(b[:])
 }
 
+// maxThrottleKeys bounds the per-IP map. A forwarded header that slips through
+// must not be able to grow it without bound inside one window.
+const maxThrottleKeys = 10000
+
 // throttle is a per-IP fixed-window counter. Zero value is unusable; use newThrottle.
 type throttle struct {
 	mu     sync.Mutex
@@ -146,6 +151,9 @@ func (t *throttle) allow(ip string) bool {
 		t.window = now
 		clear(t.hits)
 	}
+	if len(t.hits) >= maxThrottleKeys {
+		clear(t.hits) // safety valve: bound memory if keys keep growing
+	}
 	t.hits[ip]++
 	return t.hits[ip] <= t.limit
 }
@@ -161,13 +169,44 @@ func NewLobby() *Lobby {
 	return &Lobby{create: newThrottle(createLimitPerMin), list: newThrottle(listLimitPerMin)}
 }
 
-// clientIP strips the port; unparseable remotes share one bucket.
+// trustProxy honors the proxy's client-address headers. Off by default: the
+// relay is usually reached through a TLS-terminating reverse proxy, where the
+// TCP peer is the proxy itself and every player would share one rate-limit
+// bucket. Set PAPOPE_TRUST_PROXY=1 only when the proxy overwrites the header.
+var trustProxy = os.Getenv("PAPOPE_TRUST_PROXY") == "1"
+
+// clientIP is the per-IP rate-limit key. Unparseable remotes share one bucket.
 func clientIP(r *http.Request) string {
+	if trustProxy {
+		if ip := forwardedIP(r); ip != "" {
+			return ip
+		}
+	}
 	host, _, err := net.SplitHostPort(r.RemoteAddr)
 	if err != nil {
 		return r.RemoteAddr
 	}
 	return host
+}
+
+// forwardedIP reads the address the proxy saw. X-Real-IP wins because it is a
+// single value the proxy sets itself; X-Forwarded-For is only trusted at its
+// right end (the hop our proxy appended), since a client can prepend anything.
+// Both must parse as IPs so a forged header cannot mint unbounded throttle keys.
+func forwardedIP(r *http.Request) string {
+	if ip := strings.TrimSpace(r.Header.Get("X-Real-IP")); net.ParseIP(ip) != nil {
+		return ip
+	}
+	xff := r.Header.Get("X-Forwarded-For")
+	if xff == "" {
+		return ""
+	}
+	parts := strings.Split(xff, ",")
+	last := strings.TrimSpace(parts[len(parts)-1])
+	if net.ParseIP(last) != nil {
+		return last
+	}
+	return ""
 }
 
 func writeJSON(w http.ResponseWriter, status int, v any) {

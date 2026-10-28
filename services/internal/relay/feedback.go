@@ -157,27 +157,10 @@ func NewFeedback() *FeedbackServer {
 	return NewFeedbackServer(sink, limit)
 }
 
-// setCORS opens the route to the itch.io web build. The game posts JSON, so
-// the browser sends a preflight before the real request.
-func setCORS(w http.ResponseWriter) {
-	h := w.Header()
-	h.Set("Access-Control-Allow-Origin", "*")
-	h.Set("Access-Control-Allow-Methods", "POST, OPTIONS")
-	h.Set("Access-Control-Allow-Headers", "Content-Type")
-	h.Set("Access-Control-Max-Age", "86400")
-	h.Set("Vary", "Origin")
-}
-
-// HandlePreflight answers OPTIONS /v1/feedback.
-func (f *FeedbackServer) HandlePreflight(w http.ResponseWriter, _ *http.Request) {
-	setCORS(w)
-	w.WriteHeader(http.StatusNoContent)
-}
-
 // HandleCreate: POST /v1/feedback {feedback,version,platform,source} -> {}
 // 503 when unconfigured, 429 when throttled, 502 when the sink refuses.
+// CORS (and the preflight) is the mux-level WithCORS wrapper's job.
 func (f *FeedbackServer) HandleCreate(w http.ResponseWriter, r *http.Request) {
-	setCORS(w)
 	if !f.perIP.allow(clientIP(r)) || !f.global.allow("*") {
 		writeErr(w, http.StatusTooManyRequests, "rate limited, try again shortly")
 		return

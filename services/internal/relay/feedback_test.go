@@ -21,15 +21,14 @@ func (f *fakeSink) Send(_ context.Context, fb Feedback) error {
 	return f.err
 }
 
-func feedbackMux(sink Sink, perMin int) *http.ServeMux {
+func feedbackMux(sink Sink, perMin int) http.Handler {
 	srv := NewFeedbackServer(sink, perMin)
 	mux := http.NewServeMux()
 	mux.HandleFunc("POST /v1/feedback", srv.HandleCreate)
-	mux.HandleFunc("OPTIONS /v1/feedback", srv.HandlePreflight)
-	return mux
+	return WithCORS(mux) // CORS + preflight are the mux wrapper's job
 }
 
-func postFeedback(mux *http.ServeMux, body string) *httptest.ResponseRecorder {
+func postFeedback(mux http.Handler, body string) *httptest.ResponseRecorder {
 	req := httptest.NewRequest(http.MethodPost, "/v1/feedback", strings.NewReader(body))
 	req.Header.Set("Content-Type", "application/json")
 	rec := httptest.NewRecorder()
@@ -150,7 +149,7 @@ func TestFeedbackPreflight(t *testing.T) {
 	}
 	for header, want := range map[string]string{
 		"Access-Control-Allow-Origin":  "*",
-		"Access-Control-Allow-Methods": "POST, OPTIONS",
+		"Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
 		"Access-Control-Allow-Headers": "Content-Type",
 	} {
 		if got := rec.Header().Get(header); got != want {
