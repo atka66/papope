@@ -10,7 +10,7 @@ func _ready():
 
 func _process(delta):
 	if Net.isOnline and not Net.isHost:
-		# Guests mirror the host's options (synced via Net.sync_lobby):
+		# Guests mirror the host's options (synced via Net.push_lobby):
 		# values visible, but no selection arrows since they can't change them.
 		updateSelections()
 		$ModeOption.setFocus(false)

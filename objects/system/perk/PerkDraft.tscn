@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b77aykx4yjxqy"]
+
+[ext_resource type="Script" uid="uid://cperkdraft1aaa" path="res://objects/system/perk/PerkDraft.gd" id="1_draft"]
+
+[node name="PerkDraft" type="Node"]
+script = ExtResource("1_draft")

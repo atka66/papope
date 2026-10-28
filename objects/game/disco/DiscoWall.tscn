@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://c67s6k4lj5wvl"]
+
+[ext_resource type="Script" uid="uid://c1y8nq4mw7vdh" path="res://objects/game/disco/DiscoWall.gd" id="1_dw"]
+
+[sub_resource type="Animation" id="Animation_rv2l1"]
+resource_name = "RESET"
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Polygon2D:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_stm8m"]
+resource_name = "boop"
+length = 0.2
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Polygon2D:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_stm8m"]
+_data = {
+&"RESET": SubResource("Animation_rv2l1"),
+&"boop": SubResource("Animation_stm8m")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rv2l1"]
+size = Vector2(128, 32)
+
+[node name="DiscoWall" type="StaticBody2D" groups=["discowalls"]]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_dw")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_stm8m")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_rv2l1")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+z_index = 5
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-64, 0, 64, 0, 64, 8, -64, 8)

@@ -21,7 +21,7 @@ func _ready():
 		$Container/Body.modulate = GHOST_COLORS.pick_random()
 
 func _process(delta):
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		_interpGhost()
 		return
 	if moving:
@@ -97,7 +97,7 @@ func _interpGhost() -> void:
 
 func die(inflictorId):
 	# Online ghost deaths are host-authorized; guests mirror via Net.ghost_died.
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	if inflictorId != null:
 		Global.incrementStat(inflictorId, Global.StatEnum.GHOST_KILL, 1)
@@ -105,7 +105,7 @@ func die(inflictorId):
 	deadGhost.position = global_position
 	get_parent().add_child(deadGhost)
 	if Net.isOnline:
-		Net.ghost_died.rpc()
+		Net.ghost_died()
 	Global.initGhostSpawn()
 	queue_free()
 
@@ -137,12 +137,17 @@ func getWhipped(playerId: int, normal: Vector2) -> void:
 
 
 func _on_body_entered(body):
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	if body.is_in_group('players') && body.alive && !Global.playersFrozen:
-		body.get_node('AudioScared').play()
-		body.die(Global.DeathEnum.GHOST)
-		Global.registerAchievement(body.playerId, Global.AchiEnum.SPOOKED)
+		if body.shielded:
+			# An active shield busts the ghost instead of the player.
+			body.shieldBlocked()
+			die(body.playerId)
+		else:
+			body.get_node('AudioScared').play()
+			body.die(Global.DeathEnum.GHOST)
+			Global.registerAchievement(body.playerId, Global.AchiEnum.SPOOKED)
 	if body.is_in_group('dynamites'):
 		body.explode()
 		die(body.origin.playerId)

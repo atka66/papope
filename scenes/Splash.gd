@@ -9,4 +9,4 @@ func _input(event):
 		toLobby()
 
 func toLobby() -> void:
-	Global.goToLobby()
+	Global.goToMainMenu()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cgjwfivoc8wki"]
+[gd_scene load_steps=17 format=3 uid="uid://cgjwfivoc8wki"]
 
 [ext_resource type="Script" uid="uid://cr7n8x2odisa0" path="res://scenes/Lobby.gd" id="1_i8rer"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_pbfn1"]
@@ -12,9 +12,6 @@
 [ext_resource type="SpriteFrames" uid="uid://cscql2vhj0us1" path="res://resources/label/r1.tres" id="8_q1xo0"]
 [ext_resource type="SpriteFrames" uid="uid://b7n5rmohxyf1p" path="res://resources/label/l1.tres" id="9_ejqmw"]
 [ext_resource type="SpriteFrames" uid="uid://batkp1hq01vmw" path="res://resources/label/t.tres" id="10_c8qhg"]
-[ext_resource type="Texture2D" uid="uid://bsqq4c31uabj3" path="res://sprites/lobby/feedback.png" id="13_2t2lg"]
-[ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="14_fa23m"]
-[ext_resource type="FontFile" uid="uid://cvmvr7lse21up" path="res://fonts/HomeVideo-BLG6G.ttf" id="15_wdf1w"]
 
 [sub_resource type="Animation" id="Animation_6qw7i"]
 resource_name = "fade_in"
@@ -71,153 +68,8 @@ _data = {
 &"warn": SubResource("Animation_0qv0v")
 }
 
-[sub_resource type="Animation" id="Animation_yyg1t"]
-resource_name = "front"
-length = 0.2
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.3, 1),
-"update": 0,
-"values": [Vector2(680, 32), Vector2(680, 128)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.3, 1),
-"update": 0,
-"values": [Vector2(0.7, 0.7), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_o6r7d"]
-resource_name = "RESET"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(680, 32)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.7, 0.7)]
-}
-
-[sub_resource type="Animation" id="Animation_ug4sb"]
-resource_name = "back"
-length = 0.2
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.3, 1),
-"update": 0,
-"values": [Vector2(680, 128), Vector2(680, 32)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.3, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.7, 0.7)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ug4sb"]
-_data = {
-&"RESET": SubResource("Animation_o6r7d"),
-&"back": SubResource("Animation_ug4sb"),
-&"front": SubResource("Animation_yyg1t")
-}
-
-[sub_resource type="Animation" id="Animation_7vwmf"]
-resource_name = "RESET"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-1.91986]
-}
-
-[sub_resource type="Animation" id="Animation_m1sbv"]
-resource_name = "appear"
-length = 0.2
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(0.5, 2, 1),
-"update": 0,
-"values": [-1.91986, 0.0872665, 0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_e7qlh"]
-_data = {
-&"RESET": SubResource("Animation_7vwmf"),
-&"appear": SubResource("Animation_m1sbv")
-}
-
-[sub_resource type="LabelSettings" id="LabelSettings_c0dxd"]
-font = ExtResource("14_fa23m")
-font_size = 32
-outline_size = 8
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_qq67x"]
-font = ExtResource("14_fa23m")
-outline_size = 8
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_ofpbo"]
-font = ExtResource("14_fa23m")
-font_size = 30
-
 [node name="Lobby" type="Node2D"]
+modulate = Color(0, 0, 0, 1)
 script = ExtResource("1_i8rer")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
@@ -338,29 +190,15 @@ text = "powered by godot"
 fontSize = 2
 alignment = 7
 
-[node name="OnlineLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
+[node name="RoomLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(1352, 700)
-fontSize = 2
+text = ""
+fontSize = 3
 alignment = 3
-
-[node name="OnlineButton" type="Button" parent="MenuCanvas"]
-offset_left = 8.0
-offset_top = 676.0
-offset_right = 208.0
-offset_bottom = 732.0
-focus_mode = 0
-theme_override_fonts/font = ExtResource("14_fa23m")
-theme_override_font_sizes/font_size = 24
-text = "ONLINE"
 
 [node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
 position = Vector2(680, 32)
 scale = Vector2(0.7, 0.7)
-
-[node name="Anim" type="AnimationPlayer" parent="MenuCanvas/TitleHolder"]
-libraries = {
-&"": SubResource("AnimationLibrary_ug4sb")
-}
 
 [node name="Title" type="Sprite2D" parent="MenuCanvas/TitleHolder"]
 texture_filter = 2
@@ -375,88 +213,3 @@ fontSize = 4
 fontColor = Color(1, 0.752941, 0.12549, 1)
 alignment = 8
 animation = "wobble"
-
-[node name="FeedbackButton" type="TextureButton" parent="MenuCanvas"]
-z_index = 109
-z_as_relative = false
-offset_left = 1296.0
-offset_right = 1360.0
-offset_bottom = 64.0
-toggle_mode = true
-focus_mode = 0
-texture_normal = ExtResource("13_2t2lg")
-stretch_mode = 3
-
-[node name="FeedbackHolder" type="Node2D" parent="MenuCanvas"]
-position = Vector2(1360, 56)
-rotation = -1.91986
-
-[node name="AudioSubmit" type="AudioStreamPlayer" parent="MenuCanvas/FeedbackHolder"]
-
-[node name="Anim" type="AnimationPlayer" parent="MenuCanvas/FeedbackHolder"]
-root_node = NodePath("../FeedbackPanel")
-libraries = {
-&"": SubResource("AnimationLibrary_e7qlh")
-}
-
-[node name="FeedbackPanel" type="PanelContainer" parent="MenuCanvas/FeedbackHolder"]
-z_index = 110
-z_as_relative = false
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -576.0
-offset_right = 0.000244141
-offset_bottom = 416.0
-grow_horizontal = 0
-
-[node name="CenterContainer" type="CenterContainer" parent="MenuCanvas/FeedbackHolder/FeedbackPanel"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="TitleLabel" type="Label" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "tell us what you think!"
-label_settings = SubResource("LabelSettings_c0dxd")
-horizontal_alignment = 1
-uppercase = true
-
-[node name="DescLabel" type="Label" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "we value your opinion and want to hear about your experience with the game! whether you have feedback, suggestions, or have encountered a bug, please share it with us! your input will help us make the game better for everyone."
-label_settings = SubResource("LabelSettings_qq67x")
-horizontal_alignment = 1
-autowrap_mode = 2
-uppercase = true
-
-[node name="FeedbackEdit" type="TextEdit" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 128)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("15_wdf1w")
-placeholder_text = "WHAT'S ON YOUR MIND?..."
-wrap_mode = 1
-
-[node name="SubmitButton" type="Button" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer"]
-focus_mode = 0
-layout_mode = 2
-theme_override_fonts/font = ExtResource("14_fa23m")
-theme_override_font_sizes/font_size = 24
-text = "SUBMIT"
-
-[node name="FinishLabel" type="Label" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer"]
-custom_minimum_size = Vector2(496, 0)
-layout_mode = 2
-text = "thank you for taking the time to share your thoughts with us! your feedback is greatly appreciated."
-label_settings = SubResource("LabelSettings_ofpbo")
-horizontal_alignment = 1
-autowrap_mode = 2
-uppercase = true
-
-[connection signal="toggled" from="MenuCanvas/FeedbackButton" to="." method="_on_feedback_button_toggled"]
-[connection signal="pressed" from="MenuCanvas/OnlineButton" to="." method="_on_online_button_pressed"]
-[connection signal="focus_entered" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit" to="." method="_on_feedback_edit_focus_entered"]
-[connection signal="focus_exited" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit" to="." method="_on_feedback_edit_focus_exited"]
-[connection signal="pressed" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/SubmitButton" to="." method="_on_submit_button_pressed"]

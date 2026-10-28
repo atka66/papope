@@ -25,6 +25,10 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if body.is_in_group('players'):
+		# Car hits are host-authorized; guests converge hp/velocity via
+		# state sync instead of hurting locally.
+		if Net.isOnline and not Net.isHost:
+			return
 		$AudioCollision.stream = Res.AudioContactCar.pick_random()
 		$AudioCollision.play()
 		body.hurt(Global.DAMAGE_CAR, null)
@@ -38,6 +42,10 @@ func _on_body_entered(body):
 		if !$AudioHorn.playing:
 			$AudioHorn.play()
 	if body.is_in_group('dynamites'):
+		# Detonation is host-authorized (see Dynamite.explode); a guest car
+		# must not set off its local dynamite copy.
+		if Net.isOnline and not Net.isHost:
+			return
 		body.explode()
 		$AudioCollision.stream = Res.AudioContactCar.pick_random()
 		$AudioCollision.play()

@@ -1,0 +1,414 @@
+[gd_scene load_steps=25 format=3 uid="uid://cyc8taatjyjm1"]
+
+[ext_resource type="Script" uid="uid://cyc8taatpyja2" path="res://scenes/MainMenu.gd" id="1_menu"]
+[ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_bg"]
+[ext_resource type="PackedScene" uid="uid://bcm1wt3awqg18" path="res://objects/system/Camera.tscn" id="3_cam"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_label"]
+[ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="5_font"]
+[ext_resource type="AudioStream" uid="uid://ba4m2xuga6qbv" path="res://audio/sfx/system/fail.ogg" id="6_fail"]
+[ext_resource type="AudioStream" uid="uid://bfnectokibmn7" path="res://audio/sfx/system/option.ogg" id="6_tick"]
+[ext_resource type="Texture2D" uid="uid://c8v20op2i3bd4" path="res://sprites/lobby/title/title_hell.png" id="7_title"]
+[ext_resource type="Texture2D" uid="uid://d0akw842o4pyu" path="res://sprites/lobby/arrow.png" id="8_arrow"]
+[ext_resource type="Texture2D" uid="uid://bsqq4c31uabj3" path="res://sprites/lobby/feedback.png" id="9_fb"]
+[ext_resource type="FontFile" uid="uid://cvmvr7lse21up" path="res://fonts/HomeVideo-BLG6G.ttf" id="10_hv"]
+[ext_resource type="PackedScene" uid="uid://bovpg4jmn5nqu" path="res://objects/system/settings/Option.tscn" id="11_opt"]
+
+[sub_resource type="Animation" id="Animation_fadein"]
+resource_name = "fade_in"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fadein"]
+_data = {
+&"fade_in": SubResource("Animation_fadein")
+}
+
+[sub_resource type="Animation" id="Animation_o6r7d"]
+resource_name = "RESET"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(680, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.7, 0.7)]
+}
+
+[sub_resource type="Animation" id="Animation_ug4sb"]
+resource_name = "back"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(680, 128), Vector2(680, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.7, 0.7)]
+}
+
+[sub_resource type="Animation" id="Animation_yyg1t"]
+resource_name = "front"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(680, 32), Vector2(680, 128)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.3, 1),
+"update": 0,
+"values": [Vector2(0.7, 0.7), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ug4sb"]
+_data = {
+&"RESET": SubResource("Animation_o6r7d"),
+&"back": SubResource("Animation_ug4sb"),
+&"front": SubResource("Animation_yyg1t")
+}
+
+[sub_resource type="Animation" id="Animation_fbreset"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.91986]
+}
+
+[sub_resource type="Animation" id="Animation_fbappear"]
+resource_name = "appear"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [-1.91986, 0.0872665, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fbappear"]
+_data = {
+&"RESET": SubResource("Animation_fbreset"),
+&"appear": SubResource("Animation_fbappear")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_fbt"]
+font = ExtResource("5_font")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fbd"]
+font = ExtResource("5_font")
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_fbf"]
+font = ExtResource("5_font")
+font_size = 30
+
+[node name="MainMenu" type="Node2D"]
+modulate = Color(0, 0, 0, 1)
+script = ExtResource("1_menu")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_fadein")
+}
+autoplay = "fade_in"
+
+[node name="MovingBackground" parent="." instance=ExtResource("2_bg")]
+
+[node name="Camera" parent="." instance=ExtResource("3_cam")]
+
+[node name="AudioTick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_tick")
+bus = &"sfx"
+
+[node name="AudioFail" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_fail")
+bus = &"sfx"
+
+[node name="MenuCanvas" type="CanvasLayer" parent="."]
+
+[node name="MainHolder" type="Node2D" parent="MenuCanvas"]
+
+[node name="LocalLabel" parent="MenuCanvas/MainHolder" instance=ExtResource("4_label")]
+position = Vector2(680, 424)
+text = "local rumble"
+fontSize = 4
+alignment = 8
+
+[node name="OnlineLabel" parent="MenuCanvas/MainHolder" instance=ExtResource("4_label")]
+position = Vector2(680, 514)
+text = "online rumble"
+fontSize = 4
+alignment = 8
+
+[node name="SelectArrow" type="Sprite2D" parent="MenuCanvas/MainHolder"]
+position = Vector2(440, 428)
+scale = Vector2(2, 2)
+texture = ExtResource("8_arrow")
+hframes = 2
+frame = 1
+
+[node name="SummaryLabel" parent="MenuCanvas/MainHolder" instance=ExtResource("4_label")]
+position = Vector2(680, 672)
+text = "play together on one screen"
+fontSize = 2
+alignment = 8
+
+[node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
+position = Vector2(680, 32)
+scale = Vector2(0.7, 0.7)
+
+[node name="Anim" type="AnimationPlayer" parent="MenuCanvas/TitleHolder"]
+libraries = {
+&"": SubResource("AnimationLibrary_ug4sb")
+}
+
+[node name="Title" type="Sprite2D" parent="MenuCanvas/TitleHolder"]
+texture_filter = 2
+texture = ExtResource("7_title")
+centered = false
+offset = Vector2(-250, -16)
+
+[node name="SubtitleLabel" parent="MenuCanvas/TitleHolder" instance=ExtResource("4_label")]
+position = Vector2(0, 160)
+text = "twin stick arena"
+fontSize = 4
+fontColor = Color(1, 0.752941, 0.12549, 1)
+alignment = 8
+animation = "wobble"
+
+[node name="OnlineHolder" type="Node2D" parent="MenuCanvas"]
+
+[node name="ActionOption" parent="MenuCanvas/OnlineHolder" instance=ExtResource("11_opt")]
+position = Vector2(344, 300)
+
+[node name="VisibilityOption" parent="MenuCanvas/OnlineHolder" instance=ExtResource("11_opt")]
+position = Vector2(344, 348)
+
+[node name="HostActionLabel" parent="MenuCanvas/OnlineHolder" instance=ExtResource("4_label")]
+position = Vector2(352, 396)
+text = "host game"
+fontSize = 3
+alignment = 8
+
+[node name="ActionArrow" type="Sprite2D" parent="MenuCanvas/OnlineHolder"]
+position = Vector2(200, 400)
+scale = Vector2(2, 2)
+texture = ExtResource("8_arrow")
+offset = Vector2(-16, 0)
+hframes = 2
+frame = 1
+
+[node name="InfoLine" parent="MenuCanvas/OnlineHolder" instance=ExtResource("4_label")]
+position = Vector2(856, 348)
+text = ""
+fontSize = 2
+alignment = 8
+
+[node name="CodeEdit" type="LineEdit" parent="MenuCanvas/OnlineHolder"]
+offset_left = 184.0
+offset_top = 508.0
+offset_right = 520.0
+offset_bottom = 552.0
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 20
+placeholder_text = "room code"
+max_length = 6
+
+[node name="JoinLabel" parent="MenuCanvas/OnlineHolder" instance=ExtResource("4_label")]
+position = Vector2(352, 584)
+text = "join game"
+fontSize = 3
+alignment = 8
+
+[node name="RoomList" type="ItemList" parent="MenuCanvas/OnlineHolder"]
+offset_left = 184.0
+offset_top = 332.0
+offset_right = 520.0
+offset_bottom = 452.0
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 20
+
+[node name="RefreshLabel" parent="MenuCanvas/OnlineHolder" instance=ExtResource("4_label")]
+position = Vector2(352, 480)
+text = "refresh"
+fontSize = 3
+alignment = 8
+
+[node name="VersionLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
+position = Vector2(8, 764)
+fontSize = 2
+alignment = 2
+
+[node name="FullscreenLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
+position = Vector2(1352, 764)
+text = "f - toggle fullscreen"
+fontSize = 2
+alignment = 3
+
+[node name="GodotLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
+position = Vector2(680, 764)
+text = "powered by godot"
+fontSize = 2
+alignment = 7
+
+[node name="FeedbackButton" type="TextureButton" parent="MenuCanvas"]
+z_index = 109
+z_as_relative = false
+offset_left = 1296.0
+offset_right = 1360.0
+offset_bottom = 64.0
+focus_mode = 0
+toggle_mode = true
+texture_normal = ExtResource("9_fb")
+stretch_mode = 3
+
+[node name="FeedbackHolder" type="Node2D" parent="MenuCanvas"]
+position = Vector2(1360, 56)
+rotation = -1.91986
+
+[node name="AudioSubmit" type="AudioStreamPlayer" parent="MenuCanvas/FeedbackHolder"]
+
+[node name="Anim" type="AnimationPlayer" parent="MenuCanvas/FeedbackHolder"]
+root_node = NodePath("../FeedbackPanel")
+libraries = {
+&"": SubResource("AnimationLibrary_fbappear")
+}
+
+[node name="FeedbackPanel" type="PanelContainer" parent="MenuCanvas/FeedbackHolder"]
+z_index = 110
+z_as_relative = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -576.0
+offset_right = 0.000244141
+offset_bottom = 416.0
+grow_horizontal = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="MenuCanvas/FeedbackHolder/FeedbackPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "tell us what you think!"
+label_settings = SubResource("LabelSettings_fbt")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="DescLabel" type="Label" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "we value your opinion and want to hear about your experience with the game! whether you have feedback, suggestions, or have encountered a bug, please share it with us! your input will help us make the game better for everyone."
+label_settings = SubResource("LabelSettings_fbd")
+horizontal_alignment = 1
+autowrap_mode = 2
+uppercase = true
+
+[node name="FeedbackEdit" type="TextEdit" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_hv")
+placeholder_text = "WHAT'S ON YOUR MIND?..."
+wrap_mode = 1
+
+[node name="SubmitButton" type="Button" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("5_font")
+theme_override_font_sizes/font_size = 24
+text = "SUBMIT"
+
+[node name="FinishLabel" type="Label" parent="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer"]
+custom_minimum_size = Vector2(496, 0)
+layout_mode = 2
+text = "thank you for taking the time to share your thoughts with us! your feedback is greatly appreciated."
+label_settings = SubResource("LabelSettings_fbf")
+horizontal_alignment = 1
+autowrap_mode = 2
+uppercase = true
+
+[connection signal="toggled" from="MenuCanvas/FeedbackButton" to="." method="_on_feedback_button_toggled"]
+[connection signal="focus_entered" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit" to="." method="_on_feedback_edit_focus_entered"]
+[connection signal="focus_exited" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit" to="." method="_on_feedback_edit_focus_exited"]
+[connection signal="pressed" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/SubmitButton" to="." method="_on_submit_button_pressed"]

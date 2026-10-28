@@ -93,22 +93,27 @@ func _ready():
 		pickup(Global.getRandomPwrup())
 
 func ownsKeyboard() -> bool:
-	return playerId == 0 or (Net.isOnline and isLocal)
+	if Net.isOnline:
+		return isLocal
+	return Global.playersInputMode[playerId] == Global.InputMode.KB
 
 func getMoveVector() -> Vector2:
 	# Online: host drives remote slots from forwarded inputs, clients hold still
 	# between host state syncs (never poll another peer's gamepad).
 	if Net.isOnline and not isLocal:
-		if multiplayer.is_server():
+		if Net.isHost:
 			return netMove
 		return Vector2.ZERO
-	var lhAxis: float = Input.get_joy_axis(playerId, JOY_AXIS_LEFT_X)
-	var lvAxis: float = Input.get_joy_axis(playerId, JOY_AXIS_LEFT_Y)
-	if abs(lhAxis) < 0.1:
-		lhAxis = 0.0
-	if abs(lvAxis) < 0.1:
-		lvAxis = 0.0
-	var lAxis: Vector2 = Vector2(lhAxis, lvAxis)
+	var lAxis := Vector2.ZERO
+	var joyDevice := Global.deviceForPlayer(playerId)
+	if joyDevice >= 0:
+		var lhAxis: float = Input.get_joy_axis(joyDevice, JOY_AXIS_LEFT_X)
+		var lvAxis: float = Input.get_joy_axis(joyDevice, JOY_AXIS_LEFT_Y)
+		if abs(lhAxis) < 0.1:
+			lhAxis = 0.0
+		if abs(lvAxis) < 0.1:
+			lvAxis = 0.0
+		lAxis = Vector2(lhAxis, lvAxis)
 	if ownsKeyboard() && Global.enableHotkeys:
 		# ignore WASD while typing in a text field (lobby feedback)
 		lAxis += Input.get_vector("kb_move_left", "kb_move_right", "kb_move_up", "kb_move_down")
@@ -121,12 +126,17 @@ func getMoveVector() -> Vector2:
 func getAimVector() -> Vector2:
 	if Net.isOnline and not isLocal and hasRemoteAim:
 		return remoteAim
-	var stick: Vector2 = Vector2(
-		Input.get_joy_axis(playerId, JOY_AXIS_RIGHT_X),
-		Input.get_joy_axis(playerId, JOY_AXIS_RIGHT_Y)
-	)
+	var stick := Vector2.ZERO
+	var joyDevice := Global.deviceForPlayer(playerId)
+	if joyDevice >= 0:
+		stick = Vector2(
+			Input.get_joy_axis(joyDevice, JOY_AXIS_RIGHT_X),
+			Input.get_joy_axis(joyDevice, JOY_AXIS_RIGHT_Y)
+		)
 	if stick.length() > 0.15:
 		kbAimActive = false
+	elif not Net.isOnline and Global.playersInputMode[playerId] == Global.InputMode.KB:
+		kbAimActive = true # locked KB: mouse aim stays on, no stick to steal it
 
 	var rAxis: Vector2
 	var mouseDist: float = -1.0
@@ -181,13 +191,13 @@ func _input(event):
 	var padUse: bool = event.is_action_pressed("game_use")
 	var kbDash: bool = ownsKeyboard() && event.is_action_pressed("kb_dash")
 	var kbUse: bool = ownsKeyboard() && event.is_action_pressed("kb_use")
-	var ownsEvent: bool = (Net.isOnline && isLocal) || (!Net.isOnline && event.device == playerId)
+	var ownsEvent: bool = (Net.isOnline && isLocal) || (!Net.isOnline && event.device == Global.deviceForPlayer(playerId))
 	if ownsEvent || kbDash || kbUse:
 		if Lobby != null:
 			if Lobby.countdownNode == null && !ProjectSettings.get("papope/hosted_mode"):
 				if Net.isOnline:
 					_onlineLobbyInput(event, padUse, padDash, kbDash, kbUse)
-				elif (event.is_action_pressed("skin_next") || padUse || padDash) && !inputCd:
+				elif (Global.enableHotkeys && event.is_action_pressed("skin_next") || padUse || padDash) && !inputCd:
 					inputCd = true
 					if event.is_action_pressed("skin_next"):
 						Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
@@ -210,7 +220,7 @@ func _input(event):
 					_onlineUse()
 
 func _onlineLobbyInput(event, padUse: bool, padDash: bool, kbDash: bool, kbUse: bool) -> void:
-	if (event.is_action_pressed("skin_next") || padUse || padDash || kbDash || kbUse) && !inputCd:
+	if (Global.enableHotkeys && event.is_action_pressed("skin_next") || padUse || padDash || kbDash || kbUse) && !inputCd:
 		inputCd = true
 		if event.is_action_pressed("skin_next"):
 			_requestLobbyChange("skin", (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT)
@@ -218,46 +228,45 @@ func _onlineLobbyInput(event, padUse: bool, padDash: bool, kbDash: bool, kbUse: 
 			_requestLobbyChange("team", (Global.playersTeam[playerId] + 1) % 4)
 		if padDash || kbDash:
 			_requestLobbyChange("team", (Global.playersTeam[playerId] + 3) % 4)
-	if event.is_action_pressed("accept") || ((playerId == 0 || isLocal) && event.is_action_pressed("kb_accept")):
+	if event.is_action_pressed("accept") || (ownsKeyboard() && event.is_action_pressed("kb_accept")):
 		if Global.getNumberOfTeams() > 1:
 			if Net.isHost:
 				Net.begin_countdown()
 		else:
 			Lobby.warnCannotStart()
-	if event.is_action_pressed("cancel") || ((playerId == 0 || isLocal) && event.is_action_pressed("kb_cancel")):
+	if event.is_action_pressed("cancel") || (ownsKeyboard() && event.is_action_pressed("kb_cancel")):
 		if Lobby.countdownNode != null:
 			if Net.isHost:
 				Net.cancel_countdown()
 		else:
-			Global.playersCrowned[playerId] = false
-			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+			Net.leave_to_menu()
 
 func _requestLobbyChange(kind: String, value) -> void:
 	if Net.isHost:
 		Net.request_lobby_change(kind, playerId, value)
 	else:
-		Net.request_lobby_change.rpc_id(1, kind, playerId, value)
+		Net.request_lobby_change(kind, playerId, value)
 
 func _onlineDash(axis: Vector2) -> void:
 	if !Net.isOnline:
 		dash(axis)
 		return
 	if Net.isHost:
-		dash(axis)
-		Net.notify_action.rpc(playerId, "dash", getAimVector(), axis)
+		# notify_action executes locally and broadcasts (no relay echo),
+		# so the host must not pre-execute or the action fires twice.
+		Net.notify_action(playerId, "dash", getAimVector(), axis)
 	else:
-		Net.request_action.rpc_id(1, playerId, "dash", getAimVector(), axis)
+		Net.request_action(playerId, "dash", getAimVector(), axis)
 
 func _onlineUse() -> void:
 	if !Net.isOnline:
 		useItem()
 		return
 	if Net.isHost:
-		useItem()
-		Net.notify_action.rpc(playerId, "use", getAimVector(), getMoveVector())
+		# Same single-execution rule as dash above.
+		Net.notify_action(playerId, "use", getAimVector(), getMoveVector())
 	else:
-		Net.request_action.rpc_id(1, playerId, "use", getAimVector(), getMoveVector())
+		Net.request_action(playerId, "use", getAimVector(), getMoveVector())
 
 func regenLoop() -> void:
 	await get_tree().create_timer(1.0).timeout
@@ -320,7 +329,9 @@ func _process(delta):
 		updateAimVisuals()
 	if Global.MapControllerNode != null:
 		if alive:
-			if contactsLava && !shielded:
+			# Lava damage is host-authorized; guests keep smoke/sound locally
+			# (enteredLava) while hp converges via state sync.
+			if contactsLava && !shielded && (not Net.isOnline or Net.isHost):
 				lavaAccum += Global.DPS_LAVA * delta
 				while lavaAccum >= 1.0:
 					lavaAccum -= 1.0
@@ -377,7 +388,7 @@ func _physics_process(delta):
 			_sendAccum += delta
 			if _sendAccum >= Net.STATE_RATE:
 				_sendAccum = 0.0
-				Net.send_input.rpc_id(1, playerId, getMoveVector(), getAimVector())
+				Net.send_input(playerId, getMoveVector(), getAimVector())
 
 func _refreshLobbyVisuals() -> void:
 	if Global.playersTeam[playerId] != _lastTeam:
@@ -472,11 +483,11 @@ func apply_net_state(s: Array) -> void:
 func _netLabel(text: String, pos: Vector2, color: Color, size: int) -> void:
 	# Damage numbers are host-truth: guests skip local spawns and render the
 	# host's broadcast instead, so every screen shows the same numbers.
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	Global.spawnFallingLabel(text, pos, color, size)
 	if Net.isOnline:
-		Net.damage_number.rpc(text, pos, color, size)
+		Net.damage_number(text, pos, color, size)
 
 func _gainFeedback() -> void:	# Host-side pickup() already played full feedback there; this mirrors the
 	# noticeable bits on guests when the synced item arrives.
@@ -686,6 +697,10 @@ func untrap():
 func directExplosion():
 	hurtSound(Res.AudioHurtDynamite)
 
+func shieldBlocked() -> void:
+	# Host-authored feedback, mirrored to guests like damage numbers.
+	_netLabel('busted!', global_position, Color.LIGHT_BLUE, 3)
+
 func shield() -> void:
 	shielded = true
 	Global.spawnFallingLabel("shielded!", global_position, Color.LIGHT_BLUE, 3)
@@ -743,7 +758,7 @@ func hurtSound(sound: AudioStreamOggVorbis) -> void:
 
 func fallDown(isLava: bool) -> void:
 	if Net.isOnline and isLocal and not Net.isHost and alive and not isFallingIntoWater:
-		Net.notify_fall.rpc_id(1, playerId, isLava)
+		Net.notify_fall(playerId, isLava)
 	$CollisionShape.set_deferred("disabled", true)
 	isFallingIntoWater = true
 	if alive:
@@ -786,7 +801,7 @@ func _on_body_entered(body):
 	if body.is_in_group('players'):
 		if !hit:
 			body.hit = true
-			if Net.isOnline and not multiplayer.is_server():
+			if Net.isOnline and not Net.isHost:
 				pass # host authors the FX; impulses below stay local
 			else:
 				var collisionAnim = Res.CollisionAnimObject.instantiate()
@@ -796,12 +811,12 @@ func _on_body_entered(body):
 				collisionAnim.look_at(global_position)
 				Global.addToScene(collisionAnim)
 				if Net.isOnline:
-					Net.collision_fx.rpc(collisionAnim.position, animScale, global_position)
+					Net.collision_fx(collisionAnim.position, animScale, global_position)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 50)
 		hit = false
 	if body.is_in_group('cacti'):
 		# Online cactus hits are host-authorized; guests replay via Net.cactus_hit.
-		if Net.isOnline and not multiplayer.is_server():
+		if Net.isOnline and not Net.isHost:
 			return
 		# todo maybe hurt sound for the non-chicken as well?
 		if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
@@ -810,9 +825,12 @@ func _on_body_entered(body):
 		body.bounce()
 		body.pinch()
 		if Net.isOnline:
-			Net.cactus_hit.rpc(body.global_position)
+			Net.cactus_hit(body.global_position)
 		apply_central_impulse(body.global_position.direction_to(global_position) * 100)
-	# todo wall sound
+	if body.is_in_group('discowalls') and body.has_method('boop'):
+		# Nightclub neon ring: bumping the dancefloor edge lights it up.
+		# Remote bumps arrive via Net.disco_hit (host authored).
+		body.boop()
 
 func isTeammate(otherPlayerId) -> bool:
 	return Global.playersTeam[otherPlayerId] == Global.playersTeam[playerId]

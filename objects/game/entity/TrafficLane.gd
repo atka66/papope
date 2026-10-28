@@ -4,7 +4,7 @@ extends Marker2D
 
 func _ready():
 	# Online traffic is host-driven; guests spawn via Net.car_event.
-	if Net.isOnline and not multiplayer.is_server():
+	if Net.isOnline and not Net.isHost:
 		return
 	spawnCar()
 
@@ -14,8 +14,8 @@ func spawnCar() -> void:
 	var carSpeed := randf_range(700, 1000)
 	var paint := randi()
 	_spawnCar(carSpeed, paint)
-	if Net.isOnline and multiplayer.is_server():
-		Net.car_event.rpc(name, carSpeed, paint)
+	if Net.isOnline and Net.isHost:
+		Net.car_event(name, carSpeed, paint)
 
 	spawnCar()
 
