@@ -243,6 +243,28 @@ func isDeviceBound(device: int) -> bool:
 func isKbJoinAllowed() -> bool:
 	return not Net.isOnline and kbClaimable and playersInputMode[0] == InputMode.EMPTY
 
+func rollSkin(slot: int) -> void:
+	# Rolled once per entry: a rejoin gives a new look, while previews respawned
+	# by a lobby reload (PostGame -> Lobby, net resync) never reroll. Prefers a
+	# skin no other joined player holds and always differs from the previous one.
+	if slot < 0 or slot >= playersSkin.size():
+		return
+	var taken := []
+	for i in range(playersJoined.size()):
+		if i != slot and playersJoined[i]:
+			taken.append(playersSkin[i])
+	var pool := []
+	for skin in range(SKIN_COUNT):
+		if skin != playersSkin[slot] and not taken.has(skin):
+			pool.append(skin)
+	if pool.is_empty():
+		for skin in range(SKIN_COUNT):
+			if skin != playersSkin[slot]:
+				pool.append(skin)
+	if pool.is_empty():
+		pool = range(SKIN_COUNT)
+	playersSkin[slot] = pool.pick_random()
+
 func bindKbSlot0() -> bool:
 	if Net.isOnline or not kbClaimable or playersInputMode[0] != InputMode.EMPTY:
 		return false
@@ -250,6 +272,8 @@ func bindKbSlot0() -> bool:
 	playersDevice[0] = -1
 	playersConnected[0] = true
 	playersJoined[0] = true
+	playersTeam[0] = 0
+	rollSkin(0)
 	return true
 
 func bindPad(device: int) -> int:
@@ -264,6 +288,8 @@ func bindPad(device: int) -> int:
 	playersDevice[slot] = device
 	playersConnected[slot] = true
 	playersJoined[slot] = true
+	playersTeam[slot] = slot
+	rollSkin(slot)
 	kbClaimable = false
 	return slot
 

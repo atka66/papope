@@ -34,8 +34,6 @@ var netMove: Vector2 = Vector2.ZERO
 var remoteAim: Vector2 = Vector2.ZERO
 var hasRemoteAim: bool = false
 var _sendAccum: float = 0.0
-var _lastTeam: int = -1
-var _lastSkin: int = -1
 var _lastShielded: bool = false
 # guest-side snapshot interpolation for remote players
 const NET_INTERP_DELAY := 0.1
@@ -194,21 +192,8 @@ func _input(event):
 	var ownsEvent: bool = (Net.isOnline && isLocal) || (!Net.isOnline && event.device == Global.deviceForPlayer(playerId))
 	if ownsEvent || kbDash || kbUse:
 		if Lobby != null:
-			if Lobby.countdownNode == null && !ProjectSettings.get("papope/hosted_mode"):
-				if Net.isOnline:
-					_onlineLobbyInput(event, padUse, padDash, kbDash, kbUse)
-				elif (Global.enableHotkeys && event.is_action_pressed("skin_next") || padUse || padDash) && !inputCd:
-					inputCd = true
-					if event.is_action_pressed("skin_next"):
-						Global.playersSkin[playerId] = (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT
-						$BodyParts/Face.frame = Global.playersSkin[playerId]
-					if padUse:
-						if Global.DEBUG:
-							Global.spawnFallingLabel(Global.DEATH_STRINGS[Global.DeathEnum.DEFAULT].pick_random(), global_position, Color.LIGHT_GREEN, 3)
-						Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 1) % 4
-					if padDash:
-						Global.playersTeam[playerId] = (Global.playersTeam[playerId] + 3) % 4
-					updateColor(Global.TEAM_COLORS[Global.playersTeam[playerId]])
+			if Lobby.countdownNode == null && !ProjectSettings.get("papope/hosted_mode") && Net.isOnline:
+				_onlineLobbyInput(event)
 		else:
 			if alive && !Global.playersFrozen && !isFallingIntoWater:
 				if !trapped && linear_velocity.length() < 2000 && lAxis.length() > 0:
@@ -219,15 +204,7 @@ func _input(event):
 					inputCd = true
 					_onlineUse()
 
-func _onlineLobbyInput(event, padUse: bool, padDash: bool, kbDash: bool, kbUse: bool) -> void:
-	if (Global.enableHotkeys && event.is_action_pressed("skin_next") || padUse || padDash || kbDash || kbUse) && !inputCd:
-		inputCd = true
-		if event.is_action_pressed("skin_next"):
-			_requestLobbyChange("skin", (Global.playersSkin[playerId] + 1) % Global.SKIN_COUNT)
-		if padUse || kbUse:
-			_requestLobbyChange("team", (Global.playersTeam[playerId] + 1) % 4)
-		if padDash || kbDash:
-			_requestLobbyChange("team", (Global.playersTeam[playerId] + 3) % 4)
+func _onlineLobbyInput(event) -> void:
 	if event.is_action_pressed("accept") || (ownsKeyboard() && event.is_action_pressed("kb_accept")):
 		if Global.getNumberOfTeams() > 1:
 			if Net.isHost:
@@ -240,12 +217,6 @@ func _onlineLobbyInput(event, padUse: bool, padDash: bool, kbDash: bool, kbUse: 
 				Net.cancel_countdown()
 		else:
 			Net.leave_to_menu()
-
-func _requestLobbyChange(kind: String, value) -> void:
-	if Net.isHost:
-		Net.request_lobby_change(kind, playerId, value)
-	else:
-		Net.request_lobby_change(kind, playerId, value)
 
 func _onlineDash(axis: Vector2) -> void:
 	if !Net.isOnline:
@@ -380,8 +351,6 @@ func _physics_process(delta):
 		if alive && !Global.playersFrozen && !trapped:
 			apply_central_impulse(thrust)
 	if Net.isOnline:
-		if Lobby != null:
-			_refreshLobbyVisuals()
 		if isLocal && !Net.isHost && (Lobby != null || alive):
 			# Forward owned inputs in map and lobby alike; the host
 			# simulates every non-owned body from these.
@@ -389,15 +358,6 @@ func _physics_process(delta):
 			if _sendAccum >= Net.STATE_RATE:
 				_sendAccum = 0.0
 				Net.send_input(playerId, getMoveVector(), getAimVector())
-
-func _refreshLobbyVisuals() -> void:
-	if Global.playersTeam[playerId] != _lastTeam:
-		_lastTeam = Global.playersTeam[playerId]
-		updateColor(Global.TEAM_COLORS[_lastTeam])
-	if Global.playersSkin[playerId] != _lastSkin:
-		_lastSkin = Global.playersSkin[playerId]
-		if !Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
-			$BodyParts/Face.frame = _lastSkin
 
 func apply_net_state(s: Array) -> void:
 	# s = [slot, pos, vel, hp, alive, itemInt, ammo, shielded, aim, trapped]

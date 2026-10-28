@@ -25,7 +25,7 @@ offset_right = 28.0
 offset_bottom = 28.0
 
 [node name="ControllerSprite" type="Sprite2D" parent="."]
-position = Vector2(0, 128)
+position = Vector2(0, 104)
 scale = Vector2(2, 2)
 texture = ExtResource("3_2whjo")
 hframes = 2
@@ -69,11 +69,5 @@ autoplay = "default"
 
 [node name="LeaveLabel" parent="LeaveHolder" instance=ExtResource("4_vrrwg")]
 text = "leave"
-fontSize = 2
-alignment = 8
-
-[node name="SchemeLabel" parent="." instance=ExtResource("4_vrrwg")]
-position = Vector2(0, 80)
-text = ""
 fontSize = 2
 alignment = 8

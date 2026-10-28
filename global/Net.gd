@@ -337,6 +337,8 @@ func _reset_lobby_state() -> void:
 	Global.playersAchievements = [[], [], [], []]
 	Global.playersPerks = [[], [], [], []]
 	Global.initPlayerStats()
+	Global.playersTeam[0] = 0
+	Global.rollSkin(0)
 
 func push_lobby() -> void:
 	if not isOnline or not isHost:
@@ -447,14 +449,6 @@ func notify_fall(slot: int, isLava: bool) -> void:
 	if not isOnline or isHost:
 		return
 	_send("fall", {"slot": slot, "lava": isLava})
-
-func request_lobby_change(kind: String, slot: int, value) -> void:
-	if not isOnline:
-		return
-	if isHost:
-		_apply_lobby_change(kind, slot, value)
-	else:
-		_send("lobby_req", {"reqkind": kind, "slot": slot, "value": value})
 
 func submit_perks(slot: int, perks: Array) -> void:
 	if not isOnline or isHost:
@@ -718,9 +712,6 @@ func _handle_envelope(env: Dictionary) -> void:
 		"fall":
 			if isHost:
 				_apply_fall(int(payload.get("slot", -1)), bool(payload.get("lava", false)))
-		"lobby_req":
-			if isHost:
-				_apply_lobby_change(str(payload.get("reqkind", "")), int(payload.get("slot", -1)), payload.get("value"))
 		"perks":
 			if isHost:
 				_apply_perks(int(payload.get("slot", -1)), payload.get("perks", []))
@@ -891,6 +882,8 @@ func _on_hello(nonce: int) -> void:
 	Global.playersConnected[slot] = true
 	Global.playersJoined[slot] = true
 	Global.playersCrowned[slot] = false
+	Global.playersTeam[slot] = slot
+	Global.rollSkin(slot)
 	push_lobby()
 	_send("welcome", {"nonce": nonce, "slot": slot})
 	_push_join_state()
@@ -1065,21 +1058,6 @@ func _apply_fall(slot: int, isLava: bool) -> void:
 	var player := Global.getPlayer(slot)
 	if player != null and player.alive and not player.isFallingIntoWater:
 		player.fallDown(isLava)
-
-func _apply_lobby_change(kind: String, slot: int, value) -> void:
-	if slot < 0 or slot >= MAX_SLOTS:
-		return
-	match kind:
-		"team":
-			Global.playersTeam[slot] = int(value) % 4
-		"skin":
-			Global.playersSkin[slot] = int(value) % Global.SKIN_COUNT
-		"options":
-			if value is Array and value.size() == 2:
-				var key: String = str(value[0])
-				if Global.optionsSelected.has(key):
-					Global.optionsSelected[key] = int(value[1])
-	push_lobby()
 
 func _apply_perks(slot: int, perks) -> void:
 	if slot < 0 or slot >= MAX_SLOTS:

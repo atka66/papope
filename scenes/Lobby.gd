@@ -28,7 +28,6 @@ func _ready():
 func _process(delta):
 	var hasAnyJoined := Global.playersJoined.has(true)
 	$Settings.visible = hasAnyJoined
-	$MenuCanvas/Hints.visible = !ProjectSettings.get("papope/hosted_mode") && hasAnyJoined
 
 	$InitHolder/WaitingLabel.hide()
 	$InitHolder/TeamLimitLabel.hide()
@@ -94,6 +93,8 @@ func _input(event):
 					Global.playersDevice[i] = i
 					Global.kbClaimable = false
 					Global.playersJoined[i] = true
+					Global.playersTeam[i] = i
+					Global.rollSkin(i)
 					Global.joinPlayer(i, false)
 					break
 		if event.is_action_pressed("test2"): 
@@ -179,7 +180,7 @@ func _on_lobby_updated():
 		elif not Global.playersJoined[i] and preview != null:
 			preview.queue_free()
 	# Fixate the background on the host's map selection only; other
-	# options (mode/rounds/teams/skins) must not retrigger it. Guests
+	# options (mode/rounds) must not retrigger it. Guests
 	# resolve explicit maps locally; 'random' follows host broadcasts.
 	var fingerprint = [Global.optionsSelected['map']]
 	if fingerprint != _bgFingerprint:

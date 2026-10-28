@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cgjwfivoc8wki"]
+[gd_scene load_steps=14 format=3 uid="uid://cgjwfivoc8wki"]
 
 [ext_resource type="Script" uid="uid://cr7n8x2odisa0" path="res://scenes/Lobby.gd" id="1_i8rer"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_pbfn1"]
@@ -9,9 +9,6 @@
 [ext_resource type="SpriteFrames" uid="uid://bjujoaaro01o3" path="res://resources/label/x.tres" id="6_4v5vl"]
 [ext_resource type="AudioStream" uid="uid://ba4m2xuga6qbv" path="res://audio/sfx/system/fail.ogg" id="8_51mum"]
 [ext_resource type="Texture2D" uid="uid://c8v20op2i3bd4" path="res://sprites/lobby/title/title_hell.png" id="8_307et"]
-[ext_resource type="SpriteFrames" uid="uid://cscql2vhj0us1" path="res://resources/label/r1.tres" id="8_q1xo0"]
-[ext_resource type="SpriteFrames" uid="uid://b7n5rmohxyf1p" path="res://resources/label/l1.tres" id="9_ejqmw"]
-[ext_resource type="SpriteFrames" uid="uid://batkp1hq01vmw" path="res://resources/label/t.tres" id="10_c8qhg"]
 
 [sub_resource type="Animation" id="Animation_6qw7i"]
 resource_name = "fade_in"
@@ -136,42 +133,6 @@ stream = ExtResource("8_51mum")
 bus = &"sfx"
 
 [node name="MenuCanvas" type="CanvasLayer" parent="."]
-
-[node name="Hints" type="Node2D" parent="MenuCanvas"]
-
-[node name="TeamHint" type="Node2D" parent="MenuCanvas/Hints"]
-position = Vector2(96, 24)
-
-[node name="L1Sprite" type="AnimatedSprite2D" parent="MenuCanvas/Hints/TeamHint"]
-position = Vector2(-60, 0)
-scale = Vector2(2, 2)
-sprite_frames = ExtResource("9_ejqmw")
-autoplay = "default"
-
-[node name="R1Sprite" type="AnimatedSprite2D" parent="MenuCanvas/Hints/TeamHint"]
-position = Vector2(-24, 0)
-scale = Vector2(2, 2)
-sprite_frames = ExtResource("8_q1xo0")
-autoplay = "default"
-
-[node name="TeamLabel" parent="MenuCanvas/Hints/TeamHint" instance=ExtResource("4_8wgdj")]
-text = "change team"
-fontSize = 2
-alignment = 4
-
-[node name="SkinHint" type="Node2D" parent="MenuCanvas/Hints"]
-position = Vector2(96, 60)
-
-[node name="TriSprite" type="AnimatedSprite2D" parent="MenuCanvas/Hints/SkinHint"]
-position = Vector2(-24, 0)
-scale = Vector2(2, 2)
-sprite_frames = ExtResource("10_c8qhg")
-autoplay = "default"
-
-[node name="SkinLabel" parent="MenuCanvas/Hints/SkinHint" instance=ExtResource("4_8wgdj")]
-text = "change skin"
-fontSize = 2
-alignment = 4
 
 [node name="VersionLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(8, 764)

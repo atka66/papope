@@ -102,7 +102,7 @@ func handle_input(event: InputEvent) -> void:
 				_select((_swap_index + 1) % 3)
 			elif event.is_action_pressed("nav_left"):
 				_select((_swap_index + 2) % 3)
-			elif event.is_action_pressed("skin_next"):
+			elif event.is_action_pressed("swap_confirm"):
 				draft.commit_swap(playerId, _swap_index)
 
 

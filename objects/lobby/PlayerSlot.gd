@@ -3,8 +3,6 @@ extends Node2D
 @export var playerId: int = 0
 @onready var Lobby = get_node('/root/Lobby')
 
-var _badgeText := "###"
-
 func handleSpawnSprite():
 	var show: bool = Global.playersConnected[playerId] and !Global.playersJoined[playerId]
 	if !Net.isOnline and !show and Lobby.countdownNode == null:
@@ -22,16 +20,13 @@ func handleHints() -> void:
 	if Net.isOnline:
 		# Prompts are per-client: only the local slot's hints are actionable
 		# (remote input is ignored), so only it gets any. The prompt itself
-		# marks your slot - no extra label needed. No scheme sprite either:
-		# online a slot owns both schemes (last input wins), so there is no
-		# per-player scheme to show.
+		# marks your slot - no extra label needed.
 		if Global.playersJoined[playerId]:
 			if playerId == Net.localSlot:
 				if Lobby.countdownNode != null:
 					$CancelHolder.show()
 				else:
 					$LeaveHolder.show()
-		updateSchemeBadge()
 		return
 
 	if Global.playersConnected[playerId]:
@@ -54,18 +49,6 @@ func handleHints() -> void:
 	elif !Net.isOnline and Lobby.countdownNode == null:
 		if Global.lowestFreeSlot() == playerId and Global.playersJoined.count(true) < 4:
 			$JoinHolder.show()
-	updateSchemeBadge()
-
-func updateSchemeBadge() -> void:
-	var text := ""
-	if not Net.isOnline and Global.playersJoined[playerId]:
-		if Global.playersInputMode[playerId] == Global.InputMode.KB:
-			text = "kb"
-		elif Global.playersInputMode[playerId] == Global.InputMode.PAD:
-			text = "pad" + str(Global.playersDevice[playerId])
-	if text != _badgeText:
-		_badgeText = text
-		$SchemeLabel.setText(text)
 
 func _process(delta):
 	handleSpawnSprite()
