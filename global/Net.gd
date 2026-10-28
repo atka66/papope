@@ -587,6 +587,13 @@ func car_event(laneName: String, carSpeed: float, paint: int) -> void:
 		return
 	_send("car", {"lane": laneName, "speed": carSpeed, "paint": paint})
 
+func car_fx(laneName: String, horn: bool) -> void:
+	# Host-authored impact: guests replay it on their copy of the same lane
+	# (their car may be a network delay of travel away from the host's).
+	if not isOnline or not isHost:
+		return
+	_send("car_fx", {"lane": laneName, "horn": horn})
+
 func trap_sprung(trapPos: Vector2) -> void:
 	if not isOnline or not isHost:
 		return
@@ -596,6 +603,13 @@ func cactus_hit(cactusPos: Vector2, sound: bool = true) -> void:
 	if not isOnline or not isHost:
 		return
 	_send("cactus", {"pos": _v2a(cactusPos), "sound": sound})
+
+func whip_fx(hitPos: Vector2, playerHit: bool) -> void:
+	# Host owns the lash raycast (guest rays run against lagged bodies), so the
+	# crack position and its player-hit accent are replayed from here.
+	if not isOnline or not isHost:
+		return
+	_send("whip_fx", {"pos": _v2a(hitPos), "player": playerHit})
 
 func disco_hit(wallPos: Vector2) -> void:
 	# Nightclub neon ring: the host authors the flash, everyone replays it.
@@ -613,6 +627,12 @@ func damage_number(text: String, pos: Vector2, color: Color, size: int) -> void:
 	if not isOnline or not isHost:
 		return
 	_send("damage", {"text": text, "pos": _v2a(pos), "color": _c2a(color), "size": size})
+
+func hurt_sfx(slot: int, kind: int) -> void:
+	# Host-authored grunt (damage stays host-side); guests play it on that body.
+	if not isOnline or not isHost:
+		return
+	_send("hurt_sfx", {"slot": slot, "kind": kind})
 
 func disco_cycle(idx: int, cycleSeed: int) -> void:
 	if not isOnline or not isHost:
@@ -755,6 +775,15 @@ func _handle_envelope(env: Dictionary) -> void:
 					var lane := scene.get_node_or_null(str(payload.get("lane", "")))
 					if lane != null and lane.has_method("spawnNetCar"):
 						lane.spawnNetCar(float(payload.get("speed", 0.0)), int(payload.get("paint", 0)))
+		"car_fx":
+			if from == 0:
+				var laneName := str(payload.get("lane", ""))
+				var horn := bool(payload.get("horn", false))
+				for car in get_tree().get_nodes_in_group("car"):
+					if is_instance_valid(car) and str(car.get("laneName")) == laneName \
+							and car.has_method("playHitSound"):
+						car.playHitSound(horn)
+						break
 		"trap":
 			if from == 0:
 				var best = find_nearest("conveyables", _a2v(payload.get("pos")), 200.0)
@@ -767,6 +796,12 @@ func _handle_envelope(env: Dictionary) -> void:
 					best.bounce()
 					if bool(payload.get("sound", true)):
 						best.pinch()
+		"whip_fx":
+			if from == 0:
+				var crack = Res.CrackAnimObject.instantiate()
+				crack.position = _a2v(payload.get("pos"))
+				crack.playerHit = bool(payload.get("player", false))
+				Global.addToScene(crack)
 		"discowall":
 			if from == 0:
 				var wall = find_nearest("discowalls", _a2v(payload.get("pos")), 8.0)
@@ -787,6 +822,11 @@ func _handle_envelope(env: Dictionary) -> void:
 			if from == 0:
 				Global.spawnFallingLabel(str(payload.get("text", "")), _a2v(payload.get("pos")),
 					_a2c(payload.get("color")), int(payload.get("size", 2)))
+		"hurt_sfx":
+			if from == 0:
+				var player = Global.getPlayer(int(payload.get("slot", -1)))
+				if player != null and player.has_method("playRemoteHurt"):
+					player.playRemoteHurt(int(payload.get("kind", 0)))
 		"disco":
 			if from == 0:
 				var discoFloor = first_in_group("discofloor")

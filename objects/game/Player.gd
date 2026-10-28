@@ -648,7 +648,7 @@ func getShot(originPlayerId: int, normal: Vector2) -> void:
 	apply_central_impulse(normal * 400)
 
 func getTrapped(originPlayerId: int) -> void:
-	hurtSound(Res.AudioHurtTrap)
+	hurtSound(Global.HurtSfx.TRAP)
 	hurt(Global.DAMAGE_TRAP, originPlayerId)
 	if isRighteouslyHitBy(originPlayerId):
 		Global.incrementStat(originPlayerId, Global.StatEnum.TRP_HIT, 1)
@@ -666,7 +666,7 @@ func getTrapped(originPlayerId: int) -> void:
 	$Lock/Timer.start(2.0)
 
 func getWhipped(originPlayerId: int, normal: Vector2) -> void:
-	hurtSound(Res.AudioHurtWhip)
+	hurtSound(Global.HurtSfx.WHIP)
 	hurt(Global.DAMAGE_WHIP, originPlayerId)
 	if isRighteouslyHitBy(originPlayerId):
 		Global.incrementStat(originPlayerId, Global.StatEnum.WHP_HIT, 1)
@@ -679,7 +679,7 @@ func getWhipped(originPlayerId: int, normal: Vector2) -> void:
 	apply_central_impulse(normal * 2000)
 
 func getZapped() -> void:
-	hurtSound(Res.AudioContactCactus.pick_random()) # TODO maybe something else
+	hurtSound(Global.HurtSfx.ZAP)
 	hurt(Global.DAMAGE_SPACERAY, null)
 	if isJustKilled():
 		die(Global.DeathEnum.LASER)
@@ -695,7 +695,7 @@ func untrap():
 	$Lock.hide()
 
 func directExplosion():
-	hurtSound(Res.AudioHurtDynamite)
+	hurtSound(Global.HurtSfx.DYNAMITE)
 
 func shieldBlocked() -> void:
 	# Host-authored feedback, mirrored to guests like damage numbers.
@@ -748,13 +748,33 @@ func heal(amount) -> void:
 		$Hurt/Anim.stop()
 		$Hurt/Anim.play("heal")
 
-func hurtSound(sound: AudioStreamOggVorbis) -> void:
+func hurtSound(kind: int) -> void:
 	if alive && !shielded:
-		if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
-			$AudioHurt.stream = Res.AudioChickenHurt.pick_random()
-		else:
-			$AudioHurt.stream = sound
-		$AudioHurt.play()
+		_playHurt(kind)
+		if Net.isOnline and Net.isHost:
+			Net.hurt_sfx(playerId, kind)
+
+func playRemoteHurt(kind: int) -> void:
+	# Guest replay of a host-authored grunt (damage itself stays host-side).
+	if alive:
+		_playHurt(kind)
+
+func _playHurt(kind: int) -> void:
+	if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
+		$AudioHurt.stream = Res.AudioChickenHurt.pick_random()
+	else:
+		$AudioHurt.stream = _hurtStream(kind)
+	$AudioHurt.play()
+
+func _hurtStream(kind: int) -> AudioStreamOggVorbis:
+	match kind:
+		Global.HurtSfx.TRAP:
+			return Res.AudioHurtTrap as AudioStreamOggVorbis
+		Global.HurtSfx.DYNAMITE:
+			return Res.AudioHurtDynamite as AudioStreamOggVorbis
+		Global.HurtSfx.ZAP, Global.HurtSfx.CACTUS:
+			return Res.AudioContactCactus.pick_random() as AudioStreamOggVorbis
+	return Res.AudioHurtWhip as AudioStreamOggVorbis
 
 func fallDown(isLava: bool) -> void:
 	if Net.isOnline and isLocal and not Net.isHost and alive and not isFallingIntoWater:
@@ -820,7 +840,7 @@ func _on_body_entered(body):
 			return
 		# todo maybe hurt sound for the non-chicken as well?
 		if Global.playersPerks[playerId].has(Global.PerkEnum.CHICKEN):
-			hurtSound(Res.AudioChickenHurt.pick_random())
+			hurtSound(Global.HurtSfx.CACTUS)
 		hurt(Global.DAMAGE_CACTUS, null)
 		body.bounce()
 		body.pinch()

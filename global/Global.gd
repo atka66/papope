@@ -87,6 +87,8 @@ func perk(id: int) -> PerkDef:
 	return PERK_DB[id]
 
 enum PwrupEnum { REVOLVER, DYNAMITE, SHIELD, TRAP, WHIP }
+# Hurt grunt variants; ids travel over the wire (Net.hurt_sfx), keep stable.
+enum HurtSfx { WHIP, TRAP, DYNAMITE, ZAP, CACTUS }
 
 const DPS_LAVA = 50 # damage per second while standing in lava
 const DAMAGE_REVOLVER = 20

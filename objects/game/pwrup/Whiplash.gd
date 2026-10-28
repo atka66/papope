@@ -14,7 +14,12 @@ func _ready():
 	
 	$HitScan.add_exception(origin)
 	$Container.rotate(targetNorm.angle())
-	
+
+	# Online the host owns the hit scan and the crack FX (Net.whip_fx): a guest
+	# ray runs against 100ms-lagged bodies and picks the wrong player-hit flag.
+	if Net.isOnline and not Net.isHost:
+		return
+
 	var hitPosition: Vector2
 	$HitScan.target_position = Global.extendVectorTo(targetNorm, maxLength)
 	$HitScan.force_raycast_update()
@@ -42,6 +47,8 @@ func _ready():
 	crack.position = hitPosition
 	crack.playerHit = playerHit
 	Global.addToScene(crack)
+	if Net.isOnline:
+		Net.whip_fx(hitPosition, playerHit)
 
 func _process(delta):
 	position = origin.position

@@ -28,4 +28,5 @@ func _spawnCar(carSpeed: float, paint: int = -1) -> void:
 	car.position = position
 	car.speed = carSpeed
 	car.netPaint = paint
+	car.laneName = name
 	get_parent().add_child(car)
