@@ -205,13 +205,13 @@ func _input(event):
 					_onlineUse()
 
 func _onlineLobbyInput(event) -> void:
-	if event.is_action_pressed("accept") || (ownsKeyboard() && event.is_action_pressed("kb_accept")):
+	if event.is_action_pressed("game_use") || (ownsKeyboard() && event.is_action_pressed("kb_use")):
 		if Global.getNumberOfTeams() > 1:
 			if Net.isHost:
 				Net.begin_countdown()
 		else:
 			Lobby.warnCannotStart()
-	if event.is_action_pressed("cancel") || (ownsKeyboard() && event.is_action_pressed("kb_cancel")):
+	if event.is_action_pressed("game_dash") || (ownsKeyboard() && event.is_action_pressed("kb_dash")):
 		if Lobby.countdownNode != null:
 			if Net.isHost:
 				Net.cancel_countdown()

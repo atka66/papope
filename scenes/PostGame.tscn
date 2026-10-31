@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0cxgyxhm7ecc"]
+[gd_scene load_steps=8 format=3 uid="uid://c0cxgyxhm7ecc"]
 
 [ext_resource type="Script" uid="uid://btrlv4jf2dg5t" path="res://scenes/PostGame.gd" id="1_irosb"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_5yc4x"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="3_sy2d7"]
-[ext_resource type="SpriteFrames" uid="uid://bjujoaaro01o3" path="res://resources/label/x.tres" id="4_7akrk"]
 [ext_resource type="PackedScene" uid="uid://bkf1p0bddiurc" path="res://objects/system/PlayerSummary.tscn" id="4_cetg5"]
 [ext_resource type="AudioStream" uid="uid://rd7id7m2tdou" path="res://audio/sfx/system/cash.ogg" id="6_7vljf"]
 
@@ -77,14 +76,8 @@ z_index = 101
 z_as_relative = false
 position = Vector2(680, 24)
 
-[node name="OSprite" type="AnimatedSprite2D" parent="HintHolder"]
-position = Vector2(-178, 4)
-scale = Vector2(2, 2)
-sprite_frames = ExtResource("4_7akrk")
-autoplay = "default"
-
 [node name="LobbyHint" parent="HintHolder" instance=ExtResource("3_sy2d7")]
-text = "back to lobby"
+text = "[use] back to lobby"
 fontSize = 3
 alignment = 8
 

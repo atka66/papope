@@ -112,25 +112,27 @@ func _input(event):
 		$AudioTick.play()
 		updateSelection()
 		return
-	if Global.enableHotkeys and event.is_action_pressed("kb_accept"):
+	if Global.enableHotkeys and event is InputEventKey and event.is_action_pressed("kb_use"):
 		chooseKb()
 		return
-	if event.is_action_pressed("accept") and event.device >= 0:
+	if event.is_action_pressed("game_use") and event.device >= 0:
 		choosePad(event.device)
 		return
 
 func _onlineInput(event):
-	if event.is_action_pressed("quit") or event.is_action_pressed("kb_cancel"):
-		if get_viewport().gui_get_focus_owner() is LineEdit or get_viewport().gui_get_focus_owner() is TextEdit:
+	var focus := get_viewport().gui_get_focus_owner()
+	var kbDash: bool = Global.enableHotkeys and event is InputEventKey \
+		and event.is_action_pressed("kb_dash")
+	if event.is_action_pressed("quit") or kbDash:
+		if focus is LineEdit or focus is TextEdit:
 			return # editing a field: keep Esc/Backspace for the field
 		_on_back_pressed()
 		return
 	# Gamepad menu control: toggle rows behave like lobby settings (up/down
-	# moves the cursor, left/right flips values, accept confirms), while the
+	# moves the cursor, left/right flips values, use confirms), while the
 	# join controls keep native behavior (list browsing, caret, presses).
 	# LineEdits stay keyboard-only for input.
-	if event.is_action_pressed("cancel"):
-		var focus := get_viewport().gui_get_focus_owner()
+	if event.is_action_pressed("game_dash"):
 		if focus is LineEdit or focus is TextEdit:
 			get_viewport().gui_release_focus()
 			onlineRow = 0
@@ -150,7 +152,8 @@ func _onlineInput(event):
 	if event.is_action_pressed("nav_right"):
 		_onlineNav(1, false)
 		return
-	if event.is_action_pressed("accept") or (Global.enableHotkeys and event.is_action_pressed("kb_accept")):
+	if event.is_action_pressed("game_use") \
+		or (Global.enableHotkeys and event is InputEventKey and event.is_action_pressed("kb_use")):
 		_onlineAccept()
 		return
 

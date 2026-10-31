@@ -91,18 +91,18 @@ func handle_input(event: InputEvent) -> void:
 	if draft == null or _finished:
 		return
 	var kb: bool = Global.ownsKeyboardFor(playerId)
+	var use: bool = event.is_action_pressed("game_use") \
+		or (kb and event.is_action_pressed("kb_use"))
 	match draft.phase[playerId]:
 		PerkDraft.Phase.DEALT:
-			var accept: bool = event.is_action_pressed("accept") \
-				or (kb and event.is_action_pressed("kb_accept"))
-			if accept:
+			if use:
 				draft.reveal_local(playerId)
 		PerkDraft.Phase.SWAPPING:
 			if event.is_action_pressed("nav_right"):
 				_select((_swap_index + 1) % 3)
 			elif event.is_action_pressed("nav_left"):
 				_select((_swap_index + 2) % 3)
-			elif event.is_action_pressed("swap_confirm"):
+			elif use:
 				draft.commit_swap(playerId, _swap_index)
 
 

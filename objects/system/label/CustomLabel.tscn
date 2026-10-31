@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bli02m5v875nl"]
+[gd_scene load_steps=9 format=3 uid="uid://bli02m5v875nl"]
 
 [ext_resource type="Script" uid="uid://dx1qlm664w0l" path="res://objects/system/label/CustomLabel.gd" id="1_1kkh4"]
 [ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="3_8xr18"]
@@ -237,13 +237,6 @@ _data = {
 &"wobble": SubResource("Animation_65ygq")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_gncyx"]
-font = ExtResource("3_8xr18")
-font_size = 10
-outline_size = 8
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 0
-
 [node name="CustomLabel" type="Node2D"]
 z_index = 101
 z_as_relative = false
@@ -256,13 +249,22 @@ libraries = {
 
 [node name="Container" type="Node2D" parent="."]
 
-[node name="Label" type="Label" parent="Container"]
+[node name="Label" type="RichTextLabel" parent="Container"]
 texture_filter = 2
-offset_right = 86.0
-offset_bottom = 11.0
-text = "sample-text"
-label_settings = SubResource("LabelSettings_gncyx")
-uppercase = true
+mouse_filter = 2
+clip_contents = false
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_separation = 3
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("3_8xr18")
+theme_override_font_sizes/normal_font_size = 10
+fit_content = true
+scroll_active = false
+selection_enabled = false
+context_menu_enabled = false
+shortcut_keys_enabled = false
+autowrap_mode = 0
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="."]
 bus = &"sfx"

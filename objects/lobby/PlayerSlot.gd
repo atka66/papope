@@ -59,19 +59,19 @@ func _input(event):
 		_onlineInput(event)
 		return
 	# Pad claim: exactly the lowest-free slot answers an unbound pad.
-	if Lobby.countdownNode == null and event.is_action_pressed("accept") and event.device >= 0:
+	if Lobby.countdownNode == null and event.is_action_pressed("game_use") and event.device >= 0:
 		if not Global.isDeviceBound(event.device) and Global.lowestFreeSlot() == playerId:
 			if Global.bindPad(event.device) == playerId:
 				Global.joinPlayer(playerId, false)
 			return
 	if event.device == Global.deviceForPlayer(playerId):
-		if event.is_action_pressed("accept") and Lobby.countdownNode == null:
+		if event.is_action_pressed("game_use") and Lobby.countdownNode == null:
 			if Global.playersJoined[playerId]:
 				if Global.getNumberOfTeams() > 1:
 					Lobby.startCountdown()
 				else:
 					Lobby.warnCannotStart()
-		if event.is_action_pressed("cancel"):
+		if event.is_action_pressed("game_dash"):
 			if Global.playersJoined[playerId]:
 				if Lobby.countdownNode != null:
 					Lobby.stopCountdown()
@@ -79,7 +79,7 @@ func _input(event):
 					Global.clearSlot(playerId)
 	if playerId == 0:
 		# Keyboard is dead once a pad claimed first (kbClaimable flipped).
-		if Global.enableHotkeys && event.is_action_pressed("kb_accept") and Lobby.countdownNode == null:
+		if Global.enableHotkeys && event.is_action_pressed("kb_use") and Lobby.countdownNode == null:
 			if Global.playersInputMode[0] == Global.InputMode.EMPTY and Global.isKbJoinAllowed():
 				Global.bindKbSlot0()
 				Global.joinPlayer(0, false)
@@ -88,7 +88,7 @@ func _input(event):
 					Lobby.startCountdown()
 				else:
 					Lobby.warnCannotStart()
-		if Global.enableHotkeys && event.is_action_pressed("kb_cancel"):
+		if Global.enableHotkeys && event.is_action_pressed("kb_dash"):
 			if Global.playersJoined[0] and Global.playersInputMode[0] == Global.InputMode.KB:
 				if Lobby.countdownNode != null:
 					Lobby.stopCountdown()
@@ -100,8 +100,8 @@ func _onlineInput(event):
 	# Device ids are per-machine, so any local pad/keyboard owns the local slot.
 	if playerId != Net.localSlot:
 		return
-	var padStart: bool = event.is_action_pressed("accept") || (Global.enableHotkeys && event.is_action_pressed("kb_accept"))
-	var padBack: bool = event.is_action_pressed("cancel") || (Global.enableHotkeys && event.is_action_pressed("kb_cancel"))
+	var padStart: bool = event.is_action_pressed("game_use") || (Global.enableHotkeys && event.is_action_pressed("kb_use"))
+	var padBack: bool = event.is_action_pressed("game_dash") || (Global.enableHotkeys && event.is_action_pressed("kb_dash"))
 	if padStart and Lobby.countdownNode == null:
 		if Global.getNumberOfTeams() > 1:
 			if Net.isHost:

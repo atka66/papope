@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cgjwfivoc8wki"]
+[gd_scene load_steps=13 format=3 uid="uid://cgjwfivoc8wki"]
 
 [ext_resource type="Script" uid="uid://cr7n8x2odisa0" path="res://scenes/Lobby.gd" id="1_i8rer"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_pbfn1"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://co6dqvdhklpn5" path="res://objects/lobby/PlayerSlot.tscn" id="3_32tqe"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_8wgdj"]
 [ext_resource type="PackedScene" uid="uid://cjptmb4cxuqkj" path="res://objects/system/settings/Settings.tscn" id="5_v5p30"]
-[ext_resource type="SpriteFrames" uid="uid://bjujoaaro01o3" path="res://resources/label/x.tres" id="6_4v5vl"]
 [ext_resource type="AudioStream" uid="uid://ba4m2xuga6qbv" path="res://audio/sfx/system/fail.ogg" id="8_51mum"]
 [ext_resource type="Texture2D" uid="uid://c8v20op2i3bd4" path="res://sprites/lobby/title/title_hell.png" id="8_307et"]
 
@@ -117,14 +116,8 @@ alignment = 8
 
 [node name="StartHolder" type="Node2D" parent="InitHolder"]
 
-[node name="R1Sprite" type="AnimatedSprite2D" parent="InitHolder/StartHolder"]
-position = Vector2(-108, 4)
-scale = Vector2(2, 2)
-sprite_frames = ExtResource("6_4v5vl")
-autoplay = "default"
-
 [node name="StartLabel" parent="InitHolder/StartHolder" instance=ExtResource("4_8wgdj")]
-text = "start"
+text = "[use] start"
 fontSize = 4
 alignment = 8
 
@@ -174,3 +167,97 @@ fontSize = 4
 fontColor = Color(1, 0.752941, 0.12549, 1)
 alignment = 8
 animation = "wobble"
+
+[node name="ControlsHolder" type="Node2D" parent="MenuCanvas"]
+
+[node name="TitleLabel" parent="MenuCanvas/ControlsHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(8, 0)
+text = "ingame controls"
+fontSize = 3
+
+[node name="HeaderHolder" type="Node2D" parent="MenuCanvas/ControlsHolder"]
+position = Vector2(16, 48)
+
+[node name="KbMouseLabel" parent="MenuCanvas/ControlsHolder/HeaderHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(136, 0)
+text = "kb+mouse"
+fontSize = 2
+fontColor = Color(0.6666667, 0.6666667, 0.6666667, 1)
+
+[node name="GamepadLabel" parent="MenuCanvas/ControlsHolder/HeaderHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(272, 0)
+text = "gamepad"
+fontSize = 2
+fontColor = Color(0.6666667, 0.6666667, 0.6666667, 1)
+
+[node name="MovementHolder" type="Node2D" parent="MenuCanvas/ControlsHolder"]
+position = Vector2(16, 72)
+
+[node name="Label" parent="MenuCanvas/ControlsHolder/MovementHolder" instance=ExtResource("4_8wgdj")]
+text = "movement"
+fontSize = 2
+fontColor = Color(0.6666667, 0.6666667, 0.6666667, 1)
+
+[node name="KbMouseLabel" parent="MenuCanvas/ControlsHolder/MovementHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(136, 0)
+text = "wasd"
+fontSize = 2
+
+[node name="GamepadLabel" parent="MenuCanvas/ControlsHolder/MovementHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(272, 0)
+text = "left stick"
+fontSize = 2
+
+[node name="AimHolder" type="Node2D" parent="MenuCanvas/ControlsHolder"]
+position = Vector2(16, 96)
+
+[node name="Label" parent="MenuCanvas/ControlsHolder/AimHolder" instance=ExtResource("4_8wgdj")]
+text = "aim"
+fontSize = 2
+fontColor = Color(0.6666667, 0.6666667, 0.6666667, 1)
+
+[node name="KbMouseLabel" parent="MenuCanvas/ControlsHolder/AimHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(136, 0)
+text = "mouse"
+fontSize = 2
+
+[node name="GamepadLabel" parent="MenuCanvas/ControlsHolder/AimHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(272, 0)
+text = "right stick"
+fontSize = 2
+
+[node name="UseHolder" type="Node2D" parent="MenuCanvas/ControlsHolder"]
+position = Vector2(16, 120)
+
+[node name="Label" parent="MenuCanvas/ControlsHolder/UseHolder" instance=ExtResource("4_8wgdj")]
+text = "use"
+fontSize = 2
+fontColor = Color(0.6666667, 0.6666667, 0.6666667, 1)
+
+[node name="KbMouseLabel" parent="MenuCanvas/ControlsHolder/UseHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(136, 0)
+text = "lmb"
+fontSize = 2
+
+[node name="GamepadLabel" parent="MenuCanvas/ControlsHolder/UseHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(272, 0)
+text = "r1 / rb"
+fontSize = 2
+
+[node name="DashHolder" type="Node2D" parent="MenuCanvas/ControlsHolder"]
+position = Vector2(16, 144)
+
+[node name="Label" parent="MenuCanvas/ControlsHolder/DashHolder" instance=ExtResource("4_8wgdj")]
+text = "dash"
+fontSize = 2
+fontColor = Color(0.6666667, 0.6666667, 0.6666667, 1)
+
+[node name="KbMouseLabel" parent="MenuCanvas/ControlsHolder/DashHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(136, 0)
+text = "rmb"
+fontSize = 2
+
+[node name="GamepadLabel" parent="MenuCanvas/ControlsHolder/DashHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(272, 0)
+text = "l1 / lb"
+fontSize = 2

@@ -190,7 +190,7 @@ func _joy_connection_changed(id: int, connected: bool) -> void:
 	if sceneName == 'MainMenu':
 		return # menus claim inputs explicitly via bind calls
 	if connected:
-		return # availability only; pads join via accept (bindPad)
+		return # availability only; pads join via game_use (bindPad)
 	unbindDevice(id)
 	if sceneName != 'Lobby' and sceneName != 'MainMenu':
 		goToLobby()
