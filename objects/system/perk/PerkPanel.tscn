@@ -1,18 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://bvywd7jxq2005"]
 
-[ext_resource type="Script" uid="uid://cperkpanel1aaa" path="res://objects/system/perk/PerkPanel.gd" id="1_panel"]
+[ext_resource type="Script" uid="uid://b77bb3c3qrvc7" path="res://objects/system/perk/PerkPanel.gd" id="1_panel"]
 [ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="2_players"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="5_label"]
 [ext_resource type="PackedScene" uid="uid://c1n4hoe86van5" path="res://objects/system/perk/PerkCard.tscn" id="6_card"]
 [ext_resource type="PackedScene" uid="uid://dnakmogpy1vc" path="res://objects/system/perk/PerkPip.tscn" id="7_pip"]
-
-[sub_resource type="Gradient" id="Gradient_banner"]
-offsets = PackedFloat32Array(0, 0.5, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture_banner"]
-gradient = SubResource("Gradient_banner")
-width = 64
 
 [sub_resource type="Animation" id="Animation_dwell"]
 resource_name = "dwell"
@@ -22,6 +14,14 @@ length = 3.0
 _data = {
 &"dwell": SubResource("Animation_dwell")
 }
+
+[sub_resource type="Gradient" id="Gradient_banner"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture_banner"]
+gradient = SubResource("Gradient_banner")
+width = 64
 
 [node name="PerkPanel" type="Node2D"]
 script = ExtResource("1_panel")
@@ -49,9 +49,9 @@ position = Vector2(170, 320)
 
 [node name="Pips" type="HBoxContainer" parent="."]
 offset_left = 58.0
-offset_top = 96.0
+offset_top = 112.0
 offset_right = 282.0
-offset_bottom = 160.0
+offset_bottom = 176.0
 theme_override_constants/separation = 16
 
 [node name="Pip0" parent="Pips" instance=ExtResource("7_pip")]
@@ -76,18 +76,24 @@ alignment = 8
 [node name="SwapLabelHolder" type="Node2D" parent="SwapPrompt"]
 position = Vector2(170, 24)
 
+[node name="ToggleLabel" parent="SwapPrompt/SwapLabelHolder" instance=ExtResource("5_label")]
+text = "[dash] toggle"
+fontSize = 2
+alignment = 8
+
 [node name="SwapLabel" parent="SwapPrompt/SwapLabelHolder" instance=ExtResource("5_label")]
+position = Vector2(0, 36)
 text = "[use] swap with"
 fontSize = 2
 alignment = 8
 
 [node name="SwappedPerkLabel" parent="SwapPrompt" instance=ExtResource("5_label")]
-position = Vector2(172, 64)
+position = Vector2(172, 88)
 fontSize = 3
 alignment = 8
 
 [node name="SwappedPerkDescriptionLabel" parent="SwapPrompt" instance=ExtResource("5_label")]
-position = Vector2(170, 184)
+position = Vector2(170, 192)
 fontSize = 2
 alignment = 8
 

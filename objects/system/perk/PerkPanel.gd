@@ -93,15 +93,19 @@ func handle_input(event: InputEvent) -> void:
 	var kb: bool = Global.ownsKeyboardFor(playerId)
 	var use: bool = event.is_action_pressed("game_use") \
 		or (kb and event.is_action_pressed("kb_use"))
+	var dash: bool = event.is_action_pressed("game_dash") \
+		or (kb and event.is_action_pressed("kb_dash"))
 	match draft.phase[playerId]:
 		PerkDraft.Phase.DEALT:
 			if use:
 				draft.reveal_local(playerId)
 		PerkDraft.Phase.SWAPPING:
-			if event.is_action_pressed("nav_right"):
-				_select((_swap_index + 1) % 3)
+			# Dash is the advertised toggle (it always steps forward and wraps);
+			# the nav arrows stay as an optional fallback that can also go back.
+			if dash or event.is_action_pressed("nav_right"):
+				_select((_swap_index + 1) % _pips.size())
 			elif event.is_action_pressed("nav_left"):
-				_select((_swap_index + 2) % 3)
+				_select((_swap_index + 2) % _pips.size())
 			elif use:
 				draft.commit_swap(playerId, _swap_index)
 
