@@ -7,8 +7,11 @@ var _bgAccum := 0.0
 var _bgSeed := 0
 var _bgStep := 0
 var _bgPeriod := 8.0
+var _exitOverlay
 
 func _ready():
+	_exitOverlay = Res.ExitOverlayObject.instantiate()
+	add_child(_exitOverlay)
 	Global.MusicNode.play('menu')
 	$MenuCanvas/VersionLabel.setText(Global.VERSION)
 	if ProjectSettings.get("papope/hosted_mode"):
@@ -74,14 +77,16 @@ func _updateOnlineLabels() -> void:
 		$InitHolder/WaitingLabel.show()
 
 func _input(event):
-	if event.is_action_pressed("quit") and !OS.has_feature("web"):
+	if Global.isExitEvent(event):
 		var focusOwner := get_viewport().gui_get_focus_owner()
-		if focusOwner is TextEdit or focusOwner is LineEdit:
+		if event is InputEventKey and (focusOwner is TextEdit or focusOwner is LineEdit):
 			return # typing feedback: keep Esc for the field
-		if Net.isOnline:
-			Net.leave_to_menu()
-		else:
-			Global.goToMainMenu()
+		if _exitOverlay.request("press [exit] again to leave lobby"):
+			if Net.isOnline:
+				Net.leave_to_menu()
+			else:
+				Global.goToMainMenu()
+		return
 	if Global.DEBUG && Global.enableHotkeys && !Net.isOnline: 
 		if event.is_action_pressed("test1"): 
 			for i in range(4):

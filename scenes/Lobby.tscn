@@ -261,3 +261,21 @@ fontSize = 2
 position = Vector2(272, 0)
 text = "l1 / lb"
 fontSize = 2
+
+[node name="ExitHolder" type="Node2D" parent="MenuCanvas/ControlsHolder"]
+position = Vector2(16, 168)
+
+[node name="Label" parent="MenuCanvas/ControlsHolder/ExitHolder" instance=ExtResource("4_8wgdj")]
+text = "exit"
+fontSize = 2
+fontColor = Color(0.6666667, 0.6666667, 0.6666667, 1)
+
+[node name="KbMouseLabel" parent="MenuCanvas/ControlsHolder/ExitHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(136, 0)
+text = "esc"
+fontSize = 2
+
+[node name="GamepadLabel" parent="MenuCanvas/ControlsHolder/ExitHolder" instance=ExtResource("4_8wgdj")]
+position = Vector2(272, 0)
+text = "start"
+fontSize = 2

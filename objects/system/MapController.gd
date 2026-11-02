@@ -6,8 +6,11 @@ var determRandom: RandomNumberGenerator
 var isNightclub: bool = false
 var _stateAccum: float = 0.0
 var _ghostAccum: float = 0.0
+var _exitOverlay
 
 func _ready():
+	_exitOverlay = Res.ExitOverlayObject.instantiate()
+	add_child(_exitOverlay)
 	determRandom = RandomNumberGenerator.new()
 	# Synced seed: host rolls per round and broadcasts (online), fixed 123
 	# offline. Tile variants + PREPARED items draw from this in fixed order.
@@ -64,11 +67,13 @@ func _collectStates() -> Array:
 	return Global.getPlayerStates()
 
 func _input(event):
-	if event.is_action_pressed("quit"):
-		if Net.isOnline:
-			Net.leave_to_menu()
-		else:
-			Global.goToLobby()
+	if Global.isExitEvent(event):
+		if _exitOverlay.request("press [exit] again to leave game"):
+			if Net.isOnline:
+				Net.leave_to_menu()
+			else:
+				Global.goToLobby()
+		return
 	if Global.DEBUG && !Net.isOnline:
 		if Input.is_action_just_pressed("test1"): 
 			get_tree().change_scene_to_file("res://scenes/PostGame.tscn")

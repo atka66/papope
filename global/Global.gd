@@ -336,6 +336,11 @@ func ownsKeyboardFor(slot: int) -> bool:
 		return false
 	return playersInputMode[slot] == InputMode.KB
 
+func isExitEvent(event: InputEvent) -> bool:
+	# The primary "leave this context" action: pad Start / Esc. Every exit
+	# path goes through this, so no scene needs its own key or button check.
+	return event.is_action_pressed("game_exit") or event.is_action_pressed("kb_exit")
+
 func slotOwningEvent(event: InputEvent) -> int:
 	# Which local slot, if any, should react to this event. Keyboard + mouse
 	# both report device 0, so they are matched by kind: only the KB-owning

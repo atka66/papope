@@ -21,6 +21,7 @@ var _infoText := ""
 var onlineAction := 0 # 0 = host, 1 = join
 var isPrivate := false
 var onlineRow := 0
+var _exitOverlay
 
 @onready var _mainHolder = $MenuCanvas/MainHolder
 @onready var _onlineHolder = $MenuCanvas/OnlineHolder
@@ -45,6 +46,8 @@ var onlineRow := 0
 @onready var _infoLine = $MenuCanvas/OnlineHolder/InfoLine
 
 func _ready():
+	_exitOverlay = Res.ExitOverlayObject.instantiate()
+	add_child(_exitOverlay)
 	if Net.isOnline:
 		Net.leave()
 	Global.clearMenuState()
@@ -101,11 +104,12 @@ func _input(event):
 	if menuState == MenuState.ONLINE:
 		_onlineInput(event)
 		return
-	if event.is_action_pressed("quit") and !OS.has_feature("web"):
+	if Global.isExitEvent(event) and !OS.has_feature("web"):
 		var focusOwner := get_viewport().gui_get_focus_owner()
-		if focusOwner is TextEdit or focusOwner is LineEdit:
+		if event is InputEventKey and (focusOwner is TextEdit or focusOwner is LineEdit):
 			return # typing feedback: keep Esc for the field
-		get_tree().quit()
+		if _exitOverlay.request("press [exit] again to quit game"):
+			get_tree().quit()
 		return
 	if Global.enableHotkeys and (event.is_action_pressed("nav_up") or event.is_action_pressed("nav_down")):
 		currentOption = 1 - currentOption
@@ -123,8 +127,8 @@ func _onlineInput(event):
 	var focus := get_viewport().gui_get_focus_owner()
 	var kbDash: bool = Global.enableHotkeys and event is InputEventKey \
 		and event.is_action_pressed("kb_dash")
-	if event.is_action_pressed("quit") or kbDash:
-		if focus is LineEdit or focus is TextEdit:
+	if Global.isExitEvent(event) or kbDash:
+		if event is InputEventKey and (focus is LineEdit or focus is TextEdit):
 			return # editing a field: keep Esc/Backspace for the field
 		_on_back_pressed()
 		return
