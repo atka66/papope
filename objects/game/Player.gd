@@ -192,7 +192,7 @@ func _input(event):
 	var ownsEvent: bool = (Net.isOnline && isLocal) || (!Net.isOnline && event.device == Global.deviceForPlayer(playerId))
 	if ownsEvent || kbDash || kbUse:
 		if Lobby != null:
-			if Lobby.countdownNode == null && !ProjectSettings.get("papope/hosted_mode") && Net.isOnline:
+			if Lobby.countdownNode == null && Net.isOnline:
 				_onlineLobbyInput(event)
 		else:
 			if alive && !Global.playersFrozen && !isFallingIntoWater:

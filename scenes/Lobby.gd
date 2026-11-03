@@ -14,13 +14,12 @@ func _ready():
 	add_child(_exitOverlay)
 	Global.MusicNode.play('menu')
 	$MenuCanvas/VersionLabel.setText(Global.VERSION)
-	if ProjectSettings.get("papope/hosted_mode"):
-		$MenuCanvas/FullscreenLabel.setText('atka66.itch.io/papope')
+	$MenuCanvas/FullscreenLabel.visible = !OS.has_feature("web")
 	if Net.isOnline:
 		initPlayers()
 		Net.lobby_updated.connect(_on_lobby_updated)
 	else:
-		$MenuCanvas/RoomLabel.hide()
+		$MenuCanvas/RoomCodeHolder.hide()
 		initPlayers()
 	# 'random' backdrop steps align with pan-loop ends so every replay
 	# coincides with a sweep boundary on all peers (read, not hardcoded).
@@ -64,7 +63,7 @@ func _process(delta):
 		$InitHolder/StartHolder.show()
 
 func _updateOnlineLabels() -> void:
-	$MenuCanvas/RoomLabel.setText("room: " + Net.roomCode)
+	$MenuCanvas/RoomCodeHolder/CodeLabel.setText(Net.roomCode)
 	if Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.setText("waiting for more players...")
 		$InitHolder/WaitingLabel.show()
@@ -130,12 +129,8 @@ func initPlayers() -> void:
 				Global.joinPlayer(i, true)
 		return
 	for i in range(4):
-		if ProjectSettings.get("papope/hosted_mode"):
-			if Global.playersInputMode[i] == Global.InputMode.EMPTY:
-				Global.playersJoined[i] = false
-		else:
-			if Global.playersConnected[i] && Global.playersJoined[i]:
-				Global.joinPlayer(i, true)
+		if Global.playersConnected[i] && Global.playersJoined[i]:
+			Global.joinPlayer(i, true)
 
 func advanceBgFrame() -> void:
 	# Host-side 'random' rotation: deterministic seeded order shared by all.

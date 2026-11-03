@@ -133,8 +133,14 @@ fontSize = 2
 alignment = 2
 
 [node name="FullscreenLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
+position = Vector2(1352, 744)
+text = "[f] fullscreen"
+fontSize = 2
+alignment = 3
+
+[node name="MuteLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
 position = Vector2(1352, 764)
-text = "f - toggle fullscreen"
+text = "[m] mute"
 fontSize = 2
 alignment = 3
 
@@ -144,11 +150,19 @@ text = "powered by godot"
 fontSize = 2
 alignment = 7
 
-[node name="RoomLabel" parent="MenuCanvas" instance=ExtResource("4_8wgdj")]
-position = Vector2(1352, 700)
-text = ""
+[node name="RoomCodeHolder" type="Node2D" parent="MenuCanvas"]
+position = Vector2(1216, 64)
+
+[node name="RoomCodeLabel" parent="MenuCanvas/RoomCodeHolder" instance=ExtResource("4_8wgdj")]
+text = "room code:"
+fontSize = 2
+alignment = 7
+
+[node name="CodeLabel" parent="MenuCanvas/RoomCodeHolder" instance=ExtResource("4_8wgdj")]
+text = "code"
 fontSize = 3
-alignment = 3
+fontColor = Color(1, 0.7529412, 0.1254902, 1)
+alignment = 5
 
 [node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
 position = Vector2(680, 32)

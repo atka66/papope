@@ -318,8 +318,14 @@ fontSize = 2
 alignment = 2
 
 [node name="FullscreenLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
+position = Vector2(1352, 744)
+text = "[f] fullscreen"
+fontSize = 2
+alignment = 3
+
+[node name="MuteLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
 position = Vector2(1352, 764)
-text = "f - toggle fullscreen"
+text = "[m] mute"
 fontSize = 2
 alignment = 3
 

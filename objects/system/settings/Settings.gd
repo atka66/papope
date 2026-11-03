@@ -27,7 +27,7 @@ func _process(delta):
 func _input(event):
 	if Net.isOnline and not Net.isHost:
 		return
-	if Global.enableHotkeys && Lobby.countdownNode == null && Global.playersJoined.has(true) && !ProjectSettings.get("papope/hosted_mode"):
+	if Global.enableHotkeys && Lobby.countdownNode == null && Global.playersJoined.has(true):
 		if event.is_action_pressed("nav_down"):
 			currentOption = (currentOption + 1) % 3
 			$AudioTick.play()

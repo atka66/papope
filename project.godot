@@ -167,7 +167,6 @@ ghost_respawn_time=5
 default_option_mode=0
 default_option_map=0
 default_option_rounds=1
-hosted_mode=false
 ghost_speed=250.0
 relay_url="wss://papope-relay.tlac.xyz/"
 

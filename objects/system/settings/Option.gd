@@ -7,8 +7,8 @@ func setSelection(selection: String):
 	$SelectionLabel.setText(selection)
 
 func setFocus(focus: bool):
-	$LeftArrow.visible = focus && !ProjectSettings.get("papope/hosted_mode")
-	$RightArrow.visible = focus && !ProjectSettings.get("papope/hosted_mode")
+	$LeftArrow.visible = focus
+	$RightArrow.visible = focus
 
 func animateArrow(isRight: bool):
 	$Anim.stop()

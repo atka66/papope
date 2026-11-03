@@ -53,8 +53,7 @@ func _ready():
 	Global.clearMenuState()
 	Global.MusicNode.play('menu')
 	$MenuCanvas/VersionLabel.setText(Global.VERSION)
-	if ProjectSettings.get("papope/hosted_mode"):
-		$MenuCanvas/FullscreenLabel.setText('atka66.itch.io/papope')
+	$MenuCanvas/FullscreenLabel.visible = !OS.has_feature("web")
 	$MovingBackground.restartMovingBackground(null)
 	_codeEdit.text_submitted.connect(_on_code_submitted)
 	_roomList.item_selected.connect(_on_room_selected)

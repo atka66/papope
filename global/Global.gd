@@ -197,7 +197,7 @@ func _joy_connection_changed(id: int, connected: bool) -> void:
 
 func _input(_event):
 	if enableHotkeys:
-		if Input.is_action_just_pressed("fullscreen"):
+		if Input.is_action_just_pressed("fullscreen") and !OS.has_feature("web"):
 			if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
 				DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 			else:
