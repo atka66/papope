@@ -191,7 +191,10 @@ func _joy_connection_changed(id: int, connected: bool) -> void:
 		return # menus claim inputs explicitly via bind calls
 	if connected:
 		return # availability only; pads join via game_use (bindPad)
-	unbindDevice(id)
+	var slot := unbindDevice(id)
+	if isRoomHostSlot(slot):
+		goToMainMenu()
+		return
 	if sceneName != 'Lobby' and sceneName != 'MainMenu':
 		goToLobby()
 
@@ -214,6 +217,9 @@ func disconnectPlayer(id: int) -> void:
 	if id < 0 or id >= 4:
 		return
 	clearSlot(id)
+	if isRoomHostSlot(id):
+		goToMainMenu()
+		return
 	if get_tree().get_current_scene().get_name() != 'Lobby':
 		goToLobby()
 
@@ -308,6 +314,11 @@ func clearSlot(slot: int) -> void:
 	playersConnected[slot] = false
 	playersCrowned[slot] = false
 	leavePlayer(slot)
+
+func isRoomHostSlot(slot: int) -> bool:
+	# Offline the first player (slot 0) owns the room exactly like the online
+	# host: when they leave, the room closes and everyone returns to the menu.
+	return not Net.isOnline and slot == 0
 
 func deviceForPlayer(slot: int) -> int:
 	# Local hardware index driving this slot (-1 = none / keyboard-only,

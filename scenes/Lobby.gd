@@ -51,8 +51,10 @@ func _process(delta):
 					_bgAccum = 0.0
 					advanceBgFrame()
 		return
-	if !Net.isOnline and !Global.playersJoined.has(true):
-		# Last player left: back to the mode select.
+	if !Net.isOnline and (!Global.playersJoined.has(true) or !Global.playersJoined[0]):
+		# Empty room, or the first player (the offline host) left: the room
+		# closes and everyone returns to the mode select, like a host leaving
+		# an online room.
 		Global.goToMainMenu()
 		return
 	if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
