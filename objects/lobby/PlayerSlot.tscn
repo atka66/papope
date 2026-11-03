@@ -26,7 +26,7 @@ offset_bottom = 28.0
 position = Vector2(0, 104)
 scale = Vector2(2, 2)
 texture = ExtResource("3_2whjo")
-hframes = 2
+hframes = 3
 
 [node name="JoinHolder" type="Node2D" parent="."]
 position = Vector2(0, 52)

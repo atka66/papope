@@ -44,6 +44,9 @@ var _exitOverlay
 @onready var _refreshLabel = $MenuCanvas/OnlineHolder/RefreshLabel
 @onready var _joinLabel = $MenuCanvas/OnlineHolder/JoinLabel
 @onready var _infoLine = $MenuCanvas/OnlineHolder/InfoLine
+@onready var _hostTarget = $MenuCanvas/OnlineHolder/HostTarget
+@onready var _refreshTarget = $MenuCanvas/OnlineHolder/RefreshTarget
+@onready var _joinTarget = $MenuCanvas/OnlineHolder/JoinTarget
 
 func _ready():
 	_exitOverlay = Res.ExitOverlayObject.instantiate()
@@ -62,6 +65,10 @@ func _ready():
 	Net.join_failed.connect(_on_join_failed)
 	_actionOption.setOption('action')
 	_visibilityOption.setOption('visibility')
+	_actionOption.focused.connect(_on_online_option_focused.bind("action"))
+	_actionOption.cycled.connect(_on_online_option_cycled.bind("action"))
+	_visibilityOption.focused.connect(_on_online_option_focused.bind("visibility"))
+	_visibilityOption.cycled.connect(_on_online_option_cycled.bind("visibility"))
 	_showMain()
 	if Global.sessionNotice != "":
 		# Kicked out of an online session: say why where the mode summary sits.
@@ -273,6 +280,9 @@ func _layoutOnline():
 	_joinLabel.visible = not hosting
 	_roomList.visible = not hosting
 	_codeEdit.visible = not hosting
+	_hostTarget.visible = hosting
+	_refreshTarget.visible = not hosting
+	_joinTarget.visible = not hosting
 	_actionOption.setSelection("host" if hosting else "join")
 	_visibilityOption.setSelection("private" if isPrivate else "public")
 	_updateOnlineInfo()
@@ -309,6 +319,53 @@ func choosePad(device: int):
 			$AudioFail.play()
 	else:
 		_showOnline()
+
+func _on_local_target_tapped():
+	if Global.bindTouchSlot0():
+		get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
+	else:
+		$AudioFail.play()
+
+func _on_online_target_tapped():
+	_showOnline()
+
+func _on_online_option_focused(target: String):
+	if menuState != MenuState.ONLINE:
+		return
+	var index := _onlineTargets().find(target)
+	onlineRow = index if index >= 0 else 0
+	_applyOnlineCursor()
+
+func _on_online_option_cycled(delta: int, target: String):
+	_on_online_option_focused(target)
+	if menuState != MenuState.ONLINE:
+		return
+	match target:
+		"action":
+			_flipOnlineAction(delta > 0)
+		"visibility":
+			_flipOnlinePrivate(delta > 0)
+
+func _focusOnlineTarget(target: String):
+	if menuState != MenuState.ONLINE:
+		return
+	var index := _onlineTargets().find(target)
+	if index < 0:
+		return
+	onlineRow = index
+	_applyOnlineCursor()
+
+func _on_host_target_tapped():
+	_focusOnlineTarget("hostaction")
+	_on_host_pressed()
+
+func _on_refresh_target_tapped():
+	_focusOnlineTarget("refresh")
+	_on_refresh_pressed()
+
+func _on_join_target_tapped():
+	_focusOnlineTarget("joinbutton")
+	_on_join_pressed()
 
 func _on_host_pressed():
 	setStatus("creating room...")

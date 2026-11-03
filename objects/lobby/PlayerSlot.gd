@@ -30,9 +30,16 @@ func handleHints() -> void:
 		return
 
 	if Global.playersConnected[playerId]:
-		# Sheet frame 0 = gamepad, 1 = kb+mouse. EMPTY means a pad is plugged
-		# but unbound (connected-but-not-joined), so it falls back to pad.
-		$ControllerSprite.frame = 1 if Global.playersInputMode[playerId] == Global.InputMode.KB else 0
+		# Sheet frame 0 = gamepad, 1 = kb+mouse, 2 = touch. EMPTY means a pad
+		# is plugged but unbound (connected-but-not-joined), so it falls back
+		# to the pad icon.
+		var mode = Global.playersInputMode[playerId]
+		if mode == Global.InputMode.KB:
+			$ControllerSprite.frame = 1
+		elif mode == Global.InputMode.TOUCH:
+			$ControllerSprite.frame = 2
+		else:
+			$ControllerSprite.frame = 0
 		var color = Color.WHITE
 		if Global.playersJoined[playerId]:
 			color = Global.TEAM_COLORS[Global.playersTeam[playerId]]
@@ -55,6 +62,11 @@ func _process(delta):
 	handleHints()
 
 func _input(event):
+	# A touch tap also arrives as an emulated mouse click, and kb_use/kb_dash
+	# map to the mouse buttons: those belong to the TouchTargets only, so they
+	# must never claim, start, or leave a slot.
+	if _isTouchClick(event):
+		return
 	if Net.isOnline:
 		_onlineInput(event)
 		return
@@ -114,3 +126,9 @@ func _onlineInput(event):
 				Net.cancel_countdown()
 		else:
 			Net.leave_to_menu()
+
+func _isTouchClick(event: InputEvent) -> bool:
+	# Touch screens also emit a left click tagged with DEVICE_ID_EMULATION, and
+	# kb_use/kb_dash are bound to the mouse buttons.
+	return event is InputEventMouseButton \
+		and event.device == InputEvent.DEVICE_ID_EMULATION

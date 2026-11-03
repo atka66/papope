@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cyc8taatjyjm1"]
+[gd_scene load_steps=26 format=3 uid="uid://cyc8taatjyjm1"]
 
 [ext_resource type="Script" uid="uid://cyc8taatpyja2" path="res://scenes/MainMenu.gd" id="1_menu"]
 [ext_resource type="PackedScene" uid="uid://cop2o1vtkv1qt" path="res://objects/lobby/MovingBackground.tscn" id="2_bg"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bsqq4c31uabj3" path="res://sprites/lobby/feedback.png" id="9_fb"]
 [ext_resource type="FontFile" uid="uid://cvmvr7lse21up" path="res://fonts/HomeVideo-BLG6G.ttf" id="10_hv"]
 [ext_resource type="PackedScene" uid="uid://bovpg4jmn5nqu" path="res://objects/system/settings/Option.tscn" id="11_opt"]
+[ext_resource type="Script" uid="uid://jir5ndyc6iv91" path="res://objects/system/ui/TouchTarget.gd" id="12_touch"]
 
 [sub_resource type="Animation" id="Animation_fadein"]
 resource_name = "fade_in"
@@ -231,6 +232,24 @@ text = "play together on one screen"
 fontSize = 2
 alignment = 8
 
+[node name="LocalTarget" type="Control" parent="MenuCanvas/MainHolder"]
+z_index = 102
+z_as_relative = false
+offset_left = 380.0
+offset_top = 394.0
+offset_right = 980.0
+offset_bottom = 454.0
+script = ExtResource("12_touch")
+
+[node name="OnlineTarget" type="Control" parent="MenuCanvas/MainHolder"]
+z_index = 102
+z_as_relative = false
+offset_left = 380.0
+offset_top = 484.0
+offset_right = 980.0
+offset_bottom = 544.0
+script = ExtResource("12_touch")
+
 [node name="TitleHolder" type="Node2D" parent="MenuCanvas"]
 position = Vector2(680, 32)
 scale = Vector2(0.7, 0.7)
@@ -311,6 +330,33 @@ position = Vector2(352, 480)
 text = "refresh"
 fontSize = 3
 alignment = 8
+
+[node name="HostTarget" type="Control" parent="MenuCanvas/OnlineHolder"]
+z_index = 102
+z_as_relative = false
+offset_left = 232.0
+offset_top = 372.0
+offset_right = 472.0
+offset_bottom = 420.0
+script = ExtResource("12_touch")
+
+[node name="RefreshTarget" type="Control" parent="MenuCanvas/OnlineHolder"]
+z_index = 102
+z_as_relative = false
+offset_left = 264.0
+offset_top = 456.0
+offset_right = 440.0
+offset_bottom = 504.0
+script = ExtResource("12_touch")
+
+[node name="JoinTarget" type="Control" parent="MenuCanvas/OnlineHolder"]
+z_index = 102
+z_as_relative = false
+offset_left = 252.0
+offset_top = 560.0
+offset_right = 452.0
+offset_bottom = 608.0
+script = ExtResource("12_touch")
 
 [node name="VersionLabel" parent="MenuCanvas" instance=ExtResource("4_label")]
 position = Vector2(8, 764)
@@ -415,6 +461,11 @@ autowrap_mode = 2
 uppercase = true
 
 [connection signal="toggled" from="MenuCanvas/FeedbackButton" to="." method="_on_feedback_button_toggled"]
+[connection signal="tapped" from="MenuCanvas/MainHolder/LocalTarget" to="." method="_on_local_target_tapped"]
+[connection signal="tapped" from="MenuCanvas/MainHolder/OnlineTarget" to="." method="_on_online_target_tapped"]
+[connection signal="tapped" from="MenuCanvas/OnlineHolder/HostTarget" to="." method="_on_host_target_tapped"]
+[connection signal="tapped" from="MenuCanvas/OnlineHolder/RefreshTarget" to="." method="_on_refresh_target_tapped"]
+[connection signal="tapped" from="MenuCanvas/OnlineHolder/JoinTarget" to="." method="_on_join_target_tapped"]
 [connection signal="focus_entered" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit" to="." method="_on_feedback_edit_focus_entered"]
 [connection signal="focus_exited" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit" to="." method="_on_feedback_edit_focus_exited"]
 [connection signal="pressed" from="MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/SubmitButton" to="." method="_on_submit_button_pressed"]

@@ -130,7 +130,7 @@ var playersJoined = [false, false, false, false]
 # Offline input locks: chosen in MainMenu by the initiating input (lowest-free
 # slot first). KB dies once a pad binds (kbClaimable flips, never restored
 # until the menu). Online ignores all of this: the local slot owns everything.
-enum InputMode { EMPTY, KB, PAD }
+enum InputMode { EMPTY, KB, PAD, TOUCH }
 var playersInputMode = [InputMode.EMPTY, InputMode.EMPTY, InputMode.EMPTY, InputMode.EMPTY]
 var playersDevice = [-1, -1, -1, -1] # bound joypad index for PAD slots
 var kbClaimable := true
@@ -282,6 +282,17 @@ func bindKbSlot0() -> bool:
 	rollSkin(0)
 	return true
 
+func bindTouchSlot0() -> bool:
+	if Net.isOnline or playersInputMode[0] != InputMode.EMPTY:
+		return false
+	playersInputMode[0] = InputMode.TOUCH
+	playersDevice[0] = -1
+	playersConnected[0] = true
+	playersJoined[0] = true
+	playersTeam[0] = 0
+	rollSkin(0)
+	return true
+
 func bindPad(device: int) -> int:
 	# Lowest-free-first: the first pad always lands slot 0, so no pad is ever
 	# orphaned by a keyboard lock.
@@ -322,7 +333,7 @@ func isRoomHostSlot(slot: int) -> bool:
 
 func deviceForPlayer(slot: int) -> int:
 	# Local hardware index driving this slot (-1 = none / keyboard-only,
-	# -2 = no local device).
+	# -2 = no local device, including TOUCH slots).
 	if Net.isOnline:
 		if slot == Net.localSlot:
 			return localJoyDevice()
