@@ -14,7 +14,11 @@ func _ready():
 	add_child(_exitOverlay)
 	Global.MusicNode.play('menu')
 	$MenuCanvas/VersionLabel.setText(Global.VERSION)
-	$MenuCanvas/FullscreenLabel.visible = !OS.has_feature("web")
+	# Desktop-only hints: touch has no keyboard, so neither the kb+mouse/gamepad
+	# legend nor the [f]/[m] shortcuts make sense there.
+	$MenuCanvas/ControlsHolder.visible = not Touch.mobile_mode
+	$MenuCanvas/FullscreenLabel.visible = !OS.has_feature("web") and not Touch.mobile_mode
+	$MenuCanvas/MuteLabel.visible = not Touch.mobile_mode
 	if Net.isOnline:
 		initPlayers()
 		Net.lobby_updated.connect(_on_lobby_updated)

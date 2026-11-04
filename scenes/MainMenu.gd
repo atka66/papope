@@ -60,7 +60,9 @@ func _ready():
 		currentOption = 1
 	Global.MusicNode.play('menu')
 	$MenuCanvas/VersionLabel.setText(Global.VERSION)
-	$MenuCanvas/FullscreenLabel.visible = !OS.has_feature("web")
+	# Desktop-only hints: touch has no keyboard, so the [f]/[m] shortcuts go.
+	$MenuCanvas/FullscreenLabel.visible = !OS.has_feature("web") and not Touch.mobile_mode
+	$MenuCanvas/MuteLabel.visible = not Touch.mobile_mode
 	$MovingBackground.restartMovingBackground(null)
 	_codeEdit.text_submitted.connect(_on_code_submitted)
 	_roomList.item_selected.connect(_on_room_selected)
