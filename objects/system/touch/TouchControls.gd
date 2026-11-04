@@ -5,29 +5,42 @@ extends Control
 ##
 ## Raw touch events are handled here (not per-button Controls) so both sticks
 ## and all buttons can be held at once and each finger keeps its own role.
+##
+## The sticks are floating: pressing anywhere in a zone box spawns the base at
+## the touch point and the deflection is measured from there. Each box and its
+## hint label is the only affordance; the stick itself is drawn only while a
+## finger holds it.
 
 enum Zone { NONE, MOVE, AIM, USE, DASH, EXIT }
+
+const FONT: FontFile = preload("res://fonts/blockbit.ttf")
+const FONT_SIZE := 20
 
 const STICK_RADIUS := 95.0
 const KNOB_RADIUS := 42.0
 const BUTTON_RADIUS := 60.0
-const EXIT_RADIUS := 38.0
+const EXIT_RADIUS := 42.0
 const DEADZONE := 0.12
 
-# Layout in the fixed 1360x768 viewport. Use and dash sit on the sticks' line,
-# outboard of them (the sticks are pulled in far enough that the circles stay
-# 25 px apart). Exit lives in the gap between the lobby title (ends at x 856)
-# and the room code (starts at x 1156), the only spot on screen that nothing
-# else claims - map HUDs are bottom-corner/top-right of that column and the
-# post-game posters' "wanted" line is below it.
-const MOVE_CENTER := Vector2(330, 585)
-const AIM_CENTER := Vector2(1030, 585)
+# Layout in the fixed 1360x768 viewport. Buttons and stick boxes share one line
+# (y 585) with equal 100 px gaps between them:
+#   use 90..210 | move 310..630 | aim 730..1050 | dash 1150..1270
+# so each thumb gets its own hit area next to its button and the middle of the
+# screen stays free. Exit lives in the gap between the lobby title (ends at
+# x 856) and the room code (starts at x 1156), the only spot on screen that
+# nothing else claims - map HUDs are bottom-corner/top-right of that column and
+# the post-game posters' "wanted" line is below it.
 const USE_CENTER := Vector2(150, 585)
 const DASH_CENTER := Vector2(1210, 585)
 const EXIT_CENTER := Vector2(1000, 84)
+const MOVE_ZONE := Rect2(310.0, 465.0, 320.0, 240.0)
+const AIM_ZONE := Rect2(730.0, 465.0, 320.0, 240.0)
 
 var _owner_by_touch: Dictionary = {} # touch index -> Zone
+var _owner_by_zone: Dictionary = {} # Zone -> touch index of the current grab
 var _pressed: Dictionary = {} # Zone -> true while held
+var _move_origin: Vector2 = Vector2.ZERO # base of the current grab
+var _aim_origin: Vector2 = Vector2.ZERO
 var _aim_knob: Vector2 = Vector2.ZERO # live deflection while the aim finger is down
 var _scene: Node = null
 
@@ -70,7 +83,10 @@ func _input(event: InputEvent) -> void:
 		if event.pressed:
 			if zone == Zone.NONE:
 				return
+			# A fresh grab takes the control over (and re-anchors a stick), so a
+			# touch whose release got lost can never leave it stuck held.
 			_owner_by_touch[event.index] = zone
+			_owner_by_zone[zone] = event.index
 			_pressed[zone] = true
 			_on_press(zone, event.position)
 		elif not _release(event.index):
@@ -78,10 +94,13 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 	elif event is InputEventScreenDrag:
 		var zone: int = _owner_by_touch.get(event.index, Zone.NONE)
+		# Ignore drags from a finger that lost the control to a newer grab.
+		if zone == Zone.NONE or _owner_by_zone.get(zone, -1) != event.index:
+			return
 		if zone == Zone.MOVE:
-			Touch.move = _stick_vector(event.position, MOVE_CENTER)
+			Touch.move = _stick_vector(event.position, _move_origin)
 		elif zone == Zone.AIM:
-			var vector := _stick_vector(event.position, AIM_CENTER)
+			var vector := _stick_vector(event.position, _aim_origin)
 			_aim_knob = vector
 			Touch.aim_used = true
 			if vector != Vector2.ZERO:
@@ -93,13 +112,13 @@ func _input(event: InputEvent) -> void:
 func _on_press(zone: int, position: Vector2) -> void:
 	match zone:
 		Zone.MOVE:
-			Touch.move = _stick_vector(position, MOVE_CENTER)
+			_move_origin = position
+			Touch.move = Vector2.ZERO # the press point is the origin
 		Zone.AIM:
+			_aim_origin = position
 			Touch.aim_used = true
-			var vector := _stick_vector(position, AIM_CENTER)
-			_aim_knob = vector
-			if vector != Vector2.ZERO:
-				Touch.aim = vector
+			_aim_knob = Vector2.ZERO
+			Touch.aim = Vector2.ZERO
 		Zone.USE:
 			Touch.tap_action("game_use")
 		Zone.DASH:
@@ -112,6 +131,10 @@ func _release(index: int) -> bool:
 	if zone == Zone.NONE:
 		return false
 	_owner_by_touch.erase(index)
+	# A newer grab owns the control now: this lift must not cancel that finger.
+	if _owner_by_zone.get(zone, -1) != index:
+		return true
+	_owner_by_zone.erase(zone)
 	_pressed.erase(zone)
 	if zone == Zone.MOVE:
 		Touch.move = Vector2.ZERO
@@ -123,26 +146,28 @@ func _release(index: int) -> bool:
 
 func _reset() -> void:
 	_owner_by_touch.clear()
+	_owner_by_zone.clear()
 	_pressed.clear()
 	_aim_knob = Vector2.ZERO
 	Touch.move = Vector2.ZERO
 	Touch.aim = Vector2.ZERO
 
 func _zone_at(position: Vector2) -> int:
+	# Buttons win over the boxes, so their hit areas stay exact.
 	if position.distance_to(EXIT_CENTER) <= EXIT_RADIUS:
 		return Zone.EXIT
 	if position.distance_to(USE_CENTER) <= BUTTON_RADIUS:
 		return Zone.USE
 	if position.distance_to(DASH_CENTER) <= BUTTON_RADIUS:
 		return Zone.DASH
-	if position.distance_to(MOVE_CENTER) <= STICK_RADIUS:
+	if MOVE_ZONE.has_point(position):
 		return Zone.MOVE
-	if position.distance_to(AIM_CENTER) <= STICK_RADIUS:
+	if AIM_ZONE.has_point(position):
 		return Zone.AIM
 	return Zone.NONE
 
-func _stick_vector(position: Vector2, center: Vector2) -> Vector2:
-	var offset := (position - center) / STICK_RADIUS
+func _stick_vector(position: Vector2, origin: Vector2) -> Vector2:
+	var offset := (position - origin) / STICK_RADIUS
 	if offset.length() > 1.0:
 		offset = offset.normalized()
 	if offset.length() < DEADZONE:
@@ -152,11 +177,27 @@ func _stick_vector(position: Vector2, center: Vector2) -> Vector2:
 func _draw() -> void:
 	if not visible:
 		return
-	_draw_stick(MOVE_CENTER, Touch.move)
-	_draw_stick(AIM_CENTER, _aim_knob)
-	_draw_button(USE_CENTER, BUTTON_RADIUS, "use", _pressed.has(Zone.USE))
-	_draw_button(DASH_CENTER, BUTTON_RADIUS, "dash", _pressed.has(Zone.DASH))
-	_draw_button(EXIT_CENTER, EXIT_RADIUS, "exit", _pressed.has(Zone.EXIT))
+	_draw_zone(MOVE_ZONE, "MOVE")
+	_draw_zone(AIM_ZONE, "AIM")
+	# A stick only shows up while it is held; the boxes are the resting cue.
+	if _pressed.has(Zone.MOVE):
+		_draw_stick(_move_origin, Touch.move)
+	if _pressed.has(Zone.AIM):
+		_draw_stick(_aim_origin, _aim_knob)
+	_draw_button(USE_CENTER, BUTTON_RADIUS, "USE", _pressed.has(Zone.USE))
+	_draw_button(DASH_CENTER, BUTTON_RADIUS, "DASH", _pressed.has(Zone.DASH))
+	_draw_button(EXIT_CENTER, EXIT_RADIUS, "EXIT", _pressed.has(Zone.EXIT))
+
+## A stick's hit area, drawn to match `MOVE_ZONE`/`AIM_ZONE` exactly, with its
+## hint label under the top edge (the thumb covers the middle on a press).
+func _draw_zone(rect: Rect2, label: String) -> void:
+	draw_rect(rect, Color(1, 1, 1, 0.06))
+	draw_rect(rect, Color(1, 1, 1, 0.22), false, 2.0)
+	var text_size := FONT.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE)
+	var baseline := rect.position.y + 10.0 + FONT.get_ascent(FONT_SIZE)
+	draw_string(FONT,
+		Vector2(rect.position.x + (rect.size.x - text_size.x) * 0.5, baseline),
+		label, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(1, 1, 1, 0.6))
 
 func _draw_stick(center: Vector2, value: Vector2) -> void:
 	draw_circle(center, STICK_RADIUS, Color(1, 1, 1, 0.07))
@@ -168,8 +209,8 @@ func _draw_stick(center: Vector2, value: Vector2) -> void:
 func _draw_button(center: Vector2, radius: float, label: String, pressed: bool) -> void:
 	draw_circle(center, radius, Color(1, 1, 1, 0.32 if pressed else 0.14))
 	draw_arc(center, radius, 0.0, TAU, 40, Color(1, 1, 1, 0.5), 2.0)
-	var font := ThemeDB.fallback_font
-	var font_size := 18
-	var text_size := font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size)
-	draw_string(font, center + Vector2(-text_size.x * 0.5, font_size * 0.35), label,
-		HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, Color(1, 1, 1, 0.85))
+	var text_size := FONT.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE)
+	# Vertically centre on the font's own metrics (blockbit's ascent is tall).
+	var baseline := center.y + (FONT.get_ascent(FONT_SIZE) - FONT.get_descent(FONT_SIZE)) * 0.5
+	draw_string(FONT, Vector2(center.x - text_size.x * 0.5, baseline), label,
+		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(1, 1, 1, 0.85))
