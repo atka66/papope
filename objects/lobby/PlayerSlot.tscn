@@ -1,11 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://co6dqvdhklpn5"]
+[gd_scene load_steps=6 format=3 uid="uid://co6dqvdhklpn5"]
 
-[ext_resource type="Script" path="res://objects/lobby/PlayerSlot.gd" id="1_e7ob8"]
-[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_45ndv"]
+[ext_resource type="Script" uid="uid://dqoldmrit6l25" path="res://objects/lobby/PlayerSlot.gd" id="1_e7ob8"]
+[ext_resource type="Shader" uid="uid://dmuosjg3avx6j" path="res://shaders/circle.gdshader" id="2_45ndv"]
 [ext_resource type="Texture2D" uid="uid://b3kuhrsbono02" path="res://sprites/lobby/controller.png" id="3_2whjo"]
 [ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="4_vrrwg"]
-[ext_resource type="SpriteFrames" uid="uid://bjujoaaro01o3" path="res://resources/label/x.tres" id="5_fxtnu"]
-[ext_resource type="SpriteFrames" uid="uid://bbgfxbwof2oma" path="res://resources/label/o.tres" id="6_vfeer"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o7vey"]
 shader = ExtResource("2_45ndv")
@@ -25,48 +23,31 @@ offset_right = 28.0
 offset_bottom = 28.0
 
 [node name="ControllerSprite" type="Sprite2D" parent="."]
-position = Vector2(0, 64)
+position = Vector2(0, 104)
 scale = Vector2(2, 2)
 texture = ExtResource("3_2whjo")
+hframes = 3
 
 [node name="JoinHolder" type="Node2D" parent="."]
-position = Vector2(0, 108)
-
-[node name="XSprite" type="AnimatedSprite2D" parent="JoinHolder"]
-position = Vector2(-52, 0)
-scale = Vector2(2, 2)
-sprite_frames = ExtResource("5_fxtnu")
-autoplay = "default"
+position = Vector2(0, 52)
 
 [node name="JoinLabel" parent="JoinHolder" instance=ExtResource("4_vrrwg")]
-text = "join"
+text = "[use] join"
 fontSize = 2
 alignment = 8
 
 [node name="CancelHolder" type="Node2D" parent="."]
-position = Vector2(0, 108)
-
-[node name="OSprite" type="AnimatedSprite2D" parent="CancelHolder"]
-position = Vector2(-72, 0)
-scale = Vector2(2, 2)
-sprite_frames = ExtResource("6_vfeer")
-autoplay = "default"
+position = Vector2(0, 52)
 
 [node name="CancelLabel" parent="CancelHolder" instance=ExtResource("4_vrrwg")]
-text = "cancel"
+text = "[use] cancel"
 fontSize = 2
 alignment = 8
 
 [node name="LeaveHolder" type="Node2D" parent="."]
-position = Vector2(0, 108)
-
-[node name="OSprite" type="AnimatedSprite2D" parent="LeaveHolder"]
-position = Vector2(-64, 0)
-scale = Vector2(2, 2)
-sprite_frames = ExtResource("6_vfeer")
-autoplay = "default"
+position = Vector2(0, 52)
 
 [node name="LeaveLabel" parent="LeaveHolder" instance=ExtResource("4_vrrwg")]
-text = "leave"
+text = "[exit] leave"
 fontSize = 2
 alignment = 8

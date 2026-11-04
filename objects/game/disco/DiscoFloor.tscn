@@ -91,3 +91,33 @@ position = Vector2(128, 256)
 
 [node name="DiscoTile55" parent="." instance=ExtResource("1_d4gac")]
 position = Vector2(256, 256)
+
+[node name="DiscoTile10" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-384, -256)
+
+[node name="DiscoTile20" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-384, -128)
+
+[node name="DiscoTile30" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-384, 0)
+
+[node name="DiscoTile40" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-384, 128)
+
+[node name="DiscoTile50" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(-384, 256)
+
+[node name="DiscoTile16" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(384, -256)
+
+[node name="DiscoTile26" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(384, -128)
+
+[node name="DiscoTile36" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(384, 0)
+
+[node name="DiscoTile46" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(384, 128)
+
+[node name="DiscoTile56" parent="." instance=ExtResource("1_d4gac")]
+position = Vector2(384, 256)

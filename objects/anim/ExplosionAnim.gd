@@ -13,7 +13,9 @@ func _ready():
 	$Audio.stream = Res.AudioExplosion.pick_random()
 	$Audio.play()
 	
-	if harmful:
+	# Damage is host-authoritative; guests spawn cosmetic blasts
+	# (harmful=false) via Net and converge hp through state sync.
+	if harmful and (not Net.isOnline or Net.isHost):
 		var accountableDmg = 0
 		for player in get_tree().get_nodes_in_group('players'):
 			var dist: float = position.distance_to(player.position)

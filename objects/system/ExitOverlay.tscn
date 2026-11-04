@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bf8bo6yngaunv"]
+
+[ext_resource type="Script" uid="uid://axqo8klvptw3x" path="res://objects/system/ExitOverlay.gd" id="1_exit"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="2_label"]
+
+[node name="ExitOverlay" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1_exit")
+
+[node name="Root" type="Node2D" parent="."]
+
+[node name="Dim" type="ColorRect" parent="Root"]
+offset_right = 1360.0
+offset_bottom = 768.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="Label" parent="Root" instance=ExtResource("2_label")]
+position = Vector2(680, 384)
+fontSize = 3
+alignment = 8

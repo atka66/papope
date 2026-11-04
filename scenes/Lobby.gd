@@ -1,31 +1,29 @@
 extends Node2D
 
-@onready var _feedbackAnim = $MenuCanvas/FeedbackHolder/Anim
-@onready var _feedbackForm = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer
-@onready var _feedbackEdit = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit
-@onready var _feedbackFinish = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/FinishLabel
-@onready var _audioSubmit = $MenuCanvas/FeedbackHolder/AudioSubmit
-
 var countdownNode = null
-var hasConnected = true
 var _bgFingerprint = []
 var _netAccum := 0.0
 var _bgAccum := 0.0
 var _bgSeed := 0
 var _bgStep := 0
 var _bgPeriod := 8.0
+var _exitOverlay
 
 func _ready():
+	_exitOverlay = Res.ExitOverlayObject.instantiate()
+	add_child(_exitOverlay)
 	Global.MusicNode.play('menu')
 	$MenuCanvas/VersionLabel.setText(Global.VERSION)
-	if ProjectSettings.get("papope/hosted_mode"):
-		$MenuCanvas/FullscreenLabel.setText('atka66.itch.io/papope')
+	# Desktop-only hints: touch has no keyboard, so neither the kb+mouse/gamepad
+	# legend nor the [f]/[m] shortcuts make sense there.
+	$MenuCanvas/ControlsHolder.visible = not Touch.mobile_mode
+	$MenuCanvas/FullscreenLabel.visible = !OS.has_feature("web") and not Touch.mobile_mode
+	$MenuCanvas/MuteLabel.visible = not Touch.mobile_mode
 	if Net.isOnline:
-		$MenuCanvas/OnlineButton.hide()
 		initPlayers()
 		Net.lobby_updated.connect(_on_lobby_updated)
 	else:
-		$MenuCanvas/OnlineLabel.hide()
+		$MenuCanvas/RoomCodeHolder.hide()
 		initPlayers()
 	# 'random' backdrop steps align with pan-loop ends so every replay
 	# coincides with a sweep boundary on all peers (read, not hardcoded).
@@ -34,18 +32,8 @@ func _ready():
 		_bgPeriod = loopAnim.get_animation("loop").length
 
 func _process(delta):
-	var currentHasConnected = Global.playersJoined.has(true)
-	if currentHasConnected != hasConnected:
-		$MenuCanvas/TitleHolder/Anim.seek(0)
-		if currentHasConnected:
-			$MenuCanvas/TitleHolder/Anim.play("back")
-		else:
-			$MenuCanvas/TitleHolder/Anim.play("front")
-	
-	hasConnected = currentHasConnected
-	
-	$Settings.visible = hasConnected
-	$MenuCanvas/Hints.visible = !ProjectSettings.get("papope/hosted_mode") && hasConnected
+	var hasAnyJoined := Global.playersJoined.has(true)
+	$Settings.visible = hasAnyJoined
 
 	$InitHolder/WaitingLabel.hide()
 	$InitHolder/TeamLimitLabel.hide()
@@ -58,7 +46,7 @@ func _process(delta):
 			_netAccum += delta
 			if _netAccum >= Net.STATE_RATE:
 				_netAccum = 0.0
-				Net.push_state.rpc(Global.getPlayerStates())
+				Net.push_state(Global.getPlayerStates())
 			# 'random' background steps on all screens via broadcast, aligned
 			# to pan-loop ends (see _bgPeriod).
 			if Global.options['map'][Global.optionsSelected['map']] == 'random':
@@ -66,6 +54,12 @@ func _process(delta):
 				if _bgAccum >= _bgPeriod:
 					_bgAccum = 0.0
 					advanceBgFrame()
+		return
+	if !Net.isOnline and (!Global.playersJoined.has(true) or !Global.playersJoined[0]):
+		# Empty room, or the first player (the offline host) left: the room
+		# closes and everyone returns to the mode select, like a host leaving
+		# an online room.
+		Global.goToMainMenu()
 		return
 	if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.show()
@@ -75,10 +69,7 @@ func _process(delta):
 		$InitHolder/StartHolder.show()
 
 func _updateOnlineLabels() -> void:
-	if Net.isHost:
-		$MenuCanvas/OnlineLabel.setText("online - hosting (slot 0)")
-	else:
-		$MenuCanvas/OnlineLabel.setText("online - player " + str(Net.localSlot))
+	$MenuCanvas/RoomCodeHolder/CodeLabel.setText(Net.roomCode)
 	if Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.setText("waiting for more players...")
 		$InitHolder/WaitingLabel.show()
@@ -91,15 +82,25 @@ func _updateOnlineLabels() -> void:
 		$InitHolder/WaitingLabel.show()
 
 func _input(event):
-	if event.is_action_pressed("quit") and !OS.has_feature("web"):
-		if Net.isOnline:
-			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
-		else:
-			get_tree().quit()
-	if !Net.isOnline and event is InputEventKey and event.pressed and !event.echo:
-		if event.physical_keycode == KEY_O and Global.enableHotkeys:
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+	if Global.isExitEvent(event):
+		var focusOwner := get_viewport().gui_get_focus_owner()
+		if event is InputEventKey and (focusOwner is TextEdit or focusOwner is LineEdit):
+			return # typing feedback: keep Esc for the field
+		# Offline only slot 0 owns the room (leaving it ends the lobby, see
+		# _process); any other joined slot's exit just vacates that slot, the
+		# same way a pad unplug does, and cancels a running countdown.
+		var owner := Global.slotOwningEvent(event)
+		if !Net.isOnline and owner >= 0 and !Global.isRoomHostSlot(owner):
+			if countdownNode != null:
+				stopCountdown()
+			Global.clearSlot(owner)
+			return
+		if _exitOverlay.request("press [exit] again to leave lobby"):
+			if Net.isOnline:
+				Net.leave_to_menu()
+			else:
+				Global.goToMainMenu()
+		return
 	if Global.DEBUG && Global.enableHotkeys && !Net.isOnline: 
 		if event.is_action_pressed("test1"): 
 			for i in range(4):
@@ -107,7 +108,12 @@ func _input(event):
 					Global.playersConnected[i] = true
 					break
 				if !Global.playersJoined[i]:
+					Global.playersInputMode[i] = Global.InputMode.PAD
+					Global.playersDevice[i] = i
+					Global.kbClaimable = false
 					Global.playersJoined[i] = true
+					Global.playersTeam[i] = i
+					Global.rollSkin(i)
 					Global.joinPlayer(i, false)
 					break
 		if event.is_action_pressed("test2"): 
@@ -115,6 +121,8 @@ func _input(event):
 				if Global.playersConnected[i]:
 					if Global.playersJoined[i]:
 						Global.playersJoined[i] = false
+						Global.playersInputMode[i] = Global.InputMode.EMPTY
+						Global.playersDevice[i] = -1
 						Global.leavePlayer(i)
 						break
 		if event.is_action_pressed("test3"):
@@ -136,14 +144,8 @@ func initPlayers() -> void:
 				Global.joinPlayer(i, true)
 		return
 	for i in range(4):
-		if ProjectSettings.get("papope/hosted_mode"):
-			Global.playersJoined[i] = false
-		else:
-			if Global.playersConnected[i] && Global.playersJoined[i]:
-				Global.joinPlayer(i, true)
-
-func _on_online_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+		if Global.playersConnected[i] && Global.playersJoined[i]:
+			Global.joinPlayer(i, true)
 
 func advanceBgFrame() -> void:
 	# Host-side 'random' rotation: deterministic seeded order shared by all.
@@ -158,7 +160,7 @@ func advanceBgFrame() -> void:
 	# Full replay (frame + pan restart) like a selection change: keeps the
 	# pan phase aligned on all peers instead of drifting per load time.
 	applyBgFrame(frame, true)
-	Net.bg_frame.rpc(frame, true)
+	Net.send_bg_frame(frame, true)
 
 func applyBgFrame(frame: int, replay: bool) -> void:
 	var bg = get_node_or_null("MovingBackground/Backgrounds")
@@ -172,24 +174,28 @@ func applyBgFrame(frame: int, replay: bool) -> void:
 			anim.seek(0)
 			anim.play("loop")
 
-func sendBgTo(peerId: int) -> void:
+func sendBgTo() -> void:
 	# Newcomer paint: explicit maps resolve locally, random takes host's frame.
 	if Global.options['map'][Global.optionsSelected['map']] != 'random':
 		return
 	var bg = get_node_or_null("MovingBackground/Backgrounds")
 	if bg == null:
 		return
-	Net.bg_frame.rpc_id(peerId, int(bg.frame), true)
+	Net.send_bg_frame(int(bg.frame), true)
 
 func _on_lobby_updated():
-	# Spawn previews for peers that joined after we entered the lobby.
+	# Reconcile previews with the host's slot flags both ways: joiners appear,
+	# leavers disappear. No dedicated removal message needed.
 	if !Net.isOnline:
 		return
 	for i in range(4):
-		if Global.playersJoined[i] and Global.getPlayer(i) == null:
+		var preview = Global.getPlayer(i)
+		if Global.playersJoined[i] and preview == null:
 			Global.joinPlayer(i, true)
+		elif not Global.playersJoined[i] and preview != null:
+			preview.queue_free()
 	# Fixate the background on the host's map selection only; other
-	# options (mode/rounds/teams/skins) must not retrigger it. Guests
+	# options (mode/rounds) must not retrigger it. Guests
 	# resolve explicit maps locally; 'random' follows host broadcasts.
 	var fingerprint = [Global.optionsSelected['map']]
 	if fingerprint != _bgFingerprint:
@@ -204,7 +210,7 @@ func _on_lobby_updated():
 				var frameCount: int = bg.sprite_frames.get_frame_count('default')
 				var frame := _bgSeed % frameCount
 				applyBgFrame(frame, true)
-				Net.bg_frame.rpc(frame, true)
+				Net.send_bg_frame(frame, true)
 		elif mapName != 'random' or !Net.isOnline:
 			restartMovingBackground()
 		# else: online guest with 'random' waits for the host's bg_frame.
@@ -222,47 +228,7 @@ func startCountdown() -> void:
 
 func stopCountdown() -> void:
 	countdownNode.queue_free()
+	countdownNode = null
 
 func restartMovingBackground() -> void:
 	$MovingBackground.restartMovingBackground(null)
-
-func _on_feedback_button_toggled(toggled_on):
-	if toggled_on:
-		_feedbackEdit.text = ""
-		feedbackToggle(true)
-		_feedbackAnim.play("appear")
-	else:
-		_feedbackAnim.play_backwards("appear")
-
-func feedbackToggle(toggled_on: bool):
-	_feedbackForm.visible = toggled_on
-	_feedbackFinish.visible = !toggled_on
-
-
-func _on_submit_button_pressed():
-	if _feedbackEdit.text.length() < 1:
-		return
-
-	var explosion = Res.ExplosionAnimObject.instantiate()
-	explosion.position = $Camera.offset + get_viewport().get_mouse_position()
-	explosion.harmful = false
-	explosion.shakePwr = 30
-	Global.addToScene(explosion)
-
-	feedbackToggle(false)
-	submitFeedback(_feedbackEdit.text)
-
-func submitFeedback(feedback: String):
-	var request = HTTPRequest.new()
-	add_child(request)
-	var body = JSON.stringify({ 'feedback': feedback, 'source': 'PAPOPE' })
-	request.request(Global.FEEDBACK_URL, ["Content-Type: application/json"], HTTPClient.METHOD_POST, body)
-	var response = await request.request_completed
-	request.queue_free()
-
-
-func _on_feedback_edit_focus_entered():
-	Global.enableHotkeys = false
-
-func _on_feedback_edit_focus_exited():
-	Global.enableHotkeys = true

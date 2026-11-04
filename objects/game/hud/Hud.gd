@@ -179,7 +179,7 @@ func spawnPerkIcons() -> void:
 		var icon = Sprite2D.new()
 		icon.texture = Res.TexturePerks
 		icon.hframes = len(Global.PerkEnum) + 1
-		icon.frame = Global.PERKS[perks[i]][2]
+		icon.frame = Global.perk(perks[i]).frame
 		icon.scale = Vector2(2, 2)
 		icon.centered = false
 		var x = 2 + (i * 34)

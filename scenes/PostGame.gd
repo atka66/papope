@@ -2,7 +2,11 @@ extends Node2D
 
 @export var canProceed: bool = false
 
+var _exitOverlay
+
 func _ready():
+	_exitOverlay = Res.ExitOverlayObject.instantiate()
+	add_child(_exitOverlay)
 	Global.MusicNode.play('postgame')
 	$HintHolder.hide()
 	var winnerTeam: int = Global.getWinnerTeamByScore()
@@ -14,21 +18,33 @@ func _ready():
 				Global.playersCrowned[i] = false
 
 func _input(event):
+	# Touch input goes through the overlay's synthetic actions; mouse events on
+	# a touch device must not fire kb_use as well.
+	if Touch.ignores_mouse(event):
+		return
+	var exitPressed: bool = Global.isExitEvent(event)
+	var usePressed: bool = (event.is_action_pressed('game_use') or event.is_action_pressed('kb_use')) and canProceed
 	if Net.isOnline:
 		# Only the host advances; everyone travels together via Net.to_lobby().
-		if Net.isHost and (event.is_action_pressed('quit') or ((event.is_action_pressed('accept') or event.is_action_pressed('kb_accept')) and canProceed)):
-			Net.to_lobby()
-		elif not Net.isHost and event.is_action_pressed('quit'):
-			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+		if Net.isHost:
+			if exitPressed:
+				if _exitOverlay.request("press [exit] again to leave game"):
+					Net.to_lobby()
+			elif usePressed:
+				Net.to_lobby()
+		elif exitPressed:
+			if _exitOverlay.request("press [exit] again to leave game"):
+				Net.leave_to_menu()
 		return
-	if event.is_action_pressed('quit') or ((event.is_action_pressed('accept') or event.is_action_pressed('kb_accept')) and canProceed):
+	if exitPressed:
+		if _exitOverlay.request("press [exit] again to leave game"):
+			Global.goToLobby()
+	elif usePressed:
 		Global.goToLobby()
 
 func allowProceed():
 	canProceed = true
 	if Net.isOnline and not Net.isHost:
 		# Guests can't advance the podium; say so instead of prompting.
-		$HintHolder/OSprite.hide()
 		$HintHolder/LobbyHint.setText("waiting for host...")
 	$HintHolder.show()

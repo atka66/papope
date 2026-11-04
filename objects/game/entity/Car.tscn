@@ -23,7 +23,9 @@ vframes = 6
 shape = SubResource("RectangleShape2D_8pimu")
 
 [node name="AudioCollision" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
 
 [node name="AudioHorn" type="AudioStreamPlayer2D" parent="."]
+bus = &"sfx"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

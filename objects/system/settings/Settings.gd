@@ -7,10 +7,13 @@ var currentOption = 0
 
 func _ready():
 	initOptions()
+	for i in range(optionNodes.size()):
+		optionNodes[i].focused.connect(_on_option_focused.bind(i))
+		optionNodes[i].cycled.connect(_on_option_cycled.bind(i))
 
 func _process(delta):
 	if Net.isOnline and not Net.isHost:
-		# Guests mirror the host's options (synced via Net.sync_lobby):
+		# Guests mirror the host's options (synced via Net.push_lobby):
 		# values visible, but no selection arrows since they can't change them.
 		updateSelections()
 		$ModeOption.setFocus(false)
@@ -27,7 +30,7 @@ func _process(delta):
 func _input(event):
 	if Net.isOnline and not Net.isHost:
 		return
-	if Global.enableHotkeys && Lobby.countdownNode == null && Global.playersJoined.has(true) && !ProjectSettings.get("papope/hosted_mode"):
+	if Global.enableHotkeys && Lobby.countdownNode == null && Global.playersJoined.has(true):
 		if event.is_action_pressed("nav_down"):
 			currentOption = (currentOption + 1) % 3
 			$AudioTick.play()
@@ -35,23 +38,37 @@ func _input(event):
 			currentOption = (currentOption + 5) % 3
 			$AudioTick.play()
 		if event.is_action_pressed("nav_right"):
-			var option = Global.options.keys()[currentOption]
-			Global.optionsSelected[option] = (Global.optionsSelected[option] + 1) % Global.options[option].size()
-			updateSelections()
-			optionNodes[currentOption].animateArrow(true)
-			$AudioTick.play()
-			if currentOption == 1:
-				Lobby.restartMovingBackground()
-			Net.push_lobby()
+			_cycleOption(1)
 		if event.is_action_pressed("nav_left"):
-			var option = Global.options.keys()[currentOption]
-			Global.optionsSelected[option] = (Global.optionsSelected[option] + ((Global.options[option].size() * 2) - 1)) % Global.options[option].size()
-			updateSelections()
-			optionNodes[currentOption].animateArrow(false)
-			$AudioTick.play()
-			if currentOption == 1:
-				Lobby.restartMovingBackground()
-			Net.push_lobby()
+			_cycleOption(-1)
+
+func _on_option_focused(index: int) -> void:
+	if not _canEditOptions():
+		return
+	currentOption = index
+	updateCurrentOption()
+
+func _on_option_cycled(delta: int, index: int) -> void:
+	if not _canEditOptions():
+		return
+	currentOption = index
+	_cycleOption(delta)
+
+func _canEditOptions() -> bool:
+	return not (Net.isOnline and not Net.isHost) \
+		and Lobby.countdownNode == null \
+		and Global.playersJoined.has(true)
+
+func _cycleOption(delta: int) -> void:
+	var option = Global.options.keys()[currentOption]
+	var optionCount: int = Global.options[option].size()
+	Global.optionsSelected[option] = posmod(Global.optionsSelected[option] + delta, optionCount)
+	updateSelections()
+	optionNodes[currentOption].animateArrow(delta > 0)
+	$AudioTick.play()
+	if currentOption == 1:
+		Lobby.restartMovingBackground()
+	Net.push_lobby()
 
 func initOptions() -> void:
 	$ModeOption.setOption('mode')
