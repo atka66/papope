@@ -9,7 +9,7 @@ extends RigidBody2D
 const THROW_SPEED_SCALE := 1.95
 
 func _ready():
-	if Global.MapControllerNode.isNightclub:
+	if Global.inNightclub():
 		$Container/Sprite.modulate = Color.BLACK
 		$Container/Smoke.z_as_relative = false
 		$Container/Smoke.z_index = 5

@@ -40,7 +40,7 @@ alignment = 8
 position = Vector2(0, 52)
 
 [node name="CancelLabel" parent="CancelHolder" instance=ExtResource("4_vrrwg")]
-text = "[dash] cancel"
+text = "[use] cancel"
 fontSize = 2
 alignment = 8
 
@@ -48,6 +48,6 @@ alignment = 8
 position = Vector2(0, 52)
 
 [node name="LeaveLabel" parent="LeaveHolder" instance=ExtResource("4_vrrwg")]
-text = "[dash] leave"
+text = "[exit] leave"
 fontSize = 2
 alignment = 8

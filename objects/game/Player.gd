@@ -44,7 +44,7 @@ func _ready():
 		# Guests never integrate non-owned bodies anywhere (map or lobby):
 		# the host simulates everything, snapshots drive the rest.
 		freeze = true
-	if !Lobby && Global.MapControllerNode.isNightclub:
+	if !Lobby && Global.inNightclub():
 		$BodyParts/Face.modulate = Color.BLACK
 		$Crown.modulate = Color.BLACK
 		$LookLine.z_as_relative = false
@@ -204,32 +204,17 @@ func _input(event):
 	var kbUse: bool = ownsKeyboard() && event.is_action_pressed("kb_use")
 	var ownsEvent: bool = (Net.isOnline && isLocal) || (!Net.isOnline && event.device == Global.deviceForPlayer(playerId))
 	if ownsEvent || kbDash || kbUse:
-		if Lobby != null:
-			if Lobby.countdownNode == null && Net.isOnline:
-				_onlineLobbyInput(event)
-		else:
-			if alive && !Global.playersFrozen && !isFallingIntoWater:
-				if !trapped && linear_velocity.length() < 2000 && lAxis.length() > 0:
-					if (padDash || kbDash) && !inputCd:
-						inputCd = true
-						_onlineDash(lAxis)
-				if (padUse || kbUse) && !inputCd:
+		if alive && !Global.playersFrozen && !isFallingIntoWater:
+			if !trapped && linear_velocity.length() < 2000 && lAxis.length() > 0:
+				if (padDash || kbDash) && !inputCd:
 					inputCd = true
-					_onlineUse()
-
-func _onlineLobbyInput(event) -> void:
-	if event.is_action_pressed("game_use") || (ownsKeyboard() && event.is_action_pressed("kb_use")):
-		if Global.getNumberOfTeams() > 1:
-			if Net.isHost:
-				Net.begin_countdown()
-		else:
-			Lobby.warnCannotStart()
-	if event.is_action_pressed("game_dash") || (ownsKeyboard() && event.is_action_pressed("kb_dash")):
-		if Lobby.countdownNode != null:
-			if Net.isHost:
-				Net.cancel_countdown()
-		else:
-			Net.leave_to_menu()
+					_onlineDash(lAxis)
+			# Dash works in the lobby exactly like in a map (it is the same
+			# button). 'use' there starts/cancels the countdown instead, which
+			# PlayerSlot owns, so items stay map-only.
+			if Lobby == null && (padUse || kbUse) && !inputCd:
+				inputCd = true
+				_onlineUse()
 
 func _onlineDash(axis: Vector2) -> void:
 	if !Net.isOnline:

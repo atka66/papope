@@ -14,11 +14,17 @@ const BUTTON_RADIUS := 60.0
 const EXIT_RADIUS := 38.0
 const DEADZONE := 0.12
 
-const MOVE_CENTER := Vector2(300, 585)
-const AIM_CENTER := Vector2(1040, 585)
-const USE_CENTER := Vector2(150, 190)
-const DASH_CENTER := Vector2(1210, 190)
-const EXIT_CENTER := Vector2(680, 96)
+# Layout in the fixed 1360x768 viewport. Use and dash sit on the sticks' line,
+# outboard of them (the sticks are pulled in far enough that the circles stay
+# 25 px apart). Exit lives in the gap between the lobby title (ends at x 856)
+# and the room code (starts at x 1156), the only spot on screen that nothing
+# else claims - map HUDs are bottom-corner/top-right of that column and the
+# post-game posters' "wanted" line is below it.
+const MOVE_CENTER := Vector2(330, 585)
+const AIM_CENTER := Vector2(1030, 585)
+const USE_CENTER := Vector2(150, 585)
+const DASH_CENTER := Vector2(1210, 585)
+const EXIT_CENTER := Vector2(1000, 84)
 
 var _owner_by_touch: Dictionary = {} # touch index -> Zone
 var _pressed: Dictionary = {} # Zone -> true while held

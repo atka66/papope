@@ -585,6 +585,12 @@ func spawnFallingLabel(text: String, position: Vector2, color: Color, size: int)
 func getDeathMessage(reason : DeathEnum):
 	return [DEATH_STRINGS[reason], DEATH_STRINGS[DeathEnum.DEFAULT]].pick_random().pick_random()
 
+func inNightclub() -> bool:
+	# Pre-map scenes (lobby, postgame) have no live MapController: the reference
+	# is null before the first map and freed after leaving one. Everything that
+	# can spawn outside a map (dash particles, feathers) must go through this.
+	return is_instance_valid(MapControllerNode) and MapControllerNode.isNightclub
+
 func getRandomPwrup() -> PwrupEnum:
 	# In-map rolls use the synced determRandom so every peer draws the same
 	# item (e.g. PREPARED perk at spawn); elsewhere keep global randomness.

@@ -77,55 +77,45 @@ func _input(event):
 				Global.joinPlayer(playerId, false)
 			return
 	if event.device == Global.deviceForPlayer(playerId):
-		if event.is_action_pressed("game_use") and Lobby.countdownNode == null:
-			if Global.playersJoined[playerId]:
-				if Global.getNumberOfTeams() > 1:
-					Lobby.startCountdown()
-				else:
-					Lobby.warnCannotStart()
-		if event.is_action_pressed("game_dash"):
-			if Global.playersJoined[playerId]:
-				if Lobby.countdownNode != null:
-					Lobby.stopCountdown()
-				else:
-					Global.clearSlot(playerId)
+		if event.is_action_pressed("game_use") and Global.playersJoined[playerId]:
+			# 'use' toggles the countdown: start when idle, cancel while running.
+			if Lobby.countdownNode != null:
+				Lobby.stopCountdown()
+			elif Global.getNumberOfTeams() > 1:
+				Lobby.startCountdown()
+			else:
+				Lobby.warnCannotStart()
 	if playerId == 0:
 		# Keyboard is dead once a pad claimed first (kbClaimable flipped).
-		if Global.enableHotkeys && event.is_action_pressed("kb_use") and Lobby.countdownNode == null:
-			if Global.playersInputMode[0] == Global.InputMode.EMPTY and Global.isKbJoinAllowed():
+		if Global.enableHotkeys && event.is_action_pressed("kb_use"):
+			if Lobby.countdownNode == null and Global.playersInputMode[0] == Global.InputMode.EMPTY and Global.isKbJoinAllowed():
 				Global.bindKbSlot0()
 				Global.joinPlayer(0, false)
 			elif Global.playersJoined[0] and Global.playersInputMode[0] == Global.InputMode.KB:
-				if Global.getNumberOfTeams() > 1:
+				if Lobby.countdownNode != null:
+					Lobby.stopCountdown()
+				elif Global.getNumberOfTeams() > 1:
 					Lobby.startCountdown()
 				else:
 					Lobby.warnCannotStart()
-		if Global.enableHotkeys && event.is_action_pressed("kb_dash"):
-			if Global.playersJoined[0] and Global.playersInputMode[0] == Global.InputMode.KB:
-				if Lobby.countdownNode != null:
-					Lobby.stopCountdown()
-				else:
-					Global.clearSlot(0)
 
 func _onlineInput(event):
 	# Online slots are assigned by the host; each peer drives only their own slot.
 	# Device ids are per-machine, so any local pad/keyboard owns the local slot.
 	if playerId != Net.localSlot:
 		return
-	var padStart: bool = event.is_action_pressed("game_use") || (Global.enableHotkeys && event.is_action_pressed("kb_use"))
-	var padBack: bool = event.is_action_pressed("game_dash") || (Global.enableHotkeys && event.is_action_pressed("kb_dash"))
-	if padStart and Lobby.countdownNode == null:
-		if Global.getNumberOfTeams() > 1:
-			if Net.isHost:
-				Net.begin_countdown()
-		else:
-			Lobby.warnCannotStart()
-	if padBack:
-		if Lobby.countdownNode != null:
-			if Net.isHost:
-				Net.cancel_countdown()
-		else:
-			Net.leave_to_menu()
+	var padUse: bool = event.is_action_pressed("game_use") || (Global.enableHotkeys && event.is_action_pressed("kb_use"))
+	if not padUse:
+		return
+	# 'use' toggles the countdown; only the host can drive it either way.
+	if Lobby.countdownNode != null:
+		if Net.isHost:
+			Net.cancel_countdown()
+	elif Global.getNumberOfTeams() > 1:
+		if Net.isHost:
+			Net.begin_countdown()
+	else:
+		Lobby.warnCannotStart()
 
 func _isTouchClick(event: InputEvent) -> bool:
 	# Touch screens also emit a left click tagged DEVICE_ID_EMULATION, and

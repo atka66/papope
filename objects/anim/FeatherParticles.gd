@@ -1,7 +1,7 @@
 extends CPUParticles2D
 
 func _ready():
-	if Global.MapControllerNode.isNightclub:
+	if Global.inNightclub():
 		modulate = Color.BLACK
 
 func _on_finished():

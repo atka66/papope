@@ -86,6 +86,15 @@ func _input(event):
 		var focusOwner := get_viewport().gui_get_focus_owner()
 		if event is InputEventKey and (focusOwner is TextEdit or focusOwner is LineEdit):
 			return # typing feedback: keep Esc for the field
+		# Offline only slot 0 owns the room (leaving it ends the lobby, see
+		# _process); any other joined slot's exit just vacates that slot, the
+		# same way a pad unplug does, and cancels a running countdown.
+		var owner := Global.slotOwningEvent(event)
+		if !Net.isOnline and owner >= 0 and !Global.isRoomHostSlot(owner):
+			if countdownNode != null:
+				stopCountdown()
+			Global.clearSlot(owner)
+			return
 		if _exitOverlay.request("press [exit] again to leave lobby"):
 			if Net.isOnline:
 				Net.leave_to_menu()

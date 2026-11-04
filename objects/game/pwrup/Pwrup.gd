@@ -6,7 +6,7 @@ var netSpawner: int = -1 # online: spawner index for host-driven despawn sync
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if Global.MapControllerNode.isNightclub:
+	if Global.inNightclub():
 		$Container/Sprite.modulate = Color.BLACK
 	match type:
 		Global.PwrupEnum.DYNAMITE:
