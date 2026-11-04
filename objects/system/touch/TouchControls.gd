@@ -18,21 +18,22 @@ const FONT_SIZE := 20
 
 const STICK_RADIUS := 95.0
 const KNOB_RADIUS := 42.0
-const BUTTON_RADIUS := 60.0
-const EXIT_RADIUS := 42.0
+const BUTTON_CORNER := 24.0
+const BUTTON_FONT_SIZE := 30
 const DEADZONE := 0.12
 
 # Layout in the fixed 1360x768 viewport. Buttons and stick boxes share one line
-# (y 585) with equal 100 px gaps between them:
-#   use 90..210 | move 310..630 | aim 730..1050 | dash 1150..1270
+# with equal 100 px gaps between them, and the buttons run out to the screen
+# edges (20 px margins) and down to the bottom:
+#   use 20..210 | move 310..630 | aim 730..1050 | dash 1150..1340
 # so each thumb gets its own hit area next to its button and the middle of the
-# screen stays free. Exit lives in the gap between the lobby title (ends at
+# screen stays free. Exit sits in the gap between the lobby title (ends at
 # x 856) and the room code (starts at x 1156), the only spot on screen that
-# nothing else claims - map HUDs are bottom-corner/top-right of that column and
-# the post-game posters' "wanted" line is below it.
-const USE_CENTER := Vector2(150, 585)
-const DASH_CENTER := Vector2(1210, 585)
-const EXIT_CENTER := Vector2(1000, 84)
+# nothing else claims - map HUDs are in the screen's corners and the post-game
+# posters' content is centred in their columns.
+const USE_BUTTON := Rect2(20.0, 515.0, 190.0, 233.0)
+const DASH_BUTTON := Rect2(1150.0, 515.0, 190.0, 233.0)
+const EXIT_BUTTON := Rect2(925.0, 20.0, 150.0, 93.0)
 const MOVE_ZONE := Rect2(310.0, 465.0, 320.0, 240.0)
 const AIM_ZONE := Rect2(730.0, 465.0, 320.0, 240.0)
 
@@ -43,10 +44,22 @@ var _move_origin: Vector2 = Vector2.ZERO # base of the current grab
 var _aim_origin: Vector2 = Vector2.ZERO
 var _aim_knob: Vector2 = Vector2.ZERO # live deflection while the aim finger is down
 var _scene: Node = null
+var _button_normal: StyleBoxFlat
+var _button_pressed: StyleBoxFlat
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	visible = false
+	_button_normal = _make_button_style(0.14)
+	_button_pressed = _make_button_style(0.32)
+
+func _make_button_style(fill_alpha: float) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(1, 1, 1, fill_alpha)
+	style.border_color = Color(1, 1, 1, 0.5)
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(int(BUTTON_CORNER))
+	return style
 
 func _process(_delta: float) -> void:
 	var scene := get_tree().current_scene
@@ -154,11 +167,11 @@ func _reset() -> void:
 
 func _zone_at(position: Vector2) -> int:
 	# Buttons win over the boxes, so their hit areas stay exact.
-	if position.distance_to(EXIT_CENTER) <= EXIT_RADIUS:
+	if EXIT_BUTTON.has_point(position):
 		return Zone.EXIT
-	if position.distance_to(USE_CENTER) <= BUTTON_RADIUS:
+	if USE_BUTTON.has_point(position):
 		return Zone.USE
-	if position.distance_to(DASH_CENTER) <= BUTTON_RADIUS:
+	if DASH_BUTTON.has_point(position):
 		return Zone.DASH
 	if MOVE_ZONE.has_point(position):
 		return Zone.MOVE
@@ -184,9 +197,9 @@ func _draw() -> void:
 		_draw_stick(_move_origin, Touch.move)
 	if _pressed.has(Zone.AIM):
 		_draw_stick(_aim_origin, _aim_knob)
-	_draw_button(USE_CENTER, BUTTON_RADIUS, "USE", _pressed.has(Zone.USE))
-	_draw_button(DASH_CENTER, BUTTON_RADIUS, "DASH", _pressed.has(Zone.DASH))
-	_draw_button(EXIT_CENTER, EXIT_RADIUS, "EXIT", _pressed.has(Zone.EXIT))
+	_draw_button(USE_BUTTON, "USE", _pressed.has(Zone.USE))
+	_draw_button(DASH_BUTTON, "DASH", _pressed.has(Zone.DASH))
+	_draw_button(EXIT_BUTTON, "EXIT", _pressed.has(Zone.EXIT))
 
 ## A stick's hit area, drawn to match `MOVE_ZONE`/`AIM_ZONE` exactly, with its
 ## hint label under the top edge (the thumb covers the middle on a press).
@@ -206,11 +219,15 @@ func _draw_stick(center: Vector2, value: Vector2) -> void:
 	draw_circle(knob, KNOB_RADIUS, Color(1, 1, 1, 0.20))
 	draw_arc(knob, KNOB_RADIUS, 0.0, TAU, 32, Color(1, 1, 1, 0.45), 2.0)
 
-func _draw_button(center: Vector2, radius: float, label: String, pressed: bool) -> void:
-	draw_circle(center, radius, Color(1, 1, 1, 0.32 if pressed else 0.14))
-	draw_arc(center, radius, 0.0, TAU, 40, Color(1, 1, 1, 0.5), 2.0)
-	var text_size := FONT.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE)
-	# Vertically centre on the font's own metrics (blockbit's ascent is tall).
-	var baseline := center.y + (FONT.get_ascent(FONT_SIZE) - FONT.get_descent(FONT_SIZE)) * 0.5
+func _draw_button(rect: Rect2, label: String, pressed: bool) -> void:
+	var style := _button_pressed if pressed else _button_normal
+	draw_style_box(style, rect)
+	_draw_label(rect.get_center(), label, BUTTON_FONT_SIZE, Color(1, 1, 1, 0.85))
+
+## Draws `label` horizontally and vertically centred on `center`, using the
+## font's own metrics (blockbit's ascent is tall).
+func _draw_label(center: Vector2, label: String, font_size: int, color: Color) -> void:
+	var text_size := FONT.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size)
+	var baseline := center.y + (FONT.get_ascent(font_size) - FONT.get_descent(font_size)) * 0.5
 	draw_string(FONT, Vector2(center.x - text_size.x * 0.5, baseline), label,
-		HORIZONTAL_ALIGNMENT_LEFT, -1, FONT_SIZE, Color(1, 1, 1, 0.85))
+		HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, color)
