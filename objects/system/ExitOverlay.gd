@@ -30,6 +30,8 @@ func request(text: String) -> bool:
 	return false
 
 func _show(text: String, now: float) -> void:
+	if Touch.mobile_mode:
+		text = text.replace("press [exit] again", "tap exit again")
 	_label.text = text
 	if _tween != null and _tween.is_valid():
 		_tween.kill()

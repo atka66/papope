@@ -368,6 +368,10 @@ func slotOwningEvent(event: InputEvent) -> int:
 	# both report device 0, so they are matched by kind: only the KB-owning
 	# slot takes them, and a pad slot never claims a key/mouse event just
 	# because its joypad index happens to be 0.
+	# Touch screens also emit a left click; that click belongs to the overlay,
+	# not to a second kb_use/kb_dash path (double reveal/confirm).
+	if Touch.ignores_mouse(event):
+		return -1
 	for slot in range(4):
 		if not playersJoined[slot]:
 			continue

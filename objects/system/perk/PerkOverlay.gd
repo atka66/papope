@@ -63,6 +63,8 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		return # only buttons/keys/pad presses can act here
+	if Touch.ignores_mouse(event):
+		return # the overlay owns touch; no double reveal/confirm
 	if Global.DEBUG and Input.is_action_just_pressed("test3"):
 		for i in range(_panels.size()):
 			if _panels[i].is_active():

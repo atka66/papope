@@ -12,6 +12,7 @@ var currentOption := 0 # 0 = local, 1 = online
 # Focus reads brighter (white) while the rest of the choices stay gold.
 const FOCUS_COLOR := Color.WHITE
 const IDLE_COLOR := Color(1.0, 0.752941, 0.12549)
+const TOUCH_DISABLED_COLOR := Color(0.35, 0.35, 0.35)
 const SUMMARIES := ["play together on one screen", "play with others across the net"]
 
 var _roomCodes: Array = []
@@ -54,6 +55,9 @@ func _ready():
 	if Net.isOnline:
 		Net.leave()
 	Global.clearMenuState()
+	# Phones have no local rumble: online is the only mode on touch devices.
+	if Touch.mobile_mode:
+		currentOption = 1
 	Global.MusicNode.play('menu')
 	$MenuCanvas/VersionLabel.setText(Global.VERSION)
 	$MenuCanvas/FullscreenLabel.visible = !OS.has_feature("web")
@@ -117,7 +121,8 @@ func _input(event):
 		if _exitOverlay.request("press [exit] again to quit game"):
 			get_tree().quit()
 		return
-	if Global.enableHotkeys and (event.is_action_pressed("nav_up") or event.is_action_pressed("nav_down")):
+	if Global.enableHotkeys and not Touch.mobile_mode \
+		and (event.is_action_pressed("nav_up") or event.is_action_pressed("nav_down")):
 		currentOption = 1 - currentOption
 		$AudioTick.play()
 		updateSelection()
@@ -297,12 +302,19 @@ func _renderInfoLine():
 	_infoLine.setText(_statusText if _statusText != "" else _infoText)
 
 func updateSelection():
-	_localLabel.setFontColor(FOCUS_COLOR if currentOption == 0 else IDLE_COLOR)
+	if Touch.mobile_mode:
+		currentOption = 1
+		_localLabel.setFontColor(TOUCH_DISABLED_COLOR)
+	else:
+		_localLabel.setFontColor(FOCUS_COLOR if currentOption == 0 else IDLE_COLOR)
 	_onlineLabel.setFontColor(FOCUS_COLOR if currentOption == 1 else IDLE_COLOR)
 	_selectArrow.position.y = 428.0 if currentOption == 0 else 518.0
 	$MenuCanvas/MainHolder/SummaryLabel.setText(SUMMARIES[currentOption])
 
 func chooseKb():
+	if currentOption == 0 and Touch.mobile_mode:
+		$AudioFail.play()
+		return
 	if currentOption == 0:
 		if Global.bindKbSlot0():
 			get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
@@ -312,6 +324,9 @@ func chooseKb():
 		_showOnline()
 
 func choosePad(device: int):
+	if currentOption == 0 and Touch.mobile_mode:
+		$AudioFail.play()
+		return
 	if currentOption == 0:
 		if Global.bindPad(device) >= 0:
 			get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
@@ -321,7 +336,12 @@ func choosePad(device: int):
 		_showOnline()
 
 func _on_local_target_tapped():
-	if Global.bindTouchSlot0():
+	if Touch.mobile_mode:
+		$AudioFail.play()
+		return
+	# A desktop mouse click lands here through touch emulation: bind the usual
+	# keyboard slot instead of an offline TOUCH slot (which has no controls).
+	if Global.bindKbSlot0():
 		get_tree().change_scene_to_file("res://scenes/Lobby.tscn")
 	else:
 		$AudioFail.play()

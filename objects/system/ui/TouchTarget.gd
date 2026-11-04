@@ -23,7 +23,7 @@ func _gui_input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseButton and event.pressed \
 		and event.button_index == MOUSE_BUTTON_LEFT \
-		and event.device == InputEvent.DEVICE_ID_EMULATION:
+		and (event.device == InputEvent.DEVICE_ID_EMULATION or Touch.mobile_mode):
 		_emit_tap()
 		accept_event()
 

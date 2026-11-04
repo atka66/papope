@@ -29,6 +29,7 @@ Music="*res://global/Music.tscn"
 Res="*res://global/Res.gd"
 Global="*res://global/Global.gd"
 Net="*res://global/Net.gd"
+Touch="*res://global/Touch.gd"
 
 [display]
 

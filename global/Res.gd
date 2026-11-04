@@ -26,6 +26,7 @@ extends Node
 @onready var FallingLabelObject = load("res://objects/system/label/FallingLabel.tscn")
 
 @onready var ExitOverlayObject = load("res://objects/system/ExitOverlay.tscn")
+@onready var TouchControlsObject = load("res://objects/system/touch/TouchControls.tscn")
 
 @onready var PerkOverlayObject = load("res://objects/system/perk/PerkOverlay.tscn")
 @onready var DeckCardObject = load("res://objects/system/perk/DeckCard.tscn")

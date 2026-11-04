@@ -117,6 +117,10 @@ func getMoveVector() -> Vector2:
 		lAxis += Input.get_vector("kb_move_left", "kb_move_right", "kb_move_up", "kb_move_down")
 		if lAxis.length() > 1.0:
 			lAxis = lAxis.normalized()
+	if Touch.player_active:
+		lAxis += Touch.move
+		if lAxis.length() > 1.0:
+			lAxis = lAxis.normalized()
 	if Global.playersPerks[playerId].has(Global.PerkEnum.REVERSE):
 		lAxis *= -1
 	return lAxis
@@ -131,6 +135,11 @@ func getAimVector() -> Vector2:
 			Input.get_joy_axis(joyDevice, JOY_AXIS_RIGHT_X),
 			Input.get_joy_axis(joyDevice, JOY_AXIS_RIGHT_Y)
 		)
+	if Touch.player_active and Touch.aim_used:
+		# Touch aim wins over mouse/pad while the overlay is live (also keeps
+		# desktop ?touch=1 testing from falling back to cursor aim).
+		stick = Touch.aim
+		kbAimActive = false
 	if stick.length() > 0.15:
 		kbAimActive = false
 	elif not Net.isOnline and Global.playersInputMode[playerId] == Global.InputMode.KB:
@@ -178,6 +187,10 @@ func updateAimVisuals() -> void:
 func _input(event):
 	# Online: only the owning peer drives this player (device ids are per-machine).
 	if Net.isOnline and not isLocal:
+		return
+	# Touch input arrives through the overlay's synthetic actions; mouse events
+	# on a touch device must not fire kb_use/kb_dash as well.
+	if Touch.ignores_mouse(event):
 		return
 	if ownsKeyboard():
 		if event is InputEventMouseMotion || event is InputEventMouseButton:

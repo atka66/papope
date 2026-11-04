@@ -128,7 +128,8 @@ func _onlineInput(event):
 			Net.leave_to_menu()
 
 func _isTouchClick(event: InputEvent) -> bool:
-	# Touch screens also emit a left click tagged with DEVICE_ID_EMULATION, and
-	# kb_use/kb_dash are bound to the mouse buttons.
+	# Touch screens also emit a left click tagged DEVICE_ID_EMULATION, and
+	# kb_use/kb_dash are bound to the mouse buttons. On touch devices every
+	# mouse event belongs to the overlay, never to a slot action.
 	return event is InputEventMouseButton \
-		and event.device == InputEvent.DEVICE_ID_EMULATION
+		and (Touch.mobile_mode or event.device == InputEvent.DEVICE_ID_EMULATION)

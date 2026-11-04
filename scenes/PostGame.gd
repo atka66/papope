@@ -18,6 +18,10 @@ func _ready():
 				Global.playersCrowned[i] = false
 
 func _input(event):
+	# Touch input goes through the overlay's synthetic actions; mouse events on
+	# a touch device must not fire kb_use as well.
+	if Touch.ignores_mouse(event):
+		return
 	var exitPressed: bool = Global.isExitEvent(event)
 	var usePressed: bool = (event.is_action_pressed('game_use') or event.is_action_pressed('kb_use')) and canProceed
 	if Net.isOnline:
