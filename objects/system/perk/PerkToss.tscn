@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://objects/system/perk/PerkToss.gd" id="1_toss"]
+[ext_resource type="Texture2D" uid="uid://b458ln7prqp1y" path="res://sprites/perk/perks.png" id="2_perks"]
+
+[node name="PerkToss" type="Sprite2D"]
+scale = Vector2(4, 4)
+texture = ExtResource("2_perks")
+script = ExtResource("1_toss")

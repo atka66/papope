@@ -1,13 +1,26 @@
-[gd_scene load_steps=7 format=3 uid="uid://c1n4hoe86van5"]
+[gd_scene load_steps=10 format=3 uid="uid://c1n4hoe86van5"]
 
 [ext_resource type="Script" path="res://objects/system/perk/PerkCard.gd" id="1_hk05b"]
 [ext_resource type="Texture2D" uid="uid://bpcdoonpygx7q" path="res://sprites/anim/shard.png" id="2_jo33t"]
 [ext_resource type="Texture2D" uid="uid://dvarr8hta8q25" path="res://sprites/perk/cardbase.png" id="2_s0gup"]
 [ext_resource type="Texture2D" uid="uid://b458ln7prqp1y" path="res://sprites/perk/perks.png" id="3_3jac5"]
+[ext_resource type="FontFile" uid="uid://dyurelnl4pypl" path="res://fonts/blockbit.ttf" id="4_font"]
 
-[sub_resource type="Animation" id="Animation_wpi06"]
+[sub_resource type="LabelSettings" id="LabelSettings_name"]
+font = ExtResource("4_font")
+font_size = 40
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_desc"]
+font = ExtResource("4_font")
+font_size = 20
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_reveal"]
 resource_name = "reveal"
-length = 0.2
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -32,24 +45,82 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1]
 }
-tracks/2/type = "method"
+tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".")
+tracks/2/path = NodePath("CardSprite/PerkSprite:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Shine:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"showAll"
-}]
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("NameLabel:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("NameLabel:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DescLabel:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("DescLabel:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_q1v4a"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_card"]
 _data = {
-"reveal": SubResource("Animation_wpi06")
+&"reveal": SubResource("Animation_reveal")
 }
 
 [node name="PerkCard" type="Node2D"]
@@ -57,12 +128,14 @@ script = ExtResource("1_hk05b")
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_q1v4a")
+&"": SubResource("AnimationLibrary_card")
 }
 
 [node name="Shine" type="CPUParticles2D" parent="."]
+emitting = false
 amount = 15
 lifetime = 0.3
+one_shot = true
 texture = ExtResource("2_jo33t")
 particle_flag_align_y = true
 direction = Vector2(0, 0)
@@ -80,6 +153,30 @@ hframes = 2
 [node name="PerkSprite" type="Sprite2D" parent="CardSprite"]
 scale = Vector2(2, 2)
 texture = ExtResource("3_3jac5")
+
+[node name="NameLabel" type="Label" parent="."]
+visible = false
+offset_left = -200.0
+offset_top = 108.0
+offset_right = 200.0
+offset_bottom = 148.0
+pivot_offset = Vector2(200, 20)
+text = "perk"
+label_settings = SubResource("LabelSettings_name")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="DescLabel" type="Label" parent="."]
+visible = false
+offset_left = -200.0
+offset_top = 158.0
+offset_right = 200.0
+offset_bottom = 178.0
+pivot_offset = Vector2(200, 10)
+text = "description"
+label_settings = SubResource("LabelSettings_desc")
+horizontal_alignment = 1
+uppercase = true
 
 [node name="AudioFlip" type="AudioStreamPlayer" parent="."]
 bus = &"sfx"

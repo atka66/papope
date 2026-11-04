@@ -1,0 +1,108 @@
+[gd_scene load_steps=12 format=3 uid="uid://bvywd7jxq2005"]
+
+[ext_resource type="Script" uid="uid://cperkpanel1aaa" path="res://objects/system/perk/PerkPanel.gd" id="1_panel"]
+[ext_resource type="Texture2D" uid="uid://v68toutk1e4s" path="res://sprites/game/player/players.png" id="2_players"]
+[ext_resource type="SpriteFrames" uid="uid://bjujoaaro01o3" path="res://resources/label/x.tres" id="3_x"]
+[ext_resource type="SpriteFrames" uid="uid://batkp1hq01vmw" path="res://resources/label/t.tres" id="4_t"]
+[ext_resource type="PackedScene" uid="uid://bli02m5v875nl" path="res://objects/system/label/CustomLabel.tscn" id="5_label"]
+[ext_resource type="PackedScene" uid="uid://c1n4hoe86van5" path="res://objects/system/perk/PerkCard.tscn" id="6_card"]
+[ext_resource type="PackedScene" uid="uid://dnakmogpy1vc" path="res://objects/system/perk/PerkPip.tscn" id="7_pip"]
+
+[sub_resource type="Gradient" id="Gradient_banner"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture_banner"]
+gradient = SubResource("Gradient_banner")
+width = 64
+
+[sub_resource type="Animation" id="Animation_dwell"]
+resource_name = "dwell"
+length = 3.0
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_panel"]
+_data = {
+&"dwell": SubResource("Animation_dwell")
+}
+
+[node name="PerkPanel" type="Node2D"]
+script = ExtResource("1_panel")
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_panel")
+}
+
+[node name="Face" type="Sprite2D" parent="."]
+position = Vector2(170, 600)
+scale = Vector2(4, 4)
+texture = ExtResource("2_players")
+hframes = 7
+
+[node name="TeamBanner" type="TextureRect" parent="."]
+offset_left = 106.0
+offset_top = 664.0
+offset_right = 234.0
+offset_bottom = 680.0
+texture = SubResource("GradientTexture_banner")
+
+[node name="Card" parent="." instance=ExtResource("6_card")]
+position = Vector2(170, 320)
+
+[node name="Pips" type="HBoxContainer" parent="."]
+offset_left = 58.0
+offset_top = 96.0
+offset_right = 282.0
+offset_bottom = 160.0
+theme_override_constants/separation = 16
+
+[node name="Pip0" parent="Pips" instance=ExtResource("7_pip")]
+layout_mode = 2
+
+[node name="Pip1" parent="Pips" instance=ExtResource("7_pip")]
+layout_mode = 2
+
+[node name="Pip2" parent="Pips" instance=ExtResource("7_pip")]
+layout_mode = 2
+
+[node name="RevealPrompt" type="Node2D" parent="."]
+position = Vector2(170, 448)
+
+[node name="XSprite" type="AnimatedSprite2D" parent="RevealPrompt"]
+position = Vector2(-80, 0)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("3_x")
+autoplay = "default"
+
+[node name="RevealLabel" parent="RevealPrompt" instance=ExtResource("5_label")]
+text = "reveal"
+fontSize = 2
+alignment = 8
+
+[node name="SwapPrompt" type="Node2D" parent="."]
+
+[node name="SwapLabelHolder" type="Node2D" parent="SwapPrompt"]
+position = Vector2(170, 24)
+
+[node name="TriSprite" type="AnimatedSprite2D" parent="SwapPrompt/SwapLabelHolder"]
+position = Vector2(-96, 0)
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("4_t")
+autoplay = "default"
+
+[node name="SwapLabel" parent="SwapPrompt/SwapLabelHolder" instance=ExtResource("5_label")]
+text = "swap with"
+fontSize = 2
+alignment = 8
+
+[node name="SwappedPerkLabel" parent="SwapPrompt" instance=ExtResource("5_label")]
+position = Vector2(172, 64)
+fontSize = 3
+alignment = 8
+
+[node name="SwappedPerkDescriptionLabel" parent="SwapPrompt" instance=ExtResource("5_label")]
+position = Vector2(170, 184)
+fontSize = 2
+alignment = 8
+
+[connection signal="animation_finished" from="Anim" to="." method="_on_dwell_finished"]

@@ -1,13 +1,6 @@
 extends Node2D
 
-@onready var _feedbackAnim = $MenuCanvas/FeedbackHolder/Anim
-@onready var _feedbackForm = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer
-@onready var _feedbackEdit = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/VBoxContainer/FeedbackEdit
-@onready var _feedbackFinish = $MenuCanvas/FeedbackHolder/FeedbackPanel/CenterContainer/FinishLabel
-@onready var _audioSubmit = $MenuCanvas/FeedbackHolder/AudioSubmit
-
 var countdownNode = null
-var hasConnected = true
 var _bgFingerprint = []
 var _netAccum := 0.0
 var _bgAccum := 0.0
@@ -21,11 +14,10 @@ func _ready():
 	if ProjectSettings.get("papope/hosted_mode"):
 		$MenuCanvas/FullscreenLabel.setText('atka66.itch.io/papope')
 	if Net.isOnline:
-		$MenuCanvas/OnlineButton.hide()
 		initPlayers()
 		Net.lobby_updated.connect(_on_lobby_updated)
 	else:
-		$MenuCanvas/OnlineLabel.hide()
+		$MenuCanvas/RoomLabel.hide()
 		initPlayers()
 	# 'random' backdrop steps align with pan-loop ends so every replay
 	# coincides with a sweep boundary on all peers (read, not hardcoded).
@@ -34,18 +26,9 @@ func _ready():
 		_bgPeriod = loopAnim.get_animation("loop").length
 
 func _process(delta):
-	var currentHasConnected = Global.playersJoined.has(true)
-	if currentHasConnected != hasConnected:
-		$MenuCanvas/TitleHolder/Anim.seek(0)
-		if currentHasConnected:
-			$MenuCanvas/TitleHolder/Anim.play("back")
-		else:
-			$MenuCanvas/TitleHolder/Anim.play("front")
-	
-	hasConnected = currentHasConnected
-	
-	$Settings.visible = hasConnected
-	$MenuCanvas/Hints.visible = !ProjectSettings.get("papope/hosted_mode") && hasConnected
+	var hasAnyJoined := Global.playersJoined.has(true)
+	$Settings.visible = hasAnyJoined
+	$MenuCanvas/Hints.visible = !ProjectSettings.get("papope/hosted_mode") && hasAnyJoined
 
 	$InitHolder/WaitingLabel.hide()
 	$InitHolder/TeamLimitLabel.hide()
@@ -58,7 +41,7 @@ func _process(delta):
 			_netAccum += delta
 			if _netAccum >= Net.STATE_RATE:
 				_netAccum = 0.0
-				Net.push_state.rpc(Global.getPlayerStates())
+				Net.push_state(Global.getPlayerStates())
 			# 'random' background steps on all screens via broadcast, aligned
 			# to pan-loop ends (see _bgPeriod).
 			if Global.options['map'][Global.optionsSelected['map']] == 'random':
@@ -66,6 +49,10 @@ func _process(delta):
 				if _bgAccum >= _bgPeriod:
 					_bgAccum = 0.0
 					advanceBgFrame()
+		return
+	if !Net.isOnline and !Global.playersJoined.has(true):
+		# Last player left: back to the mode select.
+		Global.goToMainMenu()
 		return
 	if Global.playersConnected.count(true) < 2 or Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.show()
@@ -75,10 +62,7 @@ func _process(delta):
 		$InitHolder/StartHolder.show()
 
 func _updateOnlineLabels() -> void:
-	if Net.isHost:
-		$MenuCanvas/OnlineLabel.setText("online - hosting (slot 0)")
-	else:
-		$MenuCanvas/OnlineLabel.setText("online - player " + str(Net.localSlot))
+	$MenuCanvas/RoomLabel.setText("room: " + Net.roomCode)
 	if Global.playersJoined.count(true) < 2:
 		$InitHolder/WaitingLabel.setText("waiting for more players...")
 		$InitHolder/WaitingLabel.show()
@@ -92,14 +76,13 @@ func _updateOnlineLabels() -> void:
 
 func _input(event):
 	if event.is_action_pressed("quit") and !OS.has_feature("web"):
+		var focusOwner := get_viewport().gui_get_focus_owner()
+		if focusOwner is TextEdit or focusOwner is LineEdit:
+			return # typing feedback: keep Esc for the field
 		if Net.isOnline:
-			Net.leave()
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+			Net.leave_to_menu()
 		else:
-			get_tree().quit()
-	if !Net.isOnline and event is InputEventKey and event.pressed and !event.echo:
-		if event.physical_keycode == KEY_O and Global.enableHotkeys:
-			get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
+			Global.goToMainMenu()
 	if Global.DEBUG && Global.enableHotkeys && !Net.isOnline: 
 		if event.is_action_pressed("test1"): 
 			for i in range(4):
@@ -107,6 +90,9 @@ func _input(event):
 					Global.playersConnected[i] = true
 					break
 				if !Global.playersJoined[i]:
+					Global.playersInputMode[i] = Global.InputMode.PAD
+					Global.playersDevice[i] = i
+					Global.kbClaimable = false
 					Global.playersJoined[i] = true
 					Global.joinPlayer(i, false)
 					break
@@ -115,6 +101,8 @@ func _input(event):
 				if Global.playersConnected[i]:
 					if Global.playersJoined[i]:
 						Global.playersJoined[i] = false
+						Global.playersInputMode[i] = Global.InputMode.EMPTY
+						Global.playersDevice[i] = -1
 						Global.leavePlayer(i)
 						break
 		if event.is_action_pressed("test3"):
@@ -137,13 +125,11 @@ func initPlayers() -> void:
 		return
 	for i in range(4):
 		if ProjectSettings.get("papope/hosted_mode"):
-			Global.playersJoined[i] = false
+			if Global.playersInputMode[i] == Global.InputMode.EMPTY:
+				Global.playersJoined[i] = false
 		else:
 			if Global.playersConnected[i] && Global.playersJoined[i]:
 				Global.joinPlayer(i, true)
-
-func _on_online_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/OnlineMenu.tscn")
 
 func advanceBgFrame() -> void:
 	# Host-side 'random' rotation: deterministic seeded order shared by all.
@@ -158,7 +144,7 @@ func advanceBgFrame() -> void:
 	# Full replay (frame + pan restart) like a selection change: keeps the
 	# pan phase aligned on all peers instead of drifting per load time.
 	applyBgFrame(frame, true)
-	Net.bg_frame.rpc(frame, true)
+	Net.send_bg_frame(frame, true)
 
 func applyBgFrame(frame: int, replay: bool) -> void:
 	var bg = get_node_or_null("MovingBackground/Backgrounds")
@@ -172,22 +158,26 @@ func applyBgFrame(frame: int, replay: bool) -> void:
 			anim.seek(0)
 			anim.play("loop")
 
-func sendBgTo(peerId: int) -> void:
+func sendBgTo() -> void:
 	# Newcomer paint: explicit maps resolve locally, random takes host's frame.
 	if Global.options['map'][Global.optionsSelected['map']] != 'random':
 		return
 	var bg = get_node_or_null("MovingBackground/Backgrounds")
 	if bg == null:
 		return
-	Net.bg_frame.rpc_id(peerId, int(bg.frame), true)
+	Net.send_bg_frame(int(bg.frame), true)
 
 func _on_lobby_updated():
-	# Spawn previews for peers that joined after we entered the lobby.
+	# Reconcile previews with the host's slot flags both ways: joiners appear,
+	# leavers disappear. No dedicated removal message needed.
 	if !Net.isOnline:
 		return
 	for i in range(4):
-		if Global.playersJoined[i] and Global.getPlayer(i) == null:
+		var preview = Global.getPlayer(i)
+		if Global.playersJoined[i] and preview == null:
 			Global.joinPlayer(i, true)
+		elif not Global.playersJoined[i] and preview != null:
+			preview.queue_free()
 	# Fixate the background on the host's map selection only; other
 	# options (mode/rounds/teams/skins) must not retrigger it. Guests
 	# resolve explicit maps locally; 'random' follows host broadcasts.
@@ -204,7 +194,7 @@ func _on_lobby_updated():
 				var frameCount: int = bg.sprite_frames.get_frame_count('default')
 				var frame := _bgSeed % frameCount
 				applyBgFrame(frame, true)
-				Net.bg_frame.rpc(frame, true)
+				Net.send_bg_frame(frame, true)
 		elif mapName != 'random' or !Net.isOnline:
 			restartMovingBackground()
 		# else: online guest with 'random' waits for the host's bg_frame.
@@ -222,47 +212,7 @@ func startCountdown() -> void:
 
 func stopCountdown() -> void:
 	countdownNode.queue_free()
+	countdownNode = null
 
 func restartMovingBackground() -> void:
 	$MovingBackground.restartMovingBackground(null)
-
-func _on_feedback_button_toggled(toggled_on):
-	if toggled_on:
-		_feedbackEdit.text = ""
-		feedbackToggle(true)
-		_feedbackAnim.play("appear")
-	else:
-		_feedbackAnim.play_backwards("appear")
-
-func feedbackToggle(toggled_on: bool):
-	_feedbackForm.visible = toggled_on
-	_feedbackFinish.visible = !toggled_on
-
-
-func _on_submit_button_pressed():
-	if _feedbackEdit.text.length() < 1:
-		return
-
-	var explosion = Res.ExplosionAnimObject.instantiate()
-	explosion.position = $Camera.offset + get_viewport().get_mouse_position()
-	explosion.harmful = false
-	explosion.shakePwr = 30
-	Global.addToScene(explosion)
-
-	feedbackToggle(false)
-	submitFeedback(_feedbackEdit.text)
-
-func submitFeedback(feedback: String):
-	var request = HTTPRequest.new()
-	add_child(request)
-	var body = JSON.stringify({ 'feedback': feedback, 'source': 'PAPOPE' })
-	request.request(Global.FEEDBACK_URL, ["Content-Type: application/json"], HTTPClient.METHOD_POST, body)
-	var response = await request.request_completed
-	request.queue_free()
-
-
-func _on_feedback_edit_focus_entered():
-	Global.enableHotkeys = false
-
-func _on_feedback_edit_focus_exited():
-	Global.enableHotkeys = true

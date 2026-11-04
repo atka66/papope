@@ -14,12 +14,12 @@ func _process(delta):
 
 func spring(entity: Node2D) -> void:
 	if armed:
-		if Net.isOnline and not multiplayer.is_server():
+		if Net.isOnline and not Net.isHost:
 			return # host authorizes springs; guests reveal via Net.trap_sprung
 		if entity.is_in_group('trappables'):
 			entity.getTrapped(originPlayerId)
 			if Net.isOnline:
-				Net.trap_sprung.rpc(global_position)
+				Net.trap_sprung(global_position)
 			showSprung()
 
 func showSprung() -> void:

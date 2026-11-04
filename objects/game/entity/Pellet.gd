@@ -4,11 +4,11 @@ func _on_body_entered(body):
 	if body.is_in_group('players'):
 		# Online pellets are host-authorized like pickups: guests neither
 		# count nor munch locally, the broadcast below carries sight+sound.
-		if Net.isOnline and not multiplayer.is_server():
+		if Net.isOnline and not Net.isHost:
 			return
 		Global.incrementStat(body.playerId, Global.StatEnum.PELLETS, 1)
 		if Net.isOnline:
-			Net.pellet_eaten.rpc(global_position)
+			Net.pellet_eaten(global_position)
 		consume()
 
 func consume() -> void:

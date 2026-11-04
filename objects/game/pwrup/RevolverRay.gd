@@ -25,8 +25,19 @@ func _ready():
 		hitPosition = $HitScan.get_collision_point()
 		var hitAngle = $HitScan.target_position.bounce($HitScan.get_collision_normal()).angle()
 		var collider = $HitScan.get_collider()
+		if collider.is_in_group('discowalls') and collider.has_method('boop'):
+			# Neon ring: lights up for whatever it stopped (no damage).
+			collider.boop()
 		if collider.is_in_group('shootables'):
-			collider.getShot(origin.playerId, $HitScan.target_position.normalized())
+			# Damage is host-authoritative; guest rays are visuals only while
+			# hp/kills converge via state sync (same rule as Trap/Pwrup).
+			# Cacti take no damage, so their wobble is safe to replay on any
+			# peer and the host re-broadcasts it for peers holding no ray.
+			var cosmetic: bool = collider.is_in_group('cacti')
+			if cosmetic or not Net.isOnline or Net.isHost:
+				collider.getShot(origin.playerId, $HitScan.target_position.normalized())
+			if cosmetic and Net.isOnline and Net.isHost:
+				Net.cactus_hit(collider.global_position, false)
 			if collider.is_in_group('players'):
 				$AudioPlayerHit.play()
 			if collider.is_in_group('car'):

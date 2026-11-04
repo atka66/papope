@@ -26,8 +26,8 @@ extends Node
 @onready var FallingLabelObject = load("res://objects/system/label/FallingLabel.tscn")
 
 @onready var PerkOverlayObject = load("res://objects/system/perk/PerkOverlay.tscn")
-@onready var PerkSlotObject = load("res://objects/system/perk/PerkSlot.tscn")
-@onready var PerkCardObject = load("res://objects/system/perk/PerkCard.tscn")
+@onready var DeckCardObject = load("res://objects/system/perk/DeckCard.tscn")
+@onready var PerkTossObject = load("res://objects/system/perk/PerkToss.tscn")
 
 @onready var AudioRoundGo = load("res://audio/sfx/system/round_go.ogg")
 
